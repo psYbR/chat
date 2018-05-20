@@ -1,0 +1,69 @@
+.userWindowContainer {
+    display: flex;
+    flex-direction: column;
+    padding:
+        $element-margin
+        $element-margin
+        $element-margin
+        $element-margin-h;
+}
+
+.userListContainer {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    background-color: $base;
+    margin-bottom: $element-margin;
+    border: $element-border solid black;
+}
+
+.userListUserName {
+    display: flex;
+    margin: $element-margin;
+    padding: $list-padding;
+}
+.userListUserName > p {
+    margin: 0;
+}
+.fa-user {
+    margin-right: 8px;
+}
+.userListCurrentUser > p {
+    color: #CC0000;
+}
+.awayUser {
+    color: $font-subtle;
+}
+.op {
+    color: green;
+}
+.voice {
+    color: $hex-blue;
+}
+
+.userStatsContainer {
+    display: flex;
+    background-color: $base;
+    margin-bottom: $element-margin;
+    border: $element-border solid black;
+    height: $top-bar-height;
+    justify-content: center; 
+}
+.userStatsContainer > p {
+    margin-top: 5px;
+}
+
+.connectionStatsContainer {
+    display: flex;
+    background-color: $base;
+    border: $element-border solid black;
+    height: $top-bar-height;
+    justify-content: center;
+}
+.connectionStatsContainer > p {
+    margin-top: 5px;
+}
+
+.pingText {
+    color: darkgreen;
+}

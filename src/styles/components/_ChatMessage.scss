@@ -1,0 +1,38 @@
+.chatMessageWrapper {
+    display: flex;
+}
+.chatMessageWrapper > div > p {
+    margin: 0;
+}
+
+//TIMESTAMP
+.chatMessageTimestampContainer {
+    //display: none;
+}
+
+//USERNAME
+.chatMessageUsernameContainer{
+    color: $hex-blue;
+    text-align:right;
+    //width: 150px;
+    border-right: 1px solid $selection;
+    padding-right: 5px;
+    margin-right: 5px;
+    //lex-grow: 1;
+    min-width: 120px;
+}
+
+//MESSAGE
+.chatMessageTextContainer{
+    flex-grow: 1;
+    width: 0px;
+}
+.chatMessageCurrentUser > .pUserText {
+    color: #CC0000;
+}
+.chatMessageCurrentUser > .pMessageText {
+    color: $font-subtle;
+}
+.chatMessageSystemUser {
+    color: orange;
+}

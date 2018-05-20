@@ -1,0 +1,51 @@
+//future: resizable by dragging column separator
+//$left-column-width: 12rem;
+
+.leftSideContainer {
+    display: flex;
+    flex-direction: column;
+    //width: $left-column-width;
+    padding: $element-margin;
+    padding-right: $element-margin-h;
+}
+
+.adminAlertContainer {
+    display: flex;
+    background-color: $base;
+    width: calc(100% - $element-margin);
+    margin-bottom: $element-margin;
+    border: $element-border solid black;
+    height: $top-bar-height;
+    justify-content: center; 
+}
+.adminAlertContainer > p {
+    margin-top: 5px;
+}
+
+.channelListContainer {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    background-color: $base;
+    width: calc(100% - $element-margin);
+    border: $element-border solid black;
+}
+
+.channelListChannelName {
+    margin: $element-margin;
+    padding: $list-padding;
+}
+.channelListChannelName > p {
+    margin: 0;
+}
+.fa-comments {
+    margin-right: 8px;
+}
+
+.selected-channel {
+    background-color: $selection;
+}
+.selected-channel > p {
+    color: white;
+    font-weight: bold;
+}

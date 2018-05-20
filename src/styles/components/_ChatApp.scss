@@ -1,0 +1,17 @@
+html, body, #app {
+    height: 100%;
+}
+
+body {
+    color: $font-default;
+    font-family: $font-family-default;
+}
+
+.chatAppContainer {
+    display: flex;
+    width: 100%;
+    background-color: $surround;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}

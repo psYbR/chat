@@ -1,0 +1,80 @@
+// Colors
+$theme: #4080fb; //$purple: #7937b7;
+$hex-blue: #518ADB;
+//$font-default: rgb(211,215,207);
+$font-default: rgb(205,215,197);
+$font-subtle: rgb(109,109,109);
+$font-selection: rgb(255,255,255);
+$base: rgb(38,38,38);
+$surround: rgb(53,54,56);
+$selection: rgb(156,154,148);
+
+// Spacing
+$s-size: 1.2rem;
+$m-size: 1.6rem;
+$l-size: 3.2rem;
+$xl-size: 4.8rem;
+$desktop-breakpoint: 45rem;
+
+// Sizing
+$top-bar-height: 3rem;
+$element-margin: 3px;
+$element-margin-h: 1px; //should be half of $element-margin
+$element-border: 1px;
+$list-padding: 4px 14px 4px 18px;
+
+// Font
+$font-family-default: 'Source Sans Pro', sans-serif;
+
+.active-selection {
+    background-color: $selection;
+}
+.active-selection > p {
+    color: $font-selection;
+    text-shadow: 1px 1px #000000;
+}
+
+.emphasised-container {
+    box-shadow: 0 1px lighten($surround, 10%), inset 0 1px 1px darken($base, 5%);
+    border-radius: 2px;
+}
+.emphasised-alert {
+    background-color: darken(red, 30%) !important;
+    box-shadow: 0 1px lighten($surround, 10%), inset 0 1px 1px darken(red, 25%);
+}
+.idle-alert {
+    background-color: darken(green, 5%) !important;
+    box-shadow: 0 1px lighten($surround, 10%), inset 0 1px 1px lighten(green, 5%);
+}
+
+/*
+
+Google fonts installed:
+
+font-family: 'Kavivanar', cursive;
+font-family: 'Tajawal', sans-serif;
+font-family: 'Source Sans Pro', sans-serif;
+font-family: 'Indie Flower', cursive;
+font-family: 'Inconsolata', monospace;
+font-family: 'Dosis', sans-serif;
+font-family: 'Quicksand', sans-serif;
+font-family: 'Josefin Sans', sans-serif;
+font-family: 'Abel', sans-serif;
+font-family: 'Dancing Script', cursive;
+font-family: 'Exo', sans-serif;
+font-family: 'Kanit', sans-serif;
+font-family: 'Ropa Sans', sans-serif;
+font-family: 'Courgette', cursive;
+font-family: 'Permanent Marker', cursive;
+font-family: 'Orbitron', sans-serif;
+font-family: 'Concert One', cursive;
+font-family: 'Fredoka One', cursive;
+font-family: 'Luckiest Guy', cursive;
+font-family: 'Jura', sans-serif;
+font-family: 'Kalam', cursive;
+font-family: 'Marck Script', cursive;
+font-family: 'Audiowide', cursive;
+font-family: 'VT323', monospace;
+font-family: 'Architects Daughter', cursive;
+
+*/

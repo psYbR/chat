@@ -1,0 +1,30 @@
+
+.fontButton {
+    font-weight: bold;
+    //color: $font-default;
+    color: white;
+    background-color: $theme;
+    border: 0;
+    border-top: 4px solid lighten($theme, 10%);
+    border-bottom: 4px solid darken($theme, 10%);
+    margin: 3px;
+    border-radius: 3px;
+    height: 30px;
+    //width: 12rem;
+}
+
+.inputForm {
+    width: 100%;
+}
+.inputText {
+    background-color: rgba(0,0,0,0);
+    color: $font-default;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    padding-left: 10px;
+    border: 0;
+}
+.inputText:focus{
+    outline: none;
+}
