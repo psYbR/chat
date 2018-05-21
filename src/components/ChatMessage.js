@@ -1,4 +1,5 @@
 import React from 'react';
+import messageHTMLify from '../selectors/MessageHTMLify';
 
 const ChatMessage = (props) => (
     <div className="chatMessageWrapper">
@@ -12,7 +13,7 @@ const ChatMessage = (props) => (
         </div>
 
         <div className={"chatMessageTextContainer " + (props.isUser ? 'chatMessageCurrentUser ' : ' ') + (props.isSystem ? 'chatMessageSystemUser' : ' ')}>
-            <p className="pMessageText">{props.messageText}</p>
+            {messageHTMLify(props.messageText, 'pMessageText')}
         </div>
 
     </div>
