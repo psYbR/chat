@@ -1,40 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
 import ChatApp from './components/ChatApp.js';
 import ChannelDescription from './components/ChannelDescription.js';
+import configureStore from './stores/store';
+import { inboundMsgAction } from './actions/inboundMsgAction';
 
+//this function gets called every time the state changes
+const store = configureStore();
 
-import { createStore } from 'redux';
+// store.subscribe(() => {
+//   console.log(store.getState());
+// });
 
-const store = createStore((state = {
-  userName: '',
-  messages: []
-}) => {
-  return state;
-});
+// chat message test dispatches
+//id, source, timestamp, message, appliedFont, appliedColor
+store.dispatch(inboundMsgAction({ id: 5, source: 'Timo', message: "Just a us^3er saying Hello!" }));
+store.dispatch(inboundMsgAction({ id: 6, source: 'ASTRA-', message: "Just another user saying Hello!" }));
 
-const examples = [
-  {
-    channel: 'multirotors',
-    source: 'Pak',
-    messageBody: 'A message from a user about a bunch of stuff and a bunch of things!',
-    font: 'default',
-    color: 'default',
-    isSystem: false
-  },
-  {
-    channel: 'multirotors',
-    source: 'Pak_',
-    messageBody: 'Another message from a user!',
-    font: 'default',
-    color: 'default',
-    isSystem: false
-  }
-];
+//configure react-redux store provider
+const jsx = (
+  <Provider store={store}>
+    <ChatApp />
+  </Provider>
+);
 
-
-console.log(store.getState());
-
-ReactDOM.render(<ChatApp />, document.getElementById('app'));
+ReactDOM.render(jsx, document.getElementById('app'));

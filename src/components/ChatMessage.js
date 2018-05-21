@@ -1,22 +1,37 @@
 import React from 'react';
-import messageHTMLify from '../selectors/MessageHTMLify';
+import { connect } from 'react-redux';
+import messageHTMLify from '../utils/MessageHTMLify';
+import { unixToTimestamp } from '../utils/dateUtils';
 
-const ChatMessage = (props) => (
+const ChatMessage = ({ id, source, timestamp, message, appliedFont, appliedColor }) => (
     <div className="chatMessageWrapper">
 
         <div className="chatMessageTimestampContainer">
-            <p>[23:20:16]</p>
+            <p>{unixToTimestamp(timestamp, 2)}</p>
         </div>
 
-        <div className={"chatMessageUsernameContainer " + (props.isUser ? 'chatMessageCurrentUser ' : ' ') + (props.isSystem ? 'chatMessageSystemUser' : ' ')}>
-            <p className="pUserText">{props.userName}</p>
+        {//"chatMessageUsernameContainer " + (props.isUser ? 'chatMessageCurrentUser ' : ' ') + (props.isSystem ? 'chatMessageSystemUser' : ' ')
+        }
+        <div className='chatMessageUsernameContainer'>
+            <p className="pUserText">{source}</p>
         </div>
 
-        <div className={"chatMessageTextContainer " + (props.isUser ? 'chatMessageCurrentUser ' : ' ') + (props.isSystem ? 'chatMessageSystemUser' : ' ')}>
-            {messageHTMLify(props.messageText, 'pMessageText')}
+        {//"chatMessageTextContainer " + (props.isUser ? 'chatMessageCurrentUser ' : ' ') + (props.isSystem ? 'chatMessageSystemUser' : ' ')
+        }
+        <div className="chatMessageTextContainer">
+            {messageHTMLify(message, 'pMessageText')}
         </div>
 
     </div>
 );
 
 export default ChatMessage;
+
+// const mapStateToProps = (state, ownProps) => {
+//     console.log(ownProps);
+//     return {
+//         id: ownProps.id,
+//         inboundMessages: state.inboundMessages
+//     };
+// };
+// export default connect(mapStateToProps)(ChatMessage);
