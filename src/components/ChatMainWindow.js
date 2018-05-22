@@ -3,14 +3,19 @@ import { connect } from 'react-redux';
 import ChannelDescription from './ChannelDescription';
 import ChatInput from './ChatInput';
 import ChatMessage from './ChatMessage';
+import getVisibleMessages from '../selectors/getVisibleMessages';
 
-const ChatMainWindow = ({ inboundMessages }) => {
+const ChatMainWindow = ({ messages }) => {
     return (
+        
         <div className="chatWindowContainer">
+
+        {console.log(messages)}
+
             <ChannelDescription channelTopic={'Open and free discussion about RC multirotor (tri, quad, hex, octo)copter aircraft! From electronics to structural design, aerobatics to pilotage, and the embedded systems that piece it all together, all discussion is welcome so long as it is friendly and efficient'} />
             <div className="chatMessageContainer">
                 
-                {inboundMessages.map((message) => {
+                {messages.map((message) => {
                     return <ChatMessage key={message.id} { ...message } />
                 })}
 
@@ -25,9 +30,13 @@ const ChatMainWindow = ({ inboundMessages }) => {
 //the function needs to return an object which is passed to the component as props
 //that is where we can get the info from the app state that is desired
 const mapStateToProps = (state) => ({
-    inboundMessages: state.inboundMessages
+    messages: getVisibleMessages(state)
 });
 export default connect(mapStateToProps)(ChatMainWindow);
+
+//isUser
+//isSystem
+//
 
 {/* <ChatMessage key="1" userName="tanglesBurger" messageText="A message from YOU about a bunch of stuff and a bunch of things!" isUser={true} />
 <ChatMessage key="2" userName="tangles" messageText="A message from a user about a bunch of stuff and a bunch of things!" />

@@ -40,12 +40,20 @@ Subscribing to Store Changes:
 
 import { createStore, combineReducers } from 'redux';
 import inboundMsgReducer from '../reducers/inboundMsgReducer';
+import outboundMsgReducer from '../reducers/outboundMsgReducer';
+import activeChannelReducer from '../reducers/activeChannelReducer';
+import currentChannelsReducer from '../reducers/currentChannelsReducer';
+import configurationReducer from '../reducers/configurationReducer';
 
 //CREATE STORE
 export default () => {
 
   const store = createStore(combineReducers({
-    inboundMessages: inboundMsgReducer
+    inboundMessages: inboundMsgReducer,
+    outboundMessages: outboundMsgReducer,
+    activeChannel: activeChannelReducer,
+    currentChannels: currentChannelsReducer,
+    configuration: configurationReducer
   }),
     //enables the REDUX plugin to talk to the corresponding Chrome extension
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
@@ -58,6 +66,7 @@ export default () => {
 const demoState = {
   inboundMessages: [{
     id: 0,
+    channelId: 0,
     source: '*',
     timestamp: '',
     message: '',
@@ -66,6 +75,7 @@ const demoState = {
   }],
   outboundMessages: [{
     id: 0,
+    channelId: 0,
     timstamp: '',
     message: '',
     appliedFont: '',
@@ -84,6 +94,7 @@ const demoState = {
   },
   visibleUsers: [{
     id: 0,
+    channelId: 0,
     username: '',
     assignedGroup: 'guests',
     isAway: false,
