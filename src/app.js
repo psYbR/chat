@@ -12,12 +12,9 @@ import { activeChannelAction } from './actions/activeChannelAction';
 import { currentChannelsAction } from './actions/currentChannelsAction';
 import { configurationAction } from './actions/configurationAction';
 
+
 //this function gets called every time the state changes
 const store = configureStore();
-
-// store.subscribe(() => {
-//   console.log(store.getState());
-// });
 
 // configuration: {
 //     loggedIn: false,
@@ -31,12 +28,14 @@ const store = configureStore();
 //     showSystemMessages: true
 //   },
 
-// config test dispatch:
-store.dispatch(configurationAction());
-
 // current channels test dispatch:
-store.dispatch(currentChannelsAction({ id: 1, channelName: 'multirotors', type: 'channel',  topic: 'Multirotors Topic' }));
-store.dispatch(currentChannelsAction({ id: 2, channelName: 'drones', type: 'channel',  topic: 'Drones Topic' }));
+store.dispatch(currentChannelsAction({ id: 1, channelName: 'multirotors', type: 'channel',  topic: 'Multirotors Topic', isJoined: true, isCurrent: true, hasNewMessages: true }));
+store.dispatch(currentChannelsAction({ id: 2, channelName: 'drones', type: 'channel',  topic: 'Drones Topic', isSelected: false, isJoined: true }));
+store.dispatch(currentChannelsAction({ id: 3, channelName: 'lobby', type: 'channel',  topic: 'Welcome to the lobby', isJoined: true, hasMention: true }));
+store.dispatch(currentChannelsAction({ id: 4, channelName: 'other', type: 'channel',  topic: 'Welcome to other', hasNewNotifs: true, isJoined: true }));
+store.dispatch(currentChannelsAction({ id: 5, channelName: 'miscellaneous', type: 'channel',  }));
+store.dispatch(currentChannelsAction({ id: 6, channelName: 'hexchat', type: 'channel',   }));
+store.dispatch(currentChannelsAction({ id: 7, channelName: 'ASTRA-', type: 'user',  }));
 
 // active channel test dispatch:
 store.dispatch(activeChannelAction({ id: 1, numberOfUsers: 24, numberOfOps: 2 }));
@@ -47,9 +46,25 @@ store.dispatch(outboundMsgAction({ id: 3, channelId: 1, timestamp: 5, message: "
 store.dispatch(inboundMsgAction({ id: 4, channelId: 1, timestamp: 1, source: 'Colors', message: "^1,0A^0,1A^1,2A^2,3A^3,4A^4,5A^5,6A^6,7A^7,8A^8,9A^9,10A^10,11A^11,12A^12,13A^13,14A^14,15A^15,16A^16,17A" }));
 store.dispatch(inboundMsgAction({ id: 5, channelId: 1, timestamp: 2, source: '*', message: "Tim has left (ping timeout: 120s)" }));
 store.dispatch(outboundMsgAction({ id: 6, channelId: 1, timestamp: 3, message: "A message from you, the current user" }));
-store.dispatch(inboundMsgAction({ id: 7, channelId: 1, timestamp: 4, source: 'ASTRA-', message: "ASCII works!" }));
-store.dispatch(inboundMsgAction({ id: 8, channelId: 1, timestamp: 5, source: 'OSTRA-', message: "((̲̅ ̲̅(̲̅C̲̅r̲̅a̲̅y̲̅o̲̅l̲̲̅̅a̲̅( ̲̅((>     ☁ ▅▒░☼‿☼░▒▅ ☁" }));
-store.dispatch(inboundMsgAction({ id: 9, channelId: 2, timestamp: 6, source: 'TIM-', message: "A message to channel 2" }));
+store.dispatch(inboundMsgAction({ id: 7, channelId: 1, timestamp: 4, source: 'Champion', message: "ASCII works!" }));
+store.dispatch(inboundMsgAction({ id: 8, channelId: 1, timestamp: 5, source: 'OSTRA-', message: "A long message that is designed to stretch the width of the window so we can test the scrollbar and fill the chat window even at a low app scaling. Once again, A long message that is designed to stretch the width of the window so we can test the scrollbar and fill the chat window even at a low app scaling." }));
+store.dispatch(inboundMsgAction({ id: 9, channelId: 2, timestamp: 6, source: 'TIM-', message: "A long message that is designed to stretch the width of the window so we can test the scrollbar and fill the chat window even at a low app scaling. Once again, A long message that is designed to stretch the width of the window so we can test the scrollbar and fill the chat window even at a low app scaling." }));
+store.dispatch(inboundMsgAction({ id: 10, channelId: 1, timestamp: 4, source: 'PlayerOne', message: "A long message that is designed to stretch the width of the window so we can test the scrollbar and fill the chat window even at a low app scaling. Once again, A long message that is designed to stretch the width of the window so we can test the scrollbar and fill the chat window even at a low app scaling." }));
+store.dispatch(inboundMsgAction({ id: 11, channelId: 1, timestamp: 5, source: 'OSTRA-', message: "A long message that is designed to stretch the width of the window so we can test the scrollbar and fill the chat window even at a low app scaling. Once again, A long message that is designed to stretch the width of the window so we can test the scrollbar and fill the chat window even at a low app scaling." }));
+store.dispatch(inboundMsgAction({ id: 12, channelId: 2, timestamp: 6, source: 'TIM-', message: "A long message that is designed to stretch the width of the window so we can test the scrollbar and fill the chat window even at a low app scaling. Once again, A long message that is designed to stretch the width of the window so we can test the scrollbar and fill the chat window even at a low app scaling." }));
+store.dispatch(inboundMsgAction({ id: 13, channelId: 1, timestamp: 4, source: 'ASTRA-', message: "A long message that is designed to stretch the width of the window so we can test the scrollbar and fill the chat window even at a low app scaling. Once again, A long message that is designed to stretch the width of the window so we can test the scrollbar and fill the chat window even at a low app scaling." }));
+store.dispatch(inboundMsgAction({ id: 14, channelId: 1, timestamp: 5, source: 'OSTRA-', message: "A long message that is designed to stretch the width of the window so we can test the scrollbar and fill the chat window even at a low app scaling. Once again, A long message that is designed to stretch the width of the window so we can test the scrollbar and fill the chat window even at a low app scaling." }));
+store.dispatch(inboundMsgAction({ id: 15, channelId: 2, timestamp: 6, source: 'TIM-', message: "A long message that is designed to stretch the width of the window so we can test the scrollbar and fill the chat window even at a low app scaling. Once again, A long message that is designed to stretch the width of the window so we can test the scrollbar and fill the chat window even at a low app scaling." }));
+store.dispatch(inboundMsgAction({ id: 16, channelId: 1, timestamp: 4, source: 'ASTRA-', message: "A long message that is designed to stretch the width of the window so we can test the scrollbar and fill the chat window even at a low app scaling. Once again, A long message that is designed to stretch the width of the window so we can test the scrollbar and fill the chat window even at a low app scaling." }));
+store.dispatch(inboundMsgAction({ id: 17, channelId: 1, timestamp: 5, source: 'OSTRA-', message: "A long message that is designed to stretch the width of the window so we can test the scrollbar and fill the chat window even at a low app scaling. Once again, A long message that is designed to stretch the width of the window so we can test the scrollbar and fill the chat window even at a low app scaling." }));
+store.dispatch(inboundMsgAction({ id: 18, channelId: 2, timestamp: 6, source: 'TIM-', message: "A long message that is designed to stretch the width of the window so we can test the scrollbar and fill the chat window even at a low app scaling. Once again, A long message that is designed to stretch the width of the window so we can test the scrollbar and fill the chat window even at a low app scaling." }));
+
+store.subscribe(() => {
+  console.log(store.getState());
+});
+
+// config test dispatch:
+store.dispatch(configurationAction());
 
 //configure react-redux store provider
 const jsx = (

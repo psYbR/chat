@@ -1,5 +1,6 @@
 html {
-  font-size: 62.5%;
+  font-size: $default-app-size; 
+  overflow-x: hidden;
 }
 
 body {
@@ -12,4 +13,23 @@ button {
 
 button:disabled {
   cursor: default;
+}
+
+// scroll bar
+::-webkit-scrollbar {
+  width: .5rem;
+}
+
+// scroll bar track
+::-webkit-scrollbar-track {
+  background: $scroll-track; 
+} ::-webkit-scrollbar-track:hover {
+  background: $scroll-track-hover; 
+}
+
+// scroll bar handle
+::-webkit-scrollbar-thumb {
+  background: $scroll-thumb; 
+} ::-webkit-scrollbar-thumb:hover {
+  background: $scroll-thumb-hover; 
 }

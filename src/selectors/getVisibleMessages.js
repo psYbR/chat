@@ -32,7 +32,7 @@ export default ( { inboundMessages, outboundMessages, activeChannel, configurati
   //join the arrays together
   const concatMsg = filterIn.concat(filterOut);
 
-  console.log(concatMsg.sort(compare));
+  //console.log(concatMsg.sort(compare));
 
   //sort by timestamp and return
   return concatMsg.sort(compare);

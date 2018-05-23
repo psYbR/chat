@@ -2,11 +2,13 @@
 //     id: 0,
 //     channelName: '',
 //     type: 'channel', // 'user'
+//     topic: '',
 //     isSelected: false,
 //     isCurrent: false,
 //     isJoined: false,
 //     hasNewMessages: false,
 //     hasNewNotifs: false,
+//     hasMention: false,
 //     amOp: false,
 //     amMod: false,
 //     amVoice: false
@@ -24,6 +26,7 @@ export const currentChannelsAction = (
     isJoined = false,
     hasNewMessages = false,
     hasNewNotifs = false,
+    hasMention = false,
     amOp = false,
     amMod = false,
     amVoice = false
@@ -42,6 +45,7 @@ export const currentChannelsAction = (
       isJoined,
       hasNewMessages,
       hasNewNotifs,
+      hasMention,
       amOp,
       amMod,
       amVoice

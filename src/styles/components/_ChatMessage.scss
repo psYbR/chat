@@ -7,18 +7,21 @@
 
 //TIMESTAMP
 .chatMessageTimestampContainer {
-    //display: none;
+    
+}
+@media only screen and (max-width: $horizontal-timestamp-break-point) {
+    .chatMessageTimestampContainer {
+        display: none;
+    }
 }
 
 //USERNAME
 .chatMessageUsernameContainer{
-    color: $hex-blue;
+    color: $other-user;
     text-align:right;
-    //width: 150px;
-    border-right: 1px solid $selection;
+    border-right: 1px solid $divider;
     padding-right: 5px;
     margin-right: 5px;
-    //lex-grow: 1;
     min-width: 120px;
 }
 
@@ -28,11 +31,11 @@
     width: 0px;
 }
 .chatMessageCurrentUser > .pUserText {
-    color: #CC0000;
+    color: $user;
 }
 .chatMessageCurrentUser > .pMessageText {
     color: $font-subtle;
 }
 .chatMessageSystemUser {
-    color: orange;
+    color: $system;
 }

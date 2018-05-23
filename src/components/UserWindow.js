@@ -5,7 +5,7 @@ import UserWindowListItem from './UserWindowListItem';
 const UserWindow = () => {
     return (
         <div className="userWindowContainer">
-            <div className="userListContainer">
+            <div className="userListContainer emphasised-container">
                 <UserWindowListItem userName="PantelicGR" isAway={false} isSelected={false} isCurrentUser={false} userClass="op"/>
                 <UserWindowListItem userName="Guest63523" isAway={false} isSelected={false} isCurrentUser={false} userClass="op"/>
                 <UserWindowListItem userName="tangles" isAway={false} isSelected={true} isCurrentUser={false} userClass="voice"/>
@@ -18,7 +18,7 @@ const UserWindow = () => {
                 <UserWindowListItem userName="Pak" isAway={false} isSelected={false} isCurrentUser={false}/>
                 <UserWindowListItem userName="Pak_" isAway={true} isSelected={false} isCurrentUser={false}/>
             </div>
-            <div className="userStatsContainer">
+            <div className="userStatsContainer emphasised-container">
                 <p>2 ops, 11 total</p>
             </div>
             <ConnectionStats />

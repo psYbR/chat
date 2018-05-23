@@ -18,7 +18,7 @@ export const configurationAction = (
     defaultFont = 'Inconsolata',
     defaultColor = '-1',
     assignedGroup = 'guests',
-    defaultChannel = 'welcome',
+    defaultChannelId = 1,
     isAway = false,
     showSystemMessages = true
   } = {}
@@ -31,7 +31,7 @@ export const configurationAction = (
     defaultFont,
     defaultColor,
     assignedGroup,
-    defaultChannel,
+    defaultChannelId,
     isAway,
     showSystemMessages
   }

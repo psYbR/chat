@@ -1,50 +1,66 @@
 // Colors
-$theme: #4080fb; //$purple: #7937b7;
-$hex-blue: #518ADB;
-//$font-default: rgb(211,215,207);
+$theme: rgb(81, 138, 219);
+$default-app-size: 62.5%; //
+//$default-app-size: 120%;
+
+$font-family-default: 'Source Sans Pro', sans-serif;
 $font-default: rgb(205,215,197);
-$font-subtle: rgb(109,109,109);
-$font-selection: rgb(255,255,255);
+$font-subtle: rgb(110,110,110);
+$selected: rgb(255,255,255);
+$selected-bg: rgb(156,154,148);
+$hover: rgb(80,80,80);
 $base: rgb(38,38,38);
 $surround: rgb(53,54,56);
-$selection: rgb(156,154,148);
+$shadow: rgb(0,0,0);
+$divider: $selected-bg;
+
+$other-user: $theme;
+$user: rgb(204, 0, 0);
+$system: rgb(255, 166, 0);
+$op: rgb(0, 128, 0);
+$voice: $theme;
+
+$ping-good: rgb(0, 255, 0);
+$ping-ok: rgb(255, 145, 0);
+$ping-bad: rgb(204, 0, 0);
+
+//channel highlight colors
+$channel-current-bg: rgb(80,80,80);
+$channel-current: $selected;
+$channel-selected-border: $selected;
+$channel-new-notif: $system;
+$channel-new-message: rgb(21, 255, 0);
+$channel-mention: rgb(255, 0, 234);
+$channel-not-joined: rgb(82, 82, 82);
+
+$scroll-track: $surround;
+$scroll-track-hover: $surround;
+$scroll-thumb: $theme;
+$scroll-thumb-hover: $theme;
 
 // Spacing
 $s-size: 1.2rem;
 $m-size: 1.6rem;
 $l-size: 3.2rem;
 $xl-size: 4.8rem;
-$desktop-breakpoint: 45rem;
+$vertical-break-point: 20rem;
+$horizontal-break-point: 50rem;
+$horizontal-timestamp-break-point: 70rem;
 
 // Sizing
-$top-bar-height: 3rem;
-$element-margin: 3px;
-$element-margin-h: 1px; //should be half of $element-margin
-$element-border: 1px;
-$list-padding: 4px 14px 4px 18px;
+$bar-height: 3rem;
+$element-margin: 0.2rem;
+$element-margin-h: 0.1rem; //should be half of $element-margin
+$element-border: 0.1rem;
+$channel-list-padding: 0.4rem 1.4rem 0.4rem 1.5rem; //padding for channel name list
+$user-list-padding: 0.4rem 1.4rem 0.4rem 0.4rem; //padding for username list
 
-// Font
-$font-family-default: 'Source Sans Pro', sans-serif;
-
-.active-selection {
-    background-color: $selection;
-}
-.active-selection > p {
-    color: $font-selection;
-    text-shadow: 1px 1px #000000;
-}
-
+//default div styling
 .emphasised-container {
-    box-shadow: 0 1px lighten($surround, 10%), inset 0 1px 1px darken($base, 5%);
-    border-radius: 2px;
-}
-.emphasised-alert {
-    background-color: darken(red, 30%) !important;
-    box-shadow: 0 1px lighten($surround, 10%), inset 0 1px 1px darken(red, 25%);
-}
-.idle-alert {
-    background-color: darken(green, 5%) !important;
-    box-shadow: 0 1px lighten($surround, 10%), inset 0 1px 1px lighten(green, 5%);
+    box-shadow: 0 0.1rem lighten($surround, 10%), inset 0 0.1rem 0.1rem darken($base, 5%);
+    border-radius: 0.2rem;
+    background-color: $base;
+    border: $element-border solid $shadow;
 }
 
 /*

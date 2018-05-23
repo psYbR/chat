@@ -105,6 +105,7 @@ const demoState = {
     id: 0,
     channelName: '',
     type: 'channel', // 'user'
+    topic: '',
     isSelected: false,
     isCurrent: false,
     isJoined: false,

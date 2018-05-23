@@ -1,4 +1,4 @@
-
+// converts a unix timestamp to a user-friendly timestamp
 //
 // unixToTimestamp( String timestamp, int format)
 //

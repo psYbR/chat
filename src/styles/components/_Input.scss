@@ -1,16 +1,14 @@
 
 .fontButton {
     font-weight: bold;
-    //color: $font-default;
-    color: white;
+    color: $selected;
     background-color: $theme;
     border: 0;
-    border-top: 4px solid lighten($theme, 10%);
-    border-bottom: 4px solid darken($theme, 10%);
-    margin: 3px;
-    border-radius: 3px;
-    height: 30px;
-    //width: 12rem;
+    border-top: .2rem solid lighten($theme, 10%);
+    border-bottom: .2rem solid darken($theme, 10%);
+    margin: .3rem;
+    border-radius: .3rem;
+    height: 3rem;
 }
 
 .inputForm {
@@ -22,7 +20,7 @@
     width: 100%;
     height: 100%;
     padding: 0;
-    padding-left: 10px;
+    padding-left: 1rem;
     border: 0;
 }
 .inputText:focus{

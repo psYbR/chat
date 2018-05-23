@@ -5,65 +5,77 @@
         $element-margin
         $element-margin
         $element-margin
-        $element-margin-h;
+        0;
+}
+@media only screen and (max-width: $horizontal-break-point) {
+    .userWindowContainer {
+        display: none;
+    }
 }
 
 .userListContainer {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    background-color: $base;
     margin-bottom: $element-margin;
-    border: $element-border solid black;
+    overflow-y: scroll;
 }
 
 .userListUserName {
     display: flex;
+    min-height: .9rem;
     margin: $element-margin;
-    padding: $list-padding;
+    padding: $user-list-padding;
 }
 .userListUserName > p {
     margin: 0;
 }
 .fa-user {
-    margin-right: 8px;
+    margin-right: 0.8rem;
 }
 .userListCurrentUser > p {
-    color: #CC0000;
+    color: $user;
 }
 .awayUser {
     color: $font-subtle;
 }
 .op {
-    color: green;
+    color: $op;
 }
 .voice {
-    color: $hex-blue;
+    color: $voice;
 }
 
 .userStatsContainer {
     display: flex;
-    background-color: $base;
     margin-bottom: $element-margin;
-    border: $element-border solid black;
-    height: $top-bar-height;
+    height: $bar-height;
+    min-height: $bar-height !important;
     justify-content: center; 
+} .userStatsContainer > p {
+    margin-top: 0.5rem;
 }
-.userStatsContainer > p {
-    margin-top: 5px;
+@media only screen and (max-height: $vertical-break-point) {
+    .userStatsContainer {
+        display: none;
+    }
 }
 
 .connectionStatsContainer {
     display: flex;
-    background-color: $base;
-    border: $element-border solid black;
-    height: $top-bar-height;
+    height: $bar-height;
+    min-height: $bar-height !important;
     justify-content: center;
+    padding: 0 .3rem 0 .3rem;
+} .connectionStatsContainer > p {
+    margin-top: .5rem;
 }
-.connectionStatsContainer > p {
-    margin-top: 5px;
+@media only screen and (max-height: $vertical-break-point) {
+    .connectionStatsContainer {
+        display: none;
+    }
 }
 
 .pingText {
-    color: darkgreen;
+    color: $ping-good;
 }
