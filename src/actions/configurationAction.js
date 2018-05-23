@@ -20,7 +20,9 @@ export const configurationAction = (
     assignedGroup = 'guests',
     defaultChannelId = 1,
     isAway = false,
-    showSystemMessages = true
+    showSystemMessages = true,
+    channelListIsHidden = false,
+    userListIsHidden = false
   } = {}
 ) => ({
   type: 'SET_CONFIG',
@@ -33,6 +35,8 @@ export const configurationAction = (
     assignedGroup,
     defaultChannelId,
     isAway,
-    showSystemMessages
+    showSystemMessages,
+    channelListIsHidden,
+    userListIsHidden
   }
 });

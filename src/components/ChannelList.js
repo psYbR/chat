@@ -17,7 +17,7 @@ const ChannelList = ({ currentChannels, activeChannel }) => {
 }
 
 const mapStateToProps = ({ currentChannels, activeChannel }) => {
-    console.log(currentChannels);
+    //console.log(currentChannels);
     return {
         currentChannels,
         activeChannel

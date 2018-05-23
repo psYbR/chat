@@ -1,0 +1,33 @@
+
+.userListContainer {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    margin-bottom: $element-margin;
+    overflow-y: auto;
+}
+
+.userListUserName {
+    display: flex;
+    min-height: .9rem;
+    margin: $element-margin;
+    padding: $user-list-padding;
+}
+.userListUserName > p {
+    margin: 0;
+}
+.fa-user {
+    margin-right: 0.8rem;
+}
+.userListCurrentUser > p {
+    color: $user;
+}
+.awayUser {
+    color: $font-subtle;
+}
+.op {
+    color: $op;
+}
+.voice {
+    color: $voice;
+}
