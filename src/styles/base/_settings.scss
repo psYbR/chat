@@ -45,8 +45,10 @@ $s-size: 1.2rem;
 $m-size: 1.6rem;
 $l-size: 3.2rem;
 $xl-size: 4.8rem;
+
+//Break points NOTE - these also need to be altered in ./components/WindowResize.js
 $vertical-break-point: 20rem;
-$horizontal-break-point: 50rem;
+//$horizontal-break-point: 50rem;
 $horizontal-timestamp-break-point: 70rem;
 
 // Sizing

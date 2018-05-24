@@ -93,7 +93,8 @@ const demoState = {
     defaultChannel: 'welcome',
     isAway: false,
     showSystemMessages: true,
-    typingMessage: ''
+    typingMessage: '',
+    windowWidth: 0
   },
   visibleUsers: [{
     id: 0,

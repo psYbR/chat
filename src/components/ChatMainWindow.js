@@ -4,8 +4,9 @@ import ChannelDescription from './ChannelDescription';
 import ChatInput from './ChatInput';
 import ChatMessage from './ChatMessage';
 import getVisibleMessages from '../selectors/getVisibleMessages';
+import { toggleUserList, toggleChannelList } from '../actions/configurationAction';
 
-const ChatMainWindow = ({ channels, activeChannel, messages, configuration }) => {
+const ChatMainWindow = ({ channels, activeChannel, messages, configuration, dispatch }) => {
     return (
         <div className="chatWindowContainer">
             <ChannelDescription channelTopic={
@@ -18,15 +19,15 @@ const ChatMainWindow = ({ channels, activeChannel, messages, configuration }) =>
             <div className="chatMessageOuterContainer emphasised-container">
 
                 <div className="channelsHideContainer" onClick={() => {
-                    console.log("clicked to close!");
+                    dispatch(toggleChannelList());
                 }}>
-                    {configuration.channelListIsHidden ? <i className="fa fa-caret-right"></i> : <i className="fa fa-caret-left"></i>}
+                    {!configuration.channelListOpen ? <i className="fa fa-caret-right"></i> : <i className="fa fa-caret-left"></i>}
                 </div>
 
                 <div className="usersHideContainer" onClick={() => {
-                    console.log("clicked to close!");
+                    dispatch(toggleUserList());
                 }}>
-                    {configuration.userListIsHidden ? <i className="fa fa-caret-left"></i> : <i className="fa fa-caret-right"></i>}
+                    {!configuration.userListOpen ? <i className="fa fa-caret-left"></i> : <i className="fa fa-caret-right"></i>}
                 </div>
 
                 <div className="chatMessageContainer">
@@ -48,6 +49,7 @@ const mapStateToProps = (state) => ({
     channels: state.currentChannels,
     activeChannel: state.activeChannel,
     messages: getVisibleMessages(state),
-    configuration: state.configuration
+    configuration: state.configuration,
+    dispatch: state.dispatch
 });
 export default connect(mapStateToProps)(ChatMainWindow);
