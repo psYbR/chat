@@ -1,39 +1,10 @@
 
-.leftSideContainer {
-    display: flex;
-    flex-direction: column;
-    padding: $element-margin;
-    padding-right: $element-margin-h;
-    padding-right: 0;
-}
-@media only screen and (max-width: $horizontal-break-point) {
-    .leftSideContainer {
-        display: none;
-    }
-}
-
-.adminAlertContainer {
-    display: flex;
-    width: calc(100% - $element-margin);
-    margin-bottom: $element-margin;
-    min-height: $bar-height !important;
-    justify-content: center; 
-}
-.adminAlertContainer > p {
-    margin-top: 0.5rem;
-}
-@media only screen and (max-height: $vertical-break-point) {
-    .adminAlertContainer {
-        display: none;
-    }
-}
-
 .channelListContainer {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
     width: calc(100% - $element-margin);
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .channelListChannelName {

@@ -1,0 +1,48 @@
+//the chat message container is wrapped in an outer div the same size so that the buttons to hide the channel and user lists don't scroll when messages are scrolled
+.chatMessageOuterContainer {
+    display: flex;
+    width: calc(100% - $element-margin);
+    flex-grow: 1;
+    margin-bottom: $element-margin;
+    position: relative;
+    padding: 0;
+}
+
+//contains the actual chat messages
+.chatMessageContainer {
+    width: 100%;
+    flex-grow: 1;
+    color: $font-default;
+    padding-left: 0.6rem;
+    overflow-y: scroll;
+}
+
+//the buttons that hide the channel and user lists
+.channelsHideContainer, .usersHideContainer {
+    display: flex;
+    position: absolute;
+    //position: fixed;
+    top: calc(50% - 2rem);
+    padding-left: .2rem;
+    width: 2rem;
+    height: 4rem;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0.1rem darken($base, 5%), inset 0 0.1rem 0.1rem lighten($surround, 10%);
+    border-radius: 0.2rem;
+    background-color: $surround;
+    border: $element-border solid $shadow;
+    opacity: .2;
+    cursor: pointer;
+} .channelsHideContainer {
+    left: -.1rem;
+} .channelsHideContainer > i {
+    padding-right: .3rem;
+} .usersHideContainer {
+    border-right: none;
+    right: .5rem;
+} .channelsHideContainer:hover {
+    opacity: 1;
+} .usersHideContainer:hover {
+    opacity: 1;
+}

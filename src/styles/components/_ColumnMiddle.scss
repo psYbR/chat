@@ -1,0 +1,10 @@
+.chatWindowContainer {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    padding:
+        $element-margin
+        $element-margin
+        $element-margin
+        $element-margin;
+}

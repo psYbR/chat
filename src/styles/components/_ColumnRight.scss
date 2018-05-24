@@ -1,0 +1,14 @@
+.userWindowContainer {
+    display: flex;
+    flex-direction: column;
+    padding:
+        $element-margin
+        $element-margin
+        $element-margin
+        0;
+}
+@media only screen and (max-width: $horizontal-break-point) {
+    .userWindowContainer {
+        display: none;
+    }
+}

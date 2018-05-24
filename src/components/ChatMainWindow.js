@@ -5,18 +5,35 @@ import ChatInput from './ChatInput';
 import ChatMessage from './ChatMessage';
 import getVisibleMessages from '../selectors/getVisibleMessages';
 
-const ChatMainWindow = ({ messages }) => {
+const ChatMainWindow = ({ channels, activeChannel, messages, configuration }) => {
     return (
-        
         <div className="chatWindowContainer">
+            <ChannelDescription channelTopic={
+                    //fuck this, seriously
+                    channels.filter((channel) => {
+                        return channel.id == activeChannel.id;
+                    })[0].topic //filter returns an array of all the objects that passed
+                }
+            />
+            <div className="chatMessageOuterContainer emphasised-container">
 
-            <ChannelDescription channelTopic={'Open and free discussion about RC multirotor (tri, quad, hex, octo)copter aircraft! From electronics to structural design, aerobatics to pilotage, and the embedded systems that piece it all together, all discussion is welcome so long as it is friendly and efficient'} />
-            <div className="chatMessageContainer emphasised-container">
-                
-                {messages.map((message) => {
-                    return <ChatMessage key={message.id} { ...message } />
-                })}
+                <div className="channelsHideContainer" onClick={() => {
+                    console.log("clicked to close!");
+                }}>
+                    {configuration.channelListIsHidden ? <i className="fa fa-caret-right"></i> : <i className="fa fa-caret-left"></i>}
+                </div>
 
+                <div className="usersHideContainer" onClick={() => {
+                    console.log("clicked to close!");
+                }}>
+                    {configuration.userListIsHidden ? <i className="fa fa-caret-left"></i> : <i className="fa fa-caret-right"></i>}
+                </div>
+
+                <div className="chatMessageContainer">
+                    {messages.map((message) => {
+                        return <ChatMessage key={message.id} { ...message } />
+                    })}
+                </div>
             </div>
             <ChatInput />
         </div>
@@ -28,6 +45,9 @@ const ChatMainWindow = ({ messages }) => {
 //the function needs to return an object which is passed to the component as props
 //that is where we can get the info from the app state that is desired
 const mapStateToProps = (state) => ({
-    messages: getVisibleMessages(state)
+    channels: state.currentChannels,
+    activeChannel: state.activeChannel,
+    messages: getVisibleMessages(state),
+    configuration: state.configuration
 });
 export default connect(mapStateToProps)(ChatMainWindow);

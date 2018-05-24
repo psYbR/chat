@@ -11,6 +11,7 @@ import { outboundMsgAction } from './actions/outboundMsgAction';
 import { activeChannelAction } from './actions/activeChannelAction';
 import { currentChannelsAction } from './actions/currentChannelsAction';
 import { configurationAction } from './actions/configurationAction';
+require('./components/WindowResize.js');
 
 
 //this function gets called every time the state changes

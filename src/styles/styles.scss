@@ -1,9 +1,17 @@
 @import './base/settings';
 @import './base/base';
 @import './components/ChatApp';
+
+@import './components/ColumnMiddle';
+@import './components/ColumnLeft';
+@import './components/ColumnRight';
+
 @import './components/ChannelList';
-@import './components/ChatMainWindow';
-@import './components/UserWindow';
-@import './components/Input';
+@import './components/TopicContainer';
+@import './components/MessageContainer';
 @import './components/ChatMessage';
+@import './components/UserList';
+@import './components/Stats';
+
+@import './components/Input';
 @import './components/Alerts';

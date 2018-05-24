@@ -1,5 +1,18 @@
-
-
+.adminAlertContainer {
+    display: flex;
+    width: calc(100% - $element-margin);
+    margin-bottom: $element-margin;
+    min-height: $bar-height !important;
+    justify-content: center; 
+}
+.adminAlertContainer > p {
+    margin-top: 0.5rem;
+}
+@media only screen and (max-height: $vertical-break-point) {
+    .adminAlertContainer {
+        display: none;
+    }
+}
 
 /*Vertical Flip*/
 .verticalFlip{

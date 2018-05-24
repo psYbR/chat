@@ -21,7 +21,8 @@ export const configurationAction = (
     defaultChannelId = 1,
     isAway = false,
     showSystemMessages = true,
-    typingMessage= ''
+    channelListIsHidden = false,
+    userListIsHidden = false
   } = {}
 ) => ({
   type: 'SET_CONFIG',
@@ -35,7 +36,8 @@ export const configurationAction = (
     defaultChannelId,
     isAway,
     showSystemMessages,
-    typingMessage
+    channelListIsHidden,
+    userListIsHidden
   }
 });
 
