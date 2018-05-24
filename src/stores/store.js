@@ -44,6 +44,7 @@ import outboundMsgReducer from '../reducers/outboundMsgReducer';
 import activeChannelReducer from '../reducers/activeChannelReducer';
 import currentChannelsReducer from '../reducers/currentChannelsReducer';
 import configurationReducer from '../reducers/configurationReducer';
+import messageHistoryReducer from '../reducers/messageHistoryReducer';
 
 //CREATE STORE
 export default () => {
@@ -53,7 +54,8 @@ export default () => {
     outboundMessages: outboundMsgReducer,
     activeChannel: activeChannelReducer,
     currentChannels: currentChannelsReducer,
-    configuration: configurationReducer
+    configuration: configurationReducer,
+    messageHistory: messageHistoryReducer
   }),
     //enables the REDUX plugin to talk to the corresponding Chrome extension
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
@@ -90,7 +92,8 @@ const demoState = {
     assignedGroup: 'guests',
     defaultChannel: 'welcome',
     isAway: false,
-    showSystemMessages: true
+    showSystemMessages: true,
+    typingMessage: ''
   },
   visibleUsers: [{
     id: 0,

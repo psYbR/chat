@@ -60,7 +60,7 @@ store.dispatch(inboundMsgAction({ id: 17, channelId: 1, timestamp: 5, source: 'O
 store.dispatch(inboundMsgAction({ id: 18, channelId: 2, timestamp: 6, source: 'TIM-', message: "A long message that is designed to stretch the width of the window so we can test the scrollbar and fill the chat window even at a low app scaling. Once again, A long message that is designed to stretch the width of the window so we can test the scrollbar and fill the chat window even at a low app scaling." }));
 
 store.subscribe(() => {
-  console.log(store.getState());
+  //console.log(store.getState());
 });
 
 // config test dispatch:

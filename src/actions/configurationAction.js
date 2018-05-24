@@ -20,7 +20,8 @@ export const configurationAction = (
     assignedGroup = 'guests',
     defaultChannelId = 1,
     isAway = false,
-    showSystemMessages = true
+    showSystemMessages = true,
+    typingMessage= ''
   } = {}
 ) => ({
   type: 'SET_CONFIG',
@@ -33,6 +34,14 @@ export const configurationAction = (
     assignedGroup,
     defaultChannelId,
     isAway,
-    showSystemMessages
+    showSystemMessages,
+    typingMessage
+  }
+});
+
+export const setTypingMessage = (typingMessage= '') => ({
+  type: 'SET_TYPING_MESSAGE',
+  configuration: {
+    typingMessage
   }
 });

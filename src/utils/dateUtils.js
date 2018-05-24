@@ -6,6 +6,10 @@
 // format = 2, SQL date format eg. 2018-05-21 23:56:07
 //
 
+export const getNowUnix = () => {
+    return Math.round(new Date() / 1000);
+}
+
 export const unixToTimestamp = (UNIX_timestamp, format) => {
     var a = new Date(UNIX_timestamp * 1000);
     var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
