@@ -6,11 +6,12 @@
     margin-bottom: $element-margin;
     position: relative;
     padding: 0;
+    overflow: hidden; //required for firefox to not be a complete FUCKWIT
 }
 
 //contains the actual chat messages
 .chatMessageContainer {
-    width: 100%;
+    //width: 100%;
     flex-grow: 1;
     color: $font-default;
     padding-left: 0.6rem;
@@ -21,7 +22,6 @@
 .channelsHideContainer, .usersHideContainer {
     display: flex;
     position: absolute;
-    //position: fixed;
     top: calc(50% - 2rem);
     padding-left: .2rem;
     width: 2rem;

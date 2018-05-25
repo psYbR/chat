@@ -1,5 +1,6 @@
 html, body, #app {
     height: 100%;
+    background-color: black;
 }
 
 body {
@@ -14,6 +15,15 @@ body {
     height: 100%;
     width: 100%;
     margin: 0;
+}
+
+//used by ./components/WelcomeModal.js to blur the "background" by applying the blur to the app parent container
+.chatAppBlur {
+    -webkit-filter: blur(10px);
+    -moz-filter: blur(10px);
+    -o-filter: blur(10px);
+    -ms-filter: blur(10px);
+    filter: blur(10px);
 }
 
 #talkbubble {

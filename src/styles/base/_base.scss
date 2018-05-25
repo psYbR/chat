@@ -1,6 +1,6 @@
 html {
   font-size: $default-app-size; 
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 body {
@@ -14,6 +14,10 @@ button {
 button:disabled {
   cursor: default;
 }
+
+// Mozilla you assholes https://bugzilla.mozilla.org/show_bug.cgi?id=77790
+// bug open for 17 years - still unresolved
+// Will show a warning to firefox users that they should use Chrome or Safari if they don't want disgusting scrollbars
 
 // scroll bar
 ::-webkit-scrollbar {

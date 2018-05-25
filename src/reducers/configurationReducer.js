@@ -4,6 +4,16 @@ export default (state = reducerDefaultState, action) => {
   switch (action.type) {
     case 'SET_CONFIG':
       return action.configuration;
+    case 'SET_LOGGED_IN':
+      return {
+        ...state,
+        loggedIn: action.configuration.loggedIn
+      };
+    case 'SET_NICK':
+      return {
+        ...state,
+        username: action.configuration.username
+      };
     case 'SET_TYPING_MESSAGE':
       return {
         ...state,

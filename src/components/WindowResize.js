@@ -1,6 +1,7 @@
 //called every time the window is resized - dispatches the window size to the store so components can do things with it
 
 //NOTE - these breakpoints are also defined in ./styles/base/settings.scss
+//                                        and  ./actions/configurationAction.js
 const horizontalBreakPoint = 50; //rem
 const verticalBreakPoint = 20; //rem
 

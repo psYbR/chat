@@ -1,6 +1,7 @@
 import React from 'react';
 
-const ChannelTopic = (props) => {
+//props passed from parent
+const ChannelTopic = ({ channelTopic }) => {
     return (
         <div className="channelTopicContainer emphasised-container">
             <form
@@ -12,7 +13,7 @@ const ChannelTopic = (props) => {
             <input
                 className="topicText"
                 type='text'
-                value={props.channelTopic}
+                value={channelTopic}
                 onChange={(e) => {
                     return;
                 }}

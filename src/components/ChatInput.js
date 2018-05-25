@@ -36,7 +36,7 @@ class ChatInput extends React.Component {
                     className="inputText"
                     type='text'
                     placeholder="Type a message you want to send, then press enter to send it."
-                    value={this.props.configuration.typingMessage}
+                    value={this.props.configuration.typingMessage || ''} //the input can't have an initial state of undefined or React will issue a warning
                     onChange={this.onMessageChange}
                     onKeyDown={this.handleKeyPress}
                 />
@@ -51,4 +51,3 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps)(ChatInput);
-//export default ChatInput;

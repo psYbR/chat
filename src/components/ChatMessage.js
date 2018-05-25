@@ -4,25 +4,27 @@ import messageHTMLify from '../utils/MessageHTMLify';
 import { unixToTimestamp } from '../utils/dateUtils';
 
 const ChatMessage = ({ id, source, type, timestamp, message, appliedFont, appliedColor }) => (
-    <div className="chatMessageWrapper">
+    <tbody>
+        <tr className="chatMessageWrapper">
 
-        <div className="chatMessageTimestampContainer">
-            <p>{unixToTimestamp(timestamp, 2)}</p>
-        </div>
+            <td className="chatMessageTimestampContainer">
+                <p>{unixToTimestamp(timestamp, 2)}</p>
+            </td>
 
-        <div
-            className={"chatMessageUsernameContainer " + (type == 'outbound' ? "chatMessageCurrentUser " : '') + (source == '*' ? 'chatMessageSystemUser' : '')}
-        >
-            <p className="pUserText">{source}</p>
-        </div>
+            <td
+                className={"chatMessageUsernameContainer " + (type == 'outbound' ? "chatMessageCurrentUser " : '') + (source == '*' ? 'chatMessageSystemUser' : '')}
+            >
+                <p className="pUserText">{source}</p>
+            </td>
 
-        <div
-            className={"chatMessageTextContainer " + (type == 'outbound' ? "chatMessageCurrentUser " : '') + (source == '*' ? 'chatMessageSystemUser' : '')}
-        >
-            {messageHTMLify(message, 'pMessageText')}
-        </div>
+            <td
+                className={"chatMessageTextContainer " + (type == 'outbound' ? "chatMessageCurrentUser " : '') + (source == '*' ? 'chatMessageSystemUser' : '')}
+            >
+                {messageHTMLify(message, 'pMessageText')}
+            </td>
 
-    </div>
+        </tr>
+    </tbody>
 );
 
 export default ChatMessage;

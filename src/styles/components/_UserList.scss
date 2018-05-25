@@ -12,6 +12,7 @@
     min-height: .9rem;
     margin: $element-margin;
     padding: $user-list-padding;
+    white-space: nowrap;
 }
 .userListUserName > p {
     margin: 0;

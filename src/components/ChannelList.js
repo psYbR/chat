@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import Alerts from './Alerts';
 import ChannelListItem from './ChannelListItem';
 
-const ChannelList = ({ currentChannels, activeChannel }) => {
+const ChannelList = ({ currentChannels, activeChannel, configuration }) => {
     return (
-        <div className="leftSideContainer">
+        <div className={"leftSideContainer " + (!configuration.loggedIn ? " chatAppBlur" : '') /*Blur the app if the user isn't logged in*/}>
             <Alerts />
             <div className="channelListContainer emphasised-container">
                 {currentChannels.map((channel) => {
@@ -16,10 +16,7 @@ const ChannelList = ({ currentChannels, activeChannel }) => {
     );
 }
 
-const mapStateToProps = ({ currentChannels, activeChannel }) => {
-    return {
-        currentChannels,
-        activeChannel
-    };
+const mapStateToProps = (state) => {
+    return state;
 };
 export default connect(mapStateToProps)(ChannelList);

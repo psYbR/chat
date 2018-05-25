@@ -1,10 +1,11 @@
 import React from 'react';
 import ConnectionStats from './ConnectionStats';
 import UserWindowListItem from './UserWindowListItem';
+import { connect } from 'react-redux';
 
-const UserWindow = () => {
+const UserWindow = ({ configuration }) => {
     return (
-        <div className="userWindowContainer">
+        <div className={"userWindowContainer " + (!configuration.loggedIn ? " chatAppBlur" : '') /*Blur the app if the user isn't logged in*/}>
             <div className="userListContainer emphasised-container">
                 <UserWindowListItem userName="PantelicGR" isAway={false} isSelected={false} isCurrentUser={false} userClass="op"/>
                 <UserWindowListItem userName="Guest63523" isAway={false} isSelected={false} isCurrentUser={false} userClass="op"/>
@@ -26,4 +27,7 @@ const UserWindow = () => {
     );
 }
 
-export default UserWindow;
+const mapStateToProps = (state) => {
+    return state;
+};
+export default connect(mapStateToProps)(UserWindow);

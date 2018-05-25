@@ -8,7 +8,8 @@ import { toggleUserList, toggleChannelList } from '../actions/configurationActio
 
 const ChatMainWindow = ({ channels, activeChannel, messages, configuration, dispatch }) => {
     return (
-        <div className="chatWindowContainer">
+        <div className={"chatWindowContainer " + (!configuration.loggedIn ? " chatAppBlur" : '') /*Blur the app if the user isn't logged in*/}>
+
             <ChannelDescription channelTopic={
                     //fuck this, seriously
                     channels.filter((channel) => {
@@ -16,27 +17,33 @@ const ChatMainWindow = ({ channels, activeChannel, messages, configuration, disp
                     })[0].topic //filter returns an array of all the objects that passed
                 }
             />
+
             <div className="chatMessageOuterContainer emphasised-container">
 
-                <div className="channelsHideContainer" onClick={() => {
+                <div className="channelsHideContainer" onClick={() => { //the button to hide the channel list
                     dispatch(toggleChannelList());
                 }}>
                     {!configuration.channelListOpen ? <i className="fa fa-caret-right"></i> : <i className="fa fa-caret-left"></i>}
                 </div>
 
-                <div className="usersHideContainer" onClick={() => {
+                <div className="usersHideContainer" onClick={() => { //the button to hide the users list
                     dispatch(toggleUserList());
                 }}>
                     {!configuration.userListOpen ? <i className="fa fa-caret-left"></i> : <i className="fa fa-caret-right"></i>}
                 </div>
 
                 <div className="chatMessageContainer">
-                    {messages.map((message) => {
-                        return <ChatMessage key={message.id} { ...message } />
-                    })}
+                    <table className="chatMessageTable">
+                        {messages.map((message) => {
+                            return <ChatMessage key={message.id} { ...message } />
+                        })}
+                    </table>
                 </div>
+
             </div>
+
             <ChatInput />
+
         </div>
     );
 }
