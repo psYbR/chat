@@ -27,9 +27,9 @@ if (Math.round(window.innerWidth * 0.0625) < horizontalBreakPoint) {
 
 export const configurationAction = (
   {
-    loggedIn = true,
+    loggedIn = false,
     userid = 0,
-    username = '',//'Guest' + Math.floor(Math.random() * 10000),
+    username = '',
     defaultFont = 'Inconsolata',
     defaultColor = '-1',
     assignedGroup = 'guests',

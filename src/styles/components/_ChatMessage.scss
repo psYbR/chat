@@ -1,6 +1,4 @@
-.chatMessageWrapper {
 
-}
 .chatMessageWrapper > div > p {
     margin: 0;
 }
@@ -9,8 +7,8 @@
     table-layout:fixed;
 }.chatMessageTable > tbody  {
 
-}.chatMessageTable > tbody > tr > td {
-
+}.chatMessageTable > tbody > tr:hover {
+    background-color: lighten($base, 3%);
 }
 .chatMessageTable > tbody > tr> td > p {
     margin: 0;
@@ -20,6 +18,7 @@
 .chatMessageTimestampContainer {
     min-width: 14rem;
     max-width: 14rem;
+    vertical-align: top;
 }
 @media only screen and (max-width: $horizontal-timestamp-break-point) {
     .chatMessageTimestampContainer { display: none; }
@@ -33,6 +32,7 @@
     border-right: 1px solid $divider;
     padding-right: 5px;
     margin-right: 5px;
+    vertical-align: top;
 }
 
 //MESSAGE CONTAINER

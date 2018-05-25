@@ -7,6 +7,8 @@
   left: 0;
   top: 0;
   z-index: 15; //required because there is z-indexing for the proper display of user/channel list collapse buttons
+  -webkit-transition: width 2s; /* Safari */
+    transition: width 2s;
 } .WelcomeModalOuterContainer {
   position: absolute;
   width: 100%;
@@ -111,4 +113,26 @@
   left: 0;
   top: 0;
   background-color: rgba(99, 99, 99, 0.3);
+}
+
+.example-enter {
+  opacity: 0.01;
+  width: 0px;
+}
+
+.example-enter.example-enter-active {
+  opacity: 1;
+  width: 100px;
+  transition: 700ms;
+}
+
+.example-leave {
+  opacity: 1;
+  width: 100px;
+}
+
+.example-leave.example-leave-active {
+  opacity: 0.01;
+  width: 0px;
+  transition: 700ms;
 }

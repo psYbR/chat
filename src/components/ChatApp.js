@@ -6,16 +6,21 @@ import Window from './WindowResize';
 import WelcomeModal from './WelcomeModal';
 import { connect } from 'react-redux';
 
-const ChatApp = ({ configuration }) => {
-    return (
-        <div className="chatAppContainer">
-            <Window />
-            {!configuration.loggedIn && <WelcomeModal />}
-            <ChannelList />
-            <ChatMainWindow />
-            <UserWindow />
-        </div>
-    );
+class ChatApp extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+    render() {
+        return (
+            <div className="chatAppContainer">
+                <Window />                
+                    {!this.props.configuration.loggedIn && <WelcomeModal />}
+                <ChannelList />
+                <ChatMainWindow />
+                <UserWindow />
+            </div>
+        );
+    }
 }
 
 const mapStateToProps = (state) => {

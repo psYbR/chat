@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { setUserNick, setLoggedIn } from '../actions/configurationAction';
 
+
 class WelcomeModal extends React.Component {
   constructor(props) {
       super(props);
@@ -32,9 +33,11 @@ class WelcomeModal extends React.Component {
   }
   render() {
     return (
+      
       <div className="ModalWrapper">
         <div className="WelcomeBlurContainer">
         </div>
+        {console.log(this.props)}
         <div className="WelcomeModalOuterContainer">
           <div className="WelcomeModalInnerContainer">
 
