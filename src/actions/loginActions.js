@@ -4,7 +4,7 @@ export const setLoginState = (
 
       loggedIn = false,
       userid = 0,
-      username = '',
+      nick = '',
       assignedGroup = 'guests',
       defaultChannelId = 1,
 
@@ -15,7 +15,7 @@ export const setLoginState = (
     loginState: {
       loggedIn,
       userid,
-      username,
+      nick,
       assignedGroup,
       defaultChannelId,
     }
@@ -23,16 +23,16 @@ export const setLoginState = (
   });
   
 export const setLoggedIn = () => ({
-    type: 'LOG_IN_SUCCESSFUL',
+    type: 'LOGIN_SUCCESSFUL',
     loginState: {
         loggedIn: true
     }
 });
 
-export const setUserNick = (username = '') => ({
+export const setUserNick = (nick = '') => ({
     type: 'SET_NICK',
     loginState: {
-        username
+        nick
     }
 });
   

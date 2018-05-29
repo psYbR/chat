@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setUserNick, setLoggedIn } from '../actions/configurationAction';
+import { setUserNick, setLoggedIn } from '../actions/loginActions';
 
 
 class WelcomeModal extends React.Component {
@@ -37,7 +37,6 @@ class WelcomeModal extends React.Component {
       <div className="ModalWrapper">
         <div className="WelcomeBlurContainer">
         </div>
-        {console.log(this.props)}
         <div className="WelcomeModalOuterContainer">
           <div className="WelcomeModalInnerContainer">
 
@@ -64,12 +63,12 @@ class WelcomeModal extends React.Component {
                   type='text'
                   placeholder="Enter a nickname"
                   onChange={this.onGuestNickChange}
-                  value={this.props.configuration.username || ''} //the input can't have an initial state of undefined or React will issue a warning
+                  value={this.props.loginState.nick || ''} //the input can't have an initial state of undefined or React will issue a warning
                   spellCheck="false"
                 />
                 <button
                   className='guestNickSubmitButton' 
-                  disabled={!this.props.configuration.username}
+                  disabled={!this.props.loginState.nick}
                 >Start chatting</button>
               </form>
             </div>

@@ -4,16 +4,16 @@ import ChannelDescription from './ChannelDescription';
 import ChatInput from './ChatInput';
 import ChatMessage from './ChatMessage';
 import getVisibleMessages from '../selectors/getVisibleMessages';
-import { toggleUserList, toggleChannelList } from '../actions/configurationAction';
+import { toggleUserList, toggleChannelList } from '../actions/configurationActions';
 
-const ChatMainWindow = ({ channels, activeChannel, messages, configuration, dispatch }) => {
+const ChatMainWindow = ({ channels, messages, configuration, loginState, userInterface, dispatch }) => {
     return (
-        <div className={"chatWindowContainer " + (!configuration.loggedIn ? " chatAppBlur" : '') /*Blur the app if the user isn't logged in*/}>
+        <div className={"chatWindowContainer " + (!loginState.loggedIn ? " chatAppBlur" : '') /*Blur the app if the user isn't logged in*/}>
 
             <ChannelDescription channelTopic={
                     //fuck this, seriously
                     channels.filter((channel) => {
-                        return channel.id == activeChannel.id;
+                        return channel.channelId == userInterface.activeChannelId;
                     })[0].topic //filter returns an array of all the objects that passed
                 }
             />
@@ -23,19 +23,19 @@ const ChatMainWindow = ({ channels, activeChannel, messages, configuration, disp
                 <div className="channelsHideContainer" onClick={() => { //the button to hide the channel list
                     dispatch(toggleChannelList());
                 }}>
-                    {!configuration.channelListOpen ? <i className="fa fa-caret-right"></i> : <i className="fa fa-caret-left"></i>}
+                    {!userInterface.channelListVisible ? <i className="fa fa-caret-right"></i> : <i className="fa fa-caret-left"></i>}
                 </div>
 
                 <div className="usersHideContainer" onClick={() => { //the button to hide the users list
                     dispatch(toggleUserList());
                 }}>
-                    {!configuration.userListOpen ? <i className="fa fa-caret-left"></i> : <i className="fa fa-caret-right"></i>}
+                    {!userInterface.userListVisible ? <i className="fa fa-caret-left"></i> : <i className="fa fa-caret-right"></i>}
                 </div>
 
                 <div className="chatMessageContainer">
                     <table className="chatMessageTable">
                         {messages.map((message) => {
-                            return <ChatMessage key={message.id} { ...message } />
+                            return <ChatMessage key={message.messageId} message={message} loginState={loginState} />
                         })}
                     </table>
                 </div>
@@ -53,10 +53,11 @@ const ChatMainWindow = ({ channels, activeChannel, messages, configuration, disp
 //the function needs to return an object which is passed to the component as props
 //that is where we can get the info from the app state that is desired
 const mapStateToProps = (state) => ({
-    channels: state.currentChannels,
-    activeChannel: state.activeChannel,
+    channels: state.channels,
+    userInterface: state.userInterface,
     messages: getVisibleMessages(state),
     configuration: state.configuration,
+    loginState: state.loginState,
     dispatch: state.dispatch
 });
 export default connect(mapStateToProps)(ChatMainWindow);

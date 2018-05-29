@@ -44,6 +44,7 @@ import messageReducer from '../reducers/messageReducer';
 import configurationReducer from '../reducers/configurationReducer';
 import userReducer from '../reducers/userReducer';
 import userInterfaceReducer from '../reducers/userInterfaceReducer';
+import loginReducer from '../reducers/loginReducer';
 
 //CREATE STORE
 export default () => {
@@ -52,8 +53,9 @@ export default () => {
     channels: channelReducer,
     messages: messageReducer,
     configuration: configurationReducer,
-    user: userReducer,
-    userInterface: userInterfaceReducer
+    users: userReducer,
+    userInterface: userInterfaceReducer,
+    loginState: loginReducer
   }),
     //enables the REDUX plugin to talk to the corresponding Chrome extension
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()

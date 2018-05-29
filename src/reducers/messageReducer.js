@@ -5,7 +5,7 @@ export default (state = reducerDefaultState, action) => {
         case 'ADD_MESSAGE':
             return [
             ...state,
-            action.inboundMessage
+            action.message
             ];
         default:
             return state;

@@ -10,7 +10,7 @@ let toggledHide = false;
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { setWindowWidth, setWindowHeight, hideChannelList, hideUserList, showChannelList, showUserList } from '../actions/configurationAction';
+import { setWindowWidth, setWindowHeight, hideChannelList, hideUserList, showChannelList, showUserList } from '../actions/userInterfaceActions';
 
 class windowResize extends React.Component {
     constructor(props) {
@@ -21,7 +21,7 @@ class windowResize extends React.Component {
 
             // I TRIED to get this callback into a method of the component, but it will NOT pass the props into it... a fat arrow function is the only way to remain within scope of 'this'
             const widthRem = Math.floor(window.innerWidth * 0.0625);
-            if (this.props.windowWidth != widthRem) {
+            if (this.props.userInterface.windowWidth != widthRem) {
 
                 this.props.dispatch(setWindowWidth(widthRem));
 

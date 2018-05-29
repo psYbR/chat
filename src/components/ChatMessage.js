@@ -3,24 +3,24 @@ import { connect } from 'react-redux';
 import messageHTMLify from '../utils/MessageHTMLify';
 import { unixToTimestamp } from '../utils/dateUtils';
 
-const ChatMessage = ({ id, source, type, timestamp, message, appliedFont, appliedColor }) => (
+const ChatMessage = ({ message , loginState }) => (
     <tbody>
         <tr className="chatMessageWrapper">
 
             <td className="chatMessageTimestampContainer">
-                <p>{unixToTimestamp(timestamp, 2)}</p>
+                <p>{unixToTimestamp(message.timestamp, 2)}</p>
             </td>
 
             <td
-                className={"chatMessageUsernameContainer " + (type == 'outbound' ? "chatMessageCurrentUser " : '') + (source == '*' ? 'chatMessageSystemUser' : '')}
+                className={"chatMessageUsernameContainer " + (message.type == 'outbound' ? "chatMessageCurrentUser " : '') + (message.source == '*' ? 'chatMessageSystemUser' : '')}
             >
-                <p className="pUserText">{source}</p>
+                <p className="pUserText">{message.type=='inbound' ? message.source : loginState.nick}</p>
             </td>
 
             <td
-                className={"chatMessageTextContainer " + (type == 'outbound' ? "chatMessageCurrentUser " : '') + (source == '*' ? 'chatMessageSystemUser' : '')}
+                className={"chatMessageTextContainer " + (message.type == 'outbound' ? "chatMessageCurrentUser " : '') + (message.source == '*' ? 'chatMessageSystemUser' : '')}
             >
-                {messageHTMLify(message, 'pMessageText')}
+                {messageHTMLify(message.messageText, 'pMessageText')}
             </td>
 
         </tr>
@@ -28,12 +28,3 @@ const ChatMessage = ({ id, source, type, timestamp, message, appliedFont, applie
 );
 
 export default ChatMessage;
-
-// const mapStateToProps = (state, ownProps) => {
-//     console.log(ownProps);
-//     return {
-//         id: ownProps.id,
-//         inboundMessages: state.inboundMessages
-//     };
-// };
-// export default connect(mapStateToProps)(ChatMessage);

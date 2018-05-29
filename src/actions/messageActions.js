@@ -14,7 +14,7 @@ export const addMessage = (
 ) => ({ 
     
     type: 'ADD_MESSAGE',
-    message: { //as the outgoing value will be applied to an arr
+    message: { //as the outgoing value will be applied to an array
         messageId,
         type,
         channelId,

@@ -9,32 +9,21 @@ const compare = (a,b) => {
 }
 
 //gets the messages currently visible to the user based on context. ie. current channel, current PM, etc
-export default ( { inboundMessages, outboundMessages, activeChannel, configuration } ) => {
+export default ( { messages, userInterface, loginState } ) => {
 
+  //console.log(messages);
   //filter inbound messages by channel ID
-  let filterIn = inboundMessages.filter(inboundMessage => inboundMessage.channelId == activeChannel.id);
+  let filtered = messages.filter(message => message.channelId == userInterface.activeChannelId);
 
   //perform transform on the object
-  filterIn = filterIn.map((message) => {
-    
+  filtered = filtered.map((message) => {
+    if (message.type == 'outbound') {
+      message.source = loginState.username;
+    }
     return message;
   });
-
-  //filter outbound messages by channel ID
-  let filterOut = outboundMessages.filter(outboundMessage => outboundMessage.channelId == activeChannel.id);
-
-  //perform transform on the object
-  filterOut = filterOut.map((message) => {
-    message.source = configuration.username;
-    return message;
-  });
-
-  //join the arrays together
-  const concatMsg = filterIn.concat(filterOut);
-
-  //console.log(concatMsg.sort(compare));
 
   //sort by timestamp and return
-  return concatMsg.sort(compare);
+  return filtered.sort(compare);
 
 };

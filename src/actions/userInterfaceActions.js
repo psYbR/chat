@@ -18,9 +18,9 @@ export const setUIState = (
       windowWidth = Math.round(window.innerWidth * 0.0625),
       windowHeight = Math.round(window.innerHeight * 0.0625),
       inputFieldText = '',
-      channelId = 0,
-      numberOfUsers = 0,
-      numberOfOps = 0
+      activeChannelId = 1,
+      activeChannelNumberOfUsers = 0,
+      activeChannelNumberOfOps = 0
     } = {}
   ) => ({
     type: 'SET_UI_STATE',
@@ -30,16 +30,16 @@ export const setUIState = (
       windowWidth,
       windowHeight,
       inputFieldText,
-      channelId,
-      numberOfUsers,
-      numberOfOps
+      activeChannelId,
+      activeChannelNumberOfUsers,
+      activeChannelNumberOfOps
     }
   });
 
 //stores info about the current channel the user is in
 export const setActiveChannel = (
   {
-    activeChannelId = 0,
+    activeChannelId = 1,
     activeChannelNumberOfUsers = 0,
     activeChannelNumberOfOps = 0
   } = {}
@@ -52,7 +52,7 @@ export const setActiveChannel = (
   }
 });
 
-export const setInputFieldText = (typingMessage= '') => ({
+export const setInputFieldText = (inputFieldText = '') => ({
   type: 'SET_INPUT_FIELD_TEXT',
   UIState: {
       inputFieldText

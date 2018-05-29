@@ -2,6 +2,8 @@ const reducerDefaultState = [];
 
 export default (state = reducerDefaultState, action) => {
   switch (action.type) {
+    case 'SET_UI_STATE':
+      return action.userInterface;
     case 'SET_INPUT_FIELD_TEXT':
       return {
         ...state,
@@ -12,6 +14,7 @@ export default (state = reducerDefaultState, action) => {
         ...state,
         windowWidth: action.userInterface.windowWidth
       };
+      
     case 'SET_ACTIVE_CHANNEL':
       return {
         ...state,

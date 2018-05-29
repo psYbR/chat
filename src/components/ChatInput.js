@@ -1,9 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setTypingMessage } from '../actions/configurationAction';
-import { addMessageToHistory } from '../actions/messageHistoryAction';
+import { setInputFieldText } from '../actions/userInterfaceActions';
 import { getNowUnix } from '../utils/dateUtils';
-import { outboundMsgAction } from '../actions/outboundMsgAction';
+import { addMessage } from '../actions/messageActions';
 
 class ChatInput extends React.Component {
     constructor(props) {
@@ -11,16 +10,15 @@ class ChatInput extends React.Component {
     }
     onSubmit = (e) => {
         e.preventDefault();
-        const message = this.props.configuration.typingMessage;
+        const message = this.props.userInterface.inputFieldText;
         if (message && !(!message.replace(/\s/g, '').length)) {
-            this.props.dispatch(setTypingMessage());
-            this.props.dispatch(outboundMsgAction({ id: Math.floor(Math.random() * 20) + 100, channelId: this.props.activeChannel.id, timestamp: getNowUnix(), message: message }));
-            this.props.dispatch(addMessageToHistory(message));
+            this.props.dispatch(setInputFieldText());
+            this.props.dispatch(addMessage({ messageId: Math.floor(Math.random() * 20) + 100, type: 'outbound', channelId: this.props.userInterface.activeChannelId, timestamp: getNowUnix(), message: message }));
         }
     }
     onMessageChange = (e) => {
         const message = e.target.value;
-        this.props.dispatch(setTypingMessage(message));
+        this.props.dispatch(setInputFieldText(message));
     }
     handleKeyPress = (e) => {
         if (e.key == "ArrowUp") {
@@ -36,7 +34,7 @@ class ChatInput extends React.Component {
                     className="inputText"
                     type='text'
                     placeholder="Type a message you want to send, then press enter to send it."
-                    value={this.props.configuration.typingMessage || ''} //the input can't have an initial state of undefined or React will issue a warning
+                    value={this.props.userInterface.setInputFieldText || ''} //the input can't have an initial state of undefined or React will issue a warning
                     onChange={this.onMessageChange}
                     onKeyDown={this.handleKeyPress}
                 />
