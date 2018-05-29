@@ -2,7 +2,7 @@ const reducerDefaultState = [];
 
 export default (state = reducerDefaultState, action) => {
     switch (action.type) {
-        case 'MESSAGE_INBOUND':
+        case 'ADD_MESSAGE':
             return [
             ...state,
             action.inboundMessage

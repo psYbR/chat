@@ -39,91 +39,25 @@ Subscribing to Store Changes:
  ----------------------------------------------------------------  */
 
 import { createStore, combineReducers } from 'redux';
-import inboundMsgReducer from '../reducers/inboundMsgReducer';
-import outboundMsgReducer from '../reducers/outboundMsgReducer';
-import activeChannelReducer from '../reducers/activeChannelReducer';
-import currentChannelsReducer from '../reducers/currentChannelsReducer';
+import channelReducer from '../reducers/channelReducer';
+import messageReducer from '../reducers/messageReducer';
 import configurationReducer from '../reducers/configurationReducer';
-import messageHistoryReducer from '../reducers/messageHistoryReducer';
+import userReducer from '../reducers/userReducer';
+import userInterfaceReducer from '../reducers/userInterfaceReducer';
 
 //CREATE STORE
 export default () => {
 
   const store = createStore(combineReducers({
-    inboundMessages: inboundMsgReducer,
-    outboundMessages: outboundMsgReducer,
-    activeChannel: activeChannelReducer,
-    currentChannels: currentChannelsReducer,
+    channels: channelReducer,
+    messages: messageReducer,
     configuration: configurationReducer,
-    messageHistory: messageHistoryReducer
+    user: userReducer,
+    userInterface: userInterfaceReducer
   }),
     //enables the REDUX plugin to talk to the corresponding Chrome extension
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   );
 
   return store;
-};
-
-//DEMO STATE OBJECT
-const demoState = {
-  inboundMessages: [{
-    id: 0,
-    channelId: 0,
-    source: '*',
-    timestamp: '',
-    message: '',
-    appliedFont: '',
-    appliedColor: -1
-  }],
-  outboundMessages: [{
-    id: 0,
-    channelId: 0,
-    timstamp: '',
-    message: '',
-    appliedFont: '',
-    appliedColor: -1
-  }],
-  configuration: {
-    loggedIn: false,
-    userid: 0,
-    username: 'Guest',
-    defaultFont: 'Inconsolata',
-    defaultColor: -1,
-    assignedGroup: 'guests',
-    defaultChannel: 'welcome',
-    isAway: false,
-    showSystemMessages: true,
-    typingMessage: '',
-    windowWidth: 0
-  },
-  visibleUsers: [{
-    id: 0,
-    channelId: 0,
-    username: '',
-    assignedGroup: 'guests',
-    isAway: false,
-    isSelected: false,
-    isSelf: false
-  }],
-  currentChannels: [{
-    id: 0,
-    channelName: '',
-    type: 'channel', // 'user'
-    topic: '',
-    isSelected: false,
-    isCurrent: false,
-    isJoined: false,
-    hasNewMessages: false,
-    hasNewNotifs: false,
-    amOp: false,
-    amMod: false,
-    amVoice: false
-  }],
-  activeChannel: {
-    id: 0,
-    channelName: '',
-    channelTopic: '',
-    numberOfUsers: 0,
-    numberOfOps: 0
-  }
 };

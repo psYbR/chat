@@ -2,10 +2,10 @@ const reducerDefaultState = [];
 
 export default (state = reducerDefaultState, action) => {
     switch (action.type) {
-        case 'MESSAGE_OUTBOUND':
+        case 'ADD_CHANNEL':
             return [
             ...state,
-            action.outboundMessage
+            action.channel
             ];
         default:
             return state;
