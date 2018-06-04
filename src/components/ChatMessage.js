@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import messageHTMLify from '../utils/MessageHTMLify';
+import { messageHTMLify } from '../utils/MessageHTMLify';
 import { unixToTimestamp } from '../utils/dateUtils';
 
 const ChatMessage = ({ message , loginState }) => (

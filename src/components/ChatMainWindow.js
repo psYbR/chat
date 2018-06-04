@@ -4,6 +4,7 @@ import ChannelDescription from './ChannelDescription';
 import ChatInput from './ChatInput';
 import ChatMessage from './ChatMessage';
 import getVisibleMessages from '../selectors/getVisibleMessages';
+import StyleModal from './StyleModal';
 import { toggleUserList, toggleChannelList } from '../actions/configurationActions';
 
 const ChatMainWindow = ({ channels, messages, configuration, loginState, userInterface, dispatch }) => {
@@ -31,6 +32,8 @@ const ChatMainWindow = ({ channels, messages, configuration, loginState, userInt
                 }}>
                     {!userInterface.userListVisible ? <i className="fa fa-caret-left"></i> : <i className="fa fa-caret-right"></i>}
                 </div>
+
+                {!userInterface.styleSelectionIsVisible && <StyleModal />}
 
                 <div className="chatMessageContainer">
                     <table className="chatMessageTable">

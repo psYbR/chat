@@ -2,7 +2,7 @@
 export const setLoginState = (
     {
 
-      loggedIn = false,
+      loggedIn = true,
       userid = 0,
       nick = '',
       assignedGroup = 'guests',

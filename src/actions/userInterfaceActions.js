@@ -5,12 +5,9 @@ const horizontalBreakPoint = 50; //rem
 let initialWindowState = true;
 if (Math.round(window.innerWidth * 0.0625) < horizontalBreakPoint) {
   initialWindowState = false;
-//   document.addEventListener('DOMContentLoaded', () => {
-//     document.getElementsByClassName("userWindowContainer")[0].style.display = "none";
-//     document.getElementsByClassName("leftSideContainer")[0].style.display = "none";
-//   }, false);  
 }
 
+//the default/initial state
 export const setUIState = (
     {
       channelListVisible = initialWindowState,
@@ -20,7 +17,9 @@ export const setUIState = (
       inputFieldText = '',
       activeChannelId = 1,
       activeChannelNumberOfUsers = 0,
-      activeChannelNumberOfOps = 0
+      activeChannelNumberOfOps = 0,
+      currentPing = 0,
+      styleSelectionIsVisible = false
     } = {}
   ) => ({
     type: 'SET_UI_STATE',
@@ -32,11 +31,20 @@ export const setUIState = (
       inputFieldText,
       activeChannelId,
       activeChannelNumberOfUsers,
-      activeChannelNumberOfOps
+      activeChannelNumberOfOps,
+      currentPing,
+      styleSelectionIsVisible
     }
   });
 
-//stores info about the current channel the user is in
+export const hideStyleModal = () => ({
+  type: 'HIDE_STYLE_MODAL'
+});
+export const showStyleModal = () => ({
+  type: 'SHOW_STYLE_MODAL'
+});
+
+//the current channel the user is in
 export const setActiveChannel = (
   {
     activeChannelId = 1,
@@ -49,6 +57,32 @@ export const setActiveChannel = (
     activeChannelId,
     activeChannelNumberOfUsers,
     activeChannelNumberOfOps
+  }
+});
+
+//the current channel the user is in
+export const updateUserStats = (
+  {
+    activeChannelNumberOfUsers = 0,
+    activeChannelNumberOfOps = 0
+  } = {}
+) => ({
+  type: 'UPDATE_USER_STATS',
+  userInterface: {
+    activeChannelNumberOfUsers,
+    activeChannelNumberOfOps
+  }
+});
+
+//the current channel the user is in
+export const updatePing = (
+  {
+    currentPing = 0
+  } = {}
+) => ({
+  type: 'UPDATE_PING',
+  userInterface: {
+    currentPing
   }
 });
 

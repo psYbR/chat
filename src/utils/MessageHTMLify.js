@@ -1,42 +1,23 @@
 import React from 'react';
 
-const colorValues = {
-  '0': '255,255,255', //white
-  '1':	'0,0,0', //black
-  '2':	'0,0,127', //blue
-  '3':	'0,147,0', //green
-  '4':	'255,0,0', //light red
-  '5':	'127,0,0', //brown
-  '6':	'156,0,156', //purple
-  '7':	'252,127,0', //orange
-  '8':	'255,255,0', //yellow
-  '9':	'0,252,0', //light green
-  '10':	'0,147,147', //cyan
-  '11':	'0,255,255', //light cyan
-  '12':	'0,0,252', //light blue
-  '13':	'255,0,255', //pink
-  '14':	'127,127,127', //grey
-  '15':	'210,210,210' //light grey
-};
-
-const colorNames = {
-  '0': 'White',
-  '1':	'Black',
-  '2':	'Blue',
-  '3':	'Green',
-  '4':	'Light Red',
-  '5':	'Brown',
-  '6':	'Purple',
-  '7':	'Orange',
-  '8':	'Yellow',
-  '9':	'Light Green',
-  '10':	'Cyan',
-  '11':	'Light Cyan',
-  '12':	'Light Blue',
-  '13':	'Pink',
-  '14':	'Grey',
-  '15':	'Light Grey'
-};
+export const colors = [
+  { colorName: 'White', rgbValue:	'255,255,255'}, //white
+  { colorName: 'Black', rgbValue:	'0,0,0'}, //black
+  { colorName: 'Blue', rgbValue:	'0,0,127'}, //blue
+  { colorName: 'Green', rgbValue:	'0,147,0'}, //green
+  { colorName: 'LightRed', rgbValue:	'255,0,0'}, //light red
+  { colorName: 'Brown', rgbValue:	'127,0,0'}, //brown
+  { colorName: 'Purple', rgbValue:	'156,0,156'}, //purple
+  { colorName: 'Orange', rgbValue:	'252,127,0'}, //orange
+  { colorName: 'Yellow', rgbValue:	'255,255,0'}, //yellow
+  { colorName: 'LightGreen', rgbValue:	'0,252,0'}, //light green
+  { colorName: 'Cyan', rgbValue:	'0,147,147'}, //cyan
+  { colorName: 'LightCyan', rgbValue:	'0,255,255'}, //light cyan
+  { colorName: 'LightBlue', rgbValue:	'0,0,252'}, //light blue
+  { colorName: 'Pink', rgbValue:	'255,0,255'}, //pink
+  { colorName: 'Grey', rgbValue:	'127,127,127'}, //grey
+  { colorName: 'LightGrey', rgbValue:	'210,210,210'} //light grey
+]
 
 //escapes unsafe html tags
 const escapeHtml = (unsafe) => {
@@ -55,7 +36,7 @@ const escapeHtml = (unsafe) => {
 //  The second parameter is set as the element class name and any HTML characters are escaped
 //
 
-const messageHTMLify = (message, pClassName) => {
+export const messageHTMLify = (message, pClassName) => {
 
   let messageOutgoing = [] //stores the message to be returned
   let colorChars = '';
@@ -170,7 +151,7 @@ const messageHTMLify = (message, pClassName) => {
         //if the third or fourth character wasn't an int or a comma, or if a comma wasn't followed by an int, display the single or double digit color code that we got, then display the other character
         else if (curPos === 2 || curPos === 3 || curPos === 4) { 
           if (tagWasOpened) { messageOutgoing.push('</font>'); } //if color has already been applied to the element, close the tag
-          messageOutgoing.push('<font style="color:rgb(' + colorValues[colorChars] + '); ">');
+          messageOutgoing.push('<font style="color:rgb(' + colors[colorChars].rgbValue + '); ">');
           tagWasOpened = true; //set to true so the above </font> tag can be added in the instance color has already been applied to this <p> element
           if (curPos === 4) {
             messageOutgoing.push(',');
@@ -181,7 +162,7 @@ const messageHTMLify = (message, pClassName) => {
         //if the comma was followed by one or two valid color ints
         else if (curPos === 5 || curPos === 6) {
           if (tagWasOpened) { messageOutgoing.push('</font>'); }  //if color has already been applied to the element, close the tag
-          messageOutgoing.push('<font style="color:rgb(' + colorValues[colorChars] + '); background-color:rgb(' + colorValues[bgColorChars] + '); ">');
+          messageOutgoing.push('<font style="color:rgb(' + colors[colorChars].rgbValue + '); background-color:rgb(' + colors[bgColorChars].rgbValue + '); ">');
           tagWasOpened = true; //set to true so the above </font> tag can be added in the instance color has already been applied to this <p> element
           messageOutgoing.push(escapeHtml(message.charAt(i)));
         }
@@ -201,5 +182,3 @@ const messageHTMLify = (message, pClassName) => {
   }
 
 };
-
-export default messageHTMLify;

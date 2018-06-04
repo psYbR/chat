@@ -4,6 +4,16 @@ export default (state = reducerDefaultState, action) => {
   switch (action.type) {
     case 'SET_UI_STATE':
       return action.userInterface;
+    case 'HIDE_STYLE_MODAL':
+      return {
+        ...state,
+        styleSelectionIsVisible: false
+      };
+    case 'SHOW_STYLE_MODAL':
+      return {
+        ...state,
+        styleSelectionIsVisible: true
+      };
     case 'SET_INPUT_FIELD_TEXT':
       return {
         ...state,
@@ -22,10 +32,21 @@ export default (state = reducerDefaultState, action) => {
         activeChannelNumberOfUsers: action.userInterface.activeChannelNumberOfUsers,
         activeChannelNumberOfOps: action.userInterface.activeChannelNumberOfOps
       }
+
+    case 'UPDATE_USER_STATS':
+      return {
+        ...state,
+        activeChannelNumberOfUsers: action.userInterface.activeChannelNumberOfUsers,
+        activeChannelNumberOfOps: action.userInterface.activeChannelNumberOfOps
+      }
+
+    case 'UPDATE_PING':
+      return {
+        ...state,
+        currentPing: action.userInterface.currentPing
+      }
       
     case 'TOGGLE_USER_LIST':
-
-      //const width = Math.round(window.innerWidth * 0.0625);
       if (state.userListVisible) {
         document.getElementsByClassName("userWindowContainer")[0].style.display = "none";
         return {
@@ -41,8 +62,6 @@ export default (state = reducerDefaultState, action) => {
       }
 
     case 'TOGGLE_CHANNEL_LIST':
-
-      //const width = Math.round(window.innerWidth * 0.0625);
       if (state.channelListVisible) {
         document.getElementsByClassName("leftSideContainer")[0].style.display = "none";
         return {
