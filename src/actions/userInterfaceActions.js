@@ -19,9 +19,10 @@ export const setUIState = (
     activeChannelNumberOfUsers = 0,
     activeChannelNumberOfOps = 0,
     currentPing = 0,
-    styleSelectionIsVisible = true,
-    appIsBlurred = false,
-    appZoom = 1
+    styleSelectionIsVisible = false,
+    appIsBlurred = true,
+    appZoom = 1,
+    appIsConnected = false //whether the socket reports it has been successfully opened
   } = {}
 ) => ({
   type: 'SET_UI_STATE',
@@ -37,26 +38,21 @@ export const setUIState = (
     currentPing,
     styleSelectionIsVisible,
     appIsBlurred,
-    appZoom
+    appZoom,
+    appIsConnected
   }
 });
 
 
 //the current channel the user is in
-export const setActiveChannel = (
-  {
-    activeChannelId = 1,
-    activeChannelNumberOfUsers = 0,
-    activeChannelNumberOfOps = 0
-  } = {}
-) => ({
-  type: 'SET_ACTIVE_CHANNEL',
-  userInterface: {
-    activeChannelId,
-    activeChannelNumberOfUsers,
-    activeChannelNumberOfOps
-  }
-});
+export const setActiveChannel = ( activeChannelId = 1 ) => {
+  return({
+    type: 'SET_ACTIVE_CHANNEL',
+    userInterface: {
+      activeChannelId
+    }
+  })
+};
 
 //the current channel the user is in
 export const updateUserStats = (
@@ -82,6 +78,9 @@ export const updatePing = (
   userInterface: {
     currentPing
   }
+});
+export const setConnectedSuccessfully = () => ({
+  type: 'SET_CONNECTED'
 });
 
 export const setAppZoom = (appZoom = 1) => ({

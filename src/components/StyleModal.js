@@ -9,15 +9,6 @@ class StyleModal extends React.Component {
   constructor(props) {
     super(props);
   }
-  onSubmit = (e) => {
-    e.preventDefault();
-    this.props.dispatch(setLoggedIn());
-  }
-  onFontChange = (e) => {
-    console.log(e.target);
-    //const nick = e.target.value;
-    //this.props.dispatch(setLoggedIn(nick));
-  }
   render() {
     return (
       
@@ -35,7 +26,11 @@ class StyleModal extends React.Component {
                   }}
                 />
                 <div className="SMlayer"></div>
-                <div className="SMbutton"><span style={{background: 'rgb(' + color.rgbValue + ')' }}></span></div>
+                <div className="SMbutton">
+                <span
+                  style={{background: 'rgb(' + color.rgbValue + ')' }}
+                  className={this.props.configuration.defaultColor == color.colorName ? "SMColorSelected" : ""}
+                ></span></div>
               </label>
             ) }
           </div>

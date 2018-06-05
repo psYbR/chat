@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { setUserNick, setLoggedIn } from '../actions/loginActions';
 import { unblurApp } from '../actions/userInterfaceActions';
+import ChannelPicker from './ChannelPicker';
 
 
 class WelcomeModal extends React.Component {
@@ -40,42 +41,49 @@ class WelcomeModal extends React.Component {
         <div className="WelcomeBlurContainer">
         </div>
         <div className="WelcomeModalOuterContainer">
-          <div className="WelcomeModalInnerContainer">
 
-            {/*TABS*/}
-            <div className="tabContainer">
-              <div className="guestTab tab tabSelected">
-                <h1>Guest</h1>
-              </div>
-              <div className="loginTab tab">
-                <h1>Login</h1>
-                <div className="loginTabBadges">
-                  <i className="fas fa-envelope-square"></i>
-                  <i className="fab fa-facebook-square"></i>
-                  <i className="fab fa-google-plus-square"></i>
+          {this.props.userInterface.appIsConnected &&
+
+            <div className="WelcomeModalInnerContainer">
+              <div className="tabContainer">
+                <div className="guestTab tab tabSelected">
+                  <h1>Guest</h1>
+                </div>
+                <div className="loginTab tab">
+                  <h1>Login</h1>
+                  <div className="loginTabBadges">
+                    <i className="fas fa-envelope-square"></i>
+                    <i className="fab fa-facebook-square"></i>
+                    <i className="fab fa-google-plus-square"></i>
+                  </div>
                 </div>
               </div>
+
+              <div className="guestNickEntry">
+                <form className="guestNickInputForm" onSubmit={this.onGuestNickSubmit}>
+                  <input 
+                    className="guestNickInput"
+                    type='text'
+                    placeholder="Enter a nickname"
+                    onChange={this.onGuestNickChange}
+                    value={this.props.loginState.nick || ''} //the input can't have an initial state of undefined or React will issue a warning
+                    spellCheck="false"
+                  />
+                  <button
+                    className='guestNickSubmitButton' 
+                    disabled={!this.props.loginState.nick}
+                  >Start chatting</button>
+                </form>
+              </div>
+
+              <div className="ContainerChannelPicker">
+                <ChannelPicker />
+              </div>
+
             </div>
 
-            {/*CONTENT*/}
-            <div className="guestNickEntry">
-              <form className="guestNickInputForm" onSubmit={this.onGuestNickSubmit}>
-                <input 
-                  className="guestNickInput"
-                  type='text'
-                  placeholder="Enter a nickname"
-                  onChange={this.onGuestNickChange}
-                  value={this.props.loginState.nick || ''} //the input can't have an initial state of undefined or React will issue a warning
-                  spellCheck="false"
-                />
-                <button
-                  className='guestNickSubmitButton' 
-                  disabled={!this.props.loginState.nick}
-                >Start chatting</button>
-              </form>
-            </div>
-
-          </div>
+          }
+          
         </div>
       </div>
     );

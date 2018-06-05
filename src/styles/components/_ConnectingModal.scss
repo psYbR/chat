@@ -1,0 +1,59 @@
+.connectingTitle {
+    text-align: center;
+    opacity: 1;
+    -webkit-animation: fade-in-out 2.5s infinite; 
+    -moz-animation: fade-in-out 2.5s infinite; 
+    -o-animation: fade-in-out 2.5s infinite; 
+    animation: fade-in-out 2.5s infinite;
+}
+
+/*FADE IN-OUT*/
+@-webkit-keyframes fade-in-out{
+    0%{
+      opacity: 1;
+    }
+    50%{
+      opacity: 0;
+    }
+    100%{
+      oapcity: 1;
+    }
+  }
+  
+  @-moz-keyframes fade-in-out{
+    0%{
+      opacity: 1;
+    }
+    50%{
+      opacity: 0;
+    }
+    100%{
+      oapcity: 1;
+    }
+  }
+  
+  @-o-keyframes fade-in-out{
+    0%{
+      opacity: 1;
+    }
+    50%{
+      opacity: 0;
+    }
+    100%{
+      oapcity: 1;
+    }
+  }
+  
+  @keyframes fade-in-out{
+    0%{
+      opacity: 1;
+    }
+    50%{
+      opacity: 0;
+    }
+    100%{
+      oapcity: 1;
+    }
+  }
+
+  

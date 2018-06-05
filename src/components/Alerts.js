@@ -5,9 +5,9 @@ const Alerts = () => {
         <div className="adminAlertContainer emphasised-container verticalFlip">
             <p>Chat App</p>
             <p>Welcome!</p>
-            <p>Have a nice day :)</p>
+            <p>Hello :)</p>
             <p>Chat App</p>
-            <p>Enjoy your stay!</p>
+            <p>Sup?</p>
         </div>
     );
 }

@@ -7,6 +7,20 @@ export default (state = reducerDefaultState, action) => {
             ...state,
             action.channel
             ];
+        case 'SET_CURRENT_CHANNEL':
+            return state.map((channel) => {
+                if (channel.channelId === action.channelId) {
+                    return {
+                        ...channel,
+                        isCurrent: true
+                    }
+                } else {
+                    return {
+                        ...channel,
+                        isCurrent: false
+                    }
+                }
+            })
         default:
             return state;
     }

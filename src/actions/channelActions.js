@@ -38,3 +38,8 @@ export const addChannel = (
   }
 
 });
+
+export const setCurrentChannel = (channelId) => ({ 
+  type: 'SET_CURRENT_CHANNEL',
+  channelId
+});

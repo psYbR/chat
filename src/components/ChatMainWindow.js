@@ -11,12 +11,11 @@ const ChatMainWindow = ({ channels, messages, configuration, loginState, userInt
     return (
         <div className={"chatWindowContainer" + (userInterface.appIsBlurred ? " chatAppBlur" : '') /*Blur the app if the user isn't logged in*/}>
 
-            <ChannelDescription channelTopic={
-                    //fuck this, seriously
-                    channels.filter((channel) => {
-                        return channel.channelId == userInterface.activeChannelId;
-                    })[0].topic //filter returns an array of all the objects that passed
-                }
+            <ChannelDescription channelTopic={channels.filter((channel) => {
+                        return channel.channelId == userInterface.activeChannelId; //filter returns an array of all the objects that passed
+                    })[0] ? channels.filter((channel) => {
+                        return channel.channelId == userInterface.activeChannelId; //filter returns an array of all the objects that passed
+                    })[0].topic : ''}
             />
 
             <div className="chatMessageOuterContainer emphasised-container">

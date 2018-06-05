@@ -4,6 +4,7 @@ import ChatMainWindow from './ChatMainWindow';
 import UserList from './UserList';
 import Window from './WindowResize';
 import WelcomeModal from './WelcomeModal';
+import ConnectingModal from './ConnectingModal';
 import { connect } from 'react-redux';
 
 class ChatApp extends React.Component {
@@ -14,7 +15,8 @@ class ChatApp extends React.Component {
         return (
             <div className="chatAppContainer">
                 <Window />
-                {!this.props.loginState.loggedIn && <WelcomeModal />}
+                {(!this.props.loginState.loggedIn && this.props.userInterface.appIsConnected) && <WelcomeModal />}
+                {!this.props.userInterface.appIsConnected && <ConnectingModal />}
                 {this.props.userInterface.channelListVisible && <ChannelList />}
                 <ChatMainWindow />
                 {this.props.userInterface.userListVisible && <UserList />}

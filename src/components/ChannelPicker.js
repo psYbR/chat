@@ -1,0 +1,48 @@
+import React from 'react';
+import { connect } from 'react-redux';
+import { selectDefaultChannel, deselectDefaultChannel } from '../actions/defaultChannelsActions';
+
+class ChannelPicker extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return (
+      <div className="ChannelPickerWrapper">
+
+        <div className="ChannelPickerTitleContainer">
+            <h3>Select some channels to join</h3>
+        </div>
+
+        <div className="ChannelPickerContainer">
+            {this.props.defaultChannels.map((channel) => {
+                return (
+                    <div
+                        className={"ChannelPickerChannel " + (channel.isSelected ? "CPSelected" : '')}
+                        key={channel.channelId}
+                        onClick={() => {
+                            if (channel.isSelected) {
+                                this.props.dispatch(deselectDefaultChannel(channel.channelId));
+                            } else {
+                                this.props.dispatch(selectDefaultChannel(channel.channelId));
+                            }
+                        }}
+                    >
+                        <i className="fas fa-comment-alt"></i>
+                        <p>{channel.channelName}</p>
+                    </div>
+                );
+            })}
+            
+        </div>
+
+      </div>
+    );
+  };
+}
+
+const mapStateToProps = (state) => {
+  return state;
+};
+
+export default connect(mapStateToProps)(ChannelPicker);

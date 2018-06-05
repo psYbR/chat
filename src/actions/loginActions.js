@@ -2,9 +2,9 @@
 export const setLoginState = (
     {
 
-      loggedIn = true,
+      loggedIn = false,
       userid = 0,
-      nick = 'user',
+      nick = '',
       assignedGroup = 'guests',
       defaultChannelId = 1,
 

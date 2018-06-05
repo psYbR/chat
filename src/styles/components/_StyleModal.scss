@@ -135,7 +135,7 @@
   transition: ease .3s;
 }
 .SMColorSelected {
-  box-shadow: 0 .2rem .5rem 0 rgba(0, 0, 0, 0.26), 0 0 .6rem .2rem $theme;
+  box-shadow: 0 .2rem .5rem 0 rgba(0, 0, 0, 0.26), 0 0 .3rem .3rem white !important;
 }
 .SMbutton span:hover {
   padding: .5rem;

@@ -43,9 +43,7 @@ export default (state = reducerDefaultState, action) => {
     case 'SET_ACTIVE_CHANNEL':
       return {
         ...state,
-        activeChannelId: action.userInterface.activeChannelId,
-        activeChannelNumberOfUsers: action.userInterface.activeChannelNumberOfUsers,
-        activeChannelNumberOfOps: action.userInterface.activeChannelNumberOfOps
+        activeChannelId: action.userInterface.activeChannelId
       }
 
     case 'UPDATE_USER_STATS':
@@ -60,6 +58,12 @@ export default (state = reducerDefaultState, action) => {
         ...state,
         currentPing: action.userInterface.currentPing
       }
+
+    case 'SET_CONNECTED':
+      return {
+        ...state,
+        appIsConnected: true
+      };
 
     case 'HIDE_CHANNEL_LIST':
       return {
