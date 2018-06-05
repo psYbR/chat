@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import Alerts from './Alerts';
 import ChannelListItem from './ChannelListItem';
 
-const ChannelList = ({ channels, loginState }) => {
+const ChannelList = ({ channels, userInterface }) => {
     return (
-        <div className={"leftSideContainer " + (!loginState.loggedIn ? " chatAppBlur" : '') /*Blur the app if the user isn't logged in*/}>
+        <div className={"leftSideContainer " + (userInterface.appIsBlurred ? " chatAppBlur" : '') /*Blur the app if the flag is set*/}>
             <Alerts />
             <div className="channelListContainer emphasised-container">
                 {channels.map((channel) => {

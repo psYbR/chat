@@ -1,19 +1,114 @@
 
 .StyleModalWrapper {
-  background-color: white;
-  display: flex;
+  background-color: $surround;
   position: absolute;
-  bottom: 0.5rem;
-  left: 0.5rem;
+  top: 1rem;
+  right: 2rem;
+} .StyleModalContainer {
+  margin: $element-margin;
+  background-color: $base;
+  padding: .5rem;
 }
-.StyleModalContainer {
 
+.StyleModalContainer > div {
+  text-align: center;
+} .StyleModalContainer > div > h3 {
+  margin: 0;
 }
 
+.StyleModalFonts {
+  margin-top: .5rem;
+} .StyleModalFonts > h3 {
+  margin-bottom: .5rem !important;
+}
+
+.StyleModalOptions {
+  margin-top: .5rem;
+} 
+
+.ZoomButtonsContainer {
+  display: flex;
+} .ZoomButtonsContainer > p {
+  margin: .7rem 1.4rem 0 1.4rem;
+} .ZoomButtons {
+  background-color: $theme;
+  border: 0;
+  color: white;
+  color: $selected;
+  background-color: $surround;
+  border: 0;
+  border-top: .2rem solid lighten($surround, 10%);
+  border-bottom: .2rem solid darken($surround, 10%);
+  margin: .3rem;
+  border-radius: .3rem;
+  height: 3rem;
+}
+
+//
+// Style the checkbox
+//
+.ShowSystemContainer {
+  display: block;
+  position: relative;
+  margin-top: .4rem;
+  cursor: pointer;
+  font-size: 2.2rem;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+/* Hide the browser's default checkbox */
+.ShowSystemContainer input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+.ShowSystemCheckmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 2.5rem;
+  width: 2.5rem;
+  background-color: #eee;
+}
+/* On mouse-over, add a grey background color */
+.ShowSystemContainer:hover input ~ .ShowSystemCheckmark {
+  background-color: #ccc;
+}
+/* When the checkbox is checked, add a blue background */
+.ShowSystemContainer input:checked ~ .ShowSystemCheckmark {
+  background-color: #2196F3;
+}
+/* Create the checkmark/indicator (hidden when not checked) */
+.ShowSystemCheckmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+/* Show the checkmark when checked */
+.ShowSystemContainer input:checked ~ .ShowSystemCheckmark:after {
+  display: block;
+}
+/* Style the checkmark/indicator */
+.ShowSystemContainer .ShowSystemCheckmark:after {
+  left: .9rem;
+  top: .5rem;
+  width: .5rem;
+  height: 1rem;
+  border: solid white;
+  border-width: 0 .3rem .3rem 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+//
+//    COLOR BUTTONS
+//
 .SMinput {
   display: none;
 }
-
 .SMbutton {
   display: inline-block;
   position: relative;
@@ -22,7 +117,6 @@
   margin: .5rem;
   cursor: pointer;
 }
-
 .SMbutton span {
   display: block;
   position: absolute;
@@ -37,14 +131,15 @@
   transform: translate(-50%, -50%);
   border-radius: 100%;
   background: #eeeeee;
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  box-shadow: 0 .2rem .5rem 0 rgba(0, 0, 0, 0.26);
   transition: ease .3s;
 }
-
+.SMColorSelected {
+  box-shadow: 0 .2rem .5rem 0 rgba(0, 0, 0, 0.26), 0 0 .6rem .2rem $theme;
+}
 .SMbutton span:hover {
   padding: .5rem;
 }
-
 .SMlayer {
   display: block;
   position: absolute;
@@ -54,19 +149,4 @@
   left: 0;
   background: transparent;
   z-index: -1;
-}
-
-
-.SMorange .SMbutton span {
-  background: #FF5722;
-}
-.SMorange input:checked ~ .SMlayer {
-  background: #F4511E;
-}
-
-.SMblue .SMbutton span {
-  background: blue;
-}
-.SMblue input:checked ~ .SMlayer {
-  background: blue;
 }

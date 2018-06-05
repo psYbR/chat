@@ -20,7 +20,7 @@ const ChatMessage = ({ message , loginState }) => (
             <td
                 className={"chatMessageTextContainer " + (message.type == 'outbound' ? "chatMessageCurrentUser " : '') + (message.source == '*' ? 'chatMessageSystemUser' : '')}
             >
-                {messageHTMLify(message.messageText, 'pMessageText')}
+                {messageHTMLify(message.messageText, 'pMessageText', message.appliedFont, message.appliedColor, message.source)}
             </td>
 
         </tr>

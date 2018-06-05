@@ -3,9 +3,9 @@ import ConnectionStats from './ConnectionStats';
 import UserListItem from './UserListItem';
 import { connect } from 'react-redux';
 
-const UserWindow = ({ configuration, loginState }) => {
+const UserWindow = ({ configuration, userInterface }) => {
     return (
-        <div className={"userWindowContainer " + (!loginState.loggedIn ? " chatAppBlur" : '') /*Blur the app if the user isn't logged in*/}>
+        <div className={"userWindowContainer " + (userInterface.appIsBlurred ? " chatAppBlur" : '') /*Blur the app if the flag is set*/}>
             <div className="userListContainer emphasised-container">
                 <UserListItem userName="PantelicGR" isAway={false} isSelected={false} isCurrentUser={false} userClass="op"/>
                 <UserListItem userName="Guest63523" isAway={false} isSelected={false} isCurrentUser={false} userClass="op"/>

@@ -2,7 +2,7 @@
 $theme: rgb(81, 138, 219);
 //$theme: rgb(221, 0, 0);
 
-$default-app-size: 62.5%; //
+$default-app-size: 62.5%; //62.5% will mean that .1rem = 1px
 //$default-app-size: 120%;
 
 $font-family-default: 'Source Sans Pro', sans-serif;
@@ -69,6 +69,7 @@ $user-list-padding: 0.4rem 1.4rem 0.4rem 0.4rem; //padding for username list
 
 /*
 
+See ./utils/styleInfo.js where the fonts and colors are defined
 Google fonts installed:
 
 font-family: 'Kavivanar', cursive;

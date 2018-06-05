@@ -14,15 +14,30 @@ export default (state = reducerDefaultState, action) => {
         ...state,
         styleSelectionIsVisible: true
       };
+    case 'BLUR_APP':
+      return {
+        ...state,
+        appIsBlurred: true
+      };
+    case 'UNBLUR_APP':
+      return {
+        ...state,
+        appIsBlurred: false
+      };
     case 'SET_INPUT_FIELD_TEXT':
       return {
         ...state,
         inputFieldText: action.userInterface.inputFieldText
       };
+    case 'SET_APP_ZOOM':
+      return {
+        ...state,
+        appZoom: action.userInterface.appZoom
+      };
     case 'SET_WINDOW_WIDTH':
       return {
         ...state,
-        windowWidth: action.userInterface.windowWidth
+        windowWidth: action.windowWidth
       };
       
     case 'SET_ACTIVE_CHANNEL':
@@ -45,60 +60,26 @@ export default (state = reducerDefaultState, action) => {
         ...state,
         currentPing: action.userInterface.currentPing
       }
-      
-    case 'TOGGLE_USER_LIST':
-      if (state.userListVisible) {
-        document.getElementsByClassName("userWindowContainer")[0].style.display = "none";
-        return {
-          ...state,
-          userListVisible: false
-        };
-      } else {
-        document.getElementsByClassName("userWindowContainer")[0].style.display = "flex";
-        return {
-          ...state,
-          userListVisible: true
-        };
-      }
-
-    case 'TOGGLE_CHANNEL_LIST':
-      if (state.channelListVisible) {
-        document.getElementsByClassName("leftSideContainer")[0].style.display = "none";
-        return {
-          ...state,
-          channelListVisible: false
-        };
-      } else {
-        document.getElementsByClassName("leftSideContainer")[0].style.display = "flex";
-        return {
-          ...state,
-          channelListVisible: true
-        };
-      }
 
     case 'HIDE_CHANNEL_LIST':
-      document.getElementsByClassName("leftSideContainer")[0].style.display = "none";
       return {
         ...state,
         channelListVisible: false
       };
 
     case 'SHOW_CHANNEL_LIST':
-      document.getElementsByClassName("leftSideContainer")[0].style.display = "flex";
         return {
           ...state,
           channelListVisible: true
         };
 
     case 'HIDE_USER_LIST':
-      document.getElementsByClassName("userWindowContainer")[0].style.display = "none";
       return {
         ...state,
         userListVisible: false
       };
 
     case 'SHOW_USER_LIST':
-      document.getElementsByClassName("userWindowContainer")[0].style.display = "flex";
       return {
         ...state,
         userListVisible: true

@@ -1,23 +1,5 @@
 import React from 'react';
-
-export const colors = [
-  { colorName: 'White', rgbValue:	'255,255,255'}, //white
-  { colorName: 'Black', rgbValue:	'0,0,0'}, //black
-  { colorName: 'Blue', rgbValue:	'0,0,127'}, //blue
-  { colorName: 'Green', rgbValue:	'0,147,0'}, //green
-  { colorName: 'LightRed', rgbValue:	'255,0,0'}, //light red
-  { colorName: 'Brown', rgbValue:	'127,0,0'}, //brown
-  { colorName: 'Purple', rgbValue:	'156,0,156'}, //purple
-  { colorName: 'Orange', rgbValue:	'252,127,0'}, //orange
-  { colorName: 'Yellow', rgbValue:	'255,255,0'}, //yellow
-  { colorName: 'LightGreen', rgbValue:	'0,252,0'}, //light green
-  { colorName: 'Cyan', rgbValue:	'0,147,147'}, //cyan
-  { colorName: 'LightCyan', rgbValue:	'0,255,255'}, //light cyan
-  { colorName: 'LightBlue', rgbValue:	'0,0,252'}, //light blue
-  { colorName: 'Pink', rgbValue:	'255,0,255'}, //pink
-  { colorName: 'Grey', rgbValue:	'127,127,127'}, //grey
-  { colorName: 'LightGrey', rgbValue:	'210,210,210'} //light grey
-]
+import { colors, fonts, colorNameToRGB } from './styleInfo';
 
 //escapes unsafe html tags
 const escapeHtml = (unsafe) => {
@@ -29,14 +11,19 @@ const escapeHtml = (unsafe) => {
   .replace(/'/g, "&#039;");
 }
 
+//  the below complicated function can probably be greatly simplified using a regex... future To Do
+
 //
 //  This function returns a <p></p> tag containing the string passed in as the first parameter,
 //  and adds in <font style='color: rgb(X,X,X);'> tags to recolour the text according to IRC standard
 //  color codes, eg.  ^10,5 (text color 10, background color 5)
 //  The second parameter is set as the element class name and any HTML characters are escaped
+//  third parameter is the font
+//  fourth parameter is the default color
+//  fifth is true/false and defines whether message is system
 //
 
-export const messageHTMLify = (message, pClassName) => {
+export const messageHTMLify = (message, pClassName, defaultFont, defaultColor, source) => {
 
   let messageOutgoing = [] //stores the message to be returned
   let colorChars = '';
@@ -176,8 +163,23 @@ export const messageHTMLify = (message, pClassName) => {
       }
     }
 
+    //set the style object
+    const style = {
+      fontFamily: defaultFont,
+      color: 'rgb(' + colorNameToRGB(defaultColor) + ')'
+    }
+
+    //override the font color for system messages
+    if (source == '*') {
+      style.color = 'rgb(255, 166, 0)';
+    }
+
     //return the array containing a combination of escaped regular characters and the HTML strings, using the React function dangerouslySetInnerHTML to parse it as HTML
-    return <p className={pClassName} dangerouslySetInnerHTML={{__html: messageOutgoing.join('')}} />;
+    return <p
+      className={pClassName}
+      style={style}
+      dangerouslySetInnerHTML={{__html: messageOutgoing.join('')}}
+    />;
   
   }
 

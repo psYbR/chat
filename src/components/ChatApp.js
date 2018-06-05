@@ -14,10 +14,10 @@ class ChatApp extends React.Component {
         return (
             <div className="chatAppContainer">
                 <Window />
-                    {!this.props.loginState.loggedIn && <WelcomeModal />}
-                <ChannelList />
+                {!this.props.loginState.loggedIn && <WelcomeModal />}
+                {this.props.userInterface.channelListVisible && <ChannelList />}
                 <ChatMainWindow />
-                <UserList />
+                {this.props.userInterface.userListVisible && <UserList />}
             </div>
         );
     }

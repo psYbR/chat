@@ -9,11 +9,16 @@ const compare = (a,b) => {
 }
 
 //gets the messages currently visible to the user based on context. ie. current channel, current PM, etc
-export default ( { messages, userInterface, loginState } ) => {
+export default ( { messages, userInterface, loginState, configuration } ) => {
 
-  //console.log(messages);
-  //filter inbound messages by channel ID
-  let filtered = messages.filter(message => message.channelId == userInterface.activeChannelId);
+  //filter inbound messages by channel ID and whether they originate from System or not
+  let filtered;
+  if (configuration.showSystemMessages) {
+    filtered = messages.filter(message => message.channelId == userInterface.activeChannelId);
+  } else {
+    filtered = messages.filter(message => message.channelId == userInterface.activeChannelId && message.source != '*'); //filter messages from System
+  }
+  
 
   //perform transform on the object
   filtered = filtered.map((message) => {

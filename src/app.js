@@ -38,11 +38,11 @@ store.subscribe(() => {
 });
 
 // chat message test dispatches: { id, source, timestamp, message, appliedFont, appliedColor }
-store.dispatch(addMessage({ messageId: 2, type: 'inbound', channelId: 1, timestamp:  getNowUnix()-17, source: '*', messageText: "Unix timestamps are fun" }));
-store.dispatch(addMessage({ messageId: 3, type: 'outbound', channelId: 1, timestamp: getNowUnix()-16, messageText: "Messages are injection safe <div><p><span>);\"" }));
+store.dispatch(addMessage({ messageId: 2, type: 'inbound', channelId: 1, timestamp:  getNowUnix()-17, source: '*', messageText: "Unix timestamps are fun", appliedFont: 'Orbitron', appliedColor: 'Orange' }));
+store.dispatch(addMessage({ messageId: 3, type: 'outbound', channelId: 1, timestamp: getNowUnix()-16, messageText: "Messages are injection safe <div><p><span>);\"", appliedFont: 'Kavivanar' }));
 store.dispatch(addMessage({ messageId: 4, type: 'inbound', channelId: 1, timestamp:  getNowUnix()-15, source: 'Colors', messageText: "^1,0A^0,1A^1,2A^2,3A^3,4A^4,5A^5,6A^6,7A^7,8A^8,9A^9,10A^10,11A^11,12A^12,13A^13,14A^14,15A^15,16A^16,17A" }));
 store.dispatch(addMessage({ messageId: 5, type: 'inbound', channelId: 1, timestamp:  getNowUnix()-14, source: '*', messageText: "Tim has left (ping timeout: 120s)" }));
-store.dispatch(addMessage({ messageId: 6, type: 'outbound', channelId: 1, timestamp: getNowUnix()-13, messageText: "A message from you, the current user" }));
+store.dispatch(addMessage({ messageId: 6, type: 'outbound', channelId: 1, timestamp: getNowUnix()-13, messageText: "A message from you, the current user", appliedFont: 'Permanent Marker', appliedColor: 'Cyan' }));
 store.dispatch(addMessage({ messageId: 7, type: 'inbound', channelId: 1, timestamp:  getNowUnix()-12, source: 'Champion', messageText: "ASCII works!" }));
 store.dispatch(addMessage({ messageId: 8, type: 'inbound', channelId: 1, timestamp:  getNowUnix()-11, source: 'OSTRA-', messageText: "A long message that is designed to stretch the width of the window so we can test the scrollbar and fill the chat window even at a low app scaling. Once again, A long message that is designed to stretch the width of the window so we can test the scrollbar and fill the chat window even at a low app scaling." }));
 store.dispatch(addMessage({ messageId: 9, type: 'inbound', channelId: 2, timestamp:  getNowUnix()-10, source: 'TIM-', messageText: "A long message that is designed to stretch the width of the window so we can test the scrollbar and fill the chat window even at a low app scaling. Once again, A long message that is designed to stretch the width of the window so we can test the scrollbar and fill the chat window even at a low app scaling." }));

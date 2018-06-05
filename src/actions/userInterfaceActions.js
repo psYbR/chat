@@ -9,40 +9,38 @@ if (Math.round(window.innerWidth * 0.0625) < horizontalBreakPoint) {
 
 //the default/initial state
 export const setUIState = (
-    {
-      channelListVisible = initialWindowState,
-      userListVisible = initialWindowState,
-      windowWidth = Math.round(window.innerWidth * 0.0625),
-      windowHeight = Math.round(window.innerHeight * 0.0625),
-      inputFieldText = '',
-      activeChannelId = 1,
-      activeChannelNumberOfUsers = 0,
-      activeChannelNumberOfOps = 0,
-      currentPing = 0,
-      styleSelectionIsVisible = false
-    } = {}
-  ) => ({
-    type: 'SET_UI_STATE',
-    userInterface: {
-      channelListVisible,
-      userListVisible,
-      windowWidth,
-      windowHeight,
-      inputFieldText,
-      activeChannelId,
-      activeChannelNumberOfUsers,
-      activeChannelNumberOfOps,
-      currentPing,
-      styleSelectionIsVisible
-    }
-  });
+  {
+    channelListVisible = initialWindowState,
+    userListVisible = initialWindowState,
+    windowWidth = Math.round(window.innerWidth * 0.0625),
+    windowHeight = Math.round(window.innerHeight * 0.0625),
+    inputFieldText = '',
+    activeChannelId = 1,
+    activeChannelNumberOfUsers = 0,
+    activeChannelNumberOfOps = 0,
+    currentPing = 0,
+    styleSelectionIsVisible = true,
+    appIsBlurred = false,
+    appZoom = 1
+  } = {}
+) => ({
+  type: 'SET_UI_STATE',
+  userInterface: {
+    channelListVisible,
+    userListVisible,
+    windowWidth,
+    windowHeight,
+    inputFieldText,
+    activeChannelId,
+    activeChannelNumberOfUsers,
+    activeChannelNumberOfOps,
+    currentPing,
+    styleSelectionIsVisible,
+    appIsBlurred,
+    appZoom
+  }
+});
 
-export const hideStyleModal = () => ({
-  type: 'HIDE_STYLE_MODAL'
-});
-export const showStyleModal = () => ({
-  type: 'SHOW_STYLE_MODAL'
-});
 
 //the current channel the user is in
 export const setActiveChannel = (
@@ -86,13 +84,18 @@ export const updatePing = (
   }
 });
 
-export const setInputFieldText = (inputFieldText = '') => ({
-  type: 'SET_INPUT_FIELD_TEXT',
-  UIState: {
-      inputFieldText
+export const setAppZoom = (appZoom = 1) => ({
+  type: 'SET_APP_ZOOM',
+  userInterface: {
+    appZoom
   }
 });
-
+export const setInputFieldText = (inputFieldText = '') => ({
+  type: 'SET_INPUT_FIELD_TEXT',
+  userInterface: {
+    inputFieldText
+  }
+});
 export const setWindowWidth = (windowWidth) => ({
   type: 'SET_WINDOW_WIDTH',
   UIState: {
@@ -105,21 +108,29 @@ export const setWindowHeight = (windowHeight) => ({
     windowHeight
   }
 });
-export const toggleChannelList = () => ({
-  type: 'TOGGLE_CHANNEL_LIST'
+
+export const hideStyleModal = () => ({
+  type: 'HIDE_STYLE_MODAL'
 });
-export const toggleUserList = () => ({
-  type: 'TOGGLE_USER_LIST'
+export const showStyleModal = () => ({
+  type: 'SHOW_STYLE_MODAL'
 });
 export const hideChannelList = () => ({
   type: 'HIDE_CHANNEL_LIST'
 });
-export const hideUserList = () => ({
-  type: 'HIDE_USER_LIST'
-});
 export const showChannelList = () => ({
   type: 'SHOW_CHANNEL_LIST'
+});
+export const hideUserList = () => ({
+  type: 'HIDE_USER_LIST'
 });
 export const showUserList = () => ({
   type: 'SHOW_USER_LIST'
 });
+export const blurApp = () => ({
+  type: 'BLUR_APP'
+});
+export const unblurApp = () => ({
+  type: 'UNBLUR_APP'
+});
+

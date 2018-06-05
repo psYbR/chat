@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { setUserNick, setLoggedIn } from '../actions/loginActions';
+import { unblurApp } from '../actions/userInterfaceActions';
 
 
 class WelcomeModal extends React.Component {
@@ -10,6 +11,7 @@ class WelcomeModal extends React.Component {
   onGuestNickSubmit = (e) => {
     e.preventDefault();
     this.props.dispatch(setLoggedIn());
+    this.props.dispatch(unblurApp());
   }
   onGuestNickChange = (e) => {
     const nick = e.target.value;

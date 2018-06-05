@@ -5,11 +5,11 @@ import ChatInput from './ChatInput';
 import ChatMessage from './ChatMessage';
 import getVisibleMessages from '../selectors/getVisibleMessages';
 import StyleModal from './StyleModal';
-import { toggleUserList, toggleChannelList } from '../actions/configurationActions';
+import { hideChannelList, showChannelList, hideUserList, showUserList } from '../actions/userInterfaceActions';
 
 const ChatMainWindow = ({ channels, messages, configuration, loginState, userInterface, dispatch }) => {
     return (
-        <div className={"chatWindowContainer " + (!loginState.loggedIn ? " chatAppBlur" : '') /*Blur the app if the user isn't logged in*/}>
+        <div className={"chatWindowContainer" + (userInterface.appIsBlurred ? " chatAppBlur" : '') /*Blur the app if the user isn't logged in*/}>
 
             <ChannelDescription channelTopic={
                     //fuck this, seriously
@@ -21,19 +21,27 @@ const ChatMainWindow = ({ channels, messages, configuration, loginState, userInt
 
             <div className="chatMessageOuterContainer emphasised-container">
 
-                <div className="channelsHideContainer" onClick={() => { //the button to hide the channel list
-                    dispatch(toggleChannelList());
+                {userInterface.styleSelectionIsVisible && <StyleModal />}
+
+                <div className="channelsHideContainer" onClick={() => { //the button to show/hide the channel list
+                    if (userInterface.channelListVisible) {
+                        dispatch(hideChannelList());
+                    } else {
+                        dispatch(showChannelList());
+                    }
                 }}>
-                    {!userInterface.channelListVisible ? <i className="fa fa-caret-right"></i> : <i className="fa fa-caret-left"></i>}
+                    {userInterface.channelListVisible ? <i className="fa fa-caret-left"></i> : <i className="fa fa-caret-right"></i>}
                 </div>
 
-                <div className="usersHideContainer" onClick={() => { //the button to hide the users list
-                    dispatch(toggleUserList());
+                <div className="usersHideContainer" onClick={() => { //the button to show/hide the users list
+                    if (userInterface.userListVisible) {
+                        dispatch(hideUserList());
+                    } else {
+                        dispatch(showUserList());
+                    }
                 }}>
-                    {!userInterface.userListVisible ? <i className="fa fa-caret-left"></i> : <i className="fa fa-caret-right"></i>}
+                    {userInterface.userListVisible ? <i className="fa fa-caret-right"></i> : <i className="fa fa-caret-left"></i>}
                 </div>
-
-                {!userInterface.styleSelectionIsVisible && <StyleModal />}
 
                 <div className="chatMessageContainer">
                     <table className="chatMessageTable">
