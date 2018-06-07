@@ -79,8 +79,11 @@ export const updatePing = (
     currentPing
   }
 });
-export const setConnectedSuccessfully = () => ({
+export const setConnected = () => ({
   type: 'SET_CONNECTED'
+});
+export const setDisconnected = () => ({
+  type: 'SET_DISCONNECTED'
 });
 
 export const setAppZoom = (appZoom = 1) => ({

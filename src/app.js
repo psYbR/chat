@@ -14,7 +14,7 @@ import { setLoginState } from './actions/loginActions';
 import { getNowUnix} from './utils/dateUtils';
 import { addDefaultChannel } from './actions/defaultChannelsActions';
 
-import { setConnectedSuccessfully } from './actions/userInterfaceActions';
+import { setConnected, setDisconnected } from './actions/userInterfaceActions';
 
 //this function gets called every time the state changes
 const store = configureStore();
@@ -49,8 +49,12 @@ store.dispatch(addChannel({ channelId: 1, channelName: 'lobby', type: 'channel',
 
 
 setTimeout(() => {
-  store.dispatch(setConnectedSuccessfully());
+  store.dispatch(setConnected());
 }, 1000);
+
+setTimeout(() => {
+  //store.dispatch(setDisconnected());
+}, 5000);
 
 store.subscribe(() => {
   //console.log(store.getState());

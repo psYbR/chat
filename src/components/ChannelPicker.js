@@ -18,7 +18,7 @@ class ChannelPicker extends React.Component {
             {this.props.defaultChannels.map((channel) => {
                 return (
                     <div
-                        className={"ChannelPickerChannel " + (channel.isSelected ? "CPSelected" : '')}
+                        className={"ChannelPickerChannel" + (channel.isSelected ? " CPSelected" : '')}
                         key={channel.channelId}
                         onClick={() => {
                             if (channel.isSelected) {

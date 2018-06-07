@@ -33,16 +33,13 @@ export const messageHTMLify = (message, elementClassName, font, color, source) =
   let previousLastIndex = 0;
   while ((array1 = regexBoth.exec(message)) !== null) { //iterate the array for each match
 
-    const code = array1[0]; //contains the matched string (color code)
-    const start = regexBoth.lastIndex - array1[0].length; //get the starting index in the message of the color code
-    const end = regexBoth.lastIndex; //get the end index in the message of the color code
     let styleTags = ''; //holds the style tag that we will build
 
-    //here we iterate the color code (eg. ^12,14) for each number (the regex matches pairs of numbers)
+    //here we iterate the color code (eg. ^12,14) for each number (this regex matches pairs of numbers)
     const regexSub = RegExp(/[0-9]{1,2}/g);
     let array2; //hold the matches while we iterate
     let colorIsBackground = false; //if there is was a second color code provided after a comma (background color)
-    while ((array2 = regexSub.exec(code)) !== null) { //iterate the matches
+    while ((array2 = regexSub.exec(array1[0])) !== null) { //iterate the matches
 
       const color = array2[0]; //contains the matched string (color code)
       let colorRGB;
@@ -62,9 +59,9 @@ export const messageHTMLify = (message, elementClassName, font, color, source) =
 
     }
 
-    messageOutgoing += message.substring(previousLastIndex, start); //add in the first part the message leading up the color code
+    messageOutgoing += message.substring(previousLastIndex, regexBoth.lastIndex - array1[0].length); //add in the first part the message leading up the color code
     previousLastIndex = regexBoth.lastIndex; //save the index of where the color code ended
-    messageOutgoing += styleTags; //add the style tags to proceed the rest of the message
+    messageOutgoing += styleTags; //add the style tags that will prepend the rest of the message
 
   }
 

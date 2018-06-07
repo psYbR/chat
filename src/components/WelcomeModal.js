@@ -42,7 +42,7 @@ class WelcomeModal extends React.Component {
         </div>
         <div className="WelcomeModalOuterContainer">
 
-          {this.props.userInterface.appIsConnected &&
+          {this.props.userInterface.appIsConnected && //only show the contents of the welcome modal while the socket connection remains open
 
             <div className="WelcomeModalInnerContainer">
               <div className="tabContainer">
@@ -66,12 +66,14 @@ class WelcomeModal extends React.Component {
                     type='text'
                     placeholder="Enter a nickname"
                     onChange={this.onGuestNickChange}
-                    value={this.props.loginState.nick || ''} //the input can't have an initial state of undefined or React will issue a warning
+                    //the input can't have an initial state of undefined or React will issue a warning
+                    value={this.props.loginState.nick || ''}
                     spellCheck="false"
                   />
                   <button
-                    className='guestNickSubmitButton' 
-                    disabled={!this.props.loginState.nick}
+                    className='guestNickSubmitButton'
+                    //check that the user has picked at least one channel and entered a nick before enabling the button
+                    disabled={!this.props.loginState.nick || this.props.defaultChannels.filter((channel) => channel.isSelected == true).length < 1}
                   >Start chatting</button>
                 </form>
               </div>

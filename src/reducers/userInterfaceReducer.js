@@ -65,6 +65,12 @@ export default (state = reducerDefaultState, action) => {
         appIsConnected: true
       };
 
+    case 'SET_DISCONNECTED':
+      return {
+        ...state,
+        appIsConnected: false
+      };
+
     case 'HIDE_CHANNEL_LIST':
       return {
         ...state,
