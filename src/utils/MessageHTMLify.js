@@ -11,176 +11,83 @@ const escapeHtml = (unsafe) => {
   .replace(/'/g, "&#039;");
 }
 
-//  the below complicated function can probably be greatly simplified using a regex... future To Do
-
 //
-//  This function returns a <p></p> tag containing the string passed in as the first parameter,
-//  and adds in <font style='color: rgb(X,X,X);'> tags to recolour the text according to IRC standard
-//  color codes, eg.  ^10,5 (text color 10, background color 5)
-//  The second parameter is set as the element class name and any HTML characters are escaped
-//  third parameter is the font
-//  fourth parameter is the default color
-//  fifth is true/false and defines whether message is system
+//  This function returns a <p> tag containing a chat message
+//  it adds in <font style='color: rgb(X,X,X);'> tags to recolour the text/background according to any IRC standard color codes supplied in the message
+//  eg.  ^10,5 (text color 10, background color 5) - these colors are defined in ./utils/styleInfo.js
+//  second parameter is the element class name to use
+//  third parameter is the text font
+//  fourth parameter is the text color
+//  fifth is the username/nickname of who sent the message and is used to determine if the message was from System
 //
 
-export const messageHTMLify = (message, pClassName, defaultFont, defaultColor, source) => {
+export const messageHTMLify = (message, elementClassName, font, color, source) => {
 
-  let messageOutgoing = [] //stores the message to be returned
-  let colorChars = '';
-  let bgColorChars = '';
-  let tagWasOpened = false; //if a font tag was opened, close the old one first before applying a new one
-  let colorOutOfBounds = false;
-  let curPos = 0;
-  let caretValid = true;
-  let intValid = false;
-  let commaValid = false;
+  message = escapeHtml(message); //filter any HTML in the message
 
-  if (!message) {
-    return false;
-  } else {
-    //iterate through the text
-    for (var i = 0; i < message.length; i++) {
+  let messageOutgoing = ''; //holds the outgoing message that we will build
 
-      let pass = false;
+  //here we are checking for a match against the regex expression, which looks for foreground and background color codes within the chat message
+  const regexBoth = RegExp(/\^[0-9]{1,2}(,[0-9]{1,2})?/g);
+  let array1; //hold the matches in an array while we iterate over the message
+  let previousLastIndex = 0;
+  while ((array1 = regexBoth.exec(message)) !== null) { //iterate the array for each match
 
-      //validate the character type
-      if ((message.charAt(i) == "^") && caretValid) { //check if it's a ^
-        pass = true;
+    const code = array1[0]; //contains the matched string (color code)
+    const start = regexBoth.lastIndex - array1[0].length; //get the starting index in the message of the color code
+    const end = regexBoth.lastIndex; //get the end index in the message of the color code
+    let styleTags = ''; //holds the style tag that we will build
+
+    //here we iterate the color code (eg. ^12,14) for each number (the regex matches pairs of numbers)
+    const regexSub = RegExp(/[0-9]{1,2}/g);
+    let array2; //hold the matches while we iterate
+    let colorIsBackground = false; //if there is was a second color code provided after a comma (background color)
+    while ((array2 = regexSub.exec(code)) !== null) { //iterate the matches
+
+      const color = array2[0]; //contains the matched string (color code)
+      let colorRGB;
+      if (colors[color]) { //check if the color code is valid in the colors array (from ./utils/styleInfo.js), otherwise use color 0
+        colorRGB = colors[color].rgbValue;
+      } else {
+        colorRGB = colors[0].rgbValue;
       }
-      if (!pass && ( (message.charAt(i) == ",")  && commaValid)) { //check if it's a ,
-        pass = true;
-      }    
-      if (!pass && ( (!isNaN(parseInt(message.charAt(i), 10)))  && intValid)) { //check if it's a int
-        pass = true;
+
+      if (!colorIsBackground) { //if it is the first pair of numbers in the color code
+        styleTags += '<font style="color:rgb(' + colorRGB + ');">'; 
+        colorIsBackground = true;
+      }
+      else {
+        styleTags += '<font style="background-color:rgb(' + colorRGB + ');">'; //f it's the second pair of numbers
       }
 
-      //if the character is expected
-      if (pass) {
-
-        //reset filters
-        caretValid = false;
-        intValid = false;
-        commaValid = false;
-
-        //if the character was a ^
-        if (curPos === 0 ) {
-          curPos = 1; //got caret, now wait for first int
-          intValid = true;
-        }
-
-        //if the character was the first int
-        else if (curPos === 1) {
-          colorChars += parseInt(message.charAt(i), 10);
-          curPos = 2; //have received one valid int
-          intValid = true;
-          commaValid = true;
-        }
-
-        //if the character was either an int or a ,
-        else if (curPos === 2) { //have received second int, or a comma
-          if (!isNaN(parseInt(message.charAt(i), 10))) {
-
-            //if the color code is < 16
-            if (parseInt(message.charAt(i), 10) < 6) {
-              colorChars += parseInt(message.charAt(i), 10);
-            } else {
-              colorChars = 0;
-            }
-            curPos = 3;
-            commaValid = true;
-          }
-          else if (message.charAt(i) == ",") {
-            curPos = 4;
-            intValid = true;
-          }
-        }
-
-        //if the character was a ,
-        else if (curPos === 3) { //have received a comma
-          curPos = 4;
-          intValid = true;
-        }
-
-        //if the character was an int
-        else if (curPos === 4) { //have received first background int
-          bgColorChars += parseInt(message.charAt(i), 10);
-          curPos = 5;
-          intValid = true;
-        }
-
-        //if the character was another int
-        else if (curPos === 5) { //second background int
-
-          //if the color code is < 16
-          if (parseInt(message.charAt(i), 10) < 6) {
-            bgColorChars += parseInt(message.charAt(i), 10);
-          } else {
-            bgColorChars = 1;
-          }
-          curPos = 6;
-        }
-
-      //if the character wasn't expected
-      } else { 
-
-        //there was no color code, just a regular letter
-        if (curPos === 0) {
-
-          //escape and display it
-          messageOutgoing.push(escapeHtml(message.charAt(i)));
-        }
-
-        //if there was a ^ but no ints followed it
-        else if (curPos === 1) { 
-          messageOutgoing.push('^'); //didn't pass test, no valid codes, dump only a caret
-        }
-
-        //if the third or fourth character wasn't an int or a comma, or if a comma wasn't followed by an int, display the single or double digit color code that we got, then display the other character
-        else if (curPos === 2 || curPos === 3 || curPos === 4) { 
-          if (tagWasOpened) { messageOutgoing.push('</font>'); } //if color has already been applied to the element, close the tag
-          messageOutgoing.push('<font style="color:rgb(' + colors[colorChars].rgbValue + '); ">');
-          tagWasOpened = true; //set to true so the above </font> tag can be added in the instance color has already been applied to this <p> element
-          if (curPos === 4) {
-            messageOutgoing.push(',');
-          }
-          messageOutgoing.push(escapeHtml(message.charAt(i)));
-        }
-
-        //if the comma was followed by one or two valid color ints
-        else if (curPos === 5 || curPos === 6) {
-          if (tagWasOpened) { messageOutgoing.push('</font>'); }  //if color has already been applied to the element, close the tag
-          messageOutgoing.push('<font style="color:rgb(' + colors[colorChars].rgbValue + '); background-color:rgb(' + colors[bgColorChars].rgbValue + '); ">');
-          tagWasOpened = true; //set to true so the above </font> tag can be added in the instance color has already been applied to this <p> element
-          messageOutgoing.push(escapeHtml(message.charAt(i)));
-        }
-
-        //reset filters
-        curPos = 0;
-        caretValid = true;
-        intValid = false;
-        commaValid = false;
-        colorChars = ''; bgColorChars = '';
-      }
     }
 
-    //set the style object
-    const style = {
-      fontFamily: defaultFont,
-      color: 'rgb(' + colorNameToRGB(defaultColor) + ')'
-    }
+    messageOutgoing += message.substring(previousLastIndex, start); //add in the first part the message leading up the color code
+    previousLastIndex = regexBoth.lastIndex; //save the index of where the color code ended
+    messageOutgoing += styleTags; //add the style tags to proceed the rest of the message
 
-    //override the font color for system messages
-    if (source == '*') {
-      style.color = 'rgb(255, 166, 0)';
-    }
-
-    //return the array containing a combination of escaped regular characters and the HTML strings, using the React function dangerouslySetInnerHTML to parse it as HTML
-    return <p
-      className={pClassName}
-      style={style}
-      dangerouslySetInnerHTML={{__html: messageOutgoing.join('')}}
-    />;
-  
   }
 
+  messageOutgoing += message.substring(previousLastIndex); //assuming any tags have already been added (or there are none), add in the remainder of the message
+
+  //set the style object of the p tag, based on the message's appliedFont and appliedColor properties
+  const style = {
+    fontFamily: font,
+    color: 'rgb(' + colorNameToRGB(color) + ')'
+  }
+
+  //override the font color for system messages
+  if (source == '*') {
+    style.color = 'rgb(255, 166, 0)';
+  }
+
+  //return the styled <p> element that will be displayed
+  const output = <p
+    className={elementClassName}
+    style={style}
+    dangerouslySetInnerHTML={{__html: messageOutgoing}} //React won't parse HTML that is returned as a parameter to prevent injection, so dangerouslySetInnerHTML is required
+  />;
+
+  return output;
+  
 };
