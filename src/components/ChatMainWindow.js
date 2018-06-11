@@ -45,7 +45,7 @@ const ChatMainWindow = ({ channels, messages, configuration, loginState, userInt
                 <div className="chatMessageContainer">
                     <table className="chatMessageTable">
                         {messages.map((message) => {
-                            return <ChatMessage key={message.messageId} message={message} loginState={loginState} />
+                            return <ChatMessage key={message.timestamp} message={message} loginState={loginState} />
                         })}
                     </table>
                 </div>

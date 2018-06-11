@@ -47,3 +47,63 @@ button:disabled {
 } ::-webkit-scrollbar-thumb:hover {
   background: $scroll-thumb-hover; 
 }
+
+
+//
+// Style the checkbox
+//
+.CheckBoxContainer {
+  display: block;
+  position: relative;
+  margin-top: .4rem;
+  cursor: pointer;
+  font-size: 2.2rem;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+/* Hide the browser's default checkbox */
+.CheckBoxContainer input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+.CheckBoxCheckmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 2.5rem;
+  width: 2.5rem;
+  background-color: #eee;
+}
+/* On mouse-over, add a grey background color */
+.CheckBoxContainer:hover input ~ .CheckBoxCheckmark {
+  background-color: #ccc;
+}
+/* When the checkbox is checked, add a blue background */
+.CheckBoxContainer input:checked ~ .CheckBoxCheckmark {
+  background-color: #2196F3;
+}
+/* Create the checkmark/indicator (hidden when not checked) */
+.CheckBoxCheckmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+/* Show the checkmark when checked */
+.CheckBoxContainer input:checked ~ .CheckBoxCheckmark:after {
+  display: block;
+}
+/* Style the checkmark/indicator */
+.CheckBoxContainer .CheckBoxCheckmark:after {
+  left: .9rem;
+  top: .5rem;
+  width: .5rem;
+  height: 1rem;
+  border: solid white;
+  border-width: 0 .3rem .3rem 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}

@@ -45,65 +45,6 @@
 }
 
 //
-// Style the checkbox
-//
-.ShowSystemContainer {
-  display: block;
-  position: relative;
-  margin-top: .4rem;
-  cursor: pointer;
-  font-size: 2.2rem;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-/* Hide the browser's default checkbox */
-.ShowSystemContainer input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-}
-.ShowSystemCheckmark {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 2.5rem;
-  width: 2.5rem;
-  background-color: #eee;
-}
-/* On mouse-over, add a grey background color */
-.ShowSystemContainer:hover input ~ .ShowSystemCheckmark {
-  background-color: #ccc;
-}
-/* When the checkbox is checked, add a blue background */
-.ShowSystemContainer input:checked ~ .ShowSystemCheckmark {
-  background-color: #2196F3;
-}
-/* Create the checkmark/indicator (hidden when not checked) */
-.ShowSystemCheckmark:after {
-  content: "";
-  position: absolute;
-  display: none;
-}
-/* Show the checkmark when checked */
-.ShowSystemContainer input:checked ~ .ShowSystemCheckmark:after {
-  display: block;
-}
-/* Style the checkmark/indicator */
-.ShowSystemContainer .ShowSystemCheckmark:after {
-  left: .9rem;
-  top: .5rem;
-  width: .5rem;
-  height: 1rem;
-  border: solid white;
-  border-width: 0 .3rem .3rem 0;
-  -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  transform: rotate(45deg);
-}
-
-//
 //    COLOR BUTTONS
 //
 .SMinput {

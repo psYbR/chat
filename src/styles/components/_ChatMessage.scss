@@ -34,6 +34,9 @@
     margin-right: 5px;
     vertical-align: top;
 }
+.nicknameSpinner {
+    display: inline-block;
+}
 
 //MESSAGE CONTAINER
 .chatMessageTextContainer{
@@ -45,6 +48,7 @@
 //OUTBOUND MESSAGES (class applied to container)
 .chatMessageCurrentUser > .pUserText {
     color: $user;
+    display: inline;
 }
 .chatMessageCurrentUser > .pMessageText {
     color: $font-subtle;

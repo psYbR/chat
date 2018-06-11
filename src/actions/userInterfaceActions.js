@@ -22,7 +22,9 @@ export const setUIState = (
     styleSelectionIsVisible = false,
     appIsBlurred = true,
     appZoom = 1,
-    appIsConnected = false //whether the socket reports it has been successfully opened
+    appIsConnected = false, //whether the socket reports it has been successfully opened
+    termsAccepted = false,
+    defaultChannelsReceived = false //whether the list of default channels was received from the server
   } = {}
 ) => ({
   type: 'SET_UI_STATE',
@@ -39,7 +41,9 @@ export const setUIState = (
     styleSelectionIsVisible,
     appIsBlurred,
     appZoom,
-    appIsConnected
+    appIsConnected,
+    termsAccepted,
+    defaultChannelsReceived
   }
 });
 
@@ -51,6 +55,25 @@ export const setActiveChannel = ( activeChannelId = 1 ) => {
     userInterface: {
       activeChannelId
     }
+  })
+};
+
+
+export const setDefaultChannelsReceived = () => {
+  return({
+    type: 'SET_DEFAULT_CHANNELS_RECEIVED'
+  })
+};
+
+export const setTermsAccepted = () => {
+  return({
+    type: 'SET_TERMS_ACCEPTED'
+  })
+};
+
+export const setTermsUnaccepted = () => {
+  return({
+    type: 'SET_TERMS_UNACCEPTED'
   })
 };
 

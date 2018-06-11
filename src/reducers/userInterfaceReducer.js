@@ -65,6 +65,24 @@ export default (state = reducerDefaultState, action) => {
         appIsConnected: true
       };
 
+    case 'SET_DEFAULT_CHANNELS_RECEIVED':
+      return {
+        ...state,
+        defaultChannelsReceived: true
+      };
+
+    case 'SET_TERMS_ACCEPTED':
+      return {
+        ...state,
+        termsAccepted: true
+      };
+
+    case 'SET_TERMS_UNACCEPTED':
+      return {
+        ...state,
+        termsAccepted: false
+      };
+
     case 'SET_DISCONNECTED':
       return {
         ...state,

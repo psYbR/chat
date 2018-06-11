@@ -72,7 +72,7 @@ class StyleModal extends React.Component {
 
               <p>Show system messages?</p>
                 
-              <label className="ShowSystemContainer">
+              <label className="CheckBoxContainer">
                 <input
                   type="checkbox"
                   checked={this.props.configuration.showSystemMessages ? "checked" : ''}
@@ -81,7 +81,7 @@ class StyleModal extends React.Component {
                     else { this.props.dispatch(showSystemMessages()); }
                   }}
                 />
-                <span className="ShowSystemCheckmark"></span>
+                <span className="CheckBoxCheckmark"></span>
               </label>
 
             </div>

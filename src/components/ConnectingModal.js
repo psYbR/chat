@@ -14,13 +14,15 @@ class ConnectingModal extends React.Component {
         <div className="WelcomeBlurContainer">
         </div>
         <div className="WelcomeModalOuterContainer">
-            <div className="WelcomeModalInnerContainer">
+            <div className="WelcomeModalInnerContainer ConnectingModalContainer">
                 <h1 className="connectingTitle">Connecting...</h1>
                 <h1 style={
                     {
                         textAlign: 'center'
                     }
                 }><div className="fa fa-spinner fa-spin"></div></h1>
+                {!this.props.userInterface.appIsConnected && <p>establishing connection...</p>}
+                {!this.props.userInterface.defaultChannelsReceived && <p>downloading list of channels...</p>}
             </div>
         </div>
       </div>

@@ -101,10 +101,31 @@
   opacity: .5;
 }
 
-//I had hoped it was possible to blur the background but I guess it wasn't
-//when webkit's -webkit-backdrop-filter is supported in Chrome we can revisit
+.termsContainer {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 1rem;
+}
+
+.termsParagraph {
+  display: inline-block;
+  margin: 0 1rem 0 0;
+  padding: .5rem 0 0 0;
+}
+
+a {
+  color: $font-default;
+  font-weight: bold;
+}
+a:hover {
+  color: $theme;
+}
+
+// I had hoped it was possible to blur the background but I guess it wasn't
+// when webkit's -webkit-backdrop-filter is supported in Chrome we can revisit
 // https://caniuse.com/#feat=css-backdrop-filter 
-//rather than settle for less, I have applied a blur to the app as a whole -- see ./styles/base/_base.scss and ./components/ChatApp.js
+// rather than settle for less, I have applied a blur to the app as a whole -- see ./styles/base/_base.scss and ./components/ChatApp.js
+// this just applies a grey filter to the background
 .WelcomeBlurContainer {
   // display: none
   width:100%;

@@ -59,15 +59,15 @@ export const messageHTMLify = (message, elementClassName, font, color, source) =
 
     }
 
-    messageOutgoing += message.substring(previousLastIndex, regexBoth.lastIndex - array1[0].length); //add in the first part the message leading up the color code
-    previousLastIndex = regexBoth.lastIndex; //save the index of where the color code ended
-    messageOutgoing += styleTags; //add the style tags that will prepend the rest of the message
+    messageOutgoing += message.substring(previousLastIndex, regexBoth.lastIndex - array1[0].length); //add in the first part of the message leading up the color code
+    previousLastIndex = regexBoth.lastIndex; //save the index of where the color code ended (don't keep the color code in the message)
+    messageOutgoing += styleTags; //add the style tags
 
   }
 
   messageOutgoing += message.substring(previousLastIndex); //assuming any tags have already been added (or there are none), add in the remainder of the message
 
-  //set the style object of the p tag, based on the message's appliedFont and appliedColor properties
+  //set the style object of the p tag, based on the message's appliedFont and appliedColor properties. these are an overall style for the message - the color tags will override this for the specific section of the message where they are applied
   const style = {
     fontFamily: font,
     color: 'rgb(' + colorNameToRGB(color) + ')'

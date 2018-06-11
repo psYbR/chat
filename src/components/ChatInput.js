@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { setInputFieldText, showStyleModal, hideStyleModal } from '../actions/userInterfaceActions';
-import { getNowUnix } from '../utils/dateUtils';
+import { getNowTimestamp } from '../utils/dateUtils';
 import { addMessage } from '../actions/messageActions';
 import { blurApp, unblurApp } from '../actions/userInterfaceActions';
 import { colorNameToRGB } from '../utils/styleInfo';
@@ -20,7 +20,7 @@ class ChatInput extends React.Component {
                     messageId: Math.floor(Math.random() * 20) + 100,
                     type: 'outbound',
                     channelId: this.props.userInterface.activeChannelId,
-                    timestamp: getNowUnix(),
+                    timestamp: getNowTimestamp(),
                     messageText: message,
                     appliedFont: this.props.configuration.defaultFont,
                     appliedColor: this.props.configuration.defaultColor

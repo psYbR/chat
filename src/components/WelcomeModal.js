@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { setUserNick, setLoggedIn } from '../actions/loginActions';
-import { unblurApp } from '../actions/userInterfaceActions';
+import { unblurApp, setTermsAccepted, setTermsUnaccepted } from '../actions/userInterfaceActions';
 import ChannelPicker from './ChannelPicker';
 
 
@@ -18,19 +18,11 @@ class WelcomeModal extends React.Component {
     const nick = e.target.value;
     if (!nick || nick.match( /^[a-zA-Z0-9_-]*$/ )) {
       /* REGEX breakdown:
-        / : regex wrapper
-        ^ : start of string
-        [ : beginning of character group
         a-z : any lowercase letter
         A-Z : any uppercase letter
         0-9 : any digit
         _ : underscore
-        - : hyphen
-        ] : end of character group
-        * : zero or more of the given characters
-        $ : end of string
-        / : regex wrappery
-      */
+        - : hyphen */
       this.props.dispatch(setUserNick(nick));
     }
   }
@@ -41,10 +33,8 @@ class WelcomeModal extends React.Component {
         <div className="WelcomeBlurContainer">
         </div>
         <div className="WelcomeModalOuterContainer">
-
-          {this.props.userInterface.appIsConnected && //only show the contents of the welcome modal while the socket connection remains open
-
             <div className="WelcomeModalInnerContainer">
+
               <div className="tabContainer">
                 <div className="guestTab tab tabSelected">
                   <h1>Guest</h1>
@@ -73,9 +63,25 @@ class WelcomeModal extends React.Component {
                   <button
                     className='guestNickSubmitButton'
                     //check that the user has picked at least one channel and entered a nick before enabling the button
-                    disabled={!this.props.loginState.nick || this.props.defaultChannels.filter((channel) => channel.isSelected == true).length < 1}
+                    disabled={!this.props.loginState.nick || this.props.defaultChannels.filter((channel) => channel.isSelected == true).length < 1 || !this.props.userInterface.termsAccepted}
                   >Start chatting</button>
                 </form>
+
+                <div className="termsContainer">
+                  <p className="termsParagraph">Accept <a href='#'>usage terms</a>?</p>
+                  <label className="CheckBoxContainer">
+                    <input
+                      type="checkbox"
+                      checked={this.props.userInterface.termsAccepted ? "checked" : ''}
+                      onChange={() => {
+                        if (this.props.userInterface.termsAccepted) { this.props.dispatch(setTermsUnaccepted()); }
+                        else { this.props.dispatch(setTermsAccepted()); }
+                      }}
+                    />
+                    <span className="CheckBoxCheckmark"></span>
+                  </label>
+                </div>
+
               </div>
 
               <div className="ContainerChannelPicker">
@@ -83,9 +89,6 @@ class WelcomeModal extends React.Component {
               </div>
 
             </div>
-
-          }
-          
         </div>
       </div>
     );
