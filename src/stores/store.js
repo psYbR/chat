@@ -46,6 +46,7 @@ import userReducer from '../reducers/userReducer';
 import userInterfaceReducer from '../reducers/userInterfaceReducer';
 import loginReducer from '../reducers/loginReducer';
 import defaultChannelsReducer from '../reducers/defaultChannelsReducer';
+import userChannelsReducer from '../reducers/userChannelsReducer';
 
 //CREATE STORE
 export default () => {
@@ -57,7 +58,8 @@ export default () => {
     users: userReducer,
     userInterface: userInterfaceReducer,
     loginState: loginReducer,
-    defaultChannels: defaultChannelsReducer
+    defaultChannels: defaultChannelsReducer,
+    userChannels: userChannelsReducer
   }),
     //enables the REDUX plugin to talk to the corresponding Chrome extension
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()

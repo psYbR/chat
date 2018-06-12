@@ -71,6 +71,30 @@ export default (state = reducerDefaultState, action) => {
         defaultChannelsReceived: true
       };
 
+    case 'CHANNEL_PICKER_FIRST_TAB':
+      return {
+        ...state,
+        channelPickerSecondTab: false
+      };
+
+    case 'CHANNEL_PICKER_SECOND_TAB':
+      return {
+        ...state,
+        channelPickerSecondTab: true
+      };
+
+    case 'SET_JOIN_DEFAULT_CHANNELS':
+      return {
+        ...state,
+        defaultChannelsJoin: true
+      };
+
+    case 'UNSET_JOIN_DEFAULT_CHANNELS':
+      return {
+        ...state,
+        defaultChannelsJoin: false
+      };
+
     case 'SET_TERMS_ACCEPTED':
       return {
         ...state,
@@ -89,6 +113,17 @@ export default (state = reducerDefaultState, action) => {
         appIsConnected: false
       };
 
+    case 'HIDE_CHANNEL_MODAL':
+      return {
+        ...state,
+        channelPickerIsVisible: false
+      };
+
+    case 'SHOW_CHANNEL_MODAL':
+      return {
+        ...state,
+        channelPickerIsVisible: true
+      };
     case 'HIDE_CHANNEL_LIST':
       return {
         ...state,
@@ -96,10 +131,10 @@ export default (state = reducerDefaultState, action) => {
       };
 
     case 'SHOW_CHANNEL_LIST':
-        return {
-          ...state,
-          channelListVisible: true
-        };
+      return {
+        ...state,
+        channelListVisible: true
+      };
 
     case 'HIDE_USER_LIST':
       return {

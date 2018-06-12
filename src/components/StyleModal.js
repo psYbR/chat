@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { hideStyleModal, showStyleModal, setAppZoom } from '../actions/userInterfaceActions';
+import { hideStyleModal, setAppZoom, showChannelModal } from '../actions/userInterfaceActions';
 import { hideSystemMessages, showSystemMessages, setFontColor } from '../actions/configurationActions';
 import { colors, fonts } from '../utils/styleInfo';
 import FontPicker from './FontPicker';
@@ -83,6 +83,12 @@ class StyleModal extends React.Component {
                 />
                 <span className="CheckBoxCheckmark"></span>
               </label>
+
+              <p className='channelsLink'><a onClick={(e) => {
+                //the link that hides/shows the channel modal
+                this.props.dispatch(showChannelModal());
+                this.props.dispatch(hideStyleModal());
+              }}>Join Channels</a></p>
 
             </div>
 

@@ -1,41 +1,56 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { selectDefaultChannel, deselectDefaultChannel } from '../actions/defaultChannelsActions';
+import { hideChannelModal, channelPickerFirstTab, channelPickerSecondTab } from '../actions/userInterfaceActions';
+import DefaultChannelPicker from './DefaultChannelPicker';
+import { setJoinDefaultChannels } from '../actions/userInterfaceActions';
 
-class ChannelPicker extends React.Component {
+class Modal extends React.Component {
   constructor(props) {
     super(props);
   }
   render() {
     return (
-      <div className="ChannelPickerWrapper">
-
-        <div className="ChannelPickerTitleContainer">
-            <h3>Select some channels to join</h3>
+      <div className="ModalWrapper">
+        <div className="ModalBlurContainer">
         </div>
+        <div className="ModalOuterContainer">
+            <div className="ModalInnerContainer">
 
-        <div className="ChannelPickerContainer">
-            {this.props.defaultChannels.map((channel) => {
-                return (
-                    <div
-                        className={"ChannelPickerChannel" + (channel.isSelected ? " CPSelected" : '')}
-                        key={channel.channelId}
-                        onClick={() => {
-                            if (channel.isSelected) {
-                                this.props.dispatch(deselectDefaultChannel(channel.channelId));
-                            } else {
-                                this.props.dispatch(selectDefaultChannel(channel.channelId));
-                            }
-                        }}
-                    >
-                        <i className="fas fa-comment-alt"></i>
-                        <p>{channel.channelName}</p>
-                    </div>
-                );
-            })}
-            
+              <div className="tabContainer">
+                <div className="defaultTab tab tabSelected"
+                  onClick={(e) => {
+                    this.props.dispatch(channelPickerFirstTab());
+                  }}
+                >
+                  <h1>Default Channels</h1>
+                </div>
+                <div className="userTab tab"
+                  onClick={(e) => {
+                    this.props.dispatch(channelPickerSecondTab());
+                  }}
+                >
+                  <h1>User Channels</h1>
+                </div>
+              </div>
+              
+              {!this.props.userInterface.channelPickerSecondTab &&
+                <div className="ContainerChannelPicker">
+                  <DefaultChannelPicker />
+                </div>}
+
+              {this.props.userInterface.channelPickerSecondTab && <h1>Second tab</h1>}
+
+              <button
+                    className='guestNickSubmitButton'
+                    //check that the user has picked at least one channel and entered a nick before enabling the button
+                    onClick={(e) => {
+                      this.props.dispatch(setJoinDefaultChannels());
+                      this.props.dispatch(hideChannelModal());
+                    }}
+                  >OK</button>
+              
+            </div>
         </div>
-
       </div>
     );
   };
@@ -45,4 +60,4 @@ const mapStateToProps = (state) => {
   return state;
 };
 
-export default connect(mapStateToProps)(ChannelPicker);
+export default connect(mapStateToProps)(Modal);

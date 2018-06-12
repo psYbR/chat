@@ -1,4 +1,3 @@
-
 //sort comparitor - sort by timestamp
 const compare = (a,b) => {
   if (a.timestamp < b.timestamp)
@@ -9,9 +8,17 @@ const compare = (a,b) => {
 }
 
 //gets the messages currently visible to the user based on context. ie. current channel, current PM, etc
-export default ( { messages, userInterface, loginState, configuration } ) => {
+export default ( { messages, userInterface, loginState, configuration, channels } ) => {
 
-  //filter inbound messages by channel ID and whether they originate from System or not
+  let channelJoined = false;
+
+  //prevent messages in the channel from being displayed if the channel isn't joined
+  channels.filter((channel) => {
+    if(channel.channelId == userInterface.activeChannelId && channel.isJoined)
+    { channelJoined = true; }
+  })
+
+  //filter inbound messages by the current channel ID and whether they originate from System or not
   let filtered;
   if (configuration.showSystemMessages) {
     filtered = messages.filter(message => message.channelId == userInterface.activeChannelId);
@@ -20,7 +27,7 @@ export default ( { messages, userInterface, loginState, configuration } ) => {
   }
   
 
-  //perform transform on the object
+  //set the current user's nickname on outbound messages
   filtered = filtered.map((message) => {
     if (message.type == 'outbound') {
       message.source = loginState.username;
@@ -28,7 +35,13 @@ export default ( { messages, userInterface, loginState, configuration } ) => {
     return message;
   });
 
-  //sort by timestamp and return
-  return filtered.sort(compare);
+  if (channelJoined) {
+    //sort by timestamp and return
+    return filtered.sort(compare);
+  } else {
+    //if the channel isn't joined yet, only show a default system message in that channel
+    return [{ type: 'inbound', channelId: userInterface.activeChannelId, timestamp:  0, source: '*', messageText: "Trying to join channel...", messageSent: false }];
+  }
+
 
 };

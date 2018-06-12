@@ -2,31 +2,30 @@ const reducerDefaultState = [];
 
 export default (state = reducerDefaultState, action) => {
     switch (action.type) {
-        case 'ADD_CHANNEL':
+        case 'ADD_USER_CHANNEL':
             return [
             ...state,
             action.channel
             ];
-        case 'SET_CURRENT_CHANNEL':
+        case 'SELECT_USER_CHANNEL':
             return state.map((channel) => {
                 if (channel.channelId === action.channelId) {
                     return {
                         ...channel,
-                        isCurrent: true
+                        isSelected: true
                     }
                 } else {
                     return {
-                        ...channel,
-                        isCurrent: false //return false here because we only want one channel to be current at any time
+                        ...channel
                     }
                 }
             })
-        case 'JOIN_CHANNEL':
+        case 'DESELECT_USER_CHANNEL':
             return state.map((channel) => {
                 if (channel.channelId === action.channelId) {
                     return {
                         ...channel,
-                        isJoined: true
+                        isSelected: false
                     }
                 } else {
                     return {

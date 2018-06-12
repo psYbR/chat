@@ -43,3 +43,8 @@ export const setCurrentChannel = (channelId) => ({
   type: 'SET_CURRENT_CHANNEL',
   channelId
 });
+
+export const joinChannel = (channelId) => ({ 
+  type: 'JOIN_CHANNEL',
+  channelId
+});

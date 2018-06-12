@@ -1,48 +1,6 @@
-.ModalWrapper {
-  display: flex;
-  justify-content: center;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  left: 0;
-  top: 0;
-  z-index: 15; //required because there is z-indexing for the proper display of user/channel list collapse buttons
-  -webkit-transition: width 2s; /* Safari */
-    transition: width 2s;
-} .WelcomeModalOuterContainer {
-  position: absolute;
-  width: 100%;
-  max-width: 100rem;
-  //height: 100%;
-  display: flex;
-} .WelcomeModalInnerContainer {
-  flex-grow: 1;
-  margin: 5%;
-  background-color: $base;
-  border-radius: .5rem;
-  box-shadow: 0 0 5rem .1rem rgb(29, 29, 29);
-}
 
-//TABS
-.tabContainer {
-  width: 100%;
-  height: 6rem;
-  display: flex;
-}
-.tab {
-  position: relative;
-  margin: .5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-grow: 1;
-  height: 100%;
-  background-color: $surround;
-  cursor: pointer;
-}.tabSelected {
-  color: $theme;
-  background-color: lighten($surround, 10%);
-}.loginTab {
+//TABS - moved to base
+.loginTab {
   //text-decoration: line-through;
   cursor: not-allowed;
   color: lighten($surround, 10%);
@@ -113,45 +71,19 @@
   padding: .5rem 0 0 0;
 }
 
-a {
-  color: $font-default;
-  font-weight: bold;
-}
-a:hover {
-  color: $theme;
-}
-
-// I had hoped it was possible to blur the background but I guess it wasn't
-// when webkit's -webkit-backdrop-filter is supported in Chrome we can revisit
-// https://caniuse.com/#feat=css-backdrop-filter 
-// rather than settle for less, I have applied a blur to the app as a whole -- see ./styles/base/_base.scss and ./components/ChatApp.js
-// this just applies a grey filter to the background
-.WelcomeBlurContainer {
-  // display: none
-  width:100%;
-  height:100%;
-  position: absolute;
-  left: 0;
-  top: 0;
-  background-color: rgba(99, 99, 99, 0.3);
-}
-
 .example-enter {
   opacity: 0.01;
   width: 0px;
 }
-
 .example-enter.example-enter-active {
   opacity: 1;
   width: 100px;
   transition: 700ms;
 }
-
 .example-leave {
   opacity: 1;
   width: 100px;
 }
-
 .example-leave.example-leave-active {
   opacity: 0.01;
   width: 0px;

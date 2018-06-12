@@ -2,17 +2,18 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { setUserNick, setLoggedIn } from '../actions/loginActions';
 import { unblurApp, setTermsAccepted, setTermsUnaccepted } from '../actions/userInterfaceActions';
-import ChannelPicker from './ChannelPicker';
-
+import DefaultChannelPicker from './DefaultChannelPicker';
+import { setJoinDefaultChannels } from '../actions/userInterfaceActions';
 
 class WelcomeModal extends React.Component {
   constructor(props) {
-      super(props);
+    super(props);
   }
   onGuestNickSubmit = (e) => {
     e.preventDefault();
     this.props.dispatch(setLoggedIn());
     this.props.dispatch(unblurApp());
+    this.props.dispatch(setJoinDefaultChannels());
   }
   onGuestNickChange = (e) => {
     const nick = e.target.value;
@@ -30,10 +31,10 @@ class WelcomeModal extends React.Component {
     return (
       
       <div className="ModalWrapper">
-        <div className="WelcomeBlurContainer">
+        <div className="ModalBlurContainer">
         </div>
-        <div className="WelcomeModalOuterContainer">
-            <div className="WelcomeModalInnerContainer">
+        <div className="ModalOuterContainer">
+            <div className="ModalInnerContainer">
 
               <div className="tabContainer">
                 <div className="guestTab tab tabSelected">
@@ -85,7 +86,7 @@ class WelcomeModal extends React.Component {
               </div>
 
               <div className="ContainerChannelPicker">
-                <ChannelPicker />
+                <DefaultChannelPicker />
               </div>
 
             </div>

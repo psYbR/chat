@@ -19,12 +19,17 @@ export const setUIState = (
     activeChannelNumberOfUsers = 0,
     activeChannelNumberOfOps = 0,
     currentPing = 0,
-    styleSelectionIsVisible = false,
+    styleSelectionIsVisible = false, //use to hide/show the style modal
     appIsBlurred = true,
-    appZoom = 1,
+    appZoom = 1, //multiply the scale of visual elements by this amount
     appIsConnected = false, //whether the socket reports it has been successfully opened
     termsAccepted = false,
-    defaultChannelsReceived = false //whether the list of default channels was received from the server
+    defaultChannelsReceived = false, //whether the list of default channels was received from the server
+    defaultChannelsJoin = false, //whether the app should attempt to join the selected default channels (see app.js and utils/initialChannelRequestJoins.js)
+    retreivingUserChannels = false, //true while retrieval in progress
+    numberOfUserChannels = 0, //the server will provide this value so that when the client requests a list, we know the progress of the list retrieval
+    channelPickerIsVisible = false,
+    channelPickerSecondTab = false //false to show the first tab, true for the second
   } = {}
 ) => ({
   type: 'SET_UI_STATE',
@@ -43,7 +48,12 @@ export const setUIState = (
     appZoom,
     appIsConnected,
     termsAccepted,
-    defaultChannelsReceived
+    defaultChannelsReceived,
+    defaultChannelsJoin,
+    retreivingUserChannels,
+    numberOfUserChannels,
+    channelPickerIsVisible,
+    channelPickerSecondTab
   }
 });
 
@@ -58,6 +68,28 @@ export const setActiveChannel = ( activeChannelId = 1 ) => {
   })
 };
 
+export const channelPickerFirstTab = () => {
+  return({
+    type: 'CHANNEL_PICKER_FIRST_TAB'
+  })
+};
+export const channelPickerSecondTab = () => {
+  return({
+    type: 'CHANNEL_PICKER_SECOND_TAB'
+  })
+};
+
+export const unsetJoinDefaultChannels = () => {
+  return({
+    type: 'UNSET_JOIN_DEFAULT_CHANNELS'
+  })
+};
+
+export const setJoinDefaultChannels = () => {
+  return({
+    type: 'SET_JOIN_DEFAULT_CHANNELS'
+  })
+};
 
 export const setDefaultChannelsReceived = () => {
   return({
@@ -134,6 +166,12 @@ export const setWindowHeight = (windowHeight) => ({
   }
 });
 
+export const hideChannelModal = () => ({
+  type: 'HIDE_CHANNEL_MODAL'
+});
+export const showChannelModal = () => ({
+  type: 'SHOW_CHANNEL_MODAL'
+});
 export const hideStyleModal = () => ({
   type: 'HIDE_STYLE_MODAL'
 });

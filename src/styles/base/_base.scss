@@ -14,6 +14,14 @@ body {
   font-size: $m-size;
 }
 
+a {
+  color: $font-default;
+  font-weight: bold;
+}
+a:hover {
+  color: $theme;
+}
+
 button {
   cursor: pointer;
 }
@@ -46,6 +54,67 @@ button:disabled {
   background: $scroll-thumb; 
 } ::-webkit-scrollbar-thumb:hover {
   background: $scroll-thumb-hover; 
+}
+
+//
+// MODAL TABS
+//
+.tabContainer {
+  width: 100%;
+  height: 6rem;
+  display: flex;
+}
+.tab {
+  position: relative;
+  margin: .5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  height: 100%;
+  background-color: $surround;
+  cursor: pointer;
+}.tabSelected {
+  color: $theme;
+  background-color: lighten($surround, 10%);
+}
+
+//
+// MODAL CONTAINERS
+//
+.ModalWrapper {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: 15; //required because there is z-indexing for the proper display of user/channel list collapse buttons
+  -webkit-transition: width 2s; /* Safari */
+    transition: width 2s;
+} .ModalOuterContainer {
+  position: absolute;
+  width: 100%;
+  max-width: 100rem;
+  //height: 100%;
+  display: flex;
+} .ModalInnerContainer {
+  flex-grow: 1;
+  margin: 5%;
+  background-color: $base;
+  border-radius: .5rem;
+  box-shadow: 0 0 5rem .1rem rgb(29, 29, 29);
+}
+// I had hoped it was possible to blur the background but I guess it wasn't
+.ModalBlurContainer {
+  // display: none
+  width:100%;
+  height:100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: rgba(99, 99, 99, 0.3);
 }
 
 
@@ -83,7 +152,7 @@ button:disabled {
 }
 /* When the checkbox is checked, add a blue background */
 .CheckBoxContainer input:checked ~ .CheckBoxCheckmark {
-  background-color: #2196F3;
+  background-color: $theme;
 }
 /* Create the checkmark/indicator (hidden when not checked) */
 .CheckBoxCheckmark:after {

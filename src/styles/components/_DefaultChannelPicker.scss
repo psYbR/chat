@@ -1,0 +1,56 @@
+.ChannelPickerWrapper {
+    //background-color: blue;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+}
+
+.ChannelPickerTitleContainer {
+    background-color: $surround;
+    height: 3rem;
+    padding: 1rem .8rem .5rem .8rem;
+    width: calc(100% - 1.5rem);
+    border-radius: .4rem .4rem 0 0;
+}
+.ChannelPickerTitleContainer > h3 {
+    margin: 0;
+    text-align: center;
+    color: $font-subtle;
+}
+
+.ChannelPickerContainer {
+    background-color: darken($surround, 10%);
+    padding: 1rem;
+    border-radius: 0 0 .4rem .4rem;
+    overflow-y: auto;
+    max-height: 40rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(160px, 1fr));
+}
+
+.ChannelPickerChannel {
+    flex: 1;
+    margin: .6rem;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    border-radius: .2rem;
+    cursor: pointer;
+    padding: .8rem;
+}
+.ChannelPickerChannel:hover {
+    background-color: $surround;
+}
+
+.ChannelPickerChannel > p {
+    margin: 0 0 0 1rem;
+    display: inline-block;
+}
+
+.CPSelected {
+    color: white;
+    background-color: $theme;
+}
+.CPSelected:hover {
+    background-color: lighten($theme, 5%);
+}
