@@ -19,7 +19,6 @@ import { requestToJoinUserChannels } from './utils/joinUserChannels';
 import io from 'socket.io-client';
 
 export const socket = io();
-
 export const store = configureStore();
 
 socket.on('chat message', (msg) => {

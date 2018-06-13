@@ -7,7 +7,7 @@ const UserWindow = ({ configuration, userInterface }) => {
     return (
         <div className={"userWindowContainer " + (userInterface.appIsBlurred ? " chatAppBlur" : '') /*Blur the app if the flag is set*/}>
             <div className="userListContainer emphasised-container">
-            {/* User class can be nothing, voice, or op */}
+                {/* User class can be nothing, voice, or op */}
                 <UserListItem userName="?" isAway={false} isSelected={false} isCurrentUser={false} userClass="voice"/>
             </div>
             <div className="userStatsContainer emphasised-container">
