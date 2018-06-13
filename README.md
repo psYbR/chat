@@ -1,4 +1,4 @@
-# ChatApp (so far unnamed)
+# BlazeChat (https://blaze.chat)
 
 #### Installation Prerequisites:
 
