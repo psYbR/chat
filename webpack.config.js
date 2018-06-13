@@ -19,5 +19,9 @@ module.exports = {
         'sass-loader'
       ]
     }]
+  },
+  devtool: 'source-map',
+  devServer: {
+    contentBase: path.join(__dirname, 'public')
   }
 };
