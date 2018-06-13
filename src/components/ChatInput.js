@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { setInputFieldText, showStyleModal, hideStyleModal } from '../actions/userInterfaceActions';
 import { getNowTimestamp } from '../utils/dateUtils';
-import { addMessage } from '../actions/messageActions';
+import { addMessage, setMessageSent } from '../actions/messageActions';
 import { blurApp, unblurApp } from '../actions/userInterfaceActions';
 import { colorNameToRGB } from '../utils/styleInfo';
 import { socket } from '../app';
@@ -17,19 +17,30 @@ class ChatInput extends React.Component {
         if (message && !(!message.replace(/\s/g, '').length)) {
             this.props.dispatch(setInputFieldText());
 
-            // this.props.dispatch(addMessage(
-            //     {
-            //         messageId: Math.floor(Math.random() * 20) + 100,
-            //         type: 'outbound',
-            //         channelId: this.props.userInterface.activeChannelId,
-            //         timestamp: getNowTimestamp(),
-            //         messageText: message,
-            //         appliedFont: this.props.configuration.defaultFont,
-            //         appliedColor: this.props.configuration.defaultColor
-            //     }
-            // ));
+            const outboundMsg = {
+                source: this.props.loginState.nick, //remove and do this serverside
+                channelId: this.props.userInterface.activeChannelId, //verify serverside
+                messageText: message,
+                appliedFont: this.props.configuration.defaultFont, //validate
+                appliedColor: this.props.configuration.defaultColor, //validate
+                sentTimestamp: getNowTimestamp(),
+            };
 
-            socket.emit('chat message', message);
+            this.props.dispatch(addMessage(
+                {
+                    ...outboundMsg,
+                    type: 'outbound',
+                    messageSent: false //this should be changed
+                }
+            ));
+
+            //send the message
+            socket.emit('chat message', outboundMsg, (response) => {
+                //handle the response (the server sends back the Sent Timestamp so the message sent status can be updated)
+                const sentTimestamp = response;
+                this.props.dispatch(setMessageSent(sentTimestamp));
+                console.log("message sent successfully: " + sentTimestamp);
+            });
 
         }
     }

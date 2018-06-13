@@ -31,6 +31,12 @@
     }
 }
 
-.pingText {
+.ping-good {
     color: $ping-good;
+}
+.ping-ok {
+    color: $ping-ok;
+}
+.ping-bad {
+    color: $ping-bad;
 }

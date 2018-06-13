@@ -8,7 +8,7 @@ const ChatMessage = ({ message , loginState }) => (
         <tr className="chatMessageWrapper">
 
             <td className="chatMessageTimestampContainer">
-                {message.messageSent ? <p>{getFriendlyFromTimestamp(message.timestamp, 2)}</p> : <div className="fa fa-spinner fa-spin nicknameSpinner" />}
+                {message.messageSent ? <p>{getFriendlyFromTimestamp(message.receivedTimestamp, 2)}</p> : <div className="fa fa-spinner fa-spin nicknameSpinner" />}
             </td>
 
             <td

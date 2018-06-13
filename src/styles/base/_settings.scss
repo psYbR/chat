@@ -3,12 +3,14 @@
 // $theme: rgb(221, 0, 0);
 $theme: rgb(221, 81, 0);
 
-i { //style for fontawesome icons
-    //color: $theme; //yeah, nah
-}
+
+// :root {
+//     --theme: $theme-color;
+// }
+
+// $theme: var(--theme);
 
 $default-app-size: 62.5%; //62.5% will mean that .1rem = 1px
-//$default-app-size: 120%;
 
 $font-family-default: 'Source Sans Pro', sans-serif;
 $font-default: rgb(205,215,197);

@@ -63,7 +63,7 @@ const ChatMainWindow = (state) => {
                         :
                         //filter the visible messages according to the current channel and user configuration                        
                         getVisibleMessages(state).map((message) => {
-                            return <ChatMessage key={message.timestamp} message={message} loginState={state.loginState} />
+                            return <ChatMessage key={message.receivedTimestamp || message.sentTimestamp || 12345} message={message} loginState={state.loginState} />
                         })}
                     </table>
                 </div>

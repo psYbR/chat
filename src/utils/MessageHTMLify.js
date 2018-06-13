@@ -3,12 +3,21 @@ import { colors, fonts, colorNameToRGB } from './styleInfo';
 
 //escapes unsafe html tags
 const escapeHtml = (unsafe) => {
-  return unsafe
-  .replace(/&/g, "&amp;")
-  .replace(/</g, "&lt;")
-  .replace(/>/g, "&gt;")
-  .replace(/"/g, "&quot;")
-  .replace(/'/g, "&#039;");
+  if (unsafe == null) {
+    console.log('MessageHTMLify was given an undefined value for checking!');
+    return 'undefined';
+  }
+  if (typeof unsafe.replace === "function") {
+    return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+  } else {
+    return typeof unsafe.replace;
+  }
+  
 }
 
 //
