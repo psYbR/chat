@@ -15,30 +15,46 @@ class UserChannelPicker extends React.Component {
         </div>
 
         {this.props.userInterface.retreivingUserChannels && <p>retreiving user channels: {this.props.userChannels.length} of {this.props.userInterface.numberOfUserChannels}...</p>}
-        {!this.props.userInterface.retreivingUserChannels && <p>retreiving user channels finished.</p>}
+        {!this.props.userInterface.retreivingUserChannels && <p>finished retreiving user channels</p>}
 
-        {!this.props.userInterface.retreivingUserChannels && 
-        <div className="ChannelPickerContainer">
-            {this.props.userChannels.map((channel) => {
-                return (
-                    <div
-                        className={"ChannelPickerChannel" + (channel.isSelected ? " CPSelected" : '')}
-                        key={channel.channelId}
-                        onClick={() => {
-                            if (channel.isSelected) {
-                                this.props.dispatch(deselectUserChannel(channel.channelId));
-                            } else {
-                                this.props.dispatch(selectUserChannel(channel.channelId));
-                            }
-                        }}
-                    >
-                        <i className="fas fa-comment-alt"></i>
-                        <p>{channel.channelName}</p>
-                    </div>
-                );
-            })}
-            
-        </div>}
+        <div className="UCPContainer">
+            <table>
+                <tbody>
+                    <tr>
+                        <th>
+                            Channel Name
+                        </th>
+                        <th>
+                            Topic
+                        </th>
+                    </tr>
+                    {this.props.userChannels.map((channel) => {
+                        return (
+                            <tr
+                                className={"UCPChannel" + (channel.isSelected ? " UCPSelected" : '')}
+                                key={channel.channelId}
+                                onClick={() => {
+                                    if (channel.isSelected) {
+                                        this.props.dispatch(deselectUserChannel(channel.channelId));
+                                    } else {
+                                        this.props.dispatch(selectUserChannel(channel.channelId));
+                                    }
+                                }}
+                            >
+                                
+                                <td>
+                                    <i className="fas fa-comment-alt"></i>
+                                    <p>{channel.channelName}</p>
+                                </td>
+                                <td>
+                                    <p>{channel.topic}</p>
+                                </td>
+                            </tr>
+                        );
+                    })}
+                </tbody>
+            </table>            
+        </div>
 
       </div>
     );

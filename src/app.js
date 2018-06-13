@@ -14,7 +14,8 @@ import { setLoginState } from './actions/loginActions';
 import { getNowTimestamp } from './utils/dateUtils';
 import { addDefaultChannel } from './actions/defaultChannelsActions';
 import { setConnected, setDisconnected, setDefaultChannelsReceived } from './actions/userInterfaceActions';
-import { requestToJoinDefaultChannels } from './utils/initialChannelRequestJoins';
+import { requestToJoinDefaultChannels } from './utils/joinDefaultChannels';
+import { requestToJoinUserChannels } from './utils/joinUserChannels';
 
 export const store = configureStore();
 
@@ -26,17 +27,17 @@ store.dispatch(setLoginState());
 //tell the app the socket connection was successfully established
 setTimeout(() => {
   store.dispatch(setConnected());
-}, 500);
+}, 100);
 
 // add some default channels - these should be supplied by the server in future
 // these timeouts simulate the server taking time to send all of the default channels details to the client
 setTimeout(() => {
-  store.dispatch(addDefaultChannel({ channelId: 1, channelName: 'lobby', topic: 'Welcome to the lobby' }));
+  store.dispatch(addDefaultChannel({ channelId: 1, channelName: 'lobby', topic: 'Welcome to the lobby', isSelected: true }));
   store.dispatch(addDefaultChannel({ channelId: 2, channelName: 'help', topic: 'Join this channel to get help using Chat App' }));
   store.dispatch(addDefaultChannel({ channelId: 3, channelName: 'technology', topic: 'for discussion of all things tech-related' }));
   store.dispatch(addDefaultChannel({ channelId: 4, channelName: 'music', topic: 'for discussion of all things music' }));
   store.dispatch(addDefaultChannel({ channelId: 5, channelName: 'movies', topic: 'for discussion of all things movies' }));
-}, 1000);
+}, 200);
 setTimeout(() => {
   store.dispatch(addDefaultChannel({ channelId: 6, channelName: 'tv', topic: 'for discussion of all things TV' }));
   store.dispatch(addDefaultChannel({ channelId: 7, channelName: 'software', topic: 'for discussion of all things software' }));
@@ -44,7 +45,7 @@ setTimeout(() => {
   store.dispatch(addDefaultChannel({ channelId: 9, channelName: 'consoles', topic: 'for discussion of all things consoles' }));
   store.dispatch(addDefaultChannel({ channelId: 10, channelName: 'retro', topic: 'for discussion of all things retro tech' }));
   store.dispatch(addDefaultChannel({ channelId: 11, channelName: 'art', topic: 'for discussion of all things art' }));
-}, 1500);
+}, 300);
 setTimeout(() => {
   store.dispatch(addDefaultChannel({ channelId: 12, channelName: 'photography', topic: 'for discussion of all things photography' }));
   store.dispatch(addDefaultChannel({ channelId: 13, channelName: 'drones', topic: 'for discussion of all things related to drones' }));
@@ -55,10 +56,10 @@ setTimeout(() => {
   store.dispatch(addDefaultChannel({ channelId: 18, channelName: 'perth', topic: 'people from perth, gather here' }));
   store.dispatch(addDefaultChannel({ channelId: 19, channelName: 'brisbane', topic: 'people from brisbane, gather here' }));
   store.dispatch(addDefaultChannel({ channelId: 20, channelName: 'nz', topic: 'people from new zealand, gather here' }));
-}, 2000);
+}, 400);
 setTimeout(() => {
   store.dispatch(setDefaultChannelsReceived());
-}, 2500);
+}, 500);
 
 // chat message test dispatches: { id, source, timestamp, message, appliedFont, appliedColor }
 store.dispatch(addMessage({ type: 'inbound', channelId: 1, timestamp:  getNowTimestamp()-17, source: '*', messageText: "A user has joined the channel", messageSent: true }));
@@ -71,7 +72,9 @@ store.subscribe(() => {
   if (state.userInterface.defaultChannelsJoin) { //only call the function if the condition of the state is met
     requestToJoinDefaultChannels(state, store.dispatch);
   }
-
+  if (state.userInterface.userChannelsJoin) { //only call the function if the condition of the state is met
+    requestToJoinUserChannels(state, store.dispatch);
+  }
 });
 
 //configure react-redux store provider

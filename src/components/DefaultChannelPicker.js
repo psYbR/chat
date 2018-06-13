@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { selectDefaultChannel, deselectDefaultChannel } from '../actions/defaultChannelsActions';
 
-class ChannelPicker extends React.Component {
+class DefaultChannelPicker extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -14,11 +14,11 @@ class ChannelPicker extends React.Component {
             <h3>Select some channels to join</h3>
         </div>
 
-        <div className="ChannelPickerContainer">
+        <div className="DCPContainer">
             {this.props.defaultChannels.map((channel) => {
                 return (
                     <div
-                        className={"ChannelPickerChannel" + (channel.isSelected ? " CPSelected" : '')}
+                        className={"DCPChannel" + (channel.isSelected ? " DCPSelected" : '')}
                         key={channel.channelId}
                         onClick={() => {
                             if (channel.isSelected) {
@@ -45,4 +45,4 @@ const mapStateToProps = (state) => {
   return state;
 };
 
-export default connect(mapStateToProps)(ChannelPicker);
+export default connect(mapStateToProps)(DefaultChannelPicker);

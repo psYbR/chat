@@ -1,10 +1,10 @@
 
 export const addUserChannel = (    
   {
-      channelId = 0,
-      channelName = '',
-      topic = '',
-      isSelected = false
+    channelId = 0,
+    channelName = '',
+    topic = '',
+    isSelected = false
   } = {}
 
 ) => ({ 
@@ -28,4 +28,6 @@ type: 'DESELECT_USER_CHANNEL',
 channelId
 });
 
-
+export const resetUserChannelSelections = () => ({ 
+  type: 'RESET_USER_CHANNEL_SELECTIONS'
+  });

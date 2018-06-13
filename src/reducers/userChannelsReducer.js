@@ -7,6 +7,13 @@ export default (state = reducerDefaultState, action) => {
             ...state,
             action.channel
             ];
+        case 'RESET_USER_CHANNEL_SELECTIONS':
+            return state.map((channel) => {
+                return {
+                    ...channel,
+                    isSelected: false
+                }
+            })
         case 'SELECT_USER_CHANNEL':
             return state.map((channel) => {
                 if (channel.channelId === action.channelId) {

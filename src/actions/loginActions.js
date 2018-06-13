@@ -4,7 +4,7 @@ export const setLoginState = (
 
       loggedIn = false,
       userid = 0,
-      nick = '',
+      nick = 'Tim',
       assignedGroup = 'guests',
       defaultChannelId = 1,
 
