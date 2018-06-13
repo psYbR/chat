@@ -26,6 +26,6 @@ export const requestToJoinDefaultChannels = (state, dispatch) => {
         dispatch(joinChannel(channel.channelId));
       }
     });
-  }, 3000);
+  }, 300);
 
 }

@@ -3,7 +3,7 @@ import React from 'react';
 const ConnectionStats = () => {
     return (
         <div className="connectionStatsContainer emphasised-container">
-            <p>[CONNECTED] Ping: <span className="pingText">24ms</span></p>
+            <p>[CONNECTED] Ping: <span className="pingText">--ms</span></p>
         </div>
     );
 }

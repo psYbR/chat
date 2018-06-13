@@ -5,6 +5,7 @@ import { getNowTimestamp } from '../utils/dateUtils';
 import { addMessage } from '../actions/messageActions';
 import { blurApp, unblurApp } from '../actions/userInterfaceActions';
 import { colorNameToRGB } from '../utils/styleInfo';
+import { socket } from '../app';
 
 class ChatInput extends React.Component {
     constructor(props) {
@@ -15,17 +16,21 @@ class ChatInput extends React.Component {
         const message = this.props.userInterface.inputFieldText;
         if (message && !(!message.replace(/\s/g, '').length)) {
             this.props.dispatch(setInputFieldText());
-            this.props.dispatch(addMessage(
-                {
-                    messageId: Math.floor(Math.random() * 20) + 100,
-                    type: 'outbound',
-                    channelId: this.props.userInterface.activeChannelId,
-                    timestamp: getNowTimestamp(),
-                    messageText: message,
-                    appliedFont: this.props.configuration.defaultFont,
-                    appliedColor: this.props.configuration.defaultColor
-                }
-            ));
+
+            // this.props.dispatch(addMessage(
+            //     {
+            //         messageId: Math.floor(Math.random() * 20) + 100,
+            //         type: 'outbound',
+            //         channelId: this.props.userInterface.activeChannelId,
+            //         timestamp: getNowTimestamp(),
+            //         messageText: message,
+            //         appliedFont: this.props.configuration.defaultFont,
+            //         appliedColor: this.props.configuration.defaultColor
+            //     }
+            // ));
+
+            socket.emit('chat message', message);
+
         }
     }
     onMessageChange = (e) => {

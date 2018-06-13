@@ -7,20 +7,11 @@ const UserWindow = ({ configuration, userInterface }) => {
     return (
         <div className={"userWindowContainer " + (userInterface.appIsBlurred ? " chatAppBlur" : '') /*Blur the app if the flag is set*/}>
             <div className="userListContainer emphasised-container">
-                <UserListItem userName="PantelicGR" isAway={false} isSelected={false} isCurrentUser={false} userClass="op"/>
-                <UserListItem userName="Guest63523" isAway={false} isSelected={false} isCurrentUser={false} userClass="op"/>
-                <UserListItem userName="tangles" isAway={false} isSelected={true} isCurrentUser={false} userClass="voice"/>
-                <UserListItem userName="snafu" isAway={true} isSelected={false} isCurrentUser={false} userClass="voice"/>
-                <UserListItem userName="tanglesBurger" isAway={false} isSelected={false} isCurrentUser={true} userClass="voice"/>
-                <UserListItem userName="_abbenormal" isAway={false} isSelected={false} isCurrentUser={false}/>
-                <UserListItem userName="ASTRA-" isAway={false} isSelected={false} isCurrentUser={false}/>
-                <UserListItem userName="kitten-Meow" isAway={false} isSelected={false} isCurrentUser={false}/>
-                <UserListItem userName="Brain" isAway={true} isSelected={false} isCurrentUser={false}/>
-                <UserListItem userName="Pak" isAway={false} isSelected={false} isCurrentUser={false}/>
-                <UserListItem userName="Pak_" isAway={true} isSelected={false} isCurrentUser={false}/>
+            {/* User class can be nothing, voice, or op */}
+                <UserListItem userName="?" isAway={false} isSelected={false} isCurrentUser={false} userClass="voice"/>
             </div>
             <div className="userStatsContainer emphasised-container">
-                <p>2 ops, 11 total</p>
+                <p>? ops, ? total</p>
             </div>
             <ConnectionStats />
         </div>
