@@ -31,18 +31,23 @@
     "webpack": "3.1.0"
   },
   "devDependencies": {
-    "eslint": "^4.19.1",
-    "cpx": "^1.5.0",
     "concurrently": "^3.5.1",
+    "cpx": "^1.5.0",
+    "del-cli": "^1.1.0",
+    "eslint": "^4.19.1",
     "webpack-dev-server": "2.5.1"
   },
   "scripts": {
-    "copybundle": "node_modules/.bin/cpx \"public/bundle.js\" \"server/public\"",
-    "copybundle-watch": "node_modules/.bin/cpx \"public/bundle.js\" \"server/public\" --watch",
     "webpack-build": "node_modules/.bin/webpack",
+    "webpack-prod": "node_modules/.bin/webpack -p --config webpack.config.prod.js",
     "webpack-watch": "node_modules/.bin/webpack --watch",
-    "webpack-build-prod": "node_modules/.bin/webpack -p --config webpack.config.prod.js",
-    "dev-concurrently": "node_modules/.bin/concurrently \"npm run copybundle\" \"npm run webpackwatch\"",
-    "concurrently-build": "node_modules/.bin/concurrently \"npm run copybundle\" \"npm run webpack-build\""
+    "copymap": "node_modules/.bin/cpx \"public/bundle.js.map\" \"server/public\"",
+    "delmap": "node_modules/.bin/del-cli server/public/bundle.js.map",
+    "copybundle": "node_modules/.bin/cpx \"public/bundle.js\" \"server/public\"",
+    "copybundle-prod": "node_modules/.bin/cpx \"public/bundle.js\" \"server/public\"",
+    "copybundle-watch": "node_modules/.bin/cpx \"public/bundle.js\" \"server/public\" --watch",
+    "build": "npm run webpack-build && npm run copybundle && npm run copymap",
+    "build-prod": "npm run webpack-prod && npm run copybundle-prod && npm run delmap",
+    "watch": "node_modules/.bin/concurrently \"npm run copybundle-watch\" \"npm run webpack-watch\""
   }
 }
