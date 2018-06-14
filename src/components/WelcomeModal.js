@@ -4,6 +4,7 @@ import { setUserNick, setLoggedIn } from '../actions/loginActions';
 import { unblurApp, setTermsAccepted, setTermsUnaccepted } from '../actions/userInterfaceActions';
 import DefaultChannelPicker from './DefaultChannelPicker';
 import { setJoinDefaultChannels } from '../actions/userInterfaceActions';
+import { nickMinLength, nickMaxLength } from '../config.js';
 
 class WelcomeModal extends React.Component {
   constructor(props) {
@@ -11,6 +12,10 @@ class WelcomeModal extends React.Component {
   }
   onGuestNickSubmit = (e) => {
     e.preventDefault();
+
+    //here the UI needs to request to set nick, check nick set result, show loading anim while waiting for nick confirmation
+    // and THEN send off unblur and channel join requests
+
     this.props.dispatch(setLoggedIn());
     this.props.dispatch(unblurApp());
     this.props.dispatch(setJoinDefaultChannels());
@@ -64,7 +69,13 @@ class WelcomeModal extends React.Component {
                   <button
                     className='guestNickSubmitButton'
                     //check that the user has picked at least one channel and entered a nick before enabling the button
-                    disabled={!this.props.loginState.nick || this.props.defaultChannels.filter((channel) => channel.isSelected == true).length < 1 || !this.props.userInterface.termsAccepted}
+                    disabled={
+                      !this.props.loginState.nick ||
+                      this.props.defaultChannels.filter((channel) => channel.isSelected == true).length < 1 ||
+                      !this.props.userInterface.termsAccepted ||
+                      this.props.loginState.nick.length < nickMinLength ||
+                      this.props.loginState.nick.length > nickMaxLength
+                     }
                   >Start chatting</button>
                 </form>
 

@@ -35,6 +35,26 @@ export const sendMessage = (outboundMsg) => {
   }
 }
 
+export const setNick = (nick) => {
+  let wasError = false;
+  let errorMsg = '';
+  if (nick.length > maxNickLength || nick.length < minNickLength) { //sanity check the nick length
+    wasError = true;
+    errorMsg = 'nick was either too long or too short';
+  }
+  if (wasError) {
+    store.dispatch(nickSetFailed(errorMsg)); //tell the UI setting of the nick failed
+  } else {
+    socket.emit('set nick', outboundMsg, (response) => { //send the nick and handle the response
+      if (response == "success") {
+        store.dispatch(nickSetSuccessful()); //update the UI and set the
+      } else {
+        store.dispatch(nickSetFailed(response)); //tell the UI setting of the nick failed
+      }      
+    });
+  }
+}
+
 //handle default channels
 socket.on('default channel', (channel) => {
   if (!store.getState().userInterface.defaultChannelsReceived) {

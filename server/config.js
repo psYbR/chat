@@ -21,6 +21,11 @@ const defaultChannels = [
   { channelId: 20, channelName: 'nz', topic: 'people from new zealand, gather here' }
 ];
 
+const nickMinLength = 3;
+const nickMaxLength = 20;
+
 module.exports = {
   defaultChannels: defaultChannels,
+  nickMinLength: nickMinLength,
+  nickMaxLength: nickMaxLength
 };
