@@ -18,14 +18,11 @@ class DefaultChannelPicker extends React.Component {
             {this.props.defaultChannels.map((channel) => {
                 return (
                     <div
-                        className={"DCPChannel" + (channel.isSelected ? " DCPSelected" : '')}
+                        className={"DCPChannel" + (channel.isSelected ? " DCPSelected" : '') + (this.props.userInterface.waitForNickAcceptance ? " DCPDisabled" : "")}
                         key={channel.channelId}
                         onClick={() => {
-                            //temporarily disable the buttons
-                            if (!this.props.loginState.loggedIn) { 
-                                console.log('Channel selection disabled - lobby only for now. Once you have logged in you can join other channels through the settings modal but they won\'t work yet.');
-                                return;
-                            
+                            if (this.props.userInterface.waitForNickAcceptance) {
+                                return; //don't do anything if waiting for nick acceptance
                             }
                             if (channel.isSelected) {
                                 this.props.dispatch(deselectDefaultChannel(channel.channelId));

@@ -41,6 +41,9 @@
 .DCPChannel:hover {
     background-color: $surround;
 }
+.DCPDisabled {
+    opacity: .5;
+}
 
 .DCPChannel > p {
     margin: 0 0 0 1rem;

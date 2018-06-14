@@ -41,9 +41,17 @@
 //MESSAGE CONTAINER
 .chatMessageTextContainer{
     
-    word-wrap:normal;
-    white-space:pre-wrap;
+    word-wrap: break-word;
+    word-break: break-all;
+    //white-space:pre-wrap;
 }
+.chatMessageTextContainer > p{
+    
+    word-wrap: break-word;
+    word-break: break-all;
+    //white-space:pre-wrap;
+}
+
 
 //OUTBOUND MESSAGES (class applied to container)
 .chatMessageCurrentUser > .pUserText {
@@ -52,6 +60,7 @@
 }
 .chatMessageCurrentUser > .pMessageText {
     color: $font-subtle;
+    
 }
 .chatMessageSystemUser {
     color: $system;

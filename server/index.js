@@ -34,7 +34,6 @@ io.on('connection', function(socket){
       console.log('connection from: ' + domains[0]);
     }
   });*/
-  
 
   //when the client requests a list of the default channels they may join
   socket.on('request default channels', function(){
@@ -61,23 +60,42 @@ io.on('connection', function(socket){
   //when the client requests to set their nick
   socket.on('set nick', function(nick, callback){
     let error = "success";
-    for (var i = 0; i < onlineUsers.length; i++) {
-      if (onlineUsers[i].nick == nick) {
-        error = "that nick is in use";
+    if (!nick) {
+      error = "no nick supplied";
+    } else {
+      console.log(onlineUsers);
+      //check if another user has that nick already
+      for (var i = 0; i < onlineUsers.length; i++) {
+        if (onlineUsers[i].nick == nick) {
+          error = "that nick is in use";
+        }
+      };
+      //check the length of the nick
+      if (nick.length > config.nickMaxLength) {
+        error = "nick was too long";
       }
-    };
-    if (nick.length > config.nickMaxLength) {
-      error = "nick was too long";
+      if (nick.length < config.nickMinLength) {
+        error = "nick was too short";
+      }
     }
-    if (nick.length < config.nickMinLength) {
-      error = "nick was too short";
-    }
+    //if there was no error
     if (error == "success") {
-      users.push({
+      //add the user to the array of online users
+      onlineUsers.push({
         nick: nick,
         socketId: socket.id
+        //ip address
       })
+      //send a message to channels
+      socket.broadcast.emit('chat message', {
+        type: 'inbound', //or 'outbound'
+        channelId: 1, //the channel the message was said in
+        source: '*', //the nickname of the person who sent the message
+        receivedTimestamp: Date.now(), //when the server distributed the message
+        messageText: nick + " joined the channel"
+      });
     }
+    //send the response
     callback(error);
   });
 
@@ -88,7 +106,7 @@ io.on('connection', function(socket){
     channelId: 1, //the channel the message was said in
     source: '*', //the nickname of the person who sent the message
     receivedTimestamp: Date.now(), //when the server distributed the message
-    messageText: "Welcome to the server"
+    messageText: "Welcome to the channel!"
   });
 
   //when the client sends a chat message
@@ -97,21 +115,32 @@ io.on('connection', function(socket){
     +new Date;
     outgoing.receivedTimestamp = Date.now();
     outgoing.sentTimestamp = "";
-    //outgoing.source = socket.id; //the username needs to be grabbed by matching the socket id to the user array
+    //grab the nickname associated with the source socket ID
+    for (var i = 0; i < onlineUsers.length; i++) {
+      if (onlineUsers[i].socketId == socket.id) {
+        outgoing.source = onlineUsers[i].nick;
+      }
+    };
     callback(msg.sentTimestamp);
     socket.broadcast.emit('chat message', outgoing); //change this to send to the relevant channel users
   });
 
   //when the client disconnects
   socket.on('disconnect', function(reason){
-    console.log('User disconnected: ' + reason);
-    io.emit('chat message', {
-      type: 'inbound', //or 'outbound'
-      channelId: 1, //the channel the message was said in
-      source: '*', //the nickname of the person who sent the message
-      receivedTimestamp: Date.now(), //when the server distributed the message
-      messageText: "user left the channel (" + (reason == "transport close" ? "connection closed" : reason) + ")"
-    });
+    //remove the user from the users array and send a notification to channels
+    for (var i = 0; i < onlineUsers.length; i++) {
+      if (onlineUsers[i].socketId == socket.id) {
+        io.emit('chat message', {
+          type: 'inbound', //or 'outbound'
+          channelId: 1, //the channel the message was said in
+          source: '*', //the nickname of the person who sent the message
+          receivedTimestamp: Date.now(), //when the server distributed the message
+          messageText: onlineUsers[i].nick + " left the channel (" + (reason == "transport close" ? "connection closed" : reason) + ")"
+        });
+        console.log('User "' + onlineUsers[i].nick + '" disconnected: ' + reason);
+        onlineUsers.splice(i,1);
+      }
+    };    
   });
 
 });

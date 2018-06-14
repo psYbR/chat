@@ -1,10 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setUserNick, setLoggedIn } from '../actions/loginActions';
-import { unblurApp, setTermsAccepted, setTermsUnaccepted } from '../actions/userInterfaceActions';
+import {
+  setUserNick,
+  setLoggedIn,
+  setTermsAccepted,
+  setTermsUnaccepted,
+  setJoinDefaultChannels,
+  startWaitForNickAcceptance
+} from '../actions/actions';
 import DefaultChannelPicker from './DefaultChannelPicker';
-import { setJoinDefaultChannels } from '../actions/userInterfaceActions';
 import { nickMinLength, nickMaxLength } from '../config.js';
+import { setNick } from "../utils/utils";
 
 class WelcomeModal extends React.Component {
   constructor(props) {
@@ -15,10 +21,9 @@ class WelcomeModal extends React.Component {
 
     //here the UI needs to request to set nick, check nick set result, show loading anim while waiting for nick confirmation
     // and THEN send off unblur and channel join requests
+    this.props.dispatch(startWaitForNickAcceptance());
+    setNick(this.props.loginState.nick);
 
-    this.props.dispatch(setLoggedIn());
-    this.props.dispatch(unblurApp());
-    this.props.dispatch(setJoinDefaultChannels());
   }
   onGuestNickChange = (e) => {
     const nick = e.target.value;
@@ -57,6 +62,7 @@ class WelcomeModal extends React.Component {
 
               <div className="guestNickEntry">
                 <form className="guestNickInputForm" onSubmit={this.onGuestNickSubmit}>
+                  {this.props.userInterface.nickSetFailedReason != '' ? <p className="nickSetFailedReason">{this.props.userInterface.nickSetFailedReason}</p> : ''}
                   <input 
                     className="guestNickInput"
                     type='text'
@@ -68,15 +74,16 @@ class WelcomeModal extends React.Component {
                   />
                   <button
                     className='guestNickSubmitButton'
-                    //check that the user has picked at least one channel and entered a nick before enabling the button
+                    //check for conditions that would cause the button to be disabled
                     disabled={
                       !this.props.loginState.nick ||
                       this.props.defaultChannels.filter((channel) => channel.isSelected == true).length < 1 ||
                       !this.props.userInterface.termsAccepted ||
                       this.props.loginState.nick.length < nickMinLength ||
-                      this.props.loginState.nick.length > nickMaxLength
+                      this.props.loginState.nick.length > nickMaxLength ||
+                      this.props.userInterface.waitForNickAcceptance
                      }
-                  >Start chatting</button>
+                  >{/*change the text of the button to a loading icon*/!this.props.userInterface.waitForNickAcceptance ? "Start chatting" : <span className="fa fa-spinner fa-spin"></span>}</button>
                 </form>
 
                 <div className="termsContainer">

@@ -31,7 +31,10 @@ export const setUIState = (
     userChannelsJoin = false, //whether the app should attempt to join the user channels
     channelPickerIsVisible = false,
     channelPickerSecondTab = false, //false to show the first tab, true for the second
-    reconnectionMessage = 'Connecting' //used by the ConnectingModal to show either Connecting or Re-connecting if the connection is being initially established or if it is lost
+    reconnectionMessage = 'Connecting', //used by the ConnectingModal to show either Connecting or Re-connecting if the connection is being initially established or if it is lost
+    waitForNickAcceptance = false, //set true while waiting for the server to accept changes to the nickname
+    nickSetFailedReason = '',
+    disconnectionReason = ''
   } = {}
 ) => ({
   type: 'SET_UI_STATE',
@@ -57,7 +60,10 @@ export const setUIState = (
     userChannelsJoin,
     channelPickerIsVisible,
     channelPickerSecondTab,
-    reconnectionMessage
+    reconnectionMessage,
+    waitForNickAcceptance,
+    nickSetFailedReason,
+    disconnectionReason
   }
 });
 
@@ -101,7 +107,17 @@ export const setDisconnectionReason = (disconnectionReason) => ({
   type: 'SET_DISCONNECTION_REASON',
   disconnectionReason
 });
+export const setNickSetFailedReason = (nickSetFailedReason) => ({
+  type: 'SET_NICK_SET_FAILED_REASON',
+  nickSetFailedReason
+});
 
+export const startWaitForNickAcceptance = () => ({
+  type: 'START_WAIT_FOR_NICK_ACCEPTANCE'
+});
+export const stopWaitForNickAcceptance = () => ({
+  type: 'STOP_WAIT_FOR_NICK_ACCEPTANCE'
+});
 export const startRetrieveUserChannels = () => ({
   type: 'START_RETRIEVE_USER_CHANNELS'
 });

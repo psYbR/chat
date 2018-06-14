@@ -6,15 +6,18 @@ import { resetDefaultChannelSelections } from '../actions/defaultChannelsActions
 export const requestToJoinDefaultChannels = (state, dispatch) => {
   dispatch(unsetJoinDefaultChannels()); //reset the state value that triggers this function call
   dispatch(resetDefaultChannelSelections()); //reset the selections
-  let wasSetCurrent = false;
+  //if none of the channels are "current" (the one the user is viewing), assign one channel to be current
+  let setCurrent = true;
+  if (state.channels.filter((channel) => channel.isCurrent == true).length === 0) {
+    setCurrent = false;
+  }
   state.defaultChannels.map((defaultChannel) => {
     if (defaultChannel.isSelected) {
       const joinedChannel = state.channels.filter((channel) => channel.channelId == defaultChannel.channelId)[0];
       if (!joinedChannel || !joinedChannel.isJoined) { //do a check first to make sure the channel isn't already joined
-
-        if (!wasSetCurrent) {
+        if (!setCurrent) {
           dispatch(addChannel({ channelId: defaultChannel.channelId, channelName: defaultChannel.channelName, topic: defaultChannel.topic, isCurrent: true }));
-          wasSetCurrent = true;
+          setCurrent = true;
         } else {
           dispatch(addChannel({ channelId: defaultChannel.channelId, channelName: defaultChannel.channelName, topic: defaultChannel.topic }));
         }
@@ -26,7 +29,7 @@ export const requestToJoinDefaultChannels = (state, dispatch) => {
     }
   });
 
-  //for testing purposes (simulates joining the channel)
+  //for testing purposes (simulates joining the channel after a delay)
   setTimeout(() => {
     state.defaultChannels.map((channel) => {
       if (channel.isSelected) {

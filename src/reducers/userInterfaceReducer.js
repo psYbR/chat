@@ -50,7 +50,22 @@ export default (state = reducerDefaultState, action) => {
         ...state,
         disconnectionReason: action.disconnectionReason
       };
+    case 'SET_NICK_SET_FAILED_REASON':
+      return {
+        ...state,
+        nickSetFailedReason: action.nickSetFailedReason
+      };
     
+    case 'START_WAIT_FOR_NICK_ACCEPTANCE':
+      return {
+        ...state,
+        waitForNickAcceptance: true
+      };
+    case 'STOP_WAIT_FOR_NICK_ACCEPTANCE':
+      return {
+        ...state,
+        waitForNickAcceptance: false
+      };
     case 'START_RETRIEVE_USER_CHANNELS':
       return {
         ...state,

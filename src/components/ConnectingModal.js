@@ -21,7 +21,10 @@ class ConnectingModal extends React.Component {
                     }
                 }><div className="fa fa-spinner fa-spin"></div></h1>
                 {!this.props.userInterface.appIsConnected
-                  && <p>establishing connection...</p>}
+                  && <p>trying to establish a connection...</p>}
+                {(!this.props.userInterface.appIsConnected
+                  && this.props.userInterface.disconnectionReason != "")
+                  && <p>{this.props.userInterface.disconnectionReason}</p>}
                 {(this.props.userInterface.appIsConnected
                 && !this.props.userInterface.defaultChannelsReceived)
                   && <p>downloading channel info - {this.props.defaultChannels.length} channels received...</p>}
