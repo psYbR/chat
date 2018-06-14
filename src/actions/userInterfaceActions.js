@@ -30,7 +30,8 @@ export const setUIState = (
     numberOfUserChannels = 0, //the server will provide this value so that when the client requests a list, we know the progress of the list retrieval
     userChannelsJoin = false, //whether the app should attempt to join the user channels
     channelPickerIsVisible = false,
-    channelPickerSecondTab = false //false to show the first tab, true for the second
+    channelPickerSecondTab = false, //false to show the first tab, true for the second
+    reconnectionMessage = 'Connecting' //used by the ConnectingModal to show either Connecting or Re-connecting if the connection is being initially established or if it is lost
   } = {}
 ) => ({
   type: 'SET_UI_STATE',
@@ -55,7 +56,8 @@ export const setUIState = (
     numberOfUserChannels,
     userChannelsJoin,
     channelPickerIsVisible,
-    channelPickerSecondTab
+    channelPickerSecondTab,
+    reconnectionMessage
   }
 });
 
@@ -94,6 +96,10 @@ export const setWindowWidth = (windowWidth) => ({
 export const setNumberOfUserChannels = (numberOfUserChannels) => ({
   type: 'SET_NUMBER_OF_USER_CHANNELS',
   numberOfUserChannels
+});
+export const setDisconnectionReason = (disconnectionReason) => ({
+  type: 'SET_DISCONNECTION_REASON',
+  disconnectionReason
 });
 
 export const startRetrieveUserChannels = () => ({

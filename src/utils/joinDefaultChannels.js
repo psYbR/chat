@@ -6,11 +6,18 @@ import { resetDefaultChannelSelections } from '../actions/defaultChannelsActions
 export const requestToJoinDefaultChannels = (state, dispatch) => {
   dispatch(unsetJoinDefaultChannels()); //reset the state value that triggers this function call
   dispatch(resetDefaultChannelSelections()); //reset the selections
+  let wasSetCurrent = false;
   state.defaultChannels.map((defaultChannel) => {
     if (defaultChannel.isSelected) {
       const joinedChannel = state.channels.filter((channel) => channel.channelId == defaultChannel.channelId)[0];
       if (!joinedChannel || !joinedChannel.isJoined) { //do a check first to make sure the channel isn't already joined
-        dispatch(addChannel({ channelId: defaultChannel.channelId, channelName: defaultChannel.channelName, topic: defaultChannel.topic }));
+
+        if (!wasSetCurrent) {
+          dispatch(addChannel({ channelId: defaultChannel.channelId, channelName: defaultChannel.channelName, topic: defaultChannel.topic, isCurrent: true }));
+          wasSetCurrent = true;
+        } else {
+          dispatch(addChannel({ channelId: defaultChannel.channelId, channelName: defaultChannel.channelName, topic: defaultChannel.topic }));
+        }
 
         // here, send the actual server request to join the channel
         // for eg. requestChannelJoin(channel.channelId);

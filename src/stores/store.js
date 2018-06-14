@@ -48,8 +48,14 @@ import loginReducer from '../reducers/loginReducer';
 import defaultChannelsReducer from '../reducers/defaultChannelsReducer';
 import userChannelsReducer from '../reducers/userChannelsReducer';
 
+import {
+  setUIState,
+  setLoginState,
+  setConfiguration
+} from '../actions/actions';
+
 //CREATE STORE
-export default () => {
+const configureStore = () => {
 
   const store = createStore(combineReducers({
     channels: channelReducer,
@@ -67,3 +73,11 @@ export default () => {
 
   return store;
 };
+
+export const store = configureStore();
+
+// populate the state with default values
+store.dispatch(setUIState());
+store.dispatch(setConfiguration());
+store.dispatch(setLoginState());
+

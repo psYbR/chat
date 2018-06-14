@@ -33,7 +33,8 @@ export const addMessage = (
 
 });
 
-export const setMessageSent = (sentTimestamp) => ({
+export const setMessageSent = (sentTimestamp, status) => ({
     type: 'SET_MESSAGE_SENT',
+    status,
     sentTimestamp
 });

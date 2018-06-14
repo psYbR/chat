@@ -1,11 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setInputFieldText, showStyleModal, hideStyleModal } from '../actions/userInterfaceActions';
-import { getNowTimestamp } from '../utils/dateUtils';
-import { addMessage, setMessageSent } from '../actions/messageActions';
-import { blurApp, unblurApp } from '../actions/userInterfaceActions';
-import { colorNameToRGB } from '../utils/styleInfo';
-import { socket } from '../app';
+import { maxMessageLength } from '../config.js';
+import { setInputFieldText, showStyleModal, hideStyleModal, addMessage } from '../actions/actions';
+import { getNowTimestamp, sendMessage, colorNameToRGB } from '../utils/utils';
+
+// to do:
+//
+//      message history when pressing up arrow
+//
 
 class ChatInput extends React.Component {
     constructor(props) {
@@ -26,6 +28,7 @@ class ChatInput extends React.Component {
                 sentTimestamp: getNowTimestamp(),
             };
 
+            //add the message to the UI but set it as not sent yet - the callback from sendMessage will set it as sent
             this.props.dispatch(addMessage(
                 {
                     ...outboundMsg,
@@ -34,19 +37,16 @@ class ChatInput extends React.Component {
                 }
             ));
 
-            //send the message
-            socket.emit('chat message', outboundMsg, (response) => {
-                //handle the response (the server sends back the Sent Timestamp so the message sent status can be updated)
-                const sentTimestamp = response;
-                this.props.dispatch(setMessageSent(sentTimestamp));
-                console.log("message sent successfully: " + sentTimestamp);
-            });
+            //send the message via the socket
+            sendMessage(outboundMsg);
 
         }
     }
     onMessageChange = (e) => {
         const message = e.target.value;
-        this.props.dispatch(setInputFieldText(message));
+        if (message.length < maxMessageLength) {
+            this.props.dispatch(setInputFieldText(message));
+        }
     }
     handleKeyPress = (e) => {
         if (e.key == "ArrowUp") {

@@ -14,7 +14,7 @@ class ConnectingModal extends React.Component {
         </div>
         <div className="ModalOuterContainer">
             <div className="ModalInnerContainer ConnectingModalContainer">
-                <h1 className="connectingTitle">Connecting...</h1>
+                <h1 className="connectingTitle">{this.props.userInterface.reconnectionMessage}...</h1>
                 <h1 style={
                     {
                         textAlign: 'center'

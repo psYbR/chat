@@ -45,7 +45,12 @@ export default (state = reducerDefaultState, action) => {
         ...state,
         numberOfUserChannels: action.numberOfUserChannels
       };
-
+    case 'SET_DISCONNECTION_REASON':
+      return {
+        ...state,
+        disconnectionReason: action.disconnectionReason
+      };
+    
     case 'START_RETRIEVE_USER_CHANNELS':
       return {
         ...state,
@@ -84,7 +89,8 @@ export default (state = reducerDefaultState, action) => {
     case 'SET_CONNECTED':
       return {
         ...state,
-        appIsConnected: true
+        appIsConnected: true,
+        reconnectionMessage: "Reconnecting"
       };  
     case 'SET_DISCONNECTED':
       return {
