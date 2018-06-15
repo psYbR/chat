@@ -15,9 +15,38 @@ import {
   setLoggedIn,
   setJoinDefaultChannels,
   stopWaitForNickAcceptance,
-  setNickSetFailedReason
+  setNickSetFailedReason,
+  joinChannel
 } from '../actions/actions';
 import { getNowTimestamp } from '../utils/utils';
+
+//send request to join a channel
+export const requestJoinChannel = (channelId) => {
+  
+  //check ID is a number
+  if (isNaN(channelId)) {
+    //tell the UI setting of the nick failed
+    console.log("requesting to join channel ID failed: not a valid ID");
+    store.dispatch(addMessage({source: "*", channelId: channelId, messageSent: true, receivedTimestamp: getNowTimestamp(), messageText: "Could not join channel: invalid ID" }));
+  }
+  //if there was no error
+  else {
+    console.log("requesting to join channel ID: " + channelId);
+    socket.emit('join channel', channelId, ({ response, channelId }) => { //send the nick to the server
+      //handle the response (a string; either "success" or the reason the channel wasn't joined eg. in use)
+      if (response == "success") {
+        console.log("request to join channel ID " + channelId + " succeeded!");
+        store.dispatch(joinChannel(channelId)); //set the UI to show the channel as joined
+      } else if (response == "already in channel") {
+        console.log("no need to join channel ID " + channelId + " - already there!");
+        store.dispatch(joinChannel(channelId)); //set the UI to show the channel as joined
+      } else {
+        console.log("request to join channel ID " + channelId + " failed: " + response);
+        store.dispatch(addMessage({source: "*", channelId: channelId, messageSent: true, receivedTimestamp: getNowTimestamp(), messageText: "Could not join channel: " + response }));
+      }      
+    });
+  }
+}
 
 //send chat messages to the server and handle the response on success or failure
 export const sendMessage = (outboundMsg) => {
@@ -39,10 +68,16 @@ export const sendMessage = (outboundMsg) => {
   }
   //if there wasn't an error, send the message
   else {
-    socket.emit('chat message', outboundMsg, (response) => {
+    socket.emit('chat message', outboundMsg, ({ timestamp, response }) => {
       // handle the response
-      store.dispatch(setMessageSent(response, "success"));
-      //the response from the server will be the original sentTimestamp of the message and is used by the client to set the message to 'sent' status upon receipt of the response
+      if (response == "success") {
+        console.log("Message " + timestamp + " sent successfully!");
+        store.dispatch(setMessageSent(timestamp, "success"));
+      } else {
+        console.log("Message " + timestamp + " not sent: " + response);
+        store.dispatch(setMessageSent(timestamp, response));
+      }
+      
     });
   }
 }
@@ -73,25 +108,6 @@ export const setNick = (nick) => {
       } else {
         store.dispatch(stopWaitForNickAcceptance());
         store.dispatch(setNickSetFailedReason(response)); //tell the UI that setting the nick failed
-      }      
-    });
-  }
-}
-
-//send request to join a channel
-export const joinChannel = (channelId) => {
-  //check ID is a number
-  if (IsNaN(channelId)) {
-    store.dispatch(joinChannelFailed("invalid channel ID from client")); //tell the UI setting of the nick failed
-  }
-  //if there was no error
-  else {
-    socket.emit('join channel', channelId, ({ response, channelId }) => { //send the nick to the server
-      //handle the response (a string; either "success" or the reason the channel wasn't joined eg. in use)
-      if (response == "success") {
-        dispatch(joinChannel(channelId)); //set the UI to show the channel as joined
-      } else {
-        store.dispatch(addMessage({source: "*", channelId: channelId, messageSent: true, receivedTimestamp: getNowTimestamp(), messageText: "Could not join channel: " + response }));
       }      
     });
   }

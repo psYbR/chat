@@ -20,7 +20,7 @@ class ChatInput extends React.Component {
             this.props.dispatch(setInputFieldText());
 
             const outboundMsg = {
-                source: this.props.loginState.nick, //remove and do this serverside
+                //source: this.props.loginState.nick, //remove and do this serverside
                 channelId: this.props.userInterface.activeChannelId, //verify serverside
                 messageText: message,
                 appliedFont: this.props.configuration.defaultFont, //validate

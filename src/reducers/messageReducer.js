@@ -10,7 +10,7 @@ export default (state = reducerDefaultState, action) => {
         case 'SET_MESSAGE_SENT':
             return state.map((message) => {
                 if (message.sentTimestamp === action.sentTimestamp) {
-                    if (action.status == "success") {
+                    if (action.response == "success") {
                         return {
                             ...message,
                             messageSent: true
@@ -18,7 +18,9 @@ export default (state = reducerDefaultState, action) => {
                     } else {
                         return {
                             ...message,
-                            messageText: "^4[Message not sent: " + action.status + "] ^0" + message.messageText, //add an error in red to the start of the message
+                            messageText: "^4[Message not sent: " + action.response + "] ^0" + message.messageText, //add an error in red to the start of the message
+                            appliedFont: "Source Sans Pro", //and override the formatting so it doesn't look silly
+                            appliedColor: "default",
                             messageSent: true
                         }
                     }                    

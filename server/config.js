@@ -1,3 +1,15 @@
+//
+//  configuration for blazechat server
+//
+
+const nickMinLength = 3;
+const nickMaxLength = 20;
+const messageMaxLength = 510;
+const pingTimeout = 90000; //milliseconds
+const pingInterval = 5000; //milliseconds
+const maxHttpBufferSize = 50000; //50kb
+
+//the list of default channels that show up at the welcome screen
 const defaultChannels = [
   { channelId: 1, channelName: 'lobby', topic: 'Welcome to the lobby', isSelected: true },
   { channelId: 2, channelName: 'help', topic: 'Join this channel to get help using Chat App' },
@@ -21,11 +33,12 @@ const defaultChannels = [
   { channelId: 20, channelName: 'nz', topic: 'people from new zealand, gather here' }
 ];
 
-const nickMinLength = 3;
-const nickMaxLength = 20;
-
 module.exports = {
   defaultChannels: defaultChannels,
   nickMinLength: nickMinLength,
-  nickMaxLength: nickMaxLength
+  nickMaxLength: nickMaxLength,
+  messageMaxLength: messageMaxLength,
+  pingTimeout: pingTimeout,
+  pingInterval: pingInterval,
+  maxHttpBufferSize: maxHttpBufferSize
 };

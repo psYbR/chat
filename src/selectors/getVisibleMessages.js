@@ -26,7 +26,6 @@ export default ( { messages, userInterface, loginState, configuration, channels 
     filtered = messages.filter(message => message.channelId == userInterface.activeChannelId && message.source != '*'); //filter messages from System
   }
   
-
   //set the current user's nickname on outbound messages
   filtered = filtered.map((message) => {
     if (message.type == 'outbound') {
@@ -35,13 +34,13 @@ export default ( { messages, userInterface, loginState, configuration, channels 
     return message;
   });
 
-  if (channelJoined) {
-    //sort by timestamp and return
-    return filtered.sort(compare);
-  } else {
-    //if the channel isn't joined yet, only show a default system message in that channel
-    return [{ type: 'inbound', channelId: userInterface.activeChannelId, timestamp:  0, source: '*', messageText: "Trying to join channel...", messageSent: false }];
-  }
+  // if (channelJoined) {
+  //   //sort by timestamp and return
+  return filtered.sort(compare);
+  // } else {
+  //   //if the channel isn't joined yet, only show a default system message in that channel
+  //   return [{ type: 'inbound', channelId: userInterface.activeChannelId, timestamp:  0, source: '*', messageText: "Trying to join channel...", messageSent: false }];
+  // }
 
 
 };

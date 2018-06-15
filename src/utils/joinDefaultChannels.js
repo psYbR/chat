@@ -1,6 +1,5 @@
-import { unsetJoinDefaultChannels } from '../actions/userInterfaceActions';
-import { addChannel, joinChannel } from '../actions/channelActions';
-import { resetDefaultChannelSelections } from '../actions/defaultChannelsActions';
+import { unsetJoinDefaultChannels, resetDefaultChannelSelections, addChannel, joinChannel } from '../actions/actions';
+import { requestJoinChannel } from '../utils/utils';
 
 //sends server request to join the default channels the user initially selected
 export const requestToJoinDefaultChannels = (state, dispatch) => {
@@ -22,18 +21,8 @@ export const requestToJoinDefaultChannels = (state, dispatch) => {
           dispatch(addChannel({ channelId: defaultChannel.channelId, channelName: defaultChannel.channelName, topic: defaultChannel.topic }));
         }
         // here, send the actual server request to join the channel
-        joinChannel(defaultChannel.channelId)
+        requestJoinChannel(defaultChannel.channelId)
       }
     }
   });
-
-  //for testing purposes (simulates joining the channel after a delay)
-  setTimeout(() => {
-    state.defaultChannels.map((channel) => {
-      if (channel.isSelected) {
-        //dispatch(joinChannel(channel.channelId));
-      }
-    });
-  }, 300);
-
 }
