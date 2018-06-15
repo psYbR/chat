@@ -78,6 +78,25 @@ export const setNick = (nick) => {
   }
 }
 
+//send request to join a channel
+export const joinChannel = (channelId) => {
+  //check ID is a number
+  if (IsNaN(channelId)) {
+    store.dispatch(joinChannelFailed("invalid channel ID from client")); //tell the UI setting of the nick failed
+  }
+  //if there was no error
+  else {
+    socket.emit('join channel', channelId, ({ response, channelId }) => { //send the nick to the server
+      //handle the response (a string; either "success" or the reason the channel wasn't joined eg. in use)
+      if (response == "success") {
+        dispatch(joinChannel(channelId)); //set the UI to show the channel as joined
+      } else {
+        store.dispatch(addMessage({source: "*", channelId: channelId, messageSent: true, receivedTimestamp: getNowTimestamp(), messageText: "Could not join channel: " + response }));
+      }      
+    });
+  }
+}
+
 //handle receiving default channels from the server
 socket.on('default channel', (channel) => {
   if (!store.getState().userInterface.defaultChannelsReceived) {
@@ -108,7 +127,6 @@ socket.on('reconnect', () => {
 
 //handle disconnections and error states
 const handleDisconnect = (reason) => {
-  console.log("Socket disconnected! Reason: " + reason);
   store.dispatch(updatePing('--'));
   store.dispatch(setDisconnected());
   store.dispatch(setDisconnectionReason(reason));

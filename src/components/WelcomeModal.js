@@ -19,11 +19,11 @@ class WelcomeModal extends React.Component {
   onGuestNickSubmit = (e) => {
     e.preventDefault();
 
-    //here the UI needs to request to set nick, check nick set result, show loading anim while waiting for nick confirmation
-    // and THEN send off unblur and channel join requests
+    //set the UI to wait for the server to confirm the nick was set
     this.props.dispatch(startWaitForNickAcceptance());
+    
+    //send the request
     setNick(this.props.loginState.nick);
-
   }
   onGuestNickChange = (e) => {
     const nick = e.target.value;
@@ -83,7 +83,10 @@ class WelcomeModal extends React.Component {
                       this.props.loginState.nick.length > nickMaxLength ||
                       this.props.userInterface.waitForNickAcceptance
                      }
-                  >{/*change the text of the button to a loading icon*/!this.props.userInterface.waitForNickAcceptance ? "Start chatting" : <span className="fa fa-spinner fa-spin"></span>}</button>
+                  >
+                    {/*change the text of the button to a loading icon*/!this.props.userInterface.waitForNickAcceptance
+                    ? "Start chatting" : <span className="fa fa-spinner fa-spin"></span>}
+                  </button>
                 </form>
 
                 <div className="termsContainer">

@@ -21,10 +21,8 @@ export const requestToJoinDefaultChannels = (state, dispatch) => {
         } else {
           dispatch(addChannel({ channelId: defaultChannel.channelId, channelName: defaultChannel.channelName, topic: defaultChannel.topic }));
         }
-
         // here, send the actual server request to join the channel
-        // for eg. requestChannelJoin(channel.channelId);
-
+        joinChannel(defaultChannel.channelId)
       }
     }
   });
@@ -33,7 +31,7 @@ export const requestToJoinDefaultChannels = (state, dispatch) => {
   setTimeout(() => {
     state.defaultChannels.map((channel) => {
       if (channel.isSelected) {
-        dispatch(joinChannel(channel.channelId));
+        //dispatch(joinChannel(channel.channelId));
       }
     });
   }, 300);

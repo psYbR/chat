@@ -14,13 +14,17 @@ app.get('/', function(req, res){
 
 var config = require('./config');
 
+//users that are currently connected
 var onlineUsers = [{
   nick: "Overwatch",
   socketId: '',
   ipaddress: 'x.x.x.x'
 }];
 
-//TO DO: should be saved/loaded from disk
+//holds users that have joined channels
+var channelsJoined = [];
+
+//TO DO: custom-made channels that should be saved/loaded from disk
 var userChannels = []; 
 
 //the business end of the stick - event handlers for the client belong in here
@@ -34,6 +38,39 @@ io.on('connection', function(socket){
       console.log('connection from: ' + domains[0]);
     }
   });*/
+
+  //when the client requests to join a channel
+  socket.on('join channel', function(channelId, callback){
+    let response = "success"
+    //check the channel ID was valid
+    if (IsNaN(channelId)) {
+      response = "invalid channel ID";
+    }
+
+    //check if the ID is in the channel lists
+    response = "channel not found";
+    for (var i = 0; i < config.defaultChannels.length; i++) {
+      if (config.defaultChannels[i].channelId == channelId) {
+        response = "success";
+      }
+    };
+    for (var i = 0; i < config.userChannels.length; i++) {
+      if (config.userChannels[i].channelId == channelId) {
+        response = "success";
+      }
+    };
+
+    //check the permissions for the channel here
+
+    //add the user to the channel
+    if (response == "success") {
+      channelsJoined.push({
+        channelId: channelId,
+        userId: socket.id
+      })
+    }
+    callback(response);
+  });
 
   //when the client requests a list of the default channels they may join
   socket.on('request default channels', function(){
