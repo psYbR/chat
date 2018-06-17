@@ -42,6 +42,7 @@ export const requestJoinChannel = (channelId) => {
         store.dispatch(joinChannel(channelId)); //set the UI to show the channel as joined
       } else {
         console.log("request to join channel ID " + channelId + " failed: " + response);
+        //show an error
         store.dispatch(addMessage({source: "*", channelId: channelId, messageSent: true, receivedTimestamp: getNowTimestamp(), messageText: "Could not join channel: " + response }));
       }      
     });
@@ -130,15 +131,40 @@ socket.on('chat message', (msg) => {
   store.dispatch(addMessage({...msg, messageSent: true}));
 });
 
-//handle successful connections
-socket.on('connect', () => {
-  store.dispatch(setConnected());
+//handle connection
+const handleConnect = (socket, reconnect) => {
+
+  store.dispatch(setConnected()); //set UI state to show connected
   if (!store.getState().userInterface.defaultChannelsReceived) { 
     socket.emit('request default channels'); //send a request for default channel list only if we don't have one
   }
+
+  if (reconnect) {
+    console.log("socket connection re-established");
+
+    //request to re-join channels
+    store.getState().channels.map((channel) => {
+      if (channel.isJoined) {
+        requestJoinChannel(channel.channelId);
+      }
+    });
+
+  } else {
+    console.log("socket connection established");
+  }
+  
+  
+
+
+}
+
+//handle successful connections
+socket.on('connect', () => {
+  socket.removeListener('connect'); //we only want to do this once - otherwise on 'reconnect' this will also be called
+  handleConnect(socket, false);
 });
 socket.on('reconnect', () => {
-  store.dispatch(setConnected());
+  handleConnect(socket, true);
 });
 
 //handle disconnections and error states

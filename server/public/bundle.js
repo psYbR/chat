@@ -31549,6 +31549,9 @@ var requestJoinChannel = exports.requestJoinChannel = function requestJoinChanne
         if (response == "success") {
           console.log("request to join channel ID " + channelId + " succeeded!");
           _store.store.dispatch((0, _actions.joinChannel)(channelId)); //set the UI to show the channel as joined
+        } else if (response == "already in channel") {
+          console.log("no need to join channel ID " + channelId + " - already there!");
+          _store.store.dispatch((0, _actions.joinChannel)(channelId)); //set the UI to show the channel as joined
         } else {
           console.log("request to join channel ID " + channelId + " failed: " + response);
           _store.store.dispatch((0, _actions.addMessage)({ source: "*", channelId: channelId, messageSent: true, receivedTimestamp: (0, _utils.getNowTimestamp)(), messageText: "Could not join channel: " + response }));
@@ -31642,15 +31645,26 @@ socket.on('chat message', function (msg) {
   _store.store.dispatch((0, _actions.addMessage)(_extends({}, msg, { messageSent: true })));
 });
 
-//handle successful connections
-socket.on('connect', function () {
+//handle connection
+var handleConnect = function handleConnect(socket, reconnect) {
+  if (reconnect) {
+    console.log("socket connection re-established");
+  } else {
+    console.log("socket connection established");
+  }
+
   _store.store.dispatch((0, _actions.setConnected)());
   if (!_store.store.getState().userInterface.defaultChannelsReceived) {
     socket.emit('request default channels'); //send a request for default channel list only if we don't have one
   }
+};
+
+//handle successful connections
+socket.on('connect', function () {
+  handleConnect(socket, false);
 });
 socket.on('reconnect', function () {
-  _store.store.dispatch((0, _actions.setConnected)());
+  handleConnect(socket, true);
 });
 
 //handle disconnections and error states
