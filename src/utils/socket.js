@@ -18,7 +18,8 @@ import {
   startWaitForNickAcceptance,
   setNickSetFailedReason,
   joinChannel,
-  setCurrentChannel
+  setCurrentChannel,
+  addUser
 } from '../actions/actions';
 import { getNowTimestamp } from '../utils/utils';
 
@@ -120,6 +121,11 @@ export const setNick = (nick) => {
     });
   }
 }
+
+//handle receiving a user
+socket.on('user', (user) => {
+  store.dispatch(addUser(user));
+});
 
 //handle receiving default channels from the server
 socket.on('default channel', (channel) => {

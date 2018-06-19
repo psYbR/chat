@@ -3297,6 +3297,89 @@ module.exports = DOMLazyTree;
 /* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _dateUtils = __webpack_require__(67);
+
+Object.keys(_dateUtils).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _dateUtils[key];
+    }
+  });
+});
+
+var _joinDefaultChannels = __webpack_require__(278);
+
+Object.keys(_joinDefaultChannels).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _joinDefaultChannels[key];
+    }
+  });
+});
+
+var _joinUserChannels = __webpack_require__(279);
+
+Object.keys(_joinUserChannels).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _joinUserChannels[key];
+    }
+  });
+});
+
+var _MessageHTMLify = __webpack_require__(117);
+
+Object.keys(_MessageHTMLify).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _MessageHTMLify[key];
+    }
+  });
+});
+
+var _socket = __webpack_require__(280);
+
+Object.keys(_socket).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _socket[key];
+    }
+  });
+});
+
+var _styleInfo = __webpack_require__(69);
+
+Object.keys(_styleInfo).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _styleInfo[key];
+    }
+  });
+});
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports, __webpack_require__) {
+
 
 /**
  * Expose `Emitter`.
@@ -3463,7 +3546,7 @@ Emitter.prototype.hasListeners = function(event){
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
@@ -4076,7 +4159,7 @@ exports.decodePayloadAsBinary = function (data, binaryType, callback) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4092,7 +4175,7 @@ exports.decodePayloadAsBinary = function (data, binaryType, callback) {
 
 
 
-var EventPluginHub = __webpack_require__(27);
+var EventPluginHub = __webpack_require__(28);
 var EventPluginUtils = __webpack_require__(47);
 
 var accumulateInto = __webpack_require__(82);
@@ -4216,7 +4299,7 @@ module.exports = EventPropagators;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4496,7 +4579,7 @@ module.exports = EventPluginHub;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4560,7 +4643,7 @@ SyntheticEvent.augmentClass(SyntheticUIEvent, UIEventInterface);
 module.exports = SyntheticUIEvent;
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4611,7 +4694,7 @@ var ReactInstanceMap = {
 module.exports = ReactInstanceMap;
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4713,89 +4796,6 @@ Object.keys(_userInterfaceActions).forEach(function (key) {
     enumerable: true,
     get: function get() {
       return _userInterfaceActions[key];
-    }
-  });
-});
-
-/***/ }),
-/* 31 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _dateUtils = __webpack_require__(67);
-
-Object.keys(_dateUtils).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _dateUtils[key];
-    }
-  });
-});
-
-var _joinDefaultChannels = __webpack_require__(278);
-
-Object.keys(_joinDefaultChannels).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _joinDefaultChannels[key];
-    }
-  });
-});
-
-var _joinUserChannels = __webpack_require__(279);
-
-Object.keys(_joinUserChannels).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _joinUserChannels[key];
-    }
-  });
-});
-
-var _MessageHTMLify = __webpack_require__(117);
-
-Object.keys(_MessageHTMLify).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _MessageHTMLify[key];
-    }
-  });
-});
-
-var _socket = __webpack_require__(280);
-
-Object.keys(_socket).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _socket[key];
-    }
-  });
-});
-
-var _styleInfo = __webpack_require__(69);
-
-Object.keys(_styleInfo).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _styleInfo[key];
     }
   });
 });
@@ -5366,7 +5366,7 @@ module.exports = TransactionImpl;
 
 
 
-var SyntheticUIEvent = __webpack_require__(28);
+var SyntheticUIEvent = __webpack_require__(29);
 var ViewportMetrics = __webpack_require__(89);
 
 var getEventModifierState = __webpack_require__(51);
@@ -7744,7 +7744,7 @@ module.exports = KeyEscapeUtils;
 var _prodInvariant = __webpack_require__(3);
 
 var ReactCurrentOwner = __webpack_require__(13);
-var ReactInstanceMap = __webpack_require__(29);
+var ReactInstanceMap = __webpack_require__(30);
 var ReactInstrumentation = __webpack_require__(12);
 var ReactUpdates = __webpack_require__(14);
 
@@ -8869,7 +8869,7 @@ function plural(ms, n, name) {
  */
 
 var debug = __webpack_require__(284)('socket.io-parser');
-var Emitter = __webpack_require__(24);
+var Emitter = __webpack_require__(25);
 var binary = __webpack_require__(286);
 var isArray = __webpack_require__(119);
 var isBuf = __webpack_require__(120);
@@ -9334,8 +9334,8 @@ module.exports = function (opts) {
  * Module dependencies.
  */
 
-var parser = __webpack_require__(25);
-var Emitter = __webpack_require__(24);
+var parser = __webpack_require__(26);
+var Emitter = __webpack_require__(25);
 
 /**
  * Module exports.
@@ -12640,7 +12640,7 @@ var ReactDOMComponentTree = __webpack_require__(6);
 var ReactDOMContainerInfo = __webpack_require__(222);
 var ReactDOMFeatureFlags = __webpack_require__(223);
 var ReactFeatureFlags = __webpack_require__(86);
-var ReactInstanceMap = __webpack_require__(29);
+var ReactInstanceMap = __webpack_require__(30);
 var ReactInstrumentation = __webpack_require__(12);
 var ReactMarkupChecksum = __webpack_require__(224);
 var ReactReconciler = __webpack_require__(22);
@@ -14720,7 +14720,7 @@ var _userChannelsReducer = __webpack_require__(268);
 
 var _userChannelsReducer2 = _interopRequireDefault(_userChannelsReducer);
 
-var _actions = __webpack_require__(30);
+var _actions = __webpack_require__(31);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -15109,7 +15109,7 @@ function isBuf(obj) {
 
 var eio = __webpack_require__(287);
 var Socket = __webpack_require__(127);
-var Emitter = __webpack_require__(24);
+var Emitter = __webpack_require__(25);
 var parser = __webpack_require__(71);
 var on = __webpack_require__(128);
 var bind = __webpack_require__(129);
@@ -15747,7 +15747,7 @@ function polling (opts) {
 
 var Transport = __webpack_require__(73);
 var parseqs = __webpack_require__(42);
-var parser = __webpack_require__(25);
+var parser = __webpack_require__(26);
 var inherit = __webpack_require__(43);
 var yeast = __webpack_require__(125);
 var debug = __webpack_require__(44)('engine.io-client:polling');
@@ -16159,7 +16159,7 @@ module.exports = function(arr, obj){
  */
 
 var parser = __webpack_require__(71);
-var Emitter = __webpack_require__(24);
+var Emitter = __webpack_require__(25);
 var toArray = __webpack_require__(307);
 var on = __webpack_require__(128);
 var bind = __webpack_require__(129);
@@ -16776,7 +16776,7 @@ var _ChatApp = __webpack_require__(271);
 
 var _ChatApp2 = _interopRequireDefault(_ChatApp);
 
-var _utils = __webpack_require__(31);
+var _utils = __webpack_require__(24);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -19113,7 +19113,7 @@ module.exports = ARIADOMPropertyConfig;
 
 
 
-var EventPropagators = __webpack_require__(26);
+var EventPropagators = __webpack_require__(27);
 var ExecutionEnvironment = __webpack_require__(7);
 var FallbackCompositionState = __webpack_require__(151);
 var SyntheticCompositionEvent = __webpack_require__(152);
@@ -19685,8 +19685,8 @@ module.exports = SyntheticInputEvent;
 
 
 
-var EventPluginHub = __webpack_require__(27);
-var EventPropagators = __webpack_require__(26);
+var EventPluginHub = __webpack_require__(28);
+var EventPropagators = __webpack_require__(27);
 var ExecutionEnvironment = __webpack_require__(7);
 var ReactDOMComponentTree = __webpack_require__(6);
 var ReactUpdates = __webpack_require__(14);
@@ -20738,7 +20738,7 @@ module.exports = DefaultEventPluginOrder;
 
 
 
-var EventPropagators = __webpack_require__(26);
+var EventPropagators = __webpack_require__(27);
 var ReactDOMComponentTree = __webpack_require__(6);
 var SyntheticMouseEvent = __webpack_require__(36);
 
@@ -21534,7 +21534,7 @@ var DOMLazyTree = __webpack_require__(23);
 var DOMNamespaces = __webpack_require__(53);
 var DOMProperty = __webpack_require__(16);
 var DOMPropertyOperations = __webpack_require__(93);
-var EventPluginHub = __webpack_require__(27);
+var EventPluginHub = __webpack_require__(28);
 var EventPluginRegistry = __webpack_require__(34);
 var ReactBrowserEventEmitter = __webpack_require__(39);
 var ReactDOMComponentFlags = __webpack_require__(81);
@@ -23094,7 +23094,7 @@ module.exports = quoteAttributeValueForBrowser;
 
 
 
-var EventPluginHub = __webpack_require__(27);
+var EventPluginHub = __webpack_require__(28);
 
 function runEventQueueInBatch(events) {
   EventPluginHub.enqueueEvents(events);
@@ -23827,7 +23827,7 @@ module.exports = ReactDOMTextarea;
 var _prodInvariant = __webpack_require__(3);
 
 var ReactComponentEnvironment = __webpack_require__(56);
-var ReactInstanceMap = __webpack_require__(29);
+var ReactInstanceMap = __webpack_require__(30);
 var ReactInstrumentation = __webpack_require__(12);
 
 var ReactCurrentOwner = __webpack_require__(13);
@@ -24442,7 +24442,7 @@ var React = __webpack_require__(20);
 var ReactComponentEnvironment = __webpack_require__(56);
 var ReactCurrentOwner = __webpack_require__(13);
 var ReactErrorUtils = __webpack_require__(48);
-var ReactInstanceMap = __webpack_require__(29);
+var ReactInstanceMap = __webpack_require__(30);
 var ReactInstrumentation = __webpack_require__(12);
 var ReactNodeTypes = __webpack_require__(97);
 var ReactReconciler = __webpack_require__(22);
@@ -26536,7 +26536,7 @@ module.exports = getUnboundedScrollPosition;
 
 
 var DOMProperty = __webpack_require__(16);
-var EventPluginHub = __webpack_require__(27);
+var EventPluginHub = __webpack_require__(28);
 var EventPluginUtils = __webpack_require__(47);
 var ReactComponentEnvironment = __webpack_require__(56);
 var ReactEmptyComponent = __webpack_require__(98);
@@ -27460,7 +27460,7 @@ module.exports = SVGDOMPropertyConfig;
 
 
 
-var EventPropagators = __webpack_require__(26);
+var EventPropagators = __webpack_require__(27);
 var ExecutionEnvironment = __webpack_require__(7);
 var ReactDOMComponentTree = __webpack_require__(6);
 var ReactInputSelection = __webpack_require__(102);
@@ -27657,7 +27657,7 @@ module.exports = SelectEventPlugin;
 var _prodInvariant = __webpack_require__(3);
 
 var EventListener = __webpack_require__(101);
-var EventPropagators = __webpack_require__(26);
+var EventPropagators = __webpack_require__(27);
 var ReactDOMComponentTree = __webpack_require__(6);
 var SyntheticAnimationEvent = __webpack_require__(213);
 var SyntheticClipboardEvent = __webpack_require__(214);
@@ -27668,7 +27668,7 @@ var SyntheticMouseEvent = __webpack_require__(36);
 var SyntheticDragEvent = __webpack_require__(218);
 var SyntheticTouchEvent = __webpack_require__(219);
 var SyntheticTransitionEvent = __webpack_require__(220);
-var SyntheticUIEvent = __webpack_require__(28);
+var SyntheticUIEvent = __webpack_require__(29);
 var SyntheticWheelEvent = __webpack_require__(221);
 
 var emptyFunction = __webpack_require__(11);
@@ -27972,7 +27972,7 @@ module.exports = SyntheticClipboardEvent;
 
 
 
-var SyntheticUIEvent = __webpack_require__(28);
+var SyntheticUIEvent = __webpack_require__(29);
 
 /**
  * @interface FocusEvent
@@ -28013,7 +28013,7 @@ module.exports = SyntheticFocusEvent;
 
 
 
-var SyntheticUIEvent = __webpack_require__(28);
+var SyntheticUIEvent = __webpack_require__(29);
 
 var getEventCharCode = __webpack_require__(62);
 var getEventKey = __webpack_require__(217);
@@ -28260,7 +28260,7 @@ module.exports = SyntheticDragEvent;
 
 
 
-var SyntheticUIEvent = __webpack_require__(28);
+var SyntheticUIEvent = __webpack_require__(29);
 
 var getEventModifierState = __webpack_require__(51);
 
@@ -28600,7 +28600,7 @@ var _prodInvariant = __webpack_require__(3);
 
 var ReactCurrentOwner = __webpack_require__(13);
 var ReactDOMComponentTree = __webpack_require__(6);
-var ReactInstanceMap = __webpack_require__(29);
+var ReactInstanceMap = __webpack_require__(30);
 
 var getHostComponentFromComposite = __webpack_require__(105);
 var invariant = __webpack_require__(1);
@@ -30275,7 +30275,7 @@ exports = module.exports = __webpack_require__(112)(undefined);
 
 
 // module
-exports.push([module.i, ".emphasised-container {\n  box-shadow: 0 0.1rem #4e4f52, inset 0 0.1rem 0.1rem #191919;\n  border-radius: 0.2rem;\n  background-color: #262626;\n  border: 0.1rem solid black; }\n\n/*\r\n\r\nSee ./utils/styleInfo.js where the fonts and colors are defined\r\nGoogle fonts installed:\r\n\r\nfont-family: 'Kavivanar', cursive;\r\nfont-family: 'Tajawal', sans-serif;\r\nfont-family: 'Source Sans Pro', sans-serif;\r\nfont-family: 'Indie Flower', cursive;\r\nfont-family: 'Inconsolata', monospace;\r\nfont-family: 'Dosis', sans-serif;\r\nfont-family: 'Quicksand', sans-serif;\r\nfont-family: 'Josefin Sans', sans-serif;\r\nfont-family: 'Abel', sans-serif;\r\nfont-family: 'Dancing Script', cursive;\r\nfont-family: 'Exo', sans-serif;\r\nfont-family: 'Kanit', sans-serif;\r\nfont-family: 'Ropa Sans', sans-serif;\r\nfont-family: 'Courgette', cursive;\r\nfont-family: 'Permanent Marker', cursive;\r\nfont-family: 'Orbitron', sans-serif;\r\nfont-family: 'Concert One', cursive;\r\nfont-family: 'Fredoka One', cursive;\r\nfont-family: 'Luckiest Guy', cursive;\r\nfont-family: 'Jura', sans-serif;\r\nfont-family: 'Kalam', cursive;\r\nfont-family: 'Marck Script', cursive;\r\nfont-family: 'Audiowide', cursive;\r\nfont-family: 'VT323', monospace;\r\nfont-family: 'Architects Daughter', cursive;\r\n\r\n*/\nhtml {\n  font-size: 62.5%;\n  overflow: hidden;\n  zoom: 1; }\n\n.zoom {\n  zoom: 2;\n  -moz-transform: scale(2);\n  -moz-transform-origin: 0 0; }\n\nbody {\n  font-size: 1.6rem; }\n\na {\n  color: #cdd7c5;\n  font-weight: bold; }\n\na:hover {\n  color: #00ad09; }\n\nbutton {\n  cursor: pointer; }\n\nbutton:disabled {\n  cursor: default; }\n\n::-webkit-scrollbar {\n  width: .5rem;\n  z-index: 10; }\n\n::-webkit-scrollbar-track {\n  background: #353638;\n  z-index: 10; }\n\n::-webkit-scrollbar-track:hover {\n  background: #353638;\n  z-index: 10; }\n\n::-webkit-scrollbar-thumb {\n  background: #00ad09; }\n\n::-webkit-scrollbar-thumb:hover {\n  background: #00ad09; }\n\n.tabContainer {\n  width: 100%;\n  height: 6rem;\n  display: flex; }\n\n.tab {\n  position: relative;\n  margin: .5rem;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  flex-grow: 1;\n  height: 100%;\n  background-color: #353638;\n  cursor: pointer; }\n\n.tabSelected {\n  color: #00ad09;\n  background-color: #4e4f52; }\n\n.ModalWrapper {\n  display: flex;\n  justify-content: center;\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  left: 0;\n  top: 0;\n  z-index: 15;\n  -webkit-transition: width 2s;\n  /* Safari */\n  transition: width 2s; }\n\n.ModalOuterContainer {\n  position: absolute;\n  width: 100%;\n  max-width: 100rem;\n  display: flex; }\n\n.ModalInnerContainer {\n  flex-grow: 1;\n  margin: 5%;\n  background-color: #262626;\n  border-radius: .5rem;\n  box-shadow: 0 0 5rem 0.1rem #1d1d1d; }\n\n.ModalBlurContainer {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  left: 0;\n  top: 0;\n  background-color: rgba(99, 99, 99, 0.3); }\n\n.CheckBoxContainer {\n  display: block;\n  position: relative;\n  margin-top: .4rem;\n  cursor: pointer;\n  font-size: 2.2rem;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n/* Hide the browser's default checkbox */\n.CheckBoxContainer input {\n  position: absolute;\n  opacity: 0;\n  cursor: pointer; }\n\n.CheckBoxCheckmark {\n  position: absolute;\n  top: 0;\n  left: 0;\n  height: 2.5rem;\n  width: 2.5rem;\n  background-color: #eee; }\n\n/* On mouse-over, add a grey background color */\n.CheckBoxContainer:hover input ~ .CheckBoxCheckmark {\n  background-color: #ccc; }\n\n/* When the checkbox is checked, add a blue background */\n.CheckBoxContainer input:checked ~ .CheckBoxCheckmark {\n  background-color: #00ad09; }\n\n/* Create the checkmark/indicator (hidden when not checked) */\n.CheckBoxCheckmark:after {\n  content: \"\";\n  position: absolute;\n  display: none; }\n\n/* Show the checkmark when checked */\n.CheckBoxContainer input:checked ~ .CheckBoxCheckmark:after {\n  display: block; }\n\n/* Style the checkmark/indicator */\n.CheckBoxContainer .CheckBoxCheckmark:after {\n  left: .9rem;\n  top: .5rem;\n  width: .5rem;\n  height: 1rem;\n  border: solid white;\n  border-width: 0 .3rem .3rem 0;\n  -webkit-transform: rotate(45deg);\n  -ms-transform: rotate(45deg);\n  transform: rotate(45deg); }\n\nhtml, body, #app {\n  height: 100%;\n  background-color: black; }\n\nbody {\n  color: #cdd7c5;\n  font-family: \"Source Sans Pro\", sans-serif; }\n\n.chatAppContainer {\n  display: flex;\n  width: 100%;\n  background-color: #353638;\n  height: 100%;\n  width: 100%;\n  margin: 0; }\n\n.chatAppBlur {\n  -webkit-filter: blur(10px);\n  -moz-filter: blur(10px);\n  -o-filter: blur(10px);\n  -ms-filter: blur(10px);\n  filter: blur(10px); }\n\n#talkbubble {\n  width: 120px;\n  height: 80px;\n  background: red;\n  position: relative;\n  -moz-border-radius: 10px;\n  -webkit-border-radius: 10px;\n  border-radius: 10px; }\n\n#talkbubble:before {\n  content: \"\";\n  position: absolute;\n  right: 100%;\n  top: 26px;\n  width: 0;\n  height: 0;\n  border-top: 13px solid transparent;\n  border-right: 26px solid red;\n  border-bottom: 13px solid transparent; }\n\n.chatWindowContainer {\n  display: flex;\n  flex-grow: 1;\n  flex-direction: column;\n  padding: 0.2rem 0.2rem 0.2rem 0.2rem; }\n\n.leftSideContainer {\n  display: flex;\n  flex-direction: column;\n  padding: 0.2rem;\n  padding-right: 0.1rem;\n  padding-right: 0; }\n\n.userWindowContainer {\n  display: flex;\n  flex-direction: column;\n  padding: 0.2rem 0.2rem 0.2rem 0; }\n\n.channelListContainer {\n  display: flex;\n  flex-direction: column;\n  flex-grow: 1;\n  width: calc(100% - $element-margin);\n  overflow-y: auto; }\n\n.channelListChannelName {\n  margin: 0.2rem;\n  padding: 0.4rem 1.4rem 0.4rem 1.5rem;\n  cursor: pointer;\n  white-space: nowrap; }\n\n.channelListChannelName > p {\n  margin: 0; }\n\n.fa-comments {\n  margin-right: .8rem; }\n\n.channel-current {\n  background-color: #505050;\n  border-radius: .3rem; }\n\n.channel-current > p {\n  font-style: italic;\n  color: white;\n  text-shadow: 0.1rem 0.1rem black; }\n\n.channel-selected {\n  border-radius: .3rem;\n  border: 0.1rem solid white; }\n\n.channel-new-notif > p {\n  color: #ffa600; }\n\n.channel-new-message > p {\n  color: #15ff00; }\n\n.channel-mention > p {\n  color: #ff00ea; }\n\n.channel-not-joined > p {\n  color: #525252; }\n\n.channelTopicContainer {\n  display: flex;\n  width: calc(100% - $element-margin);\n  margin-bottom: 0.2rem;\n  min-height: 3rem !important;\n  padding-left: 1rem;\n  padding-right: 1rem; }\n\n@media only screen and (max-height: 20rem) {\n  .channelTopicContainer {\n    display: none; } }\n\n.topicForm {\n  width: 100%; }\n\n.topicText {\n  background-color: transparent;\n  color: #cdd7c5;\n  width: 100%;\n  height: 100%;\n  padding: 0;\n  border: 0; }\n\n.topicText:focus {\n  outline: none; }\n\n.chatMessageOuterContainer {\n  display: flex;\n  width: calc(100% - $element-margin);\n  flex-grow: 1;\n  margin-bottom: 0.2rem;\n  position: relative;\n  padding: 0;\n  overflow: hidden; }\n\n.chatMessageContainer {\n  flex-grow: 1;\n  color: #cdd7c5;\n  padding-left: 0.6rem;\n  overflow-y: scroll; }\n\n.channelsHideContainer, .usersHideContainer {\n  display: flex;\n  position: absolute;\n  top: calc(50% - 2rem);\n  padding-left: .2rem;\n  width: 2rem;\n  height: 4rem;\n  align-items: center;\n  justify-content: center;\n  box-shadow: 0 0.1rem #191919, inset 0 0.1rem 0.1rem #4e4f52;\n  border-radius: 0.2rem;\n  background-color: #353638;\n  border: 0.1rem solid black;\n  opacity: .2;\n  cursor: pointer; }\n\n.channelsHideContainer {\n  left: -.1rem; }\n\n.channelsHideContainer > i {\n  padding-right: .3rem; }\n\n.usersHideContainer {\n  border-right: none;\n  right: .5rem; }\n\n.channelsHideContainer:hover {\n  opacity: 1; }\n\n.usersHideContainer:hover {\n  opacity: 1; }\n\n.chatMessageWrapper > div > p {\n  margin: 0; }\n\n.chatMessageTable {\n  table-layout: fixed; }\n\n.chatMessageTable > tbody > tr:hover {\n  background-color: #2e2e2e; }\n\n.chatMessageTable > tbody > tr > td > p {\n  margin: 0; }\n\n.chatMessageTimestampContainer {\n  min-width: 14rem;\n  max-width: 14rem;\n  vertical-align: top; }\n\n@media only screen and (max-width: 70rem) {\n  .chatMessageTimestampContainer {\n    display: none; } }\n\n.chatMessageUsernameContainer {\n  white-space: nowrap;\n  color: #00ad09;\n  text-align: right;\n  border-right: 1px solid #9c9a94;\n  padding-right: 5px;\n  margin-right: 5px;\n  vertical-align: top; }\n\n.nicknameSpinner {\n  display: inline-block; }\n\n.chatMessageTextContainer {\n  word-wrap: break-word;\n  word-break: break-all; }\n\n.chatMessageTextContainer > p {\n  word-wrap: break-word;\n  word-break: break-all; }\n\n.chatMessageCurrentUser > .pUserText {\n  color: #cc0000;\n  display: inline; }\n\n.chatMessageCurrentUser > .pMessageText {\n  color: #6e6e6e; }\n\n.chatMessageSystemUser {\n  color: #ffa600; }\n\n.userListContainer {\n  display: flex;\n  flex-direction: column;\n  flex-grow: 1;\n  margin-bottom: 0.2rem;\n  overflow-y: auto; }\n\n.userListUserName {\n  display: flex;\n  min-height: .9rem;\n  margin: 0.2rem;\n  padding: 0.4rem 1.4rem 0.4rem 0.4rem;\n  white-space: nowrap; }\n\n.userListUserName > p {\n  margin: 0; }\n\n.fa-user {\n  margin-right: 0.8rem; }\n\n.userListCurrentUser > p {\n  color: #cc0000; }\n\n.awayUser {\n  color: #6e6e6e; }\n\n.op {\n  color: green; }\n\n.voice {\n  color: #00ad09; }\n\n.userStatsContainer {\n  display: flex;\n  margin-bottom: 0.2rem;\n  height: 3rem;\n  min-height: 3rem !important;\n  justify-content: center;\n  white-space: nowrap; }\n\n.userStatsContainer > p {\n  margin-top: 0.5rem; }\n\n@media only screen and (max-height: 20rem) {\n  .userStatsContainer {\n    display: none; } }\n\n.connectionStatsContainer {\n  display: flex;\n  height: 3rem;\n  min-height: 3rem !important;\n  justify-content: center;\n  padding: 0 .3rem 0 .3rem;\n  white-space: nowrap; }\n\n.connectionStatsContainer > p {\n  margin-top: .5rem; }\n\n@media only screen and (max-height: 20rem) {\n  .connectionStatsContainer {\n    display: none; } }\n\n.ping-good {\n  color: lime; }\n\n.ping-ok {\n  color: #ff9100; }\n\n.ping-bad {\n  color: #cc0000; }\n\n.chatInputContainer {\n  display: flex;\n  width: calc(100% - $element-margin);\n  border-radius: 0.3rem;\n  height: 3.6rem;\n  min-height: 3.6rem !important; }\n\n.chatInputContainerActive {\n  box-shadow: inset 0.1rem 0.1rem 0.2rem #00ad09, inset -0.1rem -0.1rem 0.2rem #00ad09; }\n\n.fontButton {\n  font-weight: bold;\n  color: white;\n  background-color: #00ad09;\n  border: 0;\n  border-top: 0.2rem solid #00e00c;\n  border-bottom: 0.2rem solid #007a06;\n  margin: .3rem;\n  border-radius: .3rem;\n  height: 3rem; }\n\n.inputForm {\n  width: 100%; }\n\n.inputText {\n  background-color: transparent;\n  color: #cdd7c5;\n  width: 100%;\n  height: 100%;\n  padding: 0;\n  padding-left: 1rem;\n  border: 0; }\n\n.inputText:focus {\n  outline: none; }\n\n.adminAlertContainer {\n  display: flex;\n  width: calc(100% - $element-margin);\n  margin-bottom: 0.2rem;\n  min-height: 3rem !important;\n  justify-content: center; }\n\n.adminAlertContainer > p {\n  margin-top: 0.5rem; }\n\n@media only screen and (max-height: 20rem) {\n  .adminAlertContainer {\n    display: none; } }\n\n/*Vertical Flip*/\n.verticalFlip {\n  text-align: center; }\n\n.verticalFlip p {\n  padding-top: .3rem;\n  animation: vertical 12.5s linear infinite 0s;\n  -ms-animation: vertical 12.5s linear infinite 0s;\n  -webkit-animation: vertical 12.5s linear infinite 0s;\n  color: #00ad09;\n  font-size: 120%;\n  opacity: 0;\n  margin: 0;\n  overflow: hidden;\n  position: absolute; }\n\n.verticalFlip p:nth-child(2) {\n  animation-delay: 2.5s;\n  -ms-animation-delay: 2.5s;\n  -webkit-animation-delay: 2.5s; }\n\n.verticalFlip p:nth-child(3) {\n  animation-delay: 5s;\n  -ms-animation-delay: 5s;\n  -webkit-animation-delay: 5s; }\n\n.verticalFlip p:nth-child(4) {\n  animation-delay: 7.5s;\n  -ms-animation-delay: 7.5s;\n  -webkit-animation-delay: 7.5s; }\n\n.verticalFlip p:nth-child(5) {\n  animation-delay: 10s;\n  -ms-animation-delay: 10s;\n  -webkit-animation-delay: 10s; }\n\n/*Vertical Flip Animation*/\n@-moz-keyframes vertical {\n  0% {\n    opacity: 0; }\n  5% {\n    opacity: 0;\n    -moz-transform: rotateX(180deg); }\n  10% {\n    opacity: 1;\n    -moz-transform: translateY(0px); }\n  25% {\n    opacity: 1;\n    -moz-transform: translateY(0px); }\n  30% {\n    opacity: 0;\n    -moz-transform: translateY(0px); }\n  80% {\n    opacity: 0; }\n  100% {\n    opacity: 0; } }\n\n@-webkit-keyframes vertical {\n  0% {\n    opacity: 0; }\n  5% {\n    opacity: 0;\n    -webkit-transform: rotateX(180deg); }\n  10% {\n    opacity: 1;\n    -webkit-transform: translateY(0px); }\n  25% {\n    opacity: 1;\n    -webkit-transform: translateY(0px); }\n  30% {\n    opacity: 0;\n    -webkit-transform: translateY(0px); }\n  80% {\n    opacity: 0; }\n  100% {\n    opacity: 0; } }\n\n@-ms-keyframes vertical {\n  0% {\n    opacity: 0; }\n  5% {\n    opacity: 0;\n    -ms-transform: rotateX(180deg); }\n  10% {\n    opacity: 1;\n    -ms-transform: translateY(0px); }\n  25% {\n    opacity: 1;\n    -ms-transform: translateY(0px); }\n  30% {\n    opacity: 0;\n    -ms-transform: translateY(0px); }\n  80% {\n    opacity: 0; }\n  100% {\n    opacity: 0; } }\n\n.nickSetFailedReason {\n  margin: 0 0 .5rem 0;\n  text-align: center; }\n\n.loginTab {\n  cursor: not-allowed;\n  color: #4e4f52; }\n\n.loginTabBadges {\n  align-self: flex-end;\n  position: absolute;\n  right: 0;\n  top: 0;\n  color: #4e4f52;\n  font-size: 3rem; }\n\n.loginTabBadges > i {\n  margin-top: .5rem;\n  margin-right: .7rem; }\n\n@media only screen and (max-width: 43rem) {\n  .loginTabBadges {\n    display: none; } }\n\n.guestNickEntry {\n  width: 100%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  flex-direction: column; }\n\n.guestNickInputForm {\n  margin-top: 2rem;\n  display: flex;\n  flex-direction: column; }\n\n.guestNickInput {\n  width: 32rem;\n  height: 8rem;\n  background-color: #353638;\n  color: #cdd7c5;\n  font-size: 4rem;\n  border: 0;\n  padding: 0 .5rem 0 .5rem;\n  text-align: center; }\n\n.guestNickSubmitButton {\n  margin-top: 1rem;\n  background: #00ad09;\n  border: none;\n  border-bottom: 0.6rem solid #007a06;\n  color: white;\n  font-weight: bold;\n  font-size: 3.2rem;\n  width: 100%;\n  margin-bottom: 1.6rem;\n  padding: 2.4rem; }\n\n.guestNickSubmitButton:disabled {\n  opacity: .5; }\n\n.termsContainer {\n  display: flex;\n  flex-direction: row;\n  margin-bottom: 1rem; }\n\n.termsParagraph {\n  display: inline-block;\n  margin: 0 1rem 0 0;\n  padding: .5rem 0 0 0; }\n\n.example-enter {\n  opacity: 0.01;\n  width: 0px; }\n\n.example-enter.example-enter-active {\n  opacity: 1;\n  width: 100px;\n  transition: 700ms; }\n\n.example-leave {\n  opacity: 1;\n  width: 100px; }\n\n.example-leave.example-leave-active {\n  opacity: 0.01;\n  width: 0px;\n  transition: 700ms; }\n\n.StyleModalWrapper {\n  background-color: #353638;\n  position: absolute;\n  top: 1rem;\n  right: 2rem; }\n\n.StyleModalContainer {\n  margin: 0.2rem;\n  background-color: #262626;\n  padding: .5rem; }\n\n.StyleModalContainer > div {\n  text-align: center; }\n\n.StyleModalContainer > div > h3 {\n  margin: 0; }\n\n.StyleModalFonts {\n  margin-top: .5rem; }\n\n.StyleModalFonts > h3 {\n  margin-bottom: .5rem !important; }\n\n.StyleModalOptions {\n  margin-top: .5rem; }\n\n.ZoomButtonsContainer {\n  display: flex; }\n\n.ZoomButtonsContainer > p {\n  margin: .7rem 1.4rem 0 1.4rem; }\n\n.ZoomButtons {\n  background-color: #00ad09;\n  border: 0;\n  color: white;\n  color: white;\n  background-color: #353638;\n  border: 0;\n  border-top: 0.2rem solid #4e4f52;\n  border-bottom: 0.2rem solid #1c1d1e;\n  margin: .3rem;\n  border-radius: .3rem;\n  height: 3rem; }\n\n.channelsLink {\n  cursor: pointer;\n  padding-left: 2.2rem; }\n\n.SMinput {\n  display: none; }\n\n.SMbutton {\n  display: inline-block;\n  position: relative;\n  width: 2rem;\n  height: 2rem;\n  margin: .5rem;\n  cursor: pointer; }\n\n.SMbutton span {\n  display: block;\n  position: absolute;\n  width: 2rem;\n  height: 2rem;\n  padding: 0;\n  top: 50%;\n  left: 50%;\n  -webkit-transform: translate(-50%, -50%);\n  -ms-transform: translate(-50%, -50%);\n  -o-transform: translate(-50%, -50%);\n  transform: translate(-50%, -50%);\n  border-radius: 100%;\n  background: #eeeeee;\n  box-shadow: 0 0.2rem 0.5rem 0 rgba(0, 0, 0, 0.26);\n  transition: ease .3s; }\n\n.SMColorSelected {\n  box-shadow: 0 0.2rem 0.5rem 0 rgba(0, 0, 0, 0.26), 0 0 0.3rem 0.3rem white !important; }\n\n.SMbutton span:hover {\n  padding: .5rem; }\n\n.SMlayer {\n  display: block;\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  top: 0;\n  left: 0;\n  background: transparent;\n  z-index: -1; }\n\n.ReactFontPicker_Wrapper {\n  position: relative;\n  width: 100%;\n  height: 3rem;\n  background-color: #353638; }\n\n.ReactFontPicker_Wrapper:hover {\n  cursor: pointer; }\n\n.ReactFontPicker_Label > p, .ReactFontPicker_SelectedOption > p {\n  margin: .5rem 0 0 0; }\n\n.ReactFontPicker_Label, .ReactFontPicker_SelectedOption {\n  height: 100%;\n  display: flex;\n  justify-content: center;\n  text-align: center; }\n\n.ReactFontPicker_LabelFloat {\n  position: absolute;\n  color: transparent; }\n\n.ReactFontPicker_Button {\n  position: absolute;\n  right: .5rem;\n  top: 1.2rem;\n  width: 0;\n  height: 0;\n  border-style: solid;\n  border-width: .5rem .6rem 0 .6rem;\n  border-color: #dddddd transparent transparent transparent; }\n\n.ReactFontPicker_Button:hover {\n  cursor: pointer; }\n\n.ReactFontPicker_Options {\n  position: absolute;\n  top: 0;\n  width: 100%;\n  height: auto;\n  max-height: 20rem;\n  overflow-y: scroll;\n  padding-bottom: .5rem;\n  padding-top: .5rem;\n  float: left;\n  background-color: #262626;\n  box-shadow: 0 0 0.6rem #00ad09;\n  border: 0.1rem solid #00ad09;\n  z-index: 999;\n  -webkit-transition: .15s all ease-in-out;\n  -moz-transition: .15s all ease-in-out;\n  -ms-transition: .15s all ease-in-out;\n  -o-transition: .15s all ease-in-out;\n  transition: .15s all ease-in-out; }\n\n.ReactFontPicker_OptionsHidden {\n  position: absolute;\n  top: 0;\n  width: 100%;\n  height: 0;\n  padding-bottom: 0;\n  padding-top: 0;\n  background-color: #fff;\n  overflow: hidden;\n  box-shadow: 0 0 .6rem #ddd;\n  -webkit-transition: .15s all ease-in-out;\n  -moz-transition: .15s all ease-in-out;\n  -ms-transition: .15s all ease-in-out;\n  -o-transition: .15s all ease-in-out;\n  transition: .15s all ease-in-out; }\n\n.ReactFontPicker_Option {\n  display: block;\n  width: calc(100% - 20px);\n  padding-left: 1rem;\n  padding-right: 1rem;\n  height: 3rem;\n  line-height: 3rem;\n  float: left;\n  -webkit-transition: .1s all ease-in-out;\n  -moz-transition: .1s all ease-in-out;\n  -ms-transition: .1s all ease-in-out;\n  -o-transition: .1s all ease-in-out;\n  transition: .1s all ease-in-out; }\n\n.ReactFontPicker_Option:hover {\n  background-color: #00ad09; }\n\ndiv.ReactFontPicker_Wrapper .ripple {\n  position: relative;\n  overflow: hidden; }\n\ndiv.ReactFontPicker_Wrapper .ripple-effect {\n  position: absolute;\n  border-radius: 50%;\n  width: 5rem;\n  height: 5rem;\n  background: white;\n  animation: ripple-animation 1.8s; }\n\n@keyframes ripple-animation {\n  from {\n    transform: scale(1);\n    opacity: 0.4; }\n  to {\n    transform: scale(100);\n    opacity: 0; } }\n\n.ReactFontPicker {\n  display: block; }\n\n.connectingTitle {\n  text-align: center;\n  opacity: 1;\n  -webkit-animation: fade-in-out 2.5s infinite;\n  -moz-animation: fade-in-out 2.5s infinite;\n  -o-animation: fade-in-out 2.5s infinite;\n  animation: fade-in-out 2.5s infinite; }\n\n.ConnectingModalContainer {\n  text-align: center; }\n\n/*FADE IN-OUT*/\n@-webkit-keyframes fade-in-out {\n  0% {\n    opacity: 1; }\n  50% {\n    opacity: 0; }\n  100% {\n    oapcity: 1; } }\n\n@-moz-keyframes fade-in-out {\n  0% {\n    opacity: 1; }\n  50% {\n    opacity: 0; }\n  100% {\n    oapcity: 1; } }\n\n@-o-keyframes fade-in-out {\n  0% {\n    opacity: 1; }\n  50% {\n    opacity: 0; }\n  100% {\n    oapcity: 1; } }\n\n@keyframes fade-in-out {\n  0% {\n    opacity: 1; }\n  50% {\n    opacity: 0; }\n  100% {\n    oapcity: 1; } }\n\n.channelPickerContainer {\n  text-align: center; }\n\n.channelPickerButton {\n  margin-top: 1rem;\n  background: #00ad09;\n  border: none;\n  border-bottom: 0.6rem solid #007a06;\n  color: white;\n  font-weight: bold;\n  font-size: 3.2rem;\n  width: 100%;\n  max-width: 40rem;\n  margin-bottom: 1.6rem;\n  padding: 2.4rem; }\n\n.channelPickerButton:disabled {\n  opacity: .5; }\n\n.ChannelPickerWrapper {\n  display: flex;\n  flex-direction: column;\n  padding: 1.5rem; }\n\n.ChannelPickerTitleContainer {\n  background-color: #353638;\n  height: 3rem;\n  padding: 1rem .8rem .5rem .8rem;\n  width: calc(100% - 1.5rem);\n  border-radius: .4rem .4rem 0 0; }\n\n.ChannelPickerTitleContainer > h3 {\n  margin: 0;\n  text-align: center;\n  color: #6e6e6e; }\n\n.DCPContainer {\n  background-color: #1c1d1e;\n  padding: 1rem;\n  border-radius: 0 0 .4rem .4rem;\n  overflow-y: auto;\n  max-height: 40rem;\n  display: grid;\n  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }\n\n.DCPChannel {\n  flex: 1;\n  margin: .6rem;\n  display: flex;\n  text-align: center;\n  justify-content: center;\n  border-radius: .2rem;\n  cursor: pointer;\n  padding: .8rem; }\n\n.DCPChannel:hover {\n  background-color: #353638; }\n\n.DCPDisabled {\n  opacity: .5; }\n\n.DCPChannel > p {\n  margin: 0 0 0 1rem;\n  display: inline-block; }\n\n.DCPSelected {\n  color: white;\n  background-color: #00ad09; }\n\n.DCPSelected:hover {\n  background-color: #00c70a; }\n\n.UCPContainer {\n  background-color: #1c1d1e;\n  padding: 1rem;\n  border-radius: 0 0 .4rem .4rem;\n  overflow-y: scroll;\n  max-height: 40rem;\n  display: flex;\n  flex-direction: column;\n  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));\n  max-height: 20rem; }\n\n.UCPChannel {\n  cursor: pointer; }\n\n.UCPChannel:hover {\n  background-color: #353638; }\n\n.UCPChannel > td > p {\n  margin: 0 0 0 1rem;\n  display: inline-block; }\n\n.UCPSelected {\n  color: white;\n  background-color: #00ad09; }\n\n.UCPSelected:hover {\n  background-color: #00c70a; }\n", ""]);
+exports.push([module.i, ".emphasised-container {\n  box-shadow: 0 0.1rem #4e4f52, inset 0 0.1rem 0.1rem #191919;\n  border-radius: 0.2rem;\n  background-color: #262626;\n  border: 0.1rem solid black; }\n\n/*\n\nSee ./utils/styleInfo.js where the fonts and colors are defined\nGoogle fonts installed:\n\nfont-family: 'Kavivanar', cursive;\nfont-family: 'Tajawal', sans-serif;\nfont-family: 'Source Sans Pro', sans-serif;\nfont-family: 'Indie Flower', cursive;\nfont-family: 'Inconsolata', monospace;\nfont-family: 'Dosis', sans-serif;\nfont-family: 'Quicksand', sans-serif;\nfont-family: 'Josefin Sans', sans-serif;\nfont-family: 'Abel', sans-serif;\nfont-family: 'Dancing Script', cursive;\nfont-family: 'Exo', sans-serif;\nfont-family: 'Kanit', sans-serif;\nfont-family: 'Ropa Sans', sans-serif;\nfont-family: 'Courgette', cursive;\nfont-family: 'Permanent Marker', cursive;\nfont-family: 'Orbitron', sans-serif;\nfont-family: 'Concert One', cursive;\nfont-family: 'Fredoka One', cursive;\nfont-family: 'Luckiest Guy', cursive;\nfont-family: 'Jura', sans-serif;\nfont-family: 'Kalam', cursive;\nfont-family: 'Marck Script', cursive;\nfont-family: 'Audiowide', cursive;\nfont-family: 'VT323', monospace;\nfont-family: 'Architects Daughter', cursive;\n\n*/\nhtml {\n  font-size: 62.5%;\n  overflow: hidden;\n  zoom: 1; }\n\n.zoom {\n  zoom: 2;\n  -moz-transform: scale(2);\n  -moz-transform-origin: 0 0; }\n\nbody {\n  font-size: 1.6rem; }\n\na {\n  color: #cdd7c5;\n  font-weight: bold; }\n\na:hover {\n  color: #00ad09; }\n\nbutton {\n  cursor: pointer; }\n\nbutton:disabled {\n  cursor: default; }\n\n::-webkit-scrollbar {\n  width: .5rem;\n  z-index: 10; }\n\n::-webkit-scrollbar-track {\n  background: #353638;\n  z-index: 10; }\n\n::-webkit-scrollbar-track:hover {\n  background: #353638;\n  z-index: 10; }\n\n::-webkit-scrollbar-thumb {\n  background: #00ad09; }\n\n::-webkit-scrollbar-thumb:hover {\n  background: #00ad09; }\n\n.tabContainer {\n  width: 100%;\n  height: 6rem;\n  display: flex; }\n\n.tab {\n  position: relative;\n  margin: .5rem;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  flex-grow: 1;\n  height: 100%;\n  background-color: #353638;\n  cursor: pointer; }\n\n.tabSelected {\n  color: #00ad09;\n  background-color: #4e4f52; }\n\n.ModalWrapper {\n  display: flex;\n  justify-content: center;\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  left: 0;\n  top: 0;\n  z-index: 15;\n  -webkit-transition: width 2s;\n  /* Safari */\n  transition: width 2s; }\n\n.ModalOuterContainer {\n  position: absolute;\n  width: 100%;\n  max-width: 100rem;\n  display: flex; }\n\n.ModalInnerContainer {\n  flex-grow: 1;\n  margin: 5%;\n  background-color: #262626;\n  border-radius: .5rem;\n  box-shadow: 0 0 5rem 0.1rem #1d1d1d; }\n\n.ModalBlurContainer {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  left: 0;\n  top: 0;\n  background-color: rgba(99, 99, 99, 0.3); }\n\n.CheckBoxContainer {\n  display: block;\n  position: relative;\n  margin-top: .4rem;\n  cursor: pointer;\n  font-size: 2.2rem;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n/* Hide the browser's default checkbox */\n.CheckBoxContainer input {\n  position: absolute;\n  opacity: 0;\n  cursor: pointer; }\n\n.CheckBoxCheckmark {\n  position: absolute;\n  top: 0;\n  left: 0;\n  height: 2.5rem;\n  width: 2.5rem;\n  background-color: #eee; }\n\n/* On mouse-over, add a grey background color */\n.CheckBoxContainer:hover input ~ .CheckBoxCheckmark {\n  background-color: #ccc; }\n\n/* When the checkbox is checked, add a blue background */\n.CheckBoxContainer input:checked ~ .CheckBoxCheckmark {\n  background-color: #00ad09; }\n\n/* Create the checkmark/indicator (hidden when not checked) */\n.CheckBoxCheckmark:after {\n  content: \"\";\n  position: absolute;\n  display: none; }\n\n/* Show the checkmark when checked */\n.CheckBoxContainer input:checked ~ .CheckBoxCheckmark:after {\n  display: block; }\n\n/* Style the checkmark/indicator */\n.CheckBoxContainer .CheckBoxCheckmark:after {\n  left: .9rem;\n  top: .5rem;\n  width: .5rem;\n  height: 1rem;\n  border: solid white;\n  border-width: 0 .3rem .3rem 0;\n  -webkit-transform: rotate(45deg);\n  -ms-transform: rotate(45deg);\n  transform: rotate(45deg); }\n\nhtml, body, #app {\n  height: 100%;\n  background-color: black; }\n\nbody {\n  color: #cdd7c5;\n  font-family: \"Source Sans Pro\", sans-serif; }\n\n.chatAppContainer {\n  display: flex;\n  width: 100%;\n  background-color: #353638;\n  height: 100%;\n  width: 100%;\n  margin: 0; }\n\n.chatAppBlur {\n  -webkit-filter: blur(10px);\n  -moz-filter: blur(10px);\n  -o-filter: blur(10px);\n  -ms-filter: blur(10px);\n  filter: blur(10px); }\n\n#talkbubble {\n  width: 120px;\n  height: 80px;\n  background: red;\n  position: relative;\n  -moz-border-radius: 10px;\n  -webkit-border-radius: 10px;\n  border-radius: 10px; }\n\n#talkbubble:before {\n  content: \"\";\n  position: absolute;\n  right: 100%;\n  top: 26px;\n  width: 0;\n  height: 0;\n  border-top: 13px solid transparent;\n  border-right: 26px solid red;\n  border-bottom: 13px solid transparent; }\n\n.chatWindowContainer {\n  display: flex;\n  flex-grow: 1;\n  flex-direction: column;\n  padding: 0.2rem 0.2rem 0.2rem 0.2rem; }\n\n.leftSideContainer {\n  display: flex;\n  flex-direction: column;\n  padding: 0.2rem;\n  padding-right: 0.1rem;\n  padding-right: 0; }\n\n.userWindowContainer {\n  display: flex;\n  flex-direction: column;\n  padding: 0.2rem 0.2rem 0.2rem 0; }\n\n.channelListContainer {\n  display: flex;\n  flex-direction: column;\n  flex-grow: 1;\n  width: calc(100% - $element-margin);\n  overflow-y: auto; }\n\n.channelListChannelName {\n  margin: 0.2rem;\n  padding: 0.4rem 1.4rem 0.4rem 1.5rem;\n  cursor: pointer;\n  white-space: nowrap; }\n\n.channelListChannelName > p {\n  margin: 0; }\n\n.fa-comments {\n  margin-right: .8rem; }\n\n.channel-current {\n  background-color: #505050;\n  border-radius: .3rem; }\n\n.channel-current > p {\n  font-style: italic;\n  color: white;\n  text-shadow: 0.1rem 0.1rem black; }\n\n.channel-selected {\n  border-radius: .3rem;\n  border: 0.1rem solid white; }\n\n.channel-new-notif > p {\n  color: #ffa600; }\n\n.channel-new-message > p {\n  color: #15ff00; }\n\n.channel-mention > p {\n  color: #ff00ea; }\n\n.channel-not-joined > p {\n  color: #525252; }\n\n.channelTopicContainer {\n  display: flex;\n  width: calc(100% - $element-margin);\n  margin-bottom: 0.2rem;\n  min-height: 3rem !important;\n  padding-left: 1rem;\n  padding-right: 1rem; }\n\n@media only screen and (max-height: 20rem) {\n  .channelTopicContainer {\n    display: none; } }\n\n.topicForm {\n  width: 100%; }\n\n.topicText {\n  background-color: transparent;\n  color: #cdd7c5;\n  width: 100%;\n  height: 100%;\n  padding: 0;\n  border: 0; }\n\n.topicText:focus {\n  outline: none; }\n\n.chatMessageOuterContainer {\n  display: flex;\n  width: calc(100% - $element-margin);\n  flex-grow: 1;\n  margin-bottom: 0.2rem;\n  position: relative;\n  padding: 0;\n  overflow: hidden; }\n\n.chatMessageContainer {\n  flex-grow: 1;\n  color: #cdd7c5;\n  padding-left: 0.6rem;\n  overflow-y: scroll; }\n\n.channelsHideContainer, .usersHideContainer {\n  display: flex;\n  position: absolute;\n  top: calc(50% - 2rem);\n  padding-left: .2rem;\n  width: 2rem;\n  height: 4rem;\n  align-items: center;\n  justify-content: center;\n  box-shadow: 0 0.1rem #191919, inset 0 0.1rem 0.1rem #4e4f52;\n  border-radius: 0.2rem;\n  background-color: #353638;\n  border: 0.1rem solid black;\n  opacity: .2;\n  cursor: pointer; }\n\n.channelsHideContainer {\n  left: -.1rem; }\n\n.channelsHideContainer > i {\n  padding-right: .3rem; }\n\n.usersHideContainer {\n  border-right: none;\n  right: .5rem; }\n\n.channelsHideContainer:hover {\n  opacity: 1; }\n\n.usersHideContainer:hover {\n  opacity: 1; }\n\n.chatMessageWrapper > div > p {\n  margin: 0; }\n\n.chatMessageTable {\n  table-layout: fixed; }\n\n.chatMessageTable > tbody > tr:hover {\n  background-color: #2e2e2e; }\n\n.chatMessageTable > tbody > tr > td > p {\n  margin: 0; }\n\n.chatMessageTimestampContainer {\n  min-width: 14rem;\n  max-width: 14rem;\n  vertical-align: top; }\n\n@media only screen and (max-width: 70rem) {\n  .chatMessageTimestampContainer {\n    display: none; } }\n\n.chatMessageUsernameContainer {\n  white-space: nowrap;\n  color: #00ad09;\n  text-align: right;\n  border-right: 1px solid #9c9a94;\n  padding-right: 5px;\n  margin-right: 5px;\n  vertical-align: top; }\n\n.nicknameSpinner {\n  display: inline-block; }\n\n.chatMessageTextContainer {\n  word-wrap: break-word;\n  word-break: break-all; }\n\n.chatMessageTextContainer > p {\n  word-wrap: break-word;\n  word-break: break-all; }\n\n.chatMessageCurrentUser > .pUserText {\n  color: #cc0000;\n  display: inline; }\n\n.chatMessageCurrentUser > .pMessageText {\n  color: #6e6e6e; }\n\n.chatMessageSystemUser {\n  color: #ffa600; }\n\n.userListContainer {\n  display: flex;\n  flex-direction: column;\n  flex-grow: 1;\n  margin-bottom: 0.2rem;\n  overflow-y: auto; }\n\n.userListUserName {\n  display: flex;\n  min-height: .9rem;\n  margin: 0.2rem;\n  padding: 0.4rem 1.4rem 0.4rem 0.4rem;\n  white-space: nowrap; }\n\n.userListUserName > p {\n  margin: 0; }\n\n.fa-user {\n  margin-right: 0.8rem; }\n\n.userListCurrentUser > p {\n  color: #cc0000; }\n\n.awayUser {\n  color: #6e6e6e; }\n\n.op {\n  color: green; }\n\n.voice {\n  color: #00ad09; }\n\n.userStatsContainer {\n  display: flex;\n  margin-bottom: 0.2rem;\n  height: 3rem;\n  min-height: 3rem !important;\n  justify-content: center;\n  white-space: nowrap; }\n\n.userStatsContainer > p {\n  margin-top: 0.5rem; }\n\n@media only screen and (max-height: 20rem) {\n  .userStatsContainer {\n    display: none; } }\n\n.connectionStatsContainer {\n  display: flex;\n  height: 3rem;\n  min-height: 3rem !important;\n  justify-content: center;\n  padding: 0 .3rem 0 .3rem;\n  white-space: nowrap; }\n\n.connectionStatsContainer > p {\n  margin-top: .5rem; }\n\n@media only screen and (max-height: 20rem) {\n  .connectionStatsContainer {\n    display: none; } }\n\n.ping-good {\n  color: lime; }\n\n.ping-ok {\n  color: #ff9100; }\n\n.ping-bad {\n  color: #cc0000; }\n\n.chatInputContainer {\n  display: flex;\n  width: calc(100% - $element-margin);\n  border-radius: 0.3rem;\n  height: 3.6rem;\n  min-height: 3.6rem !important; }\n\n.chatInputContainerActive {\n  box-shadow: inset 0.1rem 0.1rem 0.2rem #00ad09, inset -0.1rem -0.1rem 0.2rem #00ad09; }\n\n.fontButton {\n  font-weight: bold;\n  color: white;\n  background-color: #00ad09;\n  border: 0;\n  border-top: 0.2rem solid #00e00c;\n  border-bottom: 0.2rem solid #007a06;\n  margin: .3rem;\n  border-radius: .3rem;\n  height: 3rem; }\n\n.inputForm {\n  width: 100%; }\n\n.inputText {\n  background-color: transparent;\n  color: #cdd7c5;\n  width: 100%;\n  height: 100%;\n  padding: 0;\n  padding-left: 1rem;\n  border: 0; }\n\n.inputText:focus {\n  outline: none; }\n\n.adminAlertContainer {\n  display: flex;\n  width: calc(100% - $element-margin);\n  margin-bottom: 0.2rem;\n  min-height: 3rem !important;\n  justify-content: center; }\n\n.adminAlertContainer > p {\n  margin-top: 0.5rem; }\n\n@media only screen and (max-height: 20rem) {\n  .adminAlertContainer {\n    display: none; } }\n\n/*Vertical Flip*/\n.verticalFlip {\n  text-align: center; }\n\n.verticalFlip p {\n  padding-top: .3rem;\n  animation: vertical 12.5s linear infinite 0s;\n  -ms-animation: vertical 12.5s linear infinite 0s;\n  -webkit-animation: vertical 12.5s linear infinite 0s;\n  color: #00ad09;\n  font-size: 120%;\n  opacity: 0;\n  margin: 0;\n  overflow: hidden;\n  position: absolute; }\n\n.verticalFlip p:nth-child(2) {\n  animation-delay: 2.5s;\n  -ms-animation-delay: 2.5s;\n  -webkit-animation-delay: 2.5s; }\n\n.verticalFlip p:nth-child(3) {\n  animation-delay: 5s;\n  -ms-animation-delay: 5s;\n  -webkit-animation-delay: 5s; }\n\n.verticalFlip p:nth-child(4) {\n  animation-delay: 7.5s;\n  -ms-animation-delay: 7.5s;\n  -webkit-animation-delay: 7.5s; }\n\n.verticalFlip p:nth-child(5) {\n  animation-delay: 10s;\n  -ms-animation-delay: 10s;\n  -webkit-animation-delay: 10s; }\n\n/*Vertical Flip Animation*/\n@-moz-keyframes vertical {\n  0% {\n    opacity: 0; }\n  5% {\n    opacity: 0;\n    -moz-transform: rotateX(180deg); }\n  10% {\n    opacity: 1;\n    -moz-transform: translateY(0px); }\n  25% {\n    opacity: 1;\n    -moz-transform: translateY(0px); }\n  30% {\n    opacity: 0;\n    -moz-transform: translateY(0px); }\n  80% {\n    opacity: 0; }\n  100% {\n    opacity: 0; } }\n\n@-webkit-keyframes vertical {\n  0% {\n    opacity: 0; }\n  5% {\n    opacity: 0;\n    -webkit-transform: rotateX(180deg); }\n  10% {\n    opacity: 1;\n    -webkit-transform: translateY(0px); }\n  25% {\n    opacity: 1;\n    -webkit-transform: translateY(0px); }\n  30% {\n    opacity: 0;\n    -webkit-transform: translateY(0px); }\n  80% {\n    opacity: 0; }\n  100% {\n    opacity: 0; } }\n\n@-ms-keyframes vertical {\n  0% {\n    opacity: 0; }\n  5% {\n    opacity: 0;\n    -ms-transform: rotateX(180deg); }\n  10% {\n    opacity: 1;\n    -ms-transform: translateY(0px); }\n  25% {\n    opacity: 1;\n    -ms-transform: translateY(0px); }\n  30% {\n    opacity: 0;\n    -ms-transform: translateY(0px); }\n  80% {\n    opacity: 0; }\n  100% {\n    opacity: 0; } }\n\n.nickSetFailedReason {\n  margin: 0 0 .5rem 0;\n  text-align: center; }\n\n.loginTab {\n  cursor: not-allowed;\n  color: #4e4f52; }\n\n.loginTabBadges {\n  align-self: flex-end;\n  position: absolute;\n  right: 0;\n  top: 0;\n  color: #4e4f52;\n  font-size: 3rem; }\n\n.loginTabBadges > i {\n  margin-top: .5rem;\n  margin-right: .7rem; }\n\n@media only screen and (max-width: 43rem) {\n  .loginTabBadges {\n    display: none; } }\n\n.guestNickEntry {\n  width: 100%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  flex-direction: column; }\n\n.guestNickInputForm {\n  margin-top: 2rem;\n  display: flex;\n  flex-direction: column; }\n\n.guestNickInput {\n  width: 32rem;\n  height: 8rem;\n  background-color: #353638;\n  color: #cdd7c5;\n  font-size: 4rem;\n  border: 0;\n  padding: 0 .5rem 0 .5rem;\n  text-align: center; }\n\n.guestNickSubmitButton {\n  margin-top: 1rem;\n  background: #00ad09;\n  border: none;\n  border-bottom: 0.6rem solid #007a06;\n  color: white;\n  font-weight: bold;\n  font-size: 3.2rem;\n  width: 100%;\n  margin-bottom: 1.6rem;\n  padding: 2.4rem; }\n\n.guestNickSubmitButton:disabled {\n  opacity: .5; }\n\n.termsContainer {\n  display: flex;\n  flex-direction: row;\n  margin-bottom: 1rem; }\n\n.termsParagraph {\n  display: inline-block;\n  margin: 0 1rem 0 0;\n  padding: .5rem 0 0 0; }\n\n.example-enter {\n  opacity: 0.01;\n  width: 0px; }\n\n.example-enter.example-enter-active {\n  opacity: 1;\n  width: 100px;\n  transition: 700ms; }\n\n.example-leave {\n  opacity: 1;\n  width: 100px; }\n\n.example-leave.example-leave-active {\n  opacity: 0.01;\n  width: 0px;\n  transition: 700ms; }\n\n.StyleModalWrapper {\n  background-color: #353638;\n  position: absolute;\n  top: 1rem;\n  right: 2rem; }\n\n.StyleModalContainer {\n  margin: 0.2rem;\n  background-color: #262626;\n  padding: .5rem; }\n\n.StyleModalContainer > div {\n  text-align: center; }\n\n.StyleModalContainer > div > h3 {\n  margin: 0; }\n\n.StyleModalFonts {\n  margin-top: .5rem; }\n\n.StyleModalFonts > h3 {\n  margin-bottom: .5rem !important; }\n\n.StyleModalOptions {\n  margin-top: .5rem; }\n\n.ZoomButtonsContainer {\n  display: flex; }\n\n.ZoomButtonsContainer > p {\n  margin: .7rem 1.4rem 0 1.4rem; }\n\n.ZoomButtons {\n  background-color: #00ad09;\n  border: 0;\n  color: white;\n  color: white;\n  background-color: #353638;\n  border: 0;\n  border-top: 0.2rem solid #4e4f52;\n  border-bottom: 0.2rem solid #1c1d1e;\n  margin: .3rem;\n  border-radius: .3rem;\n  height: 3rem; }\n\n.channelsLink {\n  cursor: pointer;\n  padding-left: 2.2rem; }\n\n.SMinput {\n  display: none; }\n\n.SMbutton {\n  display: inline-block;\n  position: relative;\n  width: 2rem;\n  height: 2rem;\n  margin: .5rem;\n  cursor: pointer; }\n\n.SMbutton span {\n  display: block;\n  position: absolute;\n  width: 2rem;\n  height: 2rem;\n  padding: 0;\n  top: 50%;\n  left: 50%;\n  -webkit-transform: translate(-50%, -50%);\n  -ms-transform: translate(-50%, -50%);\n  -o-transform: translate(-50%, -50%);\n  transform: translate(-50%, -50%);\n  border-radius: 100%;\n  background: #eeeeee;\n  box-shadow: 0 0.2rem 0.5rem 0 rgba(0, 0, 0, 0.26);\n  transition: ease .3s; }\n\n.SMColorSelected {\n  box-shadow: 0 0.2rem 0.5rem 0 rgba(0, 0, 0, 0.26), 0 0 0.3rem 0.3rem white !important; }\n\n.SMbutton span:hover {\n  padding: .5rem; }\n\n.SMlayer {\n  display: block;\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  top: 0;\n  left: 0;\n  background: transparent;\n  z-index: -1; }\n\n.ReactFontPicker_Wrapper {\n  position: relative;\n  width: 100%;\n  height: 3rem;\n  background-color: #353638; }\n\n.ReactFontPicker_Wrapper:hover {\n  cursor: pointer; }\n\n.ReactFontPicker_Label > p, .ReactFontPicker_SelectedOption > p {\n  margin: .5rem 0 0 0; }\n\n.ReactFontPicker_Label, .ReactFontPicker_SelectedOption {\n  height: 100%;\n  display: flex;\n  justify-content: center;\n  text-align: center; }\n\n.ReactFontPicker_LabelFloat {\n  position: absolute;\n  color: transparent; }\n\n.ReactFontPicker_Button {\n  position: absolute;\n  right: .5rem;\n  top: 1.2rem;\n  width: 0;\n  height: 0;\n  border-style: solid;\n  border-width: .5rem .6rem 0 .6rem;\n  border-color: #dddddd transparent transparent transparent; }\n\n.ReactFontPicker_Button:hover {\n  cursor: pointer; }\n\n.ReactFontPicker_Options {\n  position: absolute;\n  top: 0;\n  width: 100%;\n  height: auto;\n  max-height: 20rem;\n  overflow-y: scroll;\n  padding-bottom: .5rem;\n  padding-top: .5rem;\n  float: left;\n  background-color: #262626;\n  box-shadow: 0 0 0.6rem #00ad09;\n  border: 0.1rem solid #00ad09;\n  z-index: 999;\n  -webkit-transition: .15s all ease-in-out;\n  -moz-transition: .15s all ease-in-out;\n  -ms-transition: .15s all ease-in-out;\n  -o-transition: .15s all ease-in-out;\n  transition: .15s all ease-in-out; }\n\n.ReactFontPicker_OptionsHidden {\n  position: absolute;\n  top: 0;\n  width: 100%;\n  height: 0;\n  padding-bottom: 0;\n  padding-top: 0;\n  background-color: #fff;\n  overflow: hidden;\n  box-shadow: 0 0 .6rem #ddd;\n  -webkit-transition: .15s all ease-in-out;\n  -moz-transition: .15s all ease-in-out;\n  -ms-transition: .15s all ease-in-out;\n  -o-transition: .15s all ease-in-out;\n  transition: .15s all ease-in-out; }\n\n.ReactFontPicker_Option {\n  display: block;\n  width: calc(100% - 20px);\n  padding-left: 1rem;\n  padding-right: 1rem;\n  height: 3rem;\n  line-height: 3rem;\n  float: left;\n  -webkit-transition: .1s all ease-in-out;\n  -moz-transition: .1s all ease-in-out;\n  -ms-transition: .1s all ease-in-out;\n  -o-transition: .1s all ease-in-out;\n  transition: .1s all ease-in-out; }\n\n.ReactFontPicker_Option:hover {\n  background-color: #00ad09; }\n\ndiv.ReactFontPicker_Wrapper .ripple {\n  position: relative;\n  overflow: hidden; }\n\ndiv.ReactFontPicker_Wrapper .ripple-effect {\n  position: absolute;\n  border-radius: 50%;\n  width: 5rem;\n  height: 5rem;\n  background: white;\n  animation: ripple-animation 1.8s; }\n\n@keyframes ripple-animation {\n  from {\n    transform: scale(1);\n    opacity: 0.4; }\n  to {\n    transform: scale(100);\n    opacity: 0; } }\n\n.ReactFontPicker {\n  display: block; }\n\n.connectingTitle {\n  text-align: center;\n  opacity: 1;\n  -webkit-animation: fade-in-out 2.5s infinite;\n  -moz-animation: fade-in-out 2.5s infinite;\n  -o-animation: fade-in-out 2.5s infinite;\n  animation: fade-in-out 2.5s infinite; }\n\n.ConnectingModalContainer {\n  text-align: center; }\n\n/*FADE IN-OUT*/\n@-webkit-keyframes fade-in-out {\n  0% {\n    opacity: 1; }\n  50% {\n    opacity: 0; }\n  100% {\n    oapcity: 1; } }\n\n@-moz-keyframes fade-in-out {\n  0% {\n    opacity: 1; }\n  50% {\n    opacity: 0; }\n  100% {\n    oapcity: 1; } }\n\n@-o-keyframes fade-in-out {\n  0% {\n    opacity: 1; }\n  50% {\n    opacity: 0; }\n  100% {\n    oapcity: 1; } }\n\n@keyframes fade-in-out {\n  0% {\n    opacity: 1; }\n  50% {\n    opacity: 0; }\n  100% {\n    oapcity: 1; } }\n\n.channelPickerContainer {\n  text-align: center; }\n\n.channelPickerButton {\n  margin-top: 1rem;\n  background: #00ad09;\n  border: none;\n  border-bottom: 0.6rem solid #007a06;\n  color: white;\n  font-weight: bold;\n  font-size: 3.2rem;\n  width: 100%;\n  max-width: 40rem;\n  margin-bottom: 1.6rem;\n  padding: 2.4rem; }\n\n.channelPickerButton:disabled {\n  opacity: .5; }\n\n.ChannelPickerWrapper {\n  display: flex;\n  flex-direction: column;\n  padding: 1.5rem; }\n\n.ChannelPickerTitleContainer {\n  background-color: #353638;\n  height: 3rem;\n  padding: 1rem .8rem .5rem .8rem;\n  width: calc(100% - 1.5rem);\n  border-radius: .4rem .4rem 0 0; }\n\n.ChannelPickerTitleContainer > h3 {\n  margin: 0;\n  text-align: center;\n  color: #6e6e6e; }\n\n.DCPContainer {\n  background-color: #1c1d1e;\n  padding: 1rem;\n  border-radius: 0 0 .4rem .4rem;\n  overflow-y: auto;\n  max-height: 40rem;\n  display: grid;\n  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }\n\n.DCPChannel {\n  flex: 1;\n  margin: .6rem;\n  display: flex;\n  text-align: center;\n  justify-content: center;\n  border-radius: .2rem;\n  cursor: pointer;\n  padding: .8rem; }\n\n.DCPChannel:hover {\n  background-color: #353638; }\n\n.DCPDisabled {\n  opacity: .5; }\n\n.DCPChannel > p {\n  margin: 0 0 0 1rem;\n  display: inline-block; }\n\n.DCPSelected {\n  color: white;\n  background-color: #00ad09; }\n\n.DCPSelected:hover {\n  background-color: #00c70a; }\n\n.UCPContainer {\n  background-color: #1c1d1e;\n  padding: 1rem;\n  border-radius: 0 0 .4rem .4rem;\n  overflow-y: scroll;\n  max-height: 40rem;\n  display: flex;\n  flex-direction: column;\n  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));\n  max-height: 20rem; }\n\n.UCPChannel {\n  cursor: pointer; }\n\n.UCPChannel:hover {\n  background-color: #353638; }\n\n.UCPChannel > td > p {\n  margin: 0 0 0 1rem;\n  display: inline-block; }\n\n.UCPSelected {\n  color: white;\n  background-color: #00ad09; }\n\n.UCPSelected:hover {\n  background-color: #00c70a; }\n", ""]);
 
 // exports
 
@@ -30427,15 +30427,127 @@ exports.default = function () {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-// visibleUsers: [{
-//     id: 0,
-//     username: '',
-//     assignedGroup: 'guests',
-//     isAway: false,
-//     isSelected: false,
-//     isSelf: false
-//   }],
 
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+var reducerDefaultState = [];
+
+exports.default = function () {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : reducerDefaultState;
+  var action = arguments[1];
+
+  switch (action.type) {
+    case 'ADD_USER':
+      return [].concat(_toConsumableArray(state), [action.user]);
+    case 'REMOVE_USER':
+      return state.filter(function (user) {
+        return user.userId != action.userId;
+      });
+    case 'SET_GROUP_OF_USER':
+      return state.map(function (user) {
+        if (user.userId == action.userId) {
+          return _extends({}, user, {
+            group: action.group
+          });
+        } else {
+          return user;
+        }
+      });
+    case 'SET_NICK_OF_USER':
+      return state.map(function (user) {
+        if (user.userId == action.userId) {
+          return _extends({}, user, {
+            nick: action.nick
+          });
+        } else {
+          return user;
+        }
+      });
+    case 'SET_SELECTED_USER':
+      return state.map(function (user) {
+        if (user.userId == action.userId) {
+          return _extends({}, user, {
+            isSelected: true
+          });
+        } else {
+          return _extends({}, user, {
+            isSelected: false //return false here because we only want one user to be selected at any time
+          });
+        }
+      });
+    case 'SET_USER_IS_AWAY':
+      return state.map(function (user) {
+        if (user.userId == action.userId) {
+          return _extends({}, user, {
+            isAway: true
+          });
+        } else {
+          return user;
+        }
+      });
+    case 'SET_USER_IS_NOT_AWAY':
+      return state.map(function (user) {
+        if (user.userId == action.userId) {
+          return _extends({}, user, {
+            isAway: false
+          });
+        } else {
+          return user;
+        }
+      });
+    case 'SET_USER_IS_BLOCKED':
+      return state.map(function (user) {
+        if (user.userId == action.userId) {
+          return _extends({}, user, {
+            isBlocked: true
+          });
+        } else {
+          return user;
+        }
+      });
+    case 'SET_USER_IS_NOT_BLOCKED':
+      return state.map(function (user) {
+        if (user.userId == action.userId) {
+          return _extends({}, user, {
+            isBlocked: false
+          });
+        } else {
+          return user;
+        }
+      });
+    case 'ADD_USER_TO_CHANNEL':
+      return state.map(function (user) {
+        if (user.userId == action.userId) {
+          return _extends({}, user, {
+            channels: [].concat(_toConsumableArray(channels), [action.channelId])
+          });
+        } else {
+          return user;
+        }
+      });
+    case 'REMOVE_USER_FROM_CHANNEL':
+      return state.map(function (user) {
+        if (user.userId == action.userId) {
+          return _extends({}, user, {
+            channels: channels.filter(function (channel) {
+              return channel != action.channelId;
+            })
+          });
+        } else {
+          return user;
+        }
+      });
+    default:
+      return state;
+  }
+};
 
 /***/ }),
 /* 265 */
@@ -30822,6 +30934,118 @@ var setMessageSent = exports.setMessageSent = function setMessageSent(sentTimest
 
 "use strict";
 
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+//user scope is "channel" however nicknames must be unique across all channels
+var addUser = exports.addUser = function addUser() {
+  var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+      _ref$channels = _ref.channels,
+      channels = _ref$channels === undefined ? [] : _ref$channels,
+      _ref$userId = _ref.userId,
+      userId = _ref$userId === undefined ? 0 : _ref$userId,
+      _ref$group = _ref.group,
+      group = _ref$group === undefined ? 'user' : _ref$group,
+      _ref$nick = _ref.nick,
+      nick = _ref$nick === undefined ? '' : _ref$nick,
+      _ref$isSelected = _ref.isSelected,
+      isSelected = _ref$isSelected === undefined ? false : _ref$isSelected,
+      _ref$isAway = _ref.isAway,
+      isAway = _ref$isAway === undefined ? false : _ref$isAway,
+      _ref$isBlocked = _ref.isBlocked,
+      isBlocked = _ref$isBlocked === undefined ? false : _ref$isBlocked;
+
+  return {
+
+    type: 'ADD_USER',
+    user: {
+      channels: channels,
+      userId: userId,
+      group: group,
+      nick: nick,
+      isSelected: isSelected,
+      isAway: isAway,
+      isBlocked: isBlocked
+    }
+
+  };
+};
+
+var removeUser = exports.removeUser = function removeUser(userId) {
+  return {
+    type: 'REMOVE_USER',
+    userId: userId
+  };
+};
+
+var setGroupOfUser = exports.setGroupOfUser = function setGroupOfUser(userId, group) {
+  return {
+    type: 'SET_GROUP_OF_USER',
+    userId: userId,
+    group: group
+  };
+};
+
+var setNickOfUser = exports.setNickOfUser = function setNickOfUser(userId, nick) {
+  return {
+    type: 'SET_NICK_OF_USER',
+    userId: userId,
+    nick: nick
+  };
+};
+
+var setSelectedUser = exports.setSelectedUser = function setSelectedUser(userId) {
+  return {
+    type: 'SET_SELECTED_USER',
+    userId: userId
+  };
+};
+
+var setUserIsAway = exports.setUserIsAway = function setUserIsAway(userId) {
+  return {
+    type: 'SET_USER_IS_AWAY',
+    userId: userId
+  };
+};
+
+var setUserIsNotAway = exports.setUserIsNotAway = function setUserIsNotAway(userId) {
+  return {
+    type: 'SET_USER_IS_NOT_AWAY',
+    userId: userId
+  };
+};
+
+var setUserIsBlocked = exports.setUserIsBlocked = function setUserIsBlocked(userId) {
+  return {
+    type: 'SET_USER_IS_BLOCKED',
+    userId: userId
+  };
+};
+
+var setUserIsNotBlocked = exports.setUserIsNotBlocked = function setUserIsNotBlocked(userId) {
+  return {
+    type: 'SET_USER_IS_NOT_BLOCKED',
+    userId: userId
+  };
+};
+
+var addUserToChannel = exports.addUserToChannel = function addUserToChannel(userId, channelId) {
+  return {
+    type: 'ADD_USER_TO_CHANNEL',
+    userId: userId,
+    channelId: channelId
+  };
+};
+
+var removeUserFromChannel = exports.removeUserFromChannel = function removeUserFromChannel(userId, channelId) {
+  return {
+    type: 'REMOVE_USER_FROM_CHANNEL',
+    userId: userId,
+    channelId: channelId
+  };
+};
 
 /***/ }),
 /* 271 */
@@ -31288,9 +31512,9 @@ var _reactRedux = __webpack_require__(8);
 
 var _config = __webpack_require__(68);
 
-var _actions = __webpack_require__(30);
+var _actions = __webpack_require__(31);
 
-var _utils = __webpack_require__(31);
+var _utils = __webpack_require__(24);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -31416,9 +31640,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.requestToJoinDefaultChannels = undefined;
 
-var _actions = __webpack_require__(30);
+var _actions = __webpack_require__(31);
 
-var _utils = __webpack_require__(31);
+var _utils = __webpack_require__(24);
 
 //sends server request to join the default channels the user initially selected
 var requestToJoinDefaultChannels = exports.requestToJoinDefaultChannels = function requestToJoinDefaultChannels(state, dispatch) {
@@ -31520,9 +31744,9 @@ var _config = __webpack_require__(68);
 
 var _store = __webpack_require__(114);
 
-var _actions = __webpack_require__(30);
+var _actions = __webpack_require__(31);
 
-var _utils = __webpack_require__(31);
+var _utils = __webpack_require__(24);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -32741,7 +32965,7 @@ module.exports = __webpack_require__(288);
  * @api public
  *
  */
-module.exports.parser = __webpack_require__(25);
+module.exports.parser = __webpack_require__(26);
 
 
 /***/ }),
@@ -32753,10 +32977,10 @@ module.exports.parser = __webpack_require__(25);
  */
 
 var transports = __webpack_require__(122);
-var Emitter = __webpack_require__(24);
+var Emitter = __webpack_require__(25);
 var debug = __webpack_require__(44)('engine.io-client:socket');
 var index = __webpack_require__(126);
-var parser = __webpack_require__(25);
+var parser = __webpack_require__(26);
 var parseuri = __webpack_require__(118);
 var parseqs = __webpack_require__(42);
 
@@ -32893,7 +33117,7 @@ Socket.protocol = parser.protocol; // this is an int
 Socket.Socket = Socket;
 Socket.Transport = __webpack_require__(73);
 Socket.transports = __webpack_require__(122);
-Socket.parser = __webpack_require__(25);
+Socket.parser = __webpack_require__(26);
 
 /**
  * Creates transport of the given type.
@@ -33527,7 +33751,7 @@ try {
 
 var XMLHttpRequest = __webpack_require__(72);
 var Polling = __webpack_require__(123);
-var Emitter = __webpack_require__(24);
+var Emitter = __webpack_require__(25);
 var inherit = __webpack_require__(43);
 var debug = __webpack_require__(44)('engine.io-client:polling-xhr');
 
@@ -37040,7 +37264,7 @@ JSONPPolling.prototype.doWrite = function (data, fn) {
  */
 
 var Transport = __webpack_require__(73);
-var parser = __webpack_require__(25);
+var parser = __webpack_require__(26);
 var parseqs = __webpack_require__(42);
 var inherit = __webpack_require__(43);
 var yeast = __webpack_require__(125);
@@ -37969,7 +38193,7 @@ FontPicker.defaultProps = {
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _react = __webpack_require__(4);
@@ -37986,35 +38210,42 @@ var _UserListItem2 = _interopRequireDefault(_UserListItem);
 
 var _reactRedux = __webpack_require__(8);
 
+var _utils = __webpack_require__(24);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var UserWindow = function UserWindow(_ref) {
-    var configuration = _ref.configuration,
-        userInterface = _ref.userInterface;
-
-    return _react2.default.createElement(
-        'div',
-        { className: "userWindowContainer " + (userInterface.appIsBlurred ? " chatAppBlur" : '') /*Blur the app if the flag is set*/ },
-        _react2.default.createElement(
-            'div',
-            { className: 'userListContainer emphasised-container' },
-            _react2.default.createElement(_UserListItem2.default, { userName: '?', isAway: false, isSelected: false, isCurrentUser: false, userClass: 'voice' })
-        ),
-        _react2.default.createElement(
-            'div',
-            { className: 'userStatsContainer emphasised-container' },
-            _react2.default.createElement(
-                'p',
-                null,
-                '? ops, ? total'
-            )
-        ),
-        _react2.default.createElement(_ConnectionStats2.default, null)
-    );
+var UserWindow = function UserWindow(state) {
+  return _react2.default.createElement(
+    'div',
+    { className: "userWindowContainer " + (state.userInterface.appIsBlurred ? " chatAppBlur" : '') /*Blur the app if the flag is set*/ },
+    _react2.default.createElement(
+      'div',
+      { className: 'userListContainer emphasised-container' },
+      state.users.map(function (user) {
+        if (user.channels.includes(state.userInterface.activeChannelId)) {
+          return _react2.default.createElement(_UserListItem2.default, { userName: user.nick, isAway: user.isAway, isSelected: user.isSelected, userGroup: user.group });
+        }
+      })
+    ),
+    _react2.default.createElement(
+      'div',
+      { className: 'userStatsContainer emphasised-container' },
+      _react2.default.createElement(
+        'p',
+        null,
+        '0 ops, ',
+        state.users.filter(function (user) {
+          return user.channels.includes(state.userInterface.activeChannelId);
+        }).length,
+        ' total'
+      )
+    ),
+    _react2.default.createElement(_ConnectionStats2.default, null)
+  );
 };
 
 var mapStateToProps = function mapStateToProps(state) {
-    return state;
+  return state;
 };
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(UserWindow);
 
@@ -38205,7 +38436,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(8);
 
-var _actions = __webpack_require__(30);
+var _actions = __webpack_require__(31);
 
 var _DefaultChannelPicker = __webpack_require__(130);
 
@@ -38213,7 +38444,7 @@ var _DefaultChannelPicker2 = _interopRequireDefault(_DefaultChannelPicker);
 
 var _config = __webpack_require__(68);
 
-var _utils = __webpack_require__(31);
+var _utils = __webpack_require__(24);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
