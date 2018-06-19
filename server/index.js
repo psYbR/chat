@@ -18,20 +18,69 @@ var onlineUsers = [];
 //contains which channels users have joined
 var usersInChannels = [];
 //contains user-created channels
-var userChannels = []; //TO DO: save/load userChannels from disk
+var userChannels = [{
+  ...config.defaultChannel,
+  channelId: 21,
+  channelName: 'admin channel',
+  topic: 'secret admin stuff'
+}]; //TO DO: save/load userChannels from database
+
+//for a given socket ID, return the user's nick
+const socketToNick = (socketId) => {
+  const userObj = onlineUsers.filter(user => 
+    user.socketId == socketId
+  );
+  if (userObj) {
+    return userObj[0].nick;
+  } else {
+    console.log("tried to get nick from socket ID " + socketId + "but there was no nick found");
+    return false;
+  }
+};
+
+//sends a message (par 2) to a channel (par 1), excluding the sender if their socket is also supplied (par 3)
+const sendSystemMessageToChannel = (channelId, messageText, socketIdToExclude = false) => {
+  //create the message object to send
+  +new Date;
+  const message = {
+    type: 'inbound',
+    channelId: channelId,
+    source: '*',
+    receivedTimestamp: Date.now(),
+    messageText: messageText
+  }
+  //filter users to only people in the target channel
+  const usersInChannel = usersInChannels.filter(user => (
+    user.channelId == channelId
+  ));
+  //check there are users in the channel
+  if (usersInChannel) {
+    //send the message only to those users
+    usersInChannel.map((user)=>{
+      //exclude the sender if one was specified
+      if (user.socketId != socketIdToExclude) {
+        io.to(user.socketId).emit('chat message', message);
+      }
+    })
+  }
+}
 
 //the business end of the stick - event handlers for the client belong in here
 io.on('connection', (socket) => {
 
   //get the user's IP address
-  /*var ipaddress = socket.handshake.address.substr(7);
-  require('dns').reverse(ipaddress, function(err, domains) {
-    if (!domains) {
-      console.log('connection from: ' + ipaddress);
-    } else {
-      console.log('connection from: ' + domains[0]);
-    }
-  });*/
+  var ipaddress = socket.handshake.address.substr(7);
+  if (ipaddress) {
+    require('dns').reverse(ipaddress, function(err, domains) {
+      if (!domains) {
+        console.log('connection from: ' + ipaddress);
+      } else {
+        console.log('connection from: ' + domains[0]);
+      }
+    });
+  } else {
+    console.log('connection from unknown IP');
+  }
 
   //when the client requests to join a channel
   socket.on('join channel', (channelId, callback) => {
@@ -41,7 +90,7 @@ io.on('connection', (socket) => {
     if (isNaN(channelId)) {
       response = "invalid channel ID";
     }
-    //check if the ID is in the channel lists
+    //check if the ID is in one of the channel lists
     response = "channel not found";
     for (var i = 0; i < config.defaultChannels.length; i++) {
       if (config.defaultChannels[i].channelId == channelId) {
@@ -68,6 +117,10 @@ io.on('connection', (socket) => {
         channelId: channelId,
         socketId: socket.id
       })
+      //message to send to users in the channel
+      const nick = socketToNick(socket.id);
+      sendSystemMessageToChannel(channelId, nick + " has joined the channel", socket.id);
+      
     }
     callback({ response, channelId });
   });
@@ -76,7 +129,15 @@ io.on('connection', (socket) => {
   socket.on('request default channels', () => {
     console.log("Request for default channels from socket: " + socket.id)
     for (var i = 0; i < config.defaultChannels.length; i++) {
-      io.to(socket.id).emit('default channel', config.defaultChannels[i]);
+      //we don't want to send the entire channel object, so here we set up a new one with the required values in it
+      const channel = {
+        channelId: config.defaultChannels[i].channelId,
+        channelName: config.defaultChannels[i].channelName,
+        topic: config.defaultChannels[i].topic,
+        isSelected: config.defaultChannels[i].isSelected
+      };
+      //send the channel object
+      io.to(socket.id).emit('default channel', channel);
       if (i == config.defaultChannels.length - 1) {
         io.to(socket.id).emit('default channels finished');
         console.log("Sent default channels to socket: " + socket.id)
@@ -88,7 +149,18 @@ io.on('connection', (socket) => {
   socket.on('request user channels', () => {
     console.log("Request for user channels from socket: " + socket.id)
     for (var i = 0; i < userChannels.length; i++) {
-      io.to(socket.id).emit('user channel', userChannels[i]);
+      //we don't want to send the entire channel object, so here we set up a new one with the required values in it
+      const channel = {
+        channelId: userChannels[i].channelId,
+        channelName: userChannels[i].channelName,
+        topic: userChannels[i].topic,
+        isSelected: userChannels[i].isSelected
+      };
+      //check the channel is publicly listed
+      if (channel.isVisible) {
+        //send the channel object
+        io.to(socket.id).emit('user channel', channel);
+      }
       if (i == userChannels.length - 1) {
         io.to(socket.id).emit('user channels finished');
         console.log("sent user channels to socket: " + socket.id)
@@ -105,8 +177,12 @@ io.on('connection', (socket) => {
     } else {
       //check if another user has that nick already
       onlineUsers.map((user)=>{
-        if (user.nick == nick) {
-          error = "that nick is in use";
+        if (user.nick == nick) { //the nick is in use
+          if (user.socketId == socket.id) { //if it's the current user
+            error = "nick already set";
+          } else {
+            error = "that nick is in use";
+          }
         }
       })
       //check the length of the nick
@@ -120,17 +196,17 @@ io.on('connection', (socket) => {
     //if there was no error
     if (error == "success") {
       console.log("Nick '" + nick + "' accepted for socket: " + socket.id)
-      //check if the user is changing their nick (ie. they already have a nick) drop them from the array first
+      //if the user is changing their nick (ie. they already have a nick) drop them from the array first
       let wasExistingUser = false;
       let existingNick = '';
-      for (var i = 0; i < onlineUsers.length; i++) {
-        if (onlineUsers[i].socketId == socket.id) {
-          console.log('User "' + onlineUsers[i].nick + '" changed their nick to "' + nick + '".');
+      onlineUsers.map((user) => {
+        if (user.socketId == socket.id) {
+          console.log('User "' + user.nick + '" changed their nick to "' + nick + '".');
           wasExistingUser = true;
-          existingNick = onlineUsers[i].nick;
+          existingNick = user.nick;
           onlineUsers.splice(i,1);
         }
-      }; 
+      })
       //add the user to the array of online users
       onlineUsers.push({
         nick: nick,
@@ -141,25 +217,12 @@ io.on('connection', (socket) => {
       if (wasExistingUser) {
         messageText = existingNick + ' changed their nick to ' + nick;
       }
-      //get the channels this user is in
-      const channelsToInform = usersInChannels.filter(user => (
-        user.socketId == socket.id
-      ));
-      //send the message only to those users
-      channelsToInform.map((channel)=>{
-        //create the message object
-        const message = {
-          type: 'inbound',
-          channelId: channel.channelId,
-          source: '*',
-          receivedTimestamp: Date.now(),
-          messageText: messageText
-        };
-        //exclude the sender
-        if (channel.socketId != socket.id) {
-          io.to(user.socketId).emit('chat message', message);
+      //get the channels this user is in and send a message
+      usersInChannels.map((user)=>{
+        if (user.socketId == socket.id) {
+          sendSystemMessageToChannel(user.channelId, messageText, socket.id);
         }
-      })
+      });
     }
     //send the response
     callback(error);
@@ -216,20 +279,20 @@ io.on('connection', (socket) => {
 
   //when the client disconnects
   socket.on('disconnect', (reason) => {
-    //remove the user from the users array and send a notification to channels
-    for (var i = 0; i < onlineUsers.length; i++) {
-      if (onlineUsers[i].socketId == socket.id) {
-        io.emit('chat message', {
-          type: 'inbound', //or 'outbound'
-          channelId: 1, //the channel the message was said in
-          source: '*', //the nickname of the person who sent the message
-          receivedTimestamp: Date.now(), //when the server distributed the message
-          messageText: onlineUsers[i].nick + " left the channel (" + (reason == "transport close" ? "connection closed" : reason) + ")"
-        });
-        console.log('User "' + onlineUsers[i].nick + '" disconnected: ' + reason);
+    //remove the users from the relevant arrays and send a notification to channels
+    usersInChannels.map((user, i)=>{
+      if (user.socketId = socket.id) {
+        const messageText = user.nick + " has disconnected (" + reason + ")"
+        console.log(messageText);
+        sendSystemMessageToChannel(user.channelId, messageText, socket.id)
+      }
+      usersInChannels.splice(i,1);
+    })
+    onlineUsers.map((user, i) => {
+      if (user.socketId = socket.id) {
         onlineUsers.splice(i,1);
       }
-    };    
+    })
   });
 
 });

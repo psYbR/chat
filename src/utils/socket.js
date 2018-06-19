@@ -15,8 +15,10 @@ import {
   setLoggedIn,
   setJoinDefaultChannels,
   stopWaitForNickAcceptance,
+  startWaitForNickAcceptance,
   setNickSetFailedReason,
-  joinChannel
+  joinChannel,
+  setCurrentChannel
 } from '../actions/actions';
 import { getNowTimestamp } from '../utils/utils';
 
@@ -25,7 +27,7 @@ export const requestJoinChannel = (channelId) => {
   
   //check ID is a number
   if (isNaN(channelId)) {
-    //tell the UI setting of the nick failed
+    //tell the UI joining the channel failed
     console.log("requesting to join channel ID failed: not a valid ID");
     store.dispatch(addMessage({source: "*", channelId: channelId, messageSent: true, receivedTimestamp: getNowTimestamp(), messageText: "Could not join channel: invalid ID" }));
   }
@@ -37,9 +39,11 @@ export const requestJoinChannel = (channelId) => {
       if (response == "success") {
         console.log("request to join channel ID " + channelId + " succeeded!");
         store.dispatch(joinChannel(channelId)); //set the UI to show the channel as joined
+        store.dispatch(setCurrentChannel(channelId));
       } else if (response == "already in channel") {
         console.log("no need to join channel ID " + channelId + " - already there!");
         store.dispatch(joinChannel(channelId)); //set the UI to show the channel as joined
+        store.dispatch(setCurrentChannel(channelId));
       } else {
         console.log("request to join channel ID " + channelId + " failed: " + response);
         //show an error
@@ -94,6 +98,7 @@ export const setNick = (nick) => {
   }
   //if there was an error
   if (wasError) {
+    console.log("setting nick failed: " + errorMsg);
     store.dispatch(nickSetFailed(errorMsg)); //tell the UI setting of the nick failed
   }
   //if there was no error
@@ -101,12 +106,14 @@ export const setNick = (nick) => {
     socket.emit('set nick', nick, (response) => { //send the nick to the server
       //handle the response (a string; either "success" or the reason the nick wasn't accepted eg. in use)
       if (response == "success") {
+        console.log("setting nick succeeded!");
         store.dispatch(unblurApp());
         store.dispatch(setLoggedIn());
         store.dispatch(setJoinDefaultChannels()); //trigger the joining of any of the default channels they selected
         store.dispatch(stopWaitForNickAcceptance());
         store.dispatch(setNickSetFailedReason('')); //update the UI and set the nick
       } else {
+        console.log("setting nick failed: " + response);
         store.dispatch(stopWaitForNickAcceptance());
         store.dispatch(setNickSetFailedReason(response)); //tell the UI that setting the nick failed
       }      
@@ -142,12 +149,21 @@ const handleConnect = (socket, reconnect) => {
   if (reconnect) {
     console.log("socket connection re-established");
 
+    //set the nick again (server ignores if it's already set)
+    setNick(store.getState().loginState.nick);
+
+    // while (store.getState().userInterface.waitForNickAcceptance) {
+    //   console.log("waiting for server");
+    // }
+
     //request to re-join channels
     store.getState().channels.map((channel) => {
       if (channel.isJoined) {
         requestJoinChannel(channel.channelId);
       }
     });
+
+    
 
   } else {
     console.log("socket connection established");
@@ -172,6 +188,7 @@ const handleDisconnect = (reason) => {
   store.dispatch(updatePing('--'));
   store.dispatch(setDisconnected());
   store.dispatch(setDisconnectionReason(reason));
+  store.dispatch(startWaitForNickAcceptance());
 }
 socket.on('disconnect', (reason) => {
   if (reason == "transport close") {
