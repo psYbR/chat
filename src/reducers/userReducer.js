@@ -111,6 +111,8 @@ export default (state = reducerDefaultState, action) => {
           return user
         }
       })
+    case 'FLUSH_USER_LIST':
+      return reducerDefaultState
     default:
       return state;
   }

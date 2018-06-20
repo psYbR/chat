@@ -7,6 +7,7 @@ export const addUser = (
     group = 'user', //'voice', 'op', 'system'
     nick = '',
     isSelected = false,
+    isCurrentUser = false,
     isAway = false,
     isBlocked = false
   } = {}
@@ -20,6 +21,7 @@ export const addUser = (
     group,
     nick,
     isSelected,
+    isCurrentUser,
     isAway,
     isBlocked
   }
@@ -31,19 +33,19 @@ export const removeUser = (userId) => ({
   userId
 });
 
-export const setGroupOfUser = (userId, group) => ({ 
+export const setGroupOfUser = (userId, group) => ({
   type: 'SET_GROUP_OF_USER',
   userId,
   group
 });
 
-export const setNickOfUser = (userId, nick) => ({ 
+export const setNickOfUser = (userId, nick) => ({
   type: 'SET_NICK_OF_USER',
   userId,
   nick
 });
 
-export const setSelectedUser = (userId) => ({ 
+export const setSelectedUser = (userId) => ({
   type: 'SET_SELECTED_USER',
   userId
 });
@@ -78,4 +80,8 @@ export const removeUserFromChannel = (userId, channelId) => ({
   type: 'REMOVE_USER_FROM_CHANNEL',
   userId,
   channelId
+});
+
+export const flushUserList = () => ({
+  type: 'FLUSH_USER_LIST'
 });

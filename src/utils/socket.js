@@ -19,7 +19,9 @@ import {
   setNickSetFailedReason,
   joinChannel,
   setCurrentChannel,
-  addUser
+  addUser,
+  setAllChannelsWasJoined,
+  flushUserList
 } from '../actions/actions';
 import { getNowTimestamp } from '../utils/utils';
 
@@ -41,10 +43,20 @@ export const requestJoinChannel = (channelId) => {
         console.log("request to join channel ID " + channelId + " succeeded!");
         store.dispatch(joinChannel(channelId)); //set the UI to show the channel as joined
         store.dispatch(setCurrentChannel(channelId));
+        getUserList();
+        setTimeout(()=>{ //this should be changed to a Promise
+          //
+        }, 2)
+
       } else if (response == "already in channel") {
         console.log("no need to join channel ID " + channelId + " - already there!");
         store.dispatch(joinChannel(channelId)); //set the UI to show the channel as joined
         store.dispatch(setCurrentChannel(channelId));
+        getUserList();
+        setTimeout(()=>{ //this should be changed to a Promise
+          //
+        }, 2)
+
       } else {
         console.log("request to join channel ID " + channelId + " failed: " + response);
         //show an error
@@ -122,9 +134,47 @@ export const setNick = (nick) => {
   }
 }
 
-//handle receiving a user
-socket.on('user', (user) => {
-  store.dispatch(addUser(user));
+//requests a list of users for the current channel
+export const getUserList = () => {
+  if (store.getState().channels.filter(channel => channel.isJoined).length > 0) {
+    const currentChannelId = store.getState().userInterface.activeChannelId;
+    socket.emit('get user list', currentChannelId, (response) => { //send the request to the server
+      //handle the response
+      if (response == "success") {
+        console.log("user list request accepted");
+      } else {
+        console.log("user list request failed: " + response);
+      }
+    });
+  } else {
+    console.log("Skipping user channel request, no channels joined.");
+  }
+}
+
+//handle receiving a single user
+socket.on('single user', (user) => {
+  if (typeof(user) == 'object') {
+    console.log("user received:")
+    console.log(user);
+    store.dispatch(addUser(user));
+  } else {
+    console.log("invalid user received - not an object: ");
+    console.log(user);
+  }  
+});
+
+//handle receiving a user list
+socket.on('user list', (userList) => {
+  if (typeof(userList) == 'object') {
+    store.dispatch(flushUserList());
+    userList.map((user) => {
+      console.log("user received (list):")
+      console.log(user);
+      store.dispatch(addUser(user));
+    })
+  } else {
+    console.log("invalid user list received - not an object");
+  }  
 });
 
 //handle receiving default channels from the server
@@ -155,28 +205,22 @@ const handleConnect = (socket, reconnect) => {
   if (reconnect) {
     console.log("socket connection re-established");
 
+    //get the user list for the current channel
+    getUserList();
+
     //set the nick again (server ignores if it's already set)
     setNick(store.getState().loginState.nick);
 
-    // while (store.getState().userInterface.waitForNickAcceptance) {
-    //   console.log("waiting for server");
-    // }
-
     //request to re-join channels
     store.getState().channels.map((channel) => {
-      if (channel.isJoined) {
+      if (channel.wasJoined) { //this flag is used to track channels that the user was disconnected from
         requestJoinChannel(channel.channelId);
       }
     });
 
-    
-
   } else {
     console.log("socket connection established");
   }
-  
-  
-
 
 }
 
@@ -195,6 +239,7 @@ const handleDisconnect = (reason) => {
   store.dispatch(setDisconnected());
   store.dispatch(setDisconnectionReason(reason));
   store.dispatch(startWaitForNickAcceptance());
+  store.dispatch(setAllChannelsWasJoined());
 }
 socket.on('disconnect', (reason) => {
   if (reason == "transport close") {

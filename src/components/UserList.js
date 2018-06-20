@@ -2,18 +2,15 @@ import React from 'react';
 import ConnectionStats from './ConnectionStats';
 import UserListItem from './UserListItem';
 import { connect } from 'react-redux';
-import { getVisibleUsers } from '../utils/utils';
+import { getVisibleUsers } from '../selectors/getVisibleUsers';
 
 const UserWindow = (state) => {
   return (
     <div className={"userWindowContainer " + (state.userInterface.appIsBlurred ? " chatAppBlur" : '') /*Blur the app if the flag is set*/}>
       <div className="userListContainer emphasised-container">
-        {state.users.map((user) => {
-          if (user.channels.includes(state.userInterface.activeChannelId)) {
-            return <UserListItem userName={user.nick} isAway={user.isAway} isSelected={user.isSelected} userGroup={user.group} />
-          }
+        {getVisibleUsers(state).map((user)=>{
+          return <UserListItem key={user.userId} userName={user.nick} isAway={user.isAway} isSelected={user.isSelected} isCurrentUser={user.isCurrentUser} userGroup={user.group} />
         })}
-        {/* <UserListItem userName="?" isAway={false} isSelected={false} isCurrentUser={false} userClass="voice"/> */}
       </div>
       <div className="userStatsContainer emphasised-container">
         <p>0 ops, {state.users.filter((user) => {

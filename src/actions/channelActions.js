@@ -8,6 +8,7 @@ export const addChannel = (
     isSelected = false,
     isCurrent = false,
     isJoined = false,
+    wasJoined = false,
     joinFailed = false,
     hasNewMessages = false,
     hasNewNotifs = false,
@@ -29,6 +30,7 @@ export const addChannel = (
     isSelected,
     isCurrent,
     isJoined,
+    wasJoined,
     joinFailed,
     hasNewMessages,
     hasNewNotifs,
@@ -54,4 +56,8 @@ export const joinChannel = (channelId) => ({
 export const setChannelJoinFailed = (channelId) => ({ 
   type: 'SET_CHANNEL_JOIN_FAILED',
   channelId
+});
+
+export const setAllChannelsWasJoined = () => ({
+  type: 'SET_ALL_CHANNELS_WAS_JOINED'
 });

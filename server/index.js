@@ -31,9 +31,14 @@ const socketToNick = (socketId) => {
     user.socketId == socketId
   );
   if (userObj) {
-    return userObj[0].nick;
+    if (userObj[0]) {
+      return userObj[0].nick;
+    } else {
+      return "n/a:2"
+    }
+    
   } else {
-    console.log("tried to get nick from socket ID " + socketId + "but there was no nick found");
+    console.log("n/a:1");
     return false;
   }
 };
@@ -82,6 +87,94 @@ io.on('connection', (socket) => {
     console.log('connection from unknown IP');
   }
 
+  //when the client requests a user list
+  socket.on('get user list', (channelId, callback) => {
+    console.log("Request for user list for channel: '" + channelId + "' from socket: " + socket.id);
+    let response = "success"
+    //check the channel ID was valid
+    if (isNaN(channelId)) {
+      response = "invalid channel ID";
+    }
+
+    //check if the channel ID is in one of the channel lists
+    response = "that channel was not found";
+    config.defaultChannels.map((channel)=>{
+      if (channel.channelId == channelId) {
+        response = "success";
+      }
+    });
+    userChannels.map((channel)=>{
+      if (channel.channelId == channelId) {
+        response = "success";
+      }
+    });
+
+    //check the user is actually in that channel
+    response = "you are not in channel: " + channelId
+    let usersChannels = []; //keep track of which channels the user *is* in, we'll use this later on
+    usersInChannels.map((record)=>{
+      if (record.channelId == channelId && record.socketId == socket.id) {
+        response = "success";
+      }
+      if (record.socketId == socket.id) {
+        usersChannels.push(record.channelId);
+      }
+    })
+
+    //check the permissions for the channel here
+
+    //send the list of users in the channel
+    if (response == "success") {
+
+      //get the list of users actually in the requested channel
+      const userList = usersInChannels.filter(user => user.channelId == channelId);
+
+      let outgoingList = [];
+
+      //create the object for each user in the channel
+      userList.map((user) => {
+
+        let outgoingUser = {
+          userId: user.socketId,
+          channels: [], //contains a list of channels the user is in
+          isAway: false, //lol
+          isBlocked: false, //lol
+          isCurrentUser: false,
+          group: 'user' //lol
+        };
+
+        //populate the channels array for this user
+        usersInChannels.map((record)=>{
+
+          //only get channels the user requesting the user list is in - for privacy reasons we don't want them seeing other channels a user is in unles they're in those same channels
+          if (record.socketId == user.socketId && usersChannels.includes(record.channelId)) {
+            outgoingUser.channels.push(record.channelId);
+          }
+        })
+
+        //get the nickname for this user
+        onlineUsers.map((record)=>{
+          if (record.socketId == user.socketId) {
+            outgoingUser.nick =  record.nick;
+          }
+        })
+
+        //check if the user is the current user
+        if (user.socketId == socket.id) {
+          outgoingUser.isCurrentUser = true;
+        }
+
+        //add to the list we'll send to the client
+        outgoingList.push(outgoingUser);
+
+      });
+
+      //send the list to the client
+      io.to(socket.id).emit('user list', outgoingList);
+    }
+    callback(response);
+  });
+
   //when the client requests to join a channel
   socket.on('join channel', (channelId, callback) => {
     console.log("Request to join channel '" + channelId + "' from socket: " + socket.id);
@@ -120,6 +213,33 @@ io.on('connection', (socket) => {
       //message to send to users in the channel
       const nick = socketToNick(socket.id);
       sendSystemMessageToChannel(channelId, nick + " has joined the channel", socket.id);
+
+      let outgoingUser = {
+        userId: socket.id,
+        channels: [], //contains a list of channels the user is in
+        isAway: false, //lol
+        isBlocked: false, //lol
+        isCurrentUser: false,
+        group: 'user' //lol
+      };
+      //populate the channels array for this user
+      usersInChannels.map((record)=>{
+        if (record.socketId == socket.id) {
+          outgoingUser.channels.push(record.channelId);
+        }
+      })
+      //get the nickname for this user
+      outgoingUser.nick =  nick;
+
+      //send the new user object to everyone in the channel except the joining user
+      usersInChannels.map((record)=>{
+        if (record.channelId == channelId && record.socketId != socket.id) {
+          //send the user item to the client
+          io.to(record.socketId).emit('single user', outgoingUser);
+          console.log("Sending a single user: ")
+          console.log(outgoingUser)
+        }
+      })
       
     }
     callback({ response, channelId });
@@ -282,7 +402,8 @@ io.on('connection', (socket) => {
     //remove the users from the relevant arrays and send a notification to channels
     usersInChannels.map((user, i)=>{
       if (user.socketId = socket.id) {
-        const messageText = user.nick + " has disconnected (" + reason + ")"
+        const nick = socketToNick(socket.id);
+        const messageText = nick + " has disconnected (" + reason + ")"
         console.log(messageText);
         sendSystemMessageToChannel(user.channelId, messageText, socket.id)
       }

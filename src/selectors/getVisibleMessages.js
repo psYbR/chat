@@ -1,3 +1,4 @@
+
 //sort comparitor - sort by timestamp
 const compare = (a,b) => {
   if (a.timestamp < b.timestamp)
