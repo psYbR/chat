@@ -5,10 +5,13 @@
 const nickMinLength = 3;
 const nickMaxLength = 20;
 const messageMaxLength = 510;
-const pingTimeout = 90000; //milliseconds
-const pingInterval = 5000; //milliseconds
+//ping timeout is currently set very short because sockets are not closing properly when a client disconnects
+//todo: find a better way of detecting closed connections.
+const pingTimeout = 5000; //milliseconds
+const pingInterval = 3000; //milliseconds
 const maxHttpBufferSize = 50000; //50kb
 
+//the default object for a channel
 const defaultChannel = {
   channelId: 0,
   channelName: '',
@@ -19,13 +22,12 @@ const defaultChannel = {
   isVisible: true //visible in listings or not? mainly applicable to user-created channels
 }
 
+//nah, well do this in a database so I don't have to tear my hair out writing a massive object
 const channelPermissions = [
-  {
-    channelId: 1,
-
-  }
+  //move to db
 ]
 
+//todo: move these to a database
 //the list of default channels that show up at the welcome screen
 const defaultChannels = [
   { ...defaultChannel, channelId: 1, channelName: 'lobby', topic: 'Welcome to the lobby', isSelected: true },

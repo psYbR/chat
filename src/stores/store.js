@@ -67,8 +67,8 @@ const configureStore = () => {
     defaultChannels: defaultChannelsReducer,
     userChannels: userChannelsReducer
   }),
-    //enables the REDUX plugin to talk to the corresponding Chrome extension
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  //enables the REDUX plugin to talk to the corresponding Chrome extension
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   );
 
   return store;

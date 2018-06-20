@@ -19,7 +19,9 @@ import {
   setNickSetFailedReason,
   joinChannel,
   setCurrentChannel,
+  setActiveChannel,
   addUser,
+  removeUser,
   setAllChannelsWasJoined,
   flushUserList
 } from '../actions/actions';
@@ -43,20 +45,14 @@ export const requestJoinChannel = (channelId) => {
         console.log("request to join channel ID " + channelId + " succeeded!");
         store.dispatch(joinChannel(channelId)); //set the UI to show the channel as joined
         store.dispatch(setCurrentChannel(channelId));
+        store.dispatch(setActiveChannel(channelId));
         getUserList();
-        setTimeout(()=>{ //this should be changed to a Promise
-          //
-        }, 2)
-
       } else if (response == "already in channel") {
         console.log("no need to join channel ID " + channelId + " - already there!");
         store.dispatch(joinChannel(channelId)); //set the UI to show the channel as joined
         store.dispatch(setCurrentChannel(channelId));
+        store.dispatch(setActiveChannel(channelId));
         getUserList();
-        setTimeout(()=>{ //this should be changed to a Promise
-          //
-        }, 2)
-
       } else {
         console.log("request to join channel ID " + channelId + " failed: " + response);
         //show an error
@@ -68,6 +64,11 @@ export const requestJoinChannel = (channelId) => {
 
 //send chat messages to the server and handle the response on success or failure
 export const sendMessage = (outboundMsg) => {
+  if (outboundMsg.channelId == store.getState().userInterface.activeChannelId) {
+    $('.chatMessageContainer').stop().animate({
+      scrollTop: $('.chatMessageContainer')[0].scrollHeight
+    }, 800);
+  }
   let wasError = false;
   let errorMsg = '';
   //sanity check the timestamp
@@ -95,7 +96,6 @@ export const sendMessage = (outboundMsg) => {
         console.log("Message " + timestamp + " not sent: " + response);
         store.dispatch(setMessageSent(timestamp, response));
       }
-      
     });
   }
 }
@@ -136,9 +136,12 @@ export const setNick = (nick) => {
 
 //requests a list of users for the current channel
 export const getUserList = () => {
+  //check the user is in a channel before sending a server request
   if (store.getState().channels.filter(channel => channel.isJoined).length > 0) {
+    //get the ID of the current channel
     const currentChannelId = store.getState().userInterface.activeChannelId;
-    socket.emit('get user list', currentChannelId, (response) => { //send the request to the server
+    //send the request to the server
+    socket.emit('get user list', currentChannelId, (response) => {
       //handle the response
       if (response == "success") {
         console.log("user list request accepted");
@@ -152,13 +155,23 @@ export const getUserList = () => {
 }
 
 //handle receiving a single user
+socket.on('remove user', (userId) => {
+  if (userId) {
+    console.log("Remove user request received: " + userId)
+    store.dispatch(removeUser(userId));
+  } else {
+    console.log("invalid user ID received for removing a user: ");
+    console.log(userId);
+  }  
+});
+
+//handle receiving a single user
 socket.on('single user', (user) => {
   if (typeof(user) == 'object') {
-    console.log("user received:")
-    console.log(user);
+    console.log("user received (single): " + user.nick)
     store.dispatch(addUser(user));
   } else {
-    console.log("invalid user received - not an object: ");
+    console.log("invalid (single) user received:");
     console.log(user);
   }  
 });
@@ -168,12 +181,12 @@ socket.on('user list', (userList) => {
   if (typeof(userList) == 'object') {
     store.dispatch(flushUserList());
     userList.map((user) => {
-      console.log("user received (list):")
-      console.log(user);
+      console.log("user received (list): " + user.nick)
       store.dispatch(addUser(user));
     })
   } else {
-    console.log("invalid user list received - not an object");
+    console.log("invalid user list received:");
+    console.log(userList);
   }  
 });
 
@@ -192,6 +205,13 @@ socket.on('default channels finished', () => {
 //handle incoming chat messages
 socket.on('chat message', (msg) => {
   store.dispatch(addMessage({...msg, messageSent: true}));
+  // setTimeout(()=>{
+    if (msg.channelId == store.getState().userInterface.activeChannelId) {
+      $('.chatMessageContainer').stop().animate({
+        scrollTop: $('.chatMessageContainer')[0].scrollHeight
+      }, 800);
+    }
+  // }, 0)
 });
 
 //handle connection

@@ -13,6 +13,8 @@ app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html'); //send the index.html file
 });
 
+
+
 //contains users that are currently connected
 var onlineUsers = [];
 //contains which channels users have joined
@@ -34,12 +36,15 @@ const socketToNick = (socketId) => {
     if (userObj[0]) {
       return userObj[0].nick;
     } else {
-      return "n/a:2"
+      console.log("couldn't find nick (e2):");
+      console.log(userObj);
+      return "E:2 ";
+      
     }
     
   } else {
-    console.log("n/a:1");
-    return false;
+    console.log("couldn't find nick (e1)");
+    return "E:1 ";
   }
 };
 
@@ -236,8 +241,6 @@ io.on('connection', (socket) => {
         if (record.channelId == channelId && record.socketId != socket.id) {
           //send the user item to the client
           io.to(record.socketId).emit('single user', outgoingUser);
-          console.log("Sending a single user: ")
-          console.log(outgoingUser)
         }
       })
       
@@ -368,6 +371,7 @@ io.on('connection', (socket) => {
       response = "message exceeded maximum length";
     }
     //check the user is actually in the channel they're trying to send a message to
+    console.log(usersInChannels);
     const checkUser = usersInChannels.filter(user => (
       user.channelId == outgoing.channelId && user.socketId == socket.id
     ));
@@ -399,18 +403,30 @@ io.on('connection', (socket) => {
 
   //when the client disconnects
   socket.on('disconnect', (reason) => {
+
+    if (reason == 'transport error') {
+      reason = 'connection closed';
+    }
+
+    const nick = socketToNick(socket.id);
+    const messageText = nick + " has disconnected (" + reason + ")"
+    console.log(nick + " (" + socket.id + ") has disconnected (" + reason + ")");
+
     //remove the users from the relevant arrays and send a notification to channels
     usersInChannels.map((user, i)=>{
-      if (user.socketId = socket.id) {
-        const nick = socketToNick(socket.id);
-        const messageText = nick + " has disconnected (" + reason + ")"
-        console.log(messageText);
+      if (user.socketId == socket.id) {
         sendSystemMessageToChannel(user.channelId, messageText, socket.id)
+        //tell clients who were in a channel with the user to remove the user from their user lists
+        usersInChannels.map((record)=>{
+          if (record.channelId == user.channelId && record.socketId != socket.id) {
+            io.to(record.socketId).emit('remove user', socket.id);
+          }
+        })
+        usersInChannels.splice(i,1);
       }
-      usersInChannels.splice(i,1);
     })
     onlineUsers.map((user, i) => {
-      if (user.socketId = socket.id) {
+      if (user.socketId == socket.id) {
         onlineUsers.splice(i,1);
       }
     })
