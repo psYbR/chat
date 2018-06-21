@@ -1,6 +1,8 @@
+var config = require('./config');
 const express = require('express');
 const app = express();
-var config = require('./config');
+var helmet = require('helmet')
+app.use(helmet())
 app.use(express.static(__dirname + '/public')); //specify that static content (bundle.js, images) lives in the 'public' folder
 var http = require('http').Server(app);
 var clone = require('lodash.clone');
