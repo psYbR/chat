@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { maxMessageLength } from '../config.js';
 import { setInputFieldText, showStyleModal, hideStyleModal, addMessage } from '../actions/actions';
-import { getNowTimestamp, sendMessage, colorNameToRGB } from '../utils/utils';
+import { getNowTimestamp, colorNameToRGB } from '../utils/utils';
+import sendChatMessage from '../utils/handlers/sendChatMessage';
 
 // to do:
 //
@@ -38,7 +39,7 @@ class ChatInput extends React.Component {
             ));
 
             //send the message via the socket
-            sendMessage(outboundMsg);
+            sendChatMessage(outboundMsg);
 
         }
     }

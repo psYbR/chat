@@ -6,7 +6,7 @@ var io = require('./server');
 // called when the client requests a list of the default channels they may join
 //
 
-const defaultChannels = (socket) => {
+const defaultChannels = (socket) => { 
 
   console.log("Request for default channels from socket: " + socket.id)
 

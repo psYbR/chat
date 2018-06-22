@@ -1,5 +1,10 @@
-import { unsetJoinDefaultChannels, resetDefaultChannelSelections, addChannel, joinChannel } from '../actions/actions';
-import { requestJoinChannel } from '../utils/utils';
+import {
+  unsetJoinDefaultChannels,
+  resetDefaultChannelSelections,
+  addChannel
+  //joinChannel
+} from '../actions/actions';
+import requestJoinChannel from '../utils/handlers/requestJoinChannel';
 
 //sends server request to join the default channels the user initially selected
 export const requestToJoinDefaultChannels = (state, dispatch) => {

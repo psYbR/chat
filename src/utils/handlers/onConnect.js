@@ -1,5 +1,5 @@
-import { store } from '../stores/store';
-import { getDefaultChannels } from './handleChannelRequests';
+import { store } from '../../stores/store';
+import { getDefaultChannels } from './handleChannelLists';
 import requestJoinChannel from './requestJoinChannel';
 import setNick from './setNick';
 import { getUserList } from './handleUserLists';

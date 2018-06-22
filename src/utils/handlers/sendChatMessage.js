@@ -1,5 +1,12 @@
+import { store } from '../../stores/store';
+import socket from './client';
+import { maxTimestamp, maxMessageLength } from '../../config';
+import {
+  setMessageSent
+} from '../../actions/actions';
+
 //send chat messages to the server and handle the response on success or failure
-export const sendMessage = (outboundMsg) => {
+export const sendChatMessage = (outboundMsg) => {
   if (outboundMsg.channelId == store.getState().userInterface.activeChannelId) {
     $('.chatMessageContainer').stop().animate({
       scrollTop: $('.chatMessageContainer')[0].scrollHeight
@@ -35,3 +42,5 @@ export const sendMessage = (outboundMsg) => {
     });
   }
 }
+
+export default sendChatMessage;

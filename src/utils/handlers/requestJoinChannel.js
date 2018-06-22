@@ -1,13 +1,16 @@
-import { store } from '../stores/store';
-//getUserList
-//setActiveChannel*
-//setCurrentChannel*
-//joinChannel*
-//addMessage*
-//getNowTimestamp
+import { store } from '../../stores/store';
+import socket from './client';
+import {
+  setActiveChannel,
+  setCurrentChannel,
+  joinChannel,
+  addMessage
+} from '../../actions/actions';
+import { getUserList } from './handleUserLists';
+import { getNowTimestamp } from '../utils'
 
 //send request to join a channel
-const requestJoinChannel = (socket, channelId) => {
+const requestJoinChannel = (channelId) => {
   
   //check ID is a number
   if (isNaN(channelId)) {

@@ -15,7 +15,6 @@ const sendUserObject = (destinationSocketID, userSocketID, channelId) => {
 
   let outgoingUser = {
     userId: userSocketID,
-    channel: channelId, //the channel the user is in
     isAway: false, //lol
     isBlocked: false, //lol
     isCurrentUser: false,
@@ -31,9 +30,10 @@ const sendUserObject = (destinationSocketID, userSocketID, channelId) => {
 
   console.log("(sendUserObject) Sending user: ");
   console.log(outgoingUser);
+  console.log("(sendUserObject) ... in channel: " + channelId)
 
   //send the user item to the client
-  io.to(destinationSocketID).emit('single user', outgoingUser);
+  io.to(destinationSocketID).emit('user', { user: outgoingUser, channel: channelId} );
 
 }
 

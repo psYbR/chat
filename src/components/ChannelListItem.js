@@ -1,7 +1,7 @@
 import React from 'react';
 import { setActiveChannel, setCurrentChannel } from "../actions/actions";
 import { connect } from 'react-redux';
-import { getUserList } from '../utils/utils';
+import { getUserList } from '../utils/handlers/handleUserLists';
 
 const ChannelListItem = ( { channel, dispatch } ) => (
   <div

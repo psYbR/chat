@@ -10,7 +10,7 @@ export const addUser = (
     isCurrentUser = false,
     isAway = false,
     isBlocked = false
-  } = {}
+  } = {}, channel = 0
 
 ) => ({ 
   
@@ -24,13 +24,15 @@ export const addUser = (
     isCurrentUser,
     isAway,
     isBlocked
-  }
+  },
+  channel
 
 });
 
-export const removeUser = (userId) => ({ 
+export const removeUser = (userId, channel) => ({ 
   type: 'REMOVE_USER',
-  userId
+  userId,
+  channel
 });
 
 export const setGroupOfUser = (userId, group) => ({

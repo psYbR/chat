@@ -2,15 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {
   setUserNick,
-  setLoggedIn,
+  //setLoggedIn,
   setTermsAccepted,
   setTermsUnaccepted,
-  setJoinDefaultChannels,
+  //setJoinDefaultChannels,
   startWaitForNickAcceptance
 } from '../actions/actions';
 import DefaultChannelPicker from './DefaultChannelPicker';
 import { nickMinLength, nickMaxLength } from '../config.js';
-import { setNick } from "../utils/utils";
+import setNick from "../utils/handlers/setNick";
 
 class WelcomeModal extends React.Component {
   constructor(props) {

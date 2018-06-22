@@ -1,5 +1,17 @@
+import { maxNickLength, minNickLength } from '../../config';
+import { store } from '../../stores/store';
+import socket from './client';
+import {
+  nickSetFailed,
+  unblurApp,
+  setLoggedIn,
+  setJoinDefaultChannels,
+  stopWaitForNickAcceptance,
+  setNickSetFailedReason
+} from '../../actions/actions';
+
 //send the request to set the user's nickname, and handle the response on success or failure
-export const setNick = (nick) => {
+const setNick = (nick) => {
   let wasError = false;
   let errorMsg = '';
   //sanity check the nick length
@@ -31,3 +43,5 @@ export const setNick = (nick) => {
     });
   }
 }
+
+export default setNick;

@@ -1,22 +1,25 @@
 import { store } from '../stores/store';
-import { updatePing } from '../actions/actions';
 import socket from './handlers/client'; //the socket library is called within this file
-import { onDefaultChannel, onDefaultChannelsFinished } from 'handleChannelLists';
-import onChatMessage from './onChatMessage';
-import { onRemoveUser, onReceiveUser } from './handleUserLists';
+import { onDefaultChannel, onDefaultChannelsFinished } from './handlers/handleChannelLists';
+import onChatMessage from './handlers/onChatMessage';
+import { onRemoveUser, onReceiveUser } from './handlers/handleUserLists';
 import onDisconnect from './handlers/onDisconnect';
 import onConnect from './handlers/onConnect';
+import {
+  updatePing,
+  setDisconnectionReason
+} from '../actions/actions';
 
 //
 // set up the socket event handlers
 //
 
-socket.on('user', (user) => {
-  onReceiveUser(user);
+socket.on('user', ({ user, channel }) => {
+  onReceiveUser(user, channel);
 });
 
-socket.on('remove user', (userId) => {
-  onRemoveUser({ userId, channels });
+socket.on('remove user', ({ userId, channel }) => {
+  onRemoveUser(userId, channel);
 });
 
 socket.on('chat message', (msg) => {
@@ -24,7 +27,7 @@ socket.on('chat message', (msg) => {
 });
 
 socket.on('default channel', (channel) => {
-  onDefaultChannel(socket, channel);
+  onDefaultChannel(channel);
 });
 
 socket.on('default channels finished', () => {

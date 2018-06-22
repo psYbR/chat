@@ -1,11 +1,11 @@
-import { store } from '../stores/store';
+import { store } from '../../stores/store';
 import {
   updatePing,
   setDisconnected,
   setDisconnectionReason,
   startWaitForNickAcceptance,
   setAllChannelsWasJoined
-} from '../actions/actions';
+} from '../../actions/actions';
 
 //
 // handle disconnections and errors
