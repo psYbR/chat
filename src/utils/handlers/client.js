@@ -1,3 +1,4 @@
 import io from 'socket.io-client';
-const socket = io('http://localhost:3000');
+import { localDev } from '../../config';
+const socket = io(localDev);
 export default socket;
