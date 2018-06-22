@@ -52,7 +52,10 @@ const defaultChannels = [
   { ...defaultChannel, channelId: 20, channelName: 'nz', topic: 'people from new zealand, gather here' }
 ];
 
+const rootDirectory = __dirname;
+
 module.exports = {
+  rootDirectory: rootDirectory,
   defaultChannel: defaultChannel,
   defaultChannels: defaultChannels,
   nickMinLength: nickMinLength,
