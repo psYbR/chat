@@ -2,7 +2,6 @@
 //user scope is "channel" however nicknames must be unique across all channels
 export const addUser = (    
   {
-    channels = [],
     userId = 0,
     group = 'user', //'voice', 'op', 'system'
     nick = '',
@@ -10,13 +9,12 @@ export const addUser = (
     isCurrentUser = false,
     isAway = false,
     isBlocked = false
-  } = {}, channel = 0
+  } = {}
 
 ) => ({ 
   
   type: 'ADD_USER',
   user: {
-    channels,
     userId,
     group,
     nick,
@@ -24,15 +22,13 @@ export const addUser = (
     isCurrentUser,
     isAway,
     isBlocked
-  },
-  channel
+  }
 
 });
 
-export const removeUser = (userId, channel) => ({ 
+export const removeUser = (userId) => ({ 
   type: 'REMOVE_USER',
-  userId,
-  channel
+  userId
 });
 
 export const setGroupOfUser = (userId, group) => ({
@@ -70,18 +66,6 @@ export const setUserIsBlocked = (userId) => ({
 export const setUserIsNotBlocked = (userId) => ({ 
   type: 'SET_USER_IS_NOT_BLOCKED',
   userId
-});
-
-export const addUserToChannel = (userId, channelId) => ({ 
-  type: 'ADD_USER_TO_CHANNEL',
-  userId,
-  channelId
-});
-
-export const removeUserFromChannel = (userId, channelId) => ({ 
-  type: 'REMOVE_USER_FROM_CHANNEL',
-  userId,
-  channelId
 });
 
 export const flushUserList = () => ({

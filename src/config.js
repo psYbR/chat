@@ -4,4 +4,4 @@ export const nickMinLength = 3;
 export const nickMaxLength = 20;
 
 //uncomment and use 'npm run serve' to host the client separate to the server (faster client rebuild)
-//export const localDev = 'http://localhost:3000';
+export const localDev = 'http://localhost:3000';

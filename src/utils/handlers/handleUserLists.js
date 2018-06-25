@@ -9,42 +9,43 @@ export const getUserList = () => {
   if (store.getState().channels.filter(channel => channel.isJoined).length > 0) {
     //get the ID of the current channel
     const currentChannelId = store.getState().userInterface.activeChannelId;
-    //send the request to the server
-    socket.emit('get user list', currentChannelId, (response) => {
-      //handle the response
-      if (response == "success") {
-        console.log("user list request sent");
-        //empty the list first
-        //store.dispatch(flushUserList());
-      } else {
-        console.log("user list request failed: " + response);
-      }
-    });
+    //empty the list first
+    store.dispatch(flushUserList());
+    //make sure the list is emptied before sending the request
+    setTimeout(()=>{
+      //send the request to the server
+      socket.emit('get user list', currentChannelId, (response) => {
+        //handle the response
+        if (response == "success") {
+          console.log("user list request sent");
+          
+        } else {
+          console.log("user list request failed: " + response);
+        }
+      });
+    },0)    
   } else {
     console.log("Skipping user channel request, no channels joined.");
   }
 }
 
 //handle removing a user from channels (array)
-export const onRemoveUser = (userId, channel) => {
+export const onRemoveUser = (userId) => {
   if (userId) {
     console.log("Remove user request received: " + userId)
-    store.dispatch(removeUser(userId, channel));
+    store.dispatch(removeUser(userId));
   } else {
-    console.log("invalid user ID received for removing a user: ");
-    console.log(userId);
+    console.log("invalid user ID received for removing a user: " + userId);
   }  
 };
 
 //handle receiving a single user
-export const onReceiveUser = (user, channel) => {
-  if (typeof(user) == 'object' && !isNaN(channel)) {
-    console.log("user received (single): " + user.nick)
-    //console.log(user);
-    store.dispatch(addUser(user, channel));
+export const onReceiveUser = (user) => {
+  if (typeof(user) == 'object') {
+    console.log("user received: " + user.nick)
+    store.dispatch(addUser(user));
   } else {
-    console.log("invalid (single) user received, or channel missing:");
+    console.log("invalid user obj received:");
     console.log(user);
-    console.log(channel);
   }  
 };

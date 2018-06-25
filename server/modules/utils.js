@@ -34,16 +34,13 @@ const socketToNick = (socketId) => {
     if (userObj[0]) {
       return userObj[0].nick;
     } else {
-      console.log("(utils) couldn't find nick (e2) for socket: " + socketId);
-      console.log(userObj);
-      console.log("(utils) onlineUsers object:");
-      console.log(onlineUsers);
+      console.log("(utils - socket2nick) couldn't find nick (E:2) for socket: " + socketId);
       return "E:2 ";
       
     }
     
   } else {
-    console.log("couldn't find nick (e1)");
+    console.log("(utils - socket2nick) couldn't find nick (E:1)");
     return "E:1 ";
   }
 };

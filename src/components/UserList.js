@@ -13,9 +13,7 @@ const UserWindow = (state) => {
         })}
       </div>
       <div className="userStatsContainer emphasised-container">
-        <p>0 ops, {state.users.filter((user) => {
-          return user.channels.includes(state.userInterface.activeChannelId)
-        }).length} total</p>
+        <p>{state.users.filter(user => user.group == "op").length} ops, {state.users.length} total</p>
       </div>
       <ConnectionStats />
     </div>

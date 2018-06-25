@@ -8,21 +8,25 @@ var io = require('./server');
 
 const onDisconnect = (socket, reason) => {
 
+  console.log("(onDisconnect) " + socket.id + " has disconnected: " + reason + ". Getting nick...");
+
   //translate the reason into something more readable
   if (reason == 'transport error') {
     reason = 'connection closed';
   }
 
-  //get the disconnect user's nick
+  //get the disconnected user's nick
   const nick = utils.socketToNick(socket.id);
 
   //set the text of the message to send to clients
   const messageText = nick + " has disconnected (" + reason + ")"
-  console.log(nick + " (" + socket.id + ") has disconnected (" + reason + ")");
+  //console.log(nick + " (" + socket.id + ") has disconnected (" + reason + ")");
 
   //remove the user from the channels and send a notification to channels
   utils.usersInChannels.map((record, i)=>{
     if (record.socketId == socket.id) {
+
+      console.log("(onDisconnect) removing user from usersInChannels");
 
       //send a message to the channels they were in
       sendSystemMessage(record.channelId, messageText, socket.id)
@@ -45,6 +49,8 @@ const onDisconnect = (socket, reason) => {
   //remove the user from the list of online users
   utils.onlineUsers.map((user, i) => {
     if (user.socketId == socket.id) {
+
+      console.log("(onDisconnect) removing user from onlineUsers");
 
       //remove the record from the array
       utils.onlineUsers.splice(i,1);

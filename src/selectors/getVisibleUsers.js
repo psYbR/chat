@@ -11,7 +11,7 @@ const compare = (a,b) => {
 export const getVisibleUsers = (state) => {
 
   //filter by the users that are in the current channel
-  let users = state.users.filter(user => user.channels.includes(state.userInterface.activeChannelId))
+  let users = state.users;
 
   //sort alphabetically
   return users.sort(compare);
