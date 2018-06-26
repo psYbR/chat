@@ -1,38 +1,22 @@
 
 export const setLoginState = (
-    {
-
-      loggedIn = false,
-      userid = 0,
-      nick = '',
-      assignedGroup = 'guests',
-      defaultChannelId = 1,
-
-    } = {}
+  {
+    loggedIn = false,
+    nick = ''
+  } = {}
 ) => ({
-
-    type: 'SET_LOGIN_STATE',
-    loginState: {
-      loggedIn,
-      userid,
-      nick,
-      assignedGroup,
-      defaultChannelId,
-    }
-
-  });
+  type: 'SET_LOGIN_STATE',
+  loginState: {
+    loggedIn,
+    nick
+  }
+});
   
 export const setLoggedIn = () => ({
-    type: 'LOGIN_SUCCESSFUL',
-    loginState: {
-        loggedIn: true
-    }
+  type: 'SET_LOGGED_IN'
 });
-
-export const setUserNick = (nick = '') => ({
-    type: 'SET_NICK',
-    loginState: {
-        nick
-    }
+export const setNick = (nick) => ({
+  type: 'SET_NICK',
+  nick
 });
   

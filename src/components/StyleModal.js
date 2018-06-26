@@ -9,13 +9,16 @@ class StyleModal extends React.Component {
   constructor(props) {
     super(props);
   }
+  handleMoreOptionsClick = (e) => {
+    e.preventDefault();
+  }
   render() {
     return (
       
-      <div className="StyleModalWrapper emphasised-container">
-        <div className="StyleModalContainer ">
+      <div className="SMWrapper emphasised-container">
+        <div className="SMContainer ">
 
-          <div className="StyleModalColors">
+          <div className="SMColors">
             <h3>Font Color</h3>
             { /* Draw the color selector 'dots' */ colors.map((color, i) => 
               <label key={i}>
@@ -35,7 +38,7 @@ class StyleModal extends React.Component {
             ) }
           </div>
           
-          <div className="StyleModalFonts">
+          <div className="SMFonts">
             <h3>Font Style</h3>
             <FontPicker
               label="select one"
@@ -46,33 +49,14 @@ class StyleModal extends React.Component {
             /> 
           </div>
 
-          <div className="StyleModalOptions">
+          <div className="SMOptions">
             <h3>Options</h3>
 
-            <div className="ZoomButtonsContainer">
-              <button
-                className="ZoomButtons"
-                onClick={(e) => {
-                  const newZoom = this.props.userInterface.appZoom - 0.1
-                  this.props.dispatch(setAppZoom(newZoom));
-                  document.documentElement.style.zoom = newZoom;
-                }}>
-                <i className="fas fa-minus"></i>
-              </button>
-              <p>zoom</p>
-              <button
-                className="ZoomButtons"
-                onClick={(e) => {
-                  const newZoom = this.props.userInterface.appZoom + 0.1
-                  this.props.dispatch(setAppZoom(newZoom));
-                  document.documentElement.style.zoom = newZoom;
-                }}>
-                <i className="fas fa-plus"></i>
-              </button>
+            {/* set nickname placeholder */}
 
+            <div className='SMSystemMessages'>
               <p>Show system messages?</p>
-                
-              <label className="CheckBoxContainer">
+              <label className="checkBoxContainer">
                 <input
                   type="checkbox"
                   checked={this.props.configuration.showSystemMessages ? "checked" : ''}
@@ -81,15 +65,14 @@ class StyleModal extends React.Component {
                     else { this.props.dispatch(showSystemMessages()); }
                   }}
                 />
-                <span className="CheckBoxCheckmark"></span>
+                <span className="checkBoxCheckmark"></span>
               </label>
+            </div>
 
-              <p className='channelsLink'><a onClick={(e) => {
-                //the link that hides/shows the channel modal
-                this.props.dispatch(showChannelModal());
-                this.props.dispatch(hideStyleModal());
-              }}>Join Channels</a></p>
-
+            <div className='SMMoreOptionsContainer'>
+              <h3><a href=""
+                onClick={this.handleMoreOptionsClick}
+              >More Options </a></h3>
             </div>
 
           </div>

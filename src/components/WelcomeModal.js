@@ -1,16 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
-  setUserNick,
-  //setLoggedIn,
+  setNick,
   setTermsAccepted,
-  setTermsUnaccepted,
-  //setJoinDefaultChannels,
-  startWaitForNickAcceptance
+  unsetTermsAccepted,
+  setWaitingForNickAcceptance
 } from '../actions/actions';
 import DefaultChannelPicker from './DefaultChannelPicker';
 import { nickMinLength, nickMaxLength } from '../config.js';
-import setNick from "../utils/handlers/setNick";
+import requestSetNick from "../utils/handlers/requestSetNick";
 
 class WelcomeModal extends React.Component {
   constructor(props) {
@@ -20,10 +18,10 @@ class WelcomeModal extends React.Component {
     e.preventDefault();
 
     //set the UI to wait for the server to confirm the nick was set
-    this.props.dispatch(startWaitForNickAcceptance());
+    this.props.dispatch(setWaitingForNickAcceptance());
     
     //send the request
-    setNick(this.props.loginState.nick);
+    requestSetNick(this.props.loginState.nick);
   }
   onGuestNickChange = (e) => {
     const nick = e.target.value;
@@ -34,17 +32,17 @@ class WelcomeModal extends React.Component {
         0-9 : any digit
         _ : underscore
         - : hyphen */
-      this.props.dispatch(setUserNick(nick));
+      this.props.dispatch(setNick(nick));
     }
   }
   render() {
     return (
       
-      <div className="ModalWrapper">
-        <div className="ModalBlurContainer">
+      <div className="modalWrapper">
+        <div className="modalBlurContainer">
         </div>
-        <div className="ModalOuterContainer">
-            <div className="ModalInnerContainer">
+        <div className="modalOuterContainer">
+            <div className="modalInnerContainer">
 
               <div className="tabContainer">
                 <div className="guestTab tab tabSelected">
@@ -96,7 +94,7 @@ class WelcomeModal extends React.Component {
                       type="checkbox"
                       checked={this.props.userInterface.termsAccepted ? "checked" : ''}
                       onChange={() => {
-                        if (this.props.userInterface.termsAccepted) { this.props.dispatch(setTermsUnaccepted()); }
+                        if (this.props.userInterface.termsAccepted) { this.props.dispatch(unsetTermsAccepted()); }
                         else { this.props.dispatch(setTermsAccepted()); }
                       }}
                     />
@@ -106,7 +104,7 @@ class WelcomeModal extends React.Component {
 
               </div>
 
-              <div className="ContainerChannelPicker">
+              <div className="containerChannelPicker">
                 <DefaultChannelPicker />
               </div>
 

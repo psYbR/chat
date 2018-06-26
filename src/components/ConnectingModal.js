@@ -1,7 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setUserNick, setLoggedIn } from '../actions/loginActions';
-import { unblurApp } from '../actions/userInterfaceActions';
 
 class ConnectingModal extends React.Component {
   constructor(props) {
@@ -9,11 +7,11 @@ class ConnectingModal extends React.Component {
   }
   render() {
     return (
-      <div className="ModalWrapper">
-        <div className="ModalBlurContainer">
+      <div className="modalWrapper">
+        <div className="modalBlurContainer">
         </div>
-        <div className="ModalOuterContainer">
-            <div className="ModalInnerContainer ConnectingModalContainer">
+        <div className="modalOuterContainer">
+            <div className="modalInnerContainer monnectingModalContainer">
                 <h1 className="connectingTitle">{this.props.userInterface.reconnectionMessage}...</h1>
                 <h1 style={
                     {

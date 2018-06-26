@@ -7,28 +7,17 @@ export default (state = reducerDefaultState, action) => {
     case 'SET_ACTIVE_CHANNEL':
       return {
         ...state,
-        activeChannelId: action.activeChannelId
-      }
-    case 'UPDATE_USER_STATS':
-      return {
-        ...state,
-        activeChannelNumberOfUsers: action.activeChannelNumberOfUsers,
-        activeChannelNumberOfOps: action.activeChannelNumberOfOps
+        currentChannelId: action.channelId
       }
     case 'UPDATE_PING':
       return {
         ...state,
-        currentPing: action.currentPing
+        ping: action.ping
       }
-    case 'SET_APP_ZOOM':
+    case 'SET_CHAT_MESSAGE_INPUT':
       return {
         ...state,
-        appZoom: action.appZoom
-      };
-    case 'SET_INPUT_FIELD_TEXT':
-      return {
-        ...state,
-        inputFieldText: action.inputFieldText
+        chatMessageInput: action.inputValue
       };
     case 'SET_WINDOW_WIDTH':
       return {
@@ -40,61 +29,35 @@ export default (state = reducerDefaultState, action) => {
         ...state,
         windowHeight: action.windowHeight
       };*/
-    case 'SET_NUMBER_OF_USER_CHANNELS':
+    case 'SET_WAIT_FOR_NICK_ACCEPTANCE':
       return {
         ...state,
-        numberOfUserChannels: action.numberOfUserChannels
+        waitForNickAcceptance: true
       };
-    case 'SET_DISCONNECTION_REASON':
+    case 'UNSET_WAIT_FOR_NICK_ACCEPTANCE':
       return {
         ...state,
-        disconnectionReason: action.disconnectionReason
+        waitForNickAcceptance: false
       };
     case 'SET_NICK_SET_FAILED_REASON':
       return {
         ...state,
         nickSetFailedReason: action.nickSetFailedReason
       };
-    
-    case 'START_WAIT_FOR_NICK_ACCEPTANCE':
+    case 'SET_NUMBER_OF_USER_CHANNELS':
       return {
         ...state,
-        waitForNickAcceptance: true
+        numberOfUserChannels: action.numberOfUserChannels
       };
-    case 'STOP_WAIT_FOR_NICK_ACCEPTANCE':
+    case 'SET_WAITING_FOR_USER_CHANNELS':
       return {
         ...state,
-        waitForNickAcceptance: false
+        waitingForUserChannels: true
       };
-    case 'START_RETRIEVE_USER_CHANNELS':
+    case 'UNSET_WAITING_FOR_USER_CHANNELS':
       return {
         ...state,
-        retreivingUserChannels: true
-      };
-    case 'STOP_RETRIEVE_USER_CHANNELS':
-      return {
-        ...state,
-        retreivingUserChannels: false
-      };
-    case 'SET_JOIN_USER_CHANNELS':
-      return {
-        ...state,
-        userChannelsJoin: true
-      };
-    case 'UNSET_JOIN_USER_CHANNELS':
-      return {
-        ...state,
-        userChannelsJoin: false
-      };
-    case 'SET_JOIN_DEFAULT_CHANNELS':
-      return {
-        ...state,
-        defaultChannelsJoin: true
-      };
-    case 'UNSET_JOIN_DEFAULT_CHANNELS':
-      return {
-        ...state,
-        defaultChannelsJoin: false
+        waitingForUserChannels: false
       };
     case 'SET_DEFAULT_CHANNELS_RECEIVED':
       return {
@@ -112,13 +75,17 @@ export default (state = reducerDefaultState, action) => {
         ...state,
         appIsConnected: false
       };
-
-    case 'CHANNEL_PICKER_FIRST_TAB':
+    case 'SET_DISCONNECTION_REASON':
+      return {
+        ...state,
+        disconnectionReason: action.disconnectionReason
+      };
+    case 'CHANNEL_PICKER_SHOW_FIRST_TAB':
       return {
         ...state,
         channelPickerSecondTab: false
       };
-    case 'CHANNEL_PICKER_SECOND_TAB':
+    case 'CHANNEL_PICKER_SHOW_SECOND_TAB':
       return {
         ...state,
         channelPickerSecondTab: true
@@ -128,7 +95,7 @@ export default (state = reducerDefaultState, action) => {
         ...state,
         termsAccepted: true
       };
-    case 'SET_TERMS_UNACCEPTED':
+    case 'UNSET_TERMS_ACCEPTED':
       return {
         ...state,
         termsAccepted: false
@@ -156,22 +123,22 @@ export default (state = reducerDefaultState, action) => {
     case 'SHOW_CHANNEL_LIST':
       return {
         ...state,
-        channelListVisible: true
+        channelListIsVisible: true
       };
     case 'HIDE_CHANNEL_LIST':
       return {
         ...state,
-        channelListVisible: false
+        channelListIsVisible: false
       };
     case 'SHOW_USER_LIST':
       return {
         ...state,
-        userListVisible: true
+        userListIsVisible: true
       };
     case 'HIDE_USER_LIST':
       return {
         ...state,
-        userListVisible: false
+        userListIsVisible: false
       };
     case 'BLUR_APP':
       return {
@@ -183,6 +150,26 @@ export default (state = reducerDefaultState, action) => {
         ...state,
         appIsBlurred: false
       };
+    case 'SHOW_LEAVE_CHANNEL_MODAL':
+      return {
+        ...state,
+        leaveChannelModalIsVisible: true
+      }
+    case 'HIDE_LEAVE_CHANNEL_MODAL':
+      return {
+        ...state,
+        leaveChannelModalIsVisible: false
+      }
+    case 'SET_WAITING_FOR_LEAVE_CHANNEL_CONFIRMATION':
+      return {
+        ...state,
+        waitingForLeaveChannelConfirmation: true
+      }
+    case 'UNSET_WAITING_FOR_LEAVE_CHANNEL_CONFIRMATION':
+      return {
+        ...state,
+        waitingForLeaveChannelConfirmation: false
+      }
     default:
       return state;
   }

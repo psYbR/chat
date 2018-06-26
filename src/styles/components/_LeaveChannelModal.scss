@@ -1,0 +1,30 @@
+
+.leaveChannelOuterContainer {
+  width: 40rem;
+}
+
+.leaveChannelContainer {
+  padding: 2rem;
+  text-align: center;
+}
+
+.leaveChannelButtonContainer {
+  display: flex;
+  justify-content: center;
+}
+
+$lcbLeave: rgb(177, 0, 0);
+.lcbLeave {
+  background-color: $lcbLeave;
+  border: 0;
+  border-top: .2rem solid lighten($lcbLeave, 10%);
+  border-bottom: .2rem solid darken($lcbLeave, 10%);
+}
+
+$lcbStay: rgb(56, 177, 0);
+.lcbStay {
+  background-color: $lcbStay;
+  border: 0;
+  border-top: .2rem solid lighten($lcbStay, 10%);
+  border-bottom: .2rem solid darken($lcbStay, 10%);
+}

@@ -1,0 +1,38 @@
+.channelControlsContainer {
+  margin-top: $element-margin;
+  display: flex;
+  height: $bar-height;
+  min-height: $bar-height !important;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.channelControlsButton {
+  flex-grow: 1;
+  height: calc($bar-height * 0.8);
+}
+
+$ccbjoin: rgb(56, 177, 0);
+.ccbJoin {
+  background-color: $ccbjoin;
+  border: 0;
+  border-top: .2rem solid lighten($ccbjoin, 10%);
+  border-bottom: .2rem solid darken($ccbjoin, 10%);
+}
+
+$ccbleave: rgb(177, 0, 0);
+.ccbLeave {
+  background-color: $ccbleave;
+  border: 0;
+  border-top: .2rem solid lighten($ccbleave, 10%);
+  border-bottom: .2rem solid darken($ccbleave, 10%);
+}
+
+$ccbcreate: rgb(58, 176, 255);
+.ccbCreate {
+  background-color: $ccbcreate;
+  border: 0;
+  border-top: .2rem solid lighten($ccbcreate, 10%);
+  border-bottom: .2rem solid darken($ccbcreate, 10%);
+}

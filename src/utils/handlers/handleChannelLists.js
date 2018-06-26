@@ -4,7 +4,7 @@ import {
   setDefaultChannelsReceived
 } from '../../actions/actions';
 
-export const getDefaultChannels = (socket) => {
+export const requestDefaultChannels = (socket) => {
   if (!store.getState().userInterface.defaultChannelsReceived) { 
     socket.emit('request default channels'); //send a request for default channel list only if we don't have one
   }

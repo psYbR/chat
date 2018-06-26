@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Alerts from './Alerts';
 import ChannelListItem from './ChannelListItem';
+import ChannelControls from './ChannelControls';
 
 class ChannelList extends React.Component {
     constructor(props) {
@@ -15,6 +16,7 @@ class ChannelList extends React.Component {
                     return <ChannelListItem key={channel.channelId} channel={channel} />
                 })}
             </div>
+            <ChannelControls />
         </div>
     );
 }

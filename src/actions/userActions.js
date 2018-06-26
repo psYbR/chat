@@ -10,9 +10,7 @@ export const addUser = (
     isAway = false,
     isBlocked = false
   } = {}
-
 ) => ({ 
-  
   type: 'ADD_USER',
   user: {
     userId,
@@ -23,51 +21,42 @@ export const addUser = (
     isAway,
     isBlocked
   }
-
 });
 
 export const removeUser = (userId) => ({ 
   type: 'REMOVE_USER',
   userId
 });
-
 export const setGroupOfUser = (userId, group) => ({
   type: 'SET_GROUP_OF_USER',
   userId,
   group
 });
-
 export const setNickOfUser = (userId, nick) => ({
   type: 'SET_NICK_OF_USER',
   userId,
   nick
 });
-
 export const setSelectedUser = (userId) => ({
   type: 'SET_SELECTED_USER',
   userId
 });
-
 export const setUserIsAway = (userId) => ({ 
   type: 'SET_USER_IS_AWAY',
   userId
 });
-
-export const setUserIsNotAway = (userId) => ({ 
-  type: 'SET_USER_IS_NOT_AWAY',
+export const unsetUserIsAway = (userId) => ({ 
+  type: 'UNSET_USER_IS_AWAY',
   userId
 });
-
 export const setUserIsBlocked = (userId) => ({ 
   type: 'SET_USER_IS_BLOCKED',
   userId
 });
-
-export const setUserIsNotBlocked = (userId) => ({ 
-  type: 'SET_USER_IS_NOT_BLOCKED',
+export const unsetUserIsBlocked = (userId) => ({ 
+  type: 'UNSET_USER_IS_BLOCKED',
   userId
 });
-
 export const flushUserList = () => ({
   type: 'FLUSH_USER_LIST'
 });

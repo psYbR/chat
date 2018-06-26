@@ -3,7 +3,7 @@ import { addUser, removeUser, flushUserList } from '../../actions/actions';
 import socket from './client';
 
 //requests a list of users for the current channel
-export const getUserList = () => {
+export const requestUserList = () => {
 
   //check the user is in a channel before sending a server request
   if (store.getState().channels.filter(channel => channel.isJoined).length > 0) {
@@ -14,7 +14,7 @@ export const getUserList = () => {
     //make sure the list is emptied before sending the request
     setTimeout(()=>{
       //send the request to the server
-      socket.emit('get user list', currentChannelId, (response) => {
+      socket.emit('request user list', currentChannelId, (response) => {
         //handle the response
         if (response == "success") {
           console.log("user list request sent");

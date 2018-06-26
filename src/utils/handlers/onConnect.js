@@ -1,7 +1,7 @@
 import { store } from '../../stores/store';
 import { getDefaultChannels } from './handleChannelLists';
 import requestJoinChannel from './requestJoinChannel';
-import setNick from './setNick';
+import requestSetNick from './requestSetNick';
 import { getUserList } from './handleUserLists';
 import { setConnected } from '../../actions/actions';
 
@@ -19,8 +19,8 @@ const onConnect = (socket, wasReconnect) => {
   //get the default channel list
   getDefaultChannels(socket);
 
-  //if the connection was re-established after a disconnect
-  if (wasReconnect) {
+  //if the connection was re-established after a disconnect. Check the user is actually logged in
+  if (wasReconnect && store.getState().loggedIn) {
 
     console.log("socket connection re-established");
 
@@ -28,7 +28,7 @@ const onConnect = (socket, wasReconnect) => {
     getUserList();
 
     //set the nick again (server ignores if it's already set)
-    setNick(store.getState().loginState.nick);
+    requestSetNick(store.getState().loginState.nick);
 
     //handle rejected nick
 

@@ -47,6 +47,8 @@ export default (state = reducerDefaultState, action) => {
           return channel
         }
       })
+    case 'LEAVE_CHANNEL':
+      return state.filter(channel => channel.channelId != action.channelId);
     default:
       return state;
   }

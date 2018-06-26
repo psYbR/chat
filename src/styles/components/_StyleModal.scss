@@ -1,52 +1,50 @@
 
-.StyleModalWrapper {
+.SMWrapper {
   background-color: $surround;
   position: absolute;
   top: 1rem;
   right: 2rem;
-} .StyleModalContainer {
+}
+.SMContainer {
   margin: $element-margin;
   background-color: $base;
   padding: .5rem;
 }
-
-.StyleModalContainer > div {
+.SMContainer > div {
   text-align: center;
-} .StyleModalContainer > div > h3 {
+}
+.SMContainer > div > h3 {
   margin: 0;
 }
 
-.StyleModalFonts {
+.SMFonts {
   margin-top: .5rem;
-} .StyleModalFonts > h3 {
+}
+.SMFonts > h3 {
   margin-bottom: .5rem !important;
 }
 
-.StyleModalOptions {
+.SMOptions {
   margin-top: .5rem;
 } 
 
-.ZoomButtonsContainer {
+.SMSystemMessages {
   display: flex;
-} .ZoomButtonsContainer > p {
+  flex-direction: row;
+  width: 50%;
+  //justify-content: center;
+}
+.SMSystemMessages > p {
   margin: .7rem 1.4rem 0 1.4rem;
-} .ZoomButtons {
-  background-color: $theme;
-  border: 0;
-  color: white;
-  color: $selected;
-  background-color: $surround;
-  border: 0;
-  border-top: .2rem solid lighten($surround, 10%);
-  border-bottom: .2rem solid darken($surround, 10%);
-  margin: .3rem;
-  border-radius: .3rem;
-  height: 3rem;
 }
 
 .channelsLink {
   cursor: pointer;
   padding-left: 2.2rem;
+}
+
+.SMMoreOptionsContainer > h3 {
+  margin-bottom: .5rem !important;
 }
 
 //

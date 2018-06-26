@@ -10,86 +10,70 @@ if (Math.round(window.innerWidth * 0.0625) < horizontalBreakPoint) {
 //the default/initial state
 export const setUIState = (
   {
-    channelListVisible = initialWindowState,
-    userListVisible = initialWindowState,
+    channelListIsVisible = initialWindowState,
+    userListIsVisible = initialWindowState,
     windowWidth = Math.round(window.innerWidth * 0.0625),
     windowHeight = Math.round(window.innerHeight * 0.0625),
-    inputFieldText = '',
-    activeChannelId = 1,
-    activeChannelNumberOfUsers = 0,
-    activeChannelNumberOfOps = 0,
-    currentPing = '0',
-    styleSelectionIsVisible = false, //use to hide/show the style modal
+    chatMessageInput = '',
+    currentChannelId = 1,
+    ping = '0',
+    styleModalIsVisible = false, //use to hide/show the style modal
     appIsBlurred = true,
-    appZoom = 1, //multiply the scale of visual elements by this amount
     appIsConnected = false, //whether the socket reports it has been successfully opened
     termsAccepted = true,
     defaultChannelsReceived = false, //whether the list of default channels was received from the server
-    defaultChannelsJoin = false, //whether the app should attempt to join the selected default channels (see app.js and utils/initialChannelRequestJoins.js)
-    retreivingUserChannels = false, //true while retrieval in progress
+    waitingForUserChannels = false, //true while retrieval in progress
     numberOfUserChannels = 0, //the server will provide this value so that when the client requests a list, we know the progress of the list retrieval
-    userChannelsJoin = false, //whether the app should attempt to join the user channels
     channelPickerIsVisible = false,
     channelPickerSecondTab = false, //false to show the first tab, true for the second
     reconnectionMessage = 'Connecting', //used by the ConnectingModal to show either Connecting or Re-connecting if the connection is being initially established or if it is lost
     waitForNickAcceptance = false, //set true while waiting for the server to accept changes to the nickname
     nickSetFailedReason = '',
-    disconnectionReason = ''
+    disconnectionReason = '',
+    leaveChannelModalIsVisible = false,
+    waitingForLeaveChannelConfirmation = false
   } = {}
 ) => ({
   type: 'SET_UI_STATE',
   userInterface: {
-    channelListVisible,
-    userListVisible,
+    channelListIsVisible,
+    userListIsVisible,
     windowWidth,
     windowHeight,
-    inputFieldText,
-    activeChannelId,
-    activeChannelNumberOfUsers,
-    activeChannelNumberOfOps,
-    currentPing,
-    styleSelectionIsVisible,
+    chatMessageInput,
+    currentChannelId,
+    ping,
+    styleModalIsVisible,
     appIsBlurred,
-    appZoom,
     appIsConnected,
     termsAccepted,
     defaultChannelsReceived,
-    defaultChannelsJoin,
-    retreivingUserChannels,
+    waitingForUserChannels,
     numberOfUserChannels,
-    userChannelsJoin,
     channelPickerIsVisible,
     channelPickerSecondTab,
     reconnectionMessage,
     waitForNickAcceptance,
     nickSetFailedReason,
-    disconnectionReason
+    disconnectionReason,
+    leaveChannelModalIsVisible,
+    waitingForLeaveChannelConfirmation
   }
 });
 
 //the current channel the user is in
-export const setActiveChannel = (activeChannelId) => ({
-  type: 'SET_ACTIVE_CHANNEL',
-  activeChannelId
+export const setCurrentChannel = (channelId) => ({
+  type: 'SET_CURRENT_CHANNEL',
+  channelId
 });
 //the current channel the user is in
-export const updateUserStats = (activeChannelNumberOfUsers, activeChannelNumberOfOps) => ({
-  type: 'UPDATE_USER_STATS',
-  activeChannelNumberOfUsers,
-  activeChannelNumberOfOps
-});
-//the current channel the user is in
-export const updatePing = (currentPing) => ({
+export const updatePing = (ping) => ({
   type: 'UPDATE_PING',
-  currentPing
+  ping
 });
-export const setAppZoom = (appZoom = 1) => ({
-  type: 'SET_APP_ZOOM',
-  appZoom
-});
-export const setInputFieldText = (inputFieldText = '') => ({
-  type: 'SET_INPUT_FIELD_TEXT',
-  inputFieldText
+export const setChatMessageInput = (inputValue = '') => ({
+  type: 'SET_CHAT_MESSAGE_INPUT',
+  inputValue
 });
 export const setWindowWidth = (windowWidth) => ({
   type: 'SET_WINDOW_WIDTH',
@@ -99,42 +83,25 @@ export const setWindowWidth = (windowWidth) => ({
   type: 'SET_WINDOW_HEIGHT', //not used currently
   windowHeight
 }); */
-export const setNumberOfUserChannels = (numberOfUserChannels) => ({
-  type: 'SET_NUMBER_OF_USER_CHANNELS',
-  numberOfUserChannels
+export const setWaitingForNickAcceptance = () => ({
+  type: 'SET_WAIT_FOR_NICK_ACCEPTANCE'
 });
-export const setDisconnectionReason = (disconnectionReason) => ({
-  type: 'SET_DISCONNECTION_REASON',
-  disconnectionReason
+export const unsetWaitingForNickAcceptance = () => ({
+  type: 'UNSET_WAIT_FOR_NICK_ACCEPTANCE'
 });
 export const setNickSetFailedReason = (nickSetFailedReason) => ({
   type: 'SET_NICK_SET_FAILED_REASON',
   nickSetFailedReason
 });
-
-export const startWaitForNickAcceptance = () => ({
-  type: 'START_WAIT_FOR_NICK_ACCEPTANCE'
+export const setNumberOfUserChannels = (numberOfUserChannels) => ({
+  type: 'SET_NUMBER_OF_USER_CHANNELS',
+  numberOfUserChannels
 });
-export const stopWaitForNickAcceptance = () => ({
-  type: 'STOP_WAIT_FOR_NICK_ACCEPTANCE'
+export const setWaitingForUserChannels = () => ({
+  type: 'SET_WAITING_FOR_USER_CHANNELS'
 });
-export const startRetrieveUserChannels = () => ({
-  type: 'START_RETRIEVE_USER_CHANNELS'
-});
-export const stopRetrieveUserChannels = () => ({
-  type: 'STOP_RETRIEVE_USER_CHANNELS'
-});
-export const setJoinUserChannels = () => ({
-  type: 'SET_JOIN_USER_CHANNELS'
-});
-export const unsetJoinUserChannels = () => ({
-  type: 'UNSET_JOIN_USER_CHANNELS'
-});
-export const setJoinDefaultChannels = () => ({
-  type: 'SET_JOIN_DEFAULT_CHANNELS'
-});
-export const unsetJoinDefaultChannels = () => ({
-  type: 'UNSET_JOIN_DEFAULT_CHANNELS'
+export const unsetWaitingForUserChannels = () => ({
+  type: 'UNSET_WAITING_FOR_USER_CHANNELS'
 });
 export const setDefaultChannelsReceived = () => ({
   type: 'SET_DEFAULT_CHANNELS_RECEIVED'
@@ -145,18 +112,21 @@ export const setConnected = () => ({
 export const setDisconnected = () => ({
   type: 'SET_DISCONNECTED'
 });
-
-export const channelPickerFirstTab = () => ({
-  type: 'CHANNEL_PICKER_FIRST_TAB'
+export const setDisconnectionReason = (disconnectionReason) => ({
+  type: 'SET_DISCONNECTION_REASON',
+  disconnectionReason
 });
-export const channelPickerSecondTab = () => ({
-  type: 'CHANNEL_PICKER_SECOND_TAB'
+export const channelPickerShowFirstTab = () => ({
+  type: 'CHANNEL_PICKER_SHOW_FIRST_TAB'
+});
+export const channelPickerShowSecondTab = () => ({
+  type: 'CHANNEL_PICKER_SHOW_SECOND_TAB'
 });
 export const setTermsAccepted = () => ({
   type: 'SET_TERMS_ACCEPTED'
 });
-export const setTermsUnaccepted = () => ({
-  type: 'SET_TERMS_UNACCEPTED'
+export const unsetTermsAccepted = () => ({
+  type: 'UNSET_TERMS_ACCEPTED'
 });
 export const showChannelModal = () => ({
   type: 'SHOW_CHANNEL_MODAL'
@@ -188,3 +158,16 @@ export const blurApp = () => ({
 export const unblurApp = () => ({
   type: 'UNBLUR_APP'
 });
+export const showLeaveChannelModal = () => ({
+  type: 'SHOW_LEAVE_CHANNEL_MODAL'
+});
+export const hideLeaveChannelModal = () => ({
+  type: 'HIDE_LEAVE_CHANNEL_MODAL'
+});
+export const setWaitingForLeaveChannelConfirmation = () => ({
+  type: 'SET_WAITING_FOR_LEAVE_CHANNEL_CONFIRMATION'
+})
+export const unsetWaitingForLeaveChannelConfirmation = () => ({
+  type: 'UNSET_WAITING_FOR_LEAVE_CHANNEL_CONFIRMATION'
+})
+

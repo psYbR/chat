@@ -65,7 +65,7 @@ class ChatInput extends React.Component {
         return (
         <div className="chatInputContainer chatInputContainerActive emphasised-container">
             <button
-                className="fontButton"
+                className="buttonDefault fontButton"
                 onClick={this.onFontButtonClick}
             ><i className="fas fa-cog"></i></button>
             <form className="inputForm" onSubmit={this.onSubmit}>
