@@ -69,11 +69,11 @@ class StyleModal extends React.Component {
               </label>
             </div>
 
-            <div className='SMMoreOptionsContainer'>
+            {/* <div className='SMMoreOptionsContainer'>
               <h3><a href=""
                 onClick={this.handleMoreOptionsClick}
               >More Options </a></h3>
-            </div>
+            </div> */}
 
           </div>
         

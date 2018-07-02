@@ -12,7 +12,7 @@ class LeaveChannelModal extends React.Component {
   }
   onLeaveClick = () => {
     this.props.dispatch(setWaitingForLeaveChannelConfirmation());
-    requestLeaveChannel(this.props.userInterface.activeChannelId);
+    requestLeaveChannel(this.props.channels.filter(channel => channel.isCurrent)[0].channelId);
   }
   onStayClick = () => {
     this.props.dispatch(hideLeaveChannelModal());
@@ -20,13 +20,13 @@ class LeaveChannelModal extends React.Component {
   render() {
     return (
       
-      <div className="ModalWrapper">
-        <div className="ModalBlurContainer">
+      <div className="modalWrapper">
+        <div className="modalBlurContainer">
         </div>
-        <div className="ModalOuterContainer leaveChannelOuterContainer">
-            <div className="ModalInnerContainer leaveChannelContainer">
+        <div className="modalOuterContainer leaveChannelOuterContainer">
+            <div className="modalInnerContainer leaveChannelContainer">
 
-              <h3>Really leave channel '{this.props.channels.filter(channel => channel.channelId == this.props.userInterface.activeChannelId)[0].channelName}'?</h3>
+              <h3>Really leave channel '{this.props.channels.filter(channel => channel.isCurrent)[0].channelName}'?</h3>
 
               <div className="leaveChannelButtonContainer">
                 <button className="buttonDefault lcbLeave"

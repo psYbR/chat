@@ -1,13 +1,13 @@
 import { store } from '../../stores/store';
 import socket from './client';
 import {
-  setActiveChannel,
   setCurrentChannel,
   joinChannel,
   addMessage
 } from '../../actions/actions';
-import { getUserList } from './handleUserLists';
+import { requestUserList } from './handleUserLists';
 import { getNowTimestamp } from '../utils'
+import { systemNick } from '../../config';
 
 //send request to join a channel
 const requestJoinChannel = (channelId) => {
@@ -16,23 +16,22 @@ const requestJoinChannel = (channelId) => {
   if (isNaN(channelId)) {
     //tell the UI joining the channel failed
     console.log("requesting to join channel ID failed: not a valid ID");
-    store.dispatch(addMessage({source: "*", channelId: channelId, messageSent: true, receivedTimestamp: getNowTimestamp(), messageText: "Could not join channel: invalid ID" }));
+    store.dispatch(addMessage({source: systemNick, channelId: channelId, messageSent: true, receivedTimestamp: getNowTimestamp(), messageText: "Could not join channel: invalid ID" }));
   }
   //if there was no error
   else {
     console.log("requesting to join channel ID: " + channelId);
     socket.emit('join channel', channelId, ({ response, channelId }) => { //send the nick to the server
-      //handle the response (a string; either "success" or the reason the channel wasn't joined eg. in use)
+      //handle the response (a string; either "success" or the reason the channel wasn't joined eg. not allowed)
       if (response == "success" || response == "already in channel") {
         console.log("request to join channel ID " + channelId + " succeeded!");
         store.dispatch(joinChannel(channelId)); //set the UI to show the channel as joined
         store.dispatch(setCurrentChannel(channelId));
-        store.dispatch(setActiveChannel(channelId));
-        getUserList();
+        requestUserList();
       } else {
         console.log("request to join channel ID " + channelId + " failed: " + response);
         //show an error
-        store.dispatch(addMessage({source: "*", channelId: channelId, messageSent: true, receivedTimestamp: getNowTimestamp(), messageText: "Could not join channel: " + response }));
+        store.dispatch(addMessage({source: systemNick, channelId: channelId, messageSent: true, receivedTimestamp: getNowTimestamp(), messageText: "Could not join channel: " + response }));
       }      
     });
   }

@@ -36,7 +36,7 @@ io.on('connection', (socket) => {
     callback(onJoinChannel(socket, channelId));
   });
 
-  socket.on('get user list', (channelId, callback) => {
+  socket.on('request user list', (channelId, callback) => {
     callback(onGetUserList(socket, channelId));
   });
 

@@ -31,8 +31,9 @@
 .SMSystemMessages {
   display: flex;
   flex-direction: row;
-  width: 50%;
-  //justify-content: center;
+  //width: 50%;
+  justify-content: center;
+  margin-bottom: .5rem;
 }
 .SMSystemMessages > p {
   margin: .7rem 1.4rem 0 1.4rem;

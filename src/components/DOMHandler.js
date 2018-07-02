@@ -22,7 +22,7 @@ class DOMHandler extends React.Component {
   constructor(props) {
     super(props);
   }
-  componentDidMount(props) {
+  componentDidMount() {
     //listen for resizing of the DOM
     window.addEventListener("resize", () =>{
       //get the width of the window

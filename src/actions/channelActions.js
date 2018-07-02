@@ -5,7 +5,6 @@ export const addChannel = (
     channelName = '',
     type = 'channel', //or 'user' for private message
     topic = '',
-    //isSelected = false,
     isCurrent = false,
     isJoined = false,
     wasJoined = false,
@@ -13,10 +12,10 @@ export const addChannel = (
     hasNewMessages = false,
     hasNewNotifs = false,
     hasNewMention = false,
-    amOwner = false,
-    amOp = false,
-    amMod = false,
-    amVoice = false
+    userIsOwner = false,
+    userIsOp = false,
+    userIsMod = false,
+    userIsVoice = false
   } = {}
 
 ) => ({ 
@@ -27,7 +26,6 @@ export const addChannel = (
     channelName,
     type,
     topic,
-    //isSelected,
     isCurrent,
     isJoined,
     wasJoined,
@@ -35,10 +33,10 @@ export const addChannel = (
     hasNewMessages,
     hasNewNotifs,
     hasNewMention,
-    amOwner,
-    amOp,
-    amMod,
-    amVoice
+    userIsOwner,
+    userIsOp,
+    userIsMod,
+    userIsVoice
   }
 
 });

@@ -1,5 +1,5 @@
 import { store } from '../../stores/store';
-import { getDefaultChannels } from './handleChannelLists';
+import { requestDefaultChannels } from './handleChannelLists';
 import requestJoinChannel from './requestJoinChannel';
 import requestSetNick from './requestSetNick';
 import { getUserList } from './handleUserLists';
@@ -17,7 +17,7 @@ const onConnect = (socket, wasReconnect) => {
   store.dispatch(setConnected());
 
   //get the default channel list
-  getDefaultChannels(socket);
+  requestDefaultChannels(socket);
 
   //if the connection was re-established after a disconnect. Check the user is actually logged in
   if (wasReconnect && store.getState().loggedIn) {

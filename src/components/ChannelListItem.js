@@ -1,12 +1,12 @@
 import React from 'react';
-import { setActiveChannel, setCurrentChannel } from "../actions/actions";
+import { setCurrentChannel } from "../actions/actions";
 import { connect } from 'react-redux';
-import { getUserList } from '../utils/handlers/handleUserLists';
+import { requestUserList } from '../utils/handlers/handleUserLists';
 
 const ChannelListItem = ( { channel, dispatch } ) => (
   <div
     className= {"channelListChannelName " +
-      (channel.isSelected ? 'channel-selected ' : '') + 
+      //(channel.isSelected ? 'channel-selected ' : '') + 
       (channel.isCurrent ? 'channel-current ' : '') +
       (channel.hasNewNotifs ? 'channel-new-notif ' : '') +
       (channel.hasNewMessages ? 'channel-new-message ' : '') +
@@ -15,8 +15,7 @@ const ChannelListItem = ( { channel, dispatch } ) => (
     onClick={() => {
       //the current channel is set in both the userInterface and channel state objects
       dispatch(setCurrentChannel(channel.channelId));
-      dispatch(setActiveChannel(channel.channelId));
-      getUserList()
+      requestUserList()
     }}
   >
     <p>

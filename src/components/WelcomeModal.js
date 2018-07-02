@@ -1,14 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
-  setNick,
-  setTermsAccepted,
-  unsetTermsAccepted,
-  setWaitingForNickAcceptance
+  setNick
+  ,setTermsAccepted
+  ,unsetTermsAccepted
+  ,setWaitingForNickAcceptance
+  ,unsetWaitingForNickAcceptance
+  ,addChannel
+  ,setNickSetFailedReason
+  ,setLoggedIn
+  ,unblurApp
+  //,resetDefaultChannelSelections
 } from '../actions/actions';
 import DefaultChannelPicker from './DefaultChannelPicker';
 import { nickMinLength, nickMaxLength } from '../config.js';
 import requestSetNick from "../utils/handlers/requestSetNick";
+import requestJoinChannel from '../utils/handlers/requestJoinChannel'
 
 class WelcomeModal extends React.Component {
   constructor(props) {
@@ -20,8 +27,36 @@ class WelcomeModal extends React.Component {
     //set the UI to wait for the server to confirm the nick was set
     this.props.dispatch(setWaitingForNickAcceptance());
     
-    //send the request
-    requestSetNick(this.props.loginState.nick);
+    //send the request and pass in a function to handle the response
+    requestSetNick((response) => {
+      //handle the response (a string; either "success" or the reason the nick wasn't accepted eg. in use)
+      if (response == "success") {
+        console.log("setting nick succeeded!");
+        this.props.dispatch(unblurApp());
+        this.props.dispatch(setLoggedIn());
+        this.props.dispatch(unsetWaitingForNickAcceptance()); //un-disable the buttons
+        this.props.dispatch(setNickSetFailedReason('')); //update the UI and set the nick
+
+        this.props.defaultChannels.map((defaultChannel) => {
+          if (defaultChannel.isSelected) {
+            const joinedChannel = this.props.channels.filter(channel => channel.channelId == defaultChannel.channelId)[0];
+            if (!joinedChannel || !joinedChannel.isJoined) { //do a check first to make sure the channel isn't already joined
+              // add the channel to the UI
+              this.props.dispatch(addChannel({ channelId: defaultChannel.channelId, channelName: defaultChannel.channelName, topic: defaultChannel.topic }));
+              // here, send the actual server request to join the channel
+              requestJoinChannel(defaultChannel.channelId)
+            }
+          }
+        });
+
+        //this.props.dispatch(resetDefaultChannelSelections()); //reset the default channel selections
+        
+      } else {
+        console.log("setting nick failed: " + response);
+        this.props.dispatch(unsetWaitingForNickAcceptance());
+        this.props.dispatch(setNickSetFailedReason(response)); //tell the UI that setting the nick failed
+      }      
+    });
   }
   onGuestNickChange = (e) => {
     const nick = e.target.value;
@@ -79,10 +114,10 @@ class WelcomeModal extends React.Component {
                       !this.props.userInterface.termsAccepted ||
                       this.props.loginState.nick.length < nickMinLength ||
                       this.props.loginState.nick.length > nickMaxLength ||
-                      this.props.userInterface.waitForNickAcceptance
+                      this.props.userInterface.waitingForNickAcceptance
                      }
                   >
-                    {/*change the text of the button to a loading icon*/!this.props.userInterface.waitForNickAcceptance
+                    {/*change the text of the button to a loading icon*/!this.props.userInterface.waitingForNickAcceptance
                     ? "Start chatting" : <span className="fa fa-spinner fa-spin"></span>}
                   </button>
                 </form>

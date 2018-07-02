@@ -6,7 +6,7 @@ import { onRemoveUser, onReceiveUser } from './handlers/handleUserLists';
 import onDisconnect from './handlers/onDisconnect';
 import onConnect from './handlers/onConnect';
 import {
-  updatePing,
+  setPing,
   setDisconnectionReason
 } from '../actions/actions';
 
@@ -36,7 +36,7 @@ socket.on('default channels finished', () => {
 
 // handle pongs from the server
 socket.on('pong', (ms) => { //the pong event automatically has the ping in ms passed in by socket.io
-  store.dispatch(updatePing(ms));
+  store.dispatch(setPing(ms));
 });
 
 // handle connections

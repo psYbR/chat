@@ -1,9 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { hideChannelModal, channelPickerFirstTab, channelPickerSecondTab, setJoinDefaultChannels, setJoinUserChannels, startRetrieveUserChannels, stopRetrieveUserChannels, setNumberOfUserChannels } from '../actions/userInterfaceActions';
+import { hideChannelModal, channelPickerFirstTab, channelPickerSecondTab, startRetrieveUserChannels, stopRetrieveUserChannels, setNumberOfUserChannels } from '../actions/userInterfaceActions';
 import DefaultChannelPicker from './DefaultChannelPicker';
 import UserChannelPicker from './UserChannelPicker';
 import { addUserChannel } from '../actions/userChannelsActions';
+import { requestToJoinDefaultChannels } from '../utils/handlers/joinDefaultChannels';
+//import { requestToJoinUserChannels } from '../utils/handlers/joinUserChannels';
+
+// to do:
+//  the below.
 
 const userChannels = [
   { channelId: 50, channelName: 'abc', topic: 'alphabet' },
@@ -37,68 +42,68 @@ class Modal extends React.Component {
   }
   render() {
     return (
-      <div className="ModalWrapper">
-        <div className="ModalBlurContainer">
+      <div className="modalWrapper">
+        <div className="modalBlurContainer">
         </div>
-        <div className="ModalOuterContainer">
-            <div className="ModalInnerContainer channelPickerContainer">
+        <div className="modalOuterContainer">
+          <div className="modalInnerContainer channelPickerContainer">
 
-              <div className="tabContainer">
-                <div className={"defaultTab tab" + (!this.props.userInterface.channelPickerSecondTab ? " tabSelected" : "")}
-                  onClick={(e) => {
-                    this.props.dispatch(channelPickerFirstTab());
-                  }}
-                >
-                  <h1>Default Channels</h1>
-                </div>
-                <div className={"userTab tab" + (this.props.userInterface.channelPickerSecondTab ? " tabSelected" : "")}
-                  onClick={(e) => {
-                    this.props.dispatch(channelPickerSecondTab());
-                    if (this.props.userChannels.length < 1) { //only retrieve channels once
-                      this.props.dispatch(setNumberOfUserChannels(23));
-                      this.props.dispatch(startRetrieveUserChannels());
-                      let delay = 0;
-                      userChannels.map((channel) => {
-                        setTimeout(()=>{
-                          this.props.dispatch(addUserChannel(channel));
-                        }, delay);
-                        delay += 100;
-                      });
-                      setTimeout(()=>{
-                        this.props.dispatch(stopRetrieveUserChannels());
-                      }, delay);
-                    }
-                  }}
-                >
-                  <h1>User Channels</h1>
-                </div>
+            <div className="tabContainer">
+              <div className={"defaultTab tab" + (!this.props.userInterface.channelPickerSecondTab ? " tabSelected" : "")}
+                onClick={(e) => {
+                  this.props.dispatch(channelPickerFirstTab());
+                }}
+              >
+                <h1>Default Channels</h1>
               </div>
-              
-              {!this.props.userInterface.channelPickerSecondTab &&
-                <div className="ContainerChannelPicker">
-                  <DefaultChannelPicker />
-                </div>}
-
-              {this.props.userInterface.channelPickerSecondTab &&
-                <div className="ContainerChannelPicker">
-                  <UserChannelPicker />
-                </div>}
-
-              <button
-                    className='channelPickerButton'
-                    onClick={(e) => {
-                      //actions depends on which tab is active
-                      if (this.props.userInterface.channelPickerSecondTab) {
-                        this.props.dispatch(setJoinUserChannels());
-                        this.props.dispatch(hideChannelModal());
-                      } else {
-                        this.props.dispatch(setJoinDefaultChannels());
-                        this.props.dispatch(hideChannelModal());
-                      }
-                    }}
-                  >OK</button>
-              
+              <div className={"userTab tab" + (this.props.userInterface.channelPickerSecondTab ? " tabSelected" : "")}
+                onClick={(e) => {
+                  this.props.dispatch(channelPickerSecondTab());
+                  if (this.props.userChannels.length < 1) { //only retrieve channels once
+                    this.props.dispatch(setNumberOfUserChannels(23));
+                    this.props.dispatch(startRetrieveUserChannels());
+                    let delay = 0;
+                    userChannels.map((channel) => {
+                      setTimeout(()=>{
+                        this.props.dispatch(addUserChannel(channel));
+                      }, delay);
+                      delay += 100;
+                    });
+                    setTimeout(()=>{
+                      this.props.dispatch(stopRetrieveUserChannels());
+                    }, delay);
+                  }
+                }}
+              >
+                <h1>User Channels</h1>
+              </div>
             </div>
+            
+            {!this.props.userInterface.channelPickerSecondTab &&
+              <div className="ContainerChannelPicker">
+                <DefaultChannelPicker />
+              </div>}
+
+            {this.props.userInterface.channelPickerSecondTab &&
+              <div className="ContainerChannelPicker">
+                <UserChannelPicker />
+              </div>}
+
+            <button
+              className='channelPickerButton'
+              onClick={(e) => {
+                //actions depends on which tab is active
+                if (this.props.userInterface.channelPickerSecondTab) {
+                  //requestToJoinUserChannels(this.props.state, this.props.dispatch);
+                  this.props.dispatch(hideChannelModal());
+                } else {
+                  requestToJoinDefaultChannels(this.props, this.props.dispatch);
+                  this.props.dispatch(hideChannelModal());
+                }
+              }}
+            >OK</button>
+            
+          </div>
         </div>
       </div>
     );

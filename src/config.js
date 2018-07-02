@@ -2,6 +2,7 @@ export const maxTimestamp = 1893456000000; //the maximum timestamp (ms) allowed 
 export const maxMessageLength = 510; //IRC standard (512 including trailing CR)
 export const nickMinLength = 3;
 export const nickMaxLength = 20;
+export const systemNick = '*'; //the nickname of messages which originate from the System
 
 //uncomment and use 'npm run serve' to host the client separate to the server (faster client rebuild)
 export const localDev = 'http://localhost:3000';

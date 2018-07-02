@@ -15,7 +15,7 @@ export const setUIState = (
     windowWidth = Math.round(window.innerWidth * 0.0625),
     windowHeight = Math.round(window.innerHeight * 0.0625),
     chatMessageInput = '',
-    currentChannelId = 1,
+    //currentChannelId = 1,
     ping = '0',
     styleModalIsVisible = false, //use to hide/show the style modal
     appIsBlurred = true,
@@ -27,7 +27,7 @@ export const setUIState = (
     channelPickerIsVisible = false,
     channelPickerSecondTab = false, //false to show the first tab, true for the second
     reconnectionMessage = 'Connecting', //used by the ConnectingModal to show either Connecting or Re-connecting if the connection is being initially established or if it is lost
-    waitForNickAcceptance = false, //set true while waiting for the server to accept changes to the nickname
+    waitingForNickAcceptance = false, //set true while waiting for the server to accept changes to the nickname
     nickSetFailedReason = '',
     disconnectionReason = '',
     leaveChannelModalIsVisible = false,
@@ -41,7 +41,7 @@ export const setUIState = (
     windowWidth,
     windowHeight,
     chatMessageInput,
-    currentChannelId,
+    //currentChannelId,
     ping,
     styleModalIsVisible,
     appIsBlurred,
@@ -53,7 +53,7 @@ export const setUIState = (
     channelPickerIsVisible,
     channelPickerSecondTab,
     reconnectionMessage,
-    waitForNickAcceptance,
+    waitingForNickAcceptance,
     nickSetFailedReason,
     disconnectionReason,
     leaveChannelModalIsVisible,
@@ -62,12 +62,12 @@ export const setUIState = (
 });
 
 //the current channel the user is in
-export const setCurrentChannel = (channelId) => ({
-  type: 'SET_CURRENT_CHANNEL',
-  channelId
-});
+// export const setCurrentChannel = (channelId) => ({
+//   type: 'SET_CURRENT_CHANNEL',
+//   channelId
+// });
 //the current channel the user is in
-export const updatePing = (ping) => ({
+export const setPing = (ping) => ({
   type: 'UPDATE_PING',
   ping
 });

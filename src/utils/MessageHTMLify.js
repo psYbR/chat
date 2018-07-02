@@ -1,5 +1,6 @@
 import React from 'react';
 import { colors, fonts, colorNameToRGB } from './styleInfo';
+import { systemNick } from '../config';
 
 //escapes unsafe html tags
 const escapeHtml = (unsafe) => {
@@ -20,14 +21,15 @@ const escapeHtml = (unsafe) => {
   
 }
 
+//  OK. So.
 //
-//  This function returns a <p> tag containing a chat message
-//  it adds in <font style='color: rgb(X,X,X);'> tags to recolour the text/background according to any IRC standard color codes supplied in the message
-//  eg.  ^10,5 (text color 10, background color 5) - these colors are defined in ./utils/styleInfo.js
-//  second parameter is the element class name to use
-//  third parameter is the text font
-//  fourth parameter is the text color
-//  fifth is the username/nickname of who sent the message and is used to determine if the message was from System
+//  This function returns a set of <p></p> tags containing a chat message
+//  It embeds <font style='color: rgb(X,X,X);'> tags to recolour the text/background according to any IRC standard color codes which are found within the message
+//      eg.  The string: '^10,5' (text color 10, background color 5) - these colors are defined in ./utils/styleInfo.js
+//  The second parameter is the element class name to use ('pMessageText' at the time of writing)
+//  The third parameter is the text font as chosen by the user in the Style Modal
+//  The fourth parameter is the text color as chosen by the user in the Style Modal - this defines the color of the entire message but can be overridden where applicable by IRC color codes
+//  The fifth parameter is the username/nickname of the user who sent the message and is also used to determine if the message was from System (it will be an asterisk)
 //
 
 export const messageHTMLify = (message, elementClassName, font, color, source) => {
@@ -83,7 +85,7 @@ export const messageHTMLify = (message, elementClassName, font, color, source) =
   }
 
   //override the font color for system messages
-  if (source == '*') {
+  if (source == systemNick) {
     style.color = 'rgb(255, 166, 0)';
   }
 

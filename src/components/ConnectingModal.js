@@ -11,7 +11,7 @@ class ConnectingModal extends React.Component {
         <div className="modalBlurContainer">
         </div>
         <div className="modalOuterContainer">
-            <div className="modalInnerContainer monnectingModalContainer">
+            <div className="modalInnerContainer connectingModalContainer">
                 <h1 className="connectingTitle">{this.props.userInterface.reconnectionMessage}...</h1>
                 <h1 style={
                     {

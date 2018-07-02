@@ -1,12 +1,12 @@
 import { store } from '../../stores/store';
 import socket from './client';
 import {
-  setActiveChannel,
-  setCurrentChannel,
-  leaveChannel
+  setCurrentChannel
+  ,leaveChannel
 } from '../../actions/actions';
 import { getUserList } from './handleUserLists';
 import { getNowTimestamp } from '../utils'
+import { systemNick } from '../../config';
 
 //send request to join a channel
 const requestLeaveChannel = (channelId) => {
@@ -15,7 +15,7 @@ const requestLeaveChannel = (channelId) => {
   if (isNaN(channelId)) {
     //tell the UI joining the channel failed
     console.log("requesting to leave channel ID failed: not a valid ID");
-    store.dispatch(addMessage({source: "*", channelId: channelId, messageSent: true, receivedTimestamp: getNowTimestamp(), messageText: "Could not leave channel: invalid request" }));
+    store.dispatch(addMessage({source: systemNick, channelId: channelId, messageSent: true, receivedTimestamp: getNowTimestamp(), messageText: "Could not leave channel: invalid request" }));
   }
   //if there was no error
   else {
@@ -30,13 +30,12 @@ const requestLeaveChannel = (channelId) => {
           //select the first channel in the array and mark it as active
           const chanId = store.getState().channels[0].channelId;
           store.dispatch(setCurrentChannel(chanId));
-          store.dispatch(setActiveChannel(chanId));
           getUserList();
         }
       } else {
         console.log("request to leave channel ID " + channelId + " failed: " + response);
         //show an error
-        store.dispatch(addMessage({source: "*", channelId: channelId, messageSent: true, receivedTimestamp: getNowTimestamp(), messageText: "Could not leave channel: " + response }));
+        store.dispatch(addMessage({source: systemNick, channelId: channelId, messageSent: true, receivedTimestamp: getNowTimestamp(), messageText: "Could not leave channel: " + response }));
       }      
     });
   }

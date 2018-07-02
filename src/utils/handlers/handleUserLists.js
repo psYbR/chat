@@ -1,6 +1,7 @@
 import { store } from '../../stores/store';
 import { addUser, removeUser, flushUserList } from '../../actions/actions';
 import socket from './client';
+import getCurrentChannel from '../getCurrentChannel';
 
 //requests a list of users for the current channel
 export const requestUserList = () => {
@@ -8,7 +9,7 @@ export const requestUserList = () => {
   //check the user is in a channel before sending a server request
   if (store.getState().channels.filter(channel => channel.isJoined).length > 0) {
     //get the ID of the current channel
-    const currentChannelId = store.getState().userInterface.activeChannelId;
+    const currentChannelId = getCurrentChannel();
     //empty the list first
     store.dispatch(flushUserList());
     //make sure the list is emptied before sending the request
@@ -18,15 +19,13 @@ export const requestUserList = () => {
         //handle the response
         if (response == "success") {
           console.log("user list request sent");
-          
         } else {
           console.log("user list request failed: " + response);
         }
       });
-    },0)    
-  } else {
-    console.log("Skipping user channel request, no channels joined.");
+    },0) //0ms ensures it happens next tick :)
   }
+
 }
 
 //handle removing a user from channels (array)

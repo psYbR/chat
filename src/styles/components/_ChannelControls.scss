@@ -11,6 +11,7 @@
 .channelControlsButton {
   flex-grow: 1;
   height: calc($bar-height * 0.8);
+  outline: none;
 }
 
 $ccbjoin: rgb(56, 177, 0);

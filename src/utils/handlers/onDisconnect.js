@@ -3,7 +3,7 @@ import {
   updatePing,
   setDisconnected,
   setDisconnectionReason,
-  startWaitForNickAcceptance,
+  setWaitingForNickAcceptance,
   setAllChannelsWasJoined
 } from '../../actions/actions';
 
@@ -15,7 +15,7 @@ const handleDisconnect = (reason) => {
   store.dispatch(updatePing('--'));
   store.dispatch(setDisconnected());
   store.dispatch(setDisconnectionReason(reason));
-  store.dispatch(startWaitForNickAcceptance());
+  store.dispatch(setWaitingForNickAcceptance());
   store.dispatch(setAllChannelsWasJoined());
 }
 
