@@ -18,8 +18,8 @@ socket.on('user', ({ user, channel }) => {
   onReceiveUser(user, channel);
 });
 
-socket.on('remove user', ({ userId, channel }) => {
-  onRemoveUser(userId, channel);
+socket.on('remove user', (userId) => {
+  onRemoveUser(userId);
 });
 
 socket.on('chat message', (msg) => {

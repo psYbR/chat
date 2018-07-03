@@ -13,10 +13,10 @@ class ChannelControls extends React.Component {
     this.props.dispatch(showChannelModal());
   }
   onLeaveChannel = () => {
-    this.props.dispatch(showLeaveChannelModal());
+    //this.props.dispatch(showLeaveChannelModal());
   }
   onCreateChannel = () => {
-    this.props.dispatch(showCreateChannelModal());
+    //this.props.dispatch(showCreateChannelModal());
   }
   render = () => (
     <div className="channelControlsContainer emphasised-container">

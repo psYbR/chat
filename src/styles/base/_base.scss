@@ -85,9 +85,13 @@ button:disabled {
   height: 100%;
   background-color: $surround;
   cursor: pointer;
-}.tabSelected {
+}
+.tabSelected {
   color: $theme;
   background-color: lighten($surround, 10%);
+}
+.tabDisabled {
+  color: lighten($surround, 10%);
 }
 
 //

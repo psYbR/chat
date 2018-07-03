@@ -51,13 +51,14 @@ class Modal extends React.Component {
             <div className="tabContainer">
               <div className={"defaultTab tab" + (!this.props.userInterface.channelPickerSecondTab ? " tabSelected" : "")}
                 onClick={(e) => {
-                  this.props.dispatch(channelPickerFirstTab());
+                  //this.props.dispatch(channelPickerFirstTab());
                 }}
               >
                 <h1>Default Channels</h1>
               </div>
-              <div className={"userTab tab" + (this.props.userInterface.channelPickerSecondTab ? " tabSelected" : "")}
+              <div className={"userTab tab tabDisabled" + (this.props.userInterface.channelPickerSecondTab ? " tabSelected" : "")}
                 onClick={(e) => {
+                  return;
                   this.props.dispatch(channelPickerSecondTab());
                   if (this.props.userChannels.length < 1) { //only retrieve channels once
                     this.props.dispatch(setNumberOfUserChannels(23));

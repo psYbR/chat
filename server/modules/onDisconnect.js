@@ -28,7 +28,8 @@ const onDisconnect = (socket, reason) => {
       globals.usersInChannels.map((subrecord)=>{
         if (subrecord.channelId == record.channelId && subrecord.socketId != socket.id) {
           //send the event
-          io.to(record.socketId).emit('remove user', { userId: socket.id, channel: record.channelId });
+          console.log("(onDisconnect) sending 'remove user' event...")
+          io.to(subrecord.socketId).emit('remove user', socket.id);
         }
       })
     }

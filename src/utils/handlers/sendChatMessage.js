@@ -7,11 +7,7 @@ import {
 
 //send chat messages to the server and handle the response on success or failure
 export const sendChatMessage = (outboundMsg) => {
-  if (outboundMsg.channelId == store.getState().userInterface.activeChannelId) {
-    $('.chatMessageContainer').stop().animate({
-      scrollTop: $('.chatMessageContainer')[0].scrollHeight
-    }, 800);
-  }
+
   let wasError = false;
   let errorMsg = '';
   //sanity check the timestamp

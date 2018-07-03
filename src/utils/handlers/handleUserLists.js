@@ -13,7 +13,7 @@ export const requestUserList = () => {
     //empty the list first
     store.dispatch(flushUserList());
     //make sure the list is emptied before sending the request
-    setTimeout(()=>{
+    //setTimeout(()=>{
       //send the request to the server
       socket.emit('request user list', currentChannelId, (response) => {
         //handle the response
@@ -23,7 +23,7 @@ export const requestUserList = () => {
           console.log("user list request failed: " + response);
         }
       });
-    },0) //0ms ensures it happens next tick :)
+    //},0) //0ms ensures it happens next tick :)
   }
 
 }
