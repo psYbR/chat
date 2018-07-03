@@ -1,6 +1,7 @@
-const utils = require('./utils');
-const config = require('../config');
-var io = require('./server');
+utils = require('./utils');
+globals = require('./globals');
+config = require('../config');
+io = require('./server');
 
 //
 // called when the client sends a chat message
@@ -23,7 +24,7 @@ const onChatMessage = (socket, msg) => {
 
   //grab the nickname associated with the source user and add it to the outgoing message (and also verify the user exists)
   let response = "nick not found";
-  utils.onlineUsers.map((user) => {
+  globals.onlineUsers.map((user) => {
     if (user.socketId == socket.id) {
       outgoing.source = user.nick;
       response = "success"
@@ -37,7 +38,7 @@ const onChatMessage = (socket, msg) => {
 
   //check the user is actually in the channel they're trying to send a message to
   if (
-    utils.usersInChannels.filter(record => (
+    globals.usersInChannels.filter(record => (
       record.channelId == outgoing.channelId && record.socketId == socket.id
     ))
     .length < 1
@@ -53,7 +54,7 @@ const onChatMessage = (socket, msg) => {
     console.log("'" + outgoing.source + "' said: '" + outgoing.messageText + "'");
 
     //iterate users in channels
-    utils.usersInChannels.map((record)=>{ 
+    globals.usersInChannels.map((record)=>{ 
 
       //filter recipients by people who are in the destination channel and who are not the sender
       if (record.channelId == outgoing.channelId && record.socketId != socket.id) {

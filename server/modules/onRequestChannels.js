@@ -1,14 +1,14 @@
-const config = require('../config');
-const utils = require('./utils');
-var io = require('./server');
+config = require('../config');
+globals = require('./globals');
+io = require('./server');
 
 //
 // called when the client requests a list of the default channels they may join
 //
 
-const defaultChannels = (socket) => { 
+const onRequestDefaultChannels = (socket) => { 
 
-  console.log("Request for default channels from socket: " + socket.id)
+  //console.log("Request for default channels from socket: " + socket.id)
 
   config.defaultChannels.map((channel, i)=>{
 
@@ -28,7 +28,7 @@ const defaultChannels = (socket) => {
 
       //inform the client we're finished sending channels
       io.to(socket.id).emit('default channels finished');
-      console.log("Sent default channels to socket: " + socket.id)
+      //console.log("Sent default channels to socket: " + socket.id)
 
     }
 
@@ -40,11 +40,11 @@ const defaultChannels = (socket) => {
 // called when the client requests a list of the user channels they may join
 //
 
-const userChannels = (socket) => {
+const onRequestUserChannels = (socket) => {
 
   console.log("Request for user channels from socket: " + socket.id)
 
-  utils.userChannels.map((channel, i)=>{
+  globals.userChannels.map((channel, i)=>{
 
     //we don't want to send the entire channel object, so here we set up a new one with the required values in it
     const outgoingChannel = {
@@ -63,7 +63,7 @@ const userChannels = (socket) => {
     }
 
     //if all the channels have been sent
-    if (i == utils.userChannels.length - 1) {
+    if (i == userChannels.length - 1) {
 
       //inform the client we're finished sending channels
       io.to(socket.id).emit('user channels finished');
@@ -75,6 +75,6 @@ const userChannels = (socket) => {
 };
 
 module.exports = {
-  defaultChannels: defaultChannels,
-  userChannels: userChannels
+  onRequestDefaultChannels,
+  onRequestUserChannels
 }

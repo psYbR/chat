@@ -1,7 +1,8 @@
-const config = require('../config');
-const utils = require('./utils');
-const sendSystemMessage = require('./sendSystemMessage');
-const sendUserObject = require('./sendUserObject');
+config = require('../config');
+utils = require('./utils');
+globals = require('./globals');
+sendSystemMessage = require('./sendSystemMessage');
+sendUserObject = require('./sendUserObject');
 
 //
 // when the client requests to join a channel
@@ -27,7 +28,7 @@ const onJoinChannel = (socket, channelId) => {
       response = "success";
     }
   });
-  utils.userChannels.map((channel)=>{
+  globals.userChannels.map((channel)=>{
     if (channel.channelId == channelId) {
       response = "success";
     }
@@ -36,17 +37,25 @@ const onJoinChannel = (socket, channelId) => {
   //check the permissions for the channel here
 
   //check if the user is already in the channel
-  utils.usersInChannels.map((record)=>{
+  globals.usersInChannels.map((record)=>{
     if (record.channelId == channelId && record.socketId == socket.id) {
       response = "already in channel";
+      console.log("(onJoinChannel) user was already in channel: " + channelId);
     }
   });
 
+  response = "(onJoinChannel) user's nick not found"
+  globals.onlineUsers.map((record)=>{
+    if (record.socketId == socket.id) {
+      response = "success";
+    }
+  })
+
   //add the user to the channel
   if (response == "success") {
-
+    
     //add the record to the array
-    utils.usersInChannels.push({
+    globals.usersInChannels.push({
       channelId: channelId,
       socketId: socket.id
     })
@@ -55,8 +64,10 @@ const onJoinChannel = (socket, channelId) => {
     sendSystemMessage(channelId, utils.socketToNick(socket.id) + " has joined the channel", socket.id);
 
     //send the user object to everyone in the channel except the joining user
-    utils.usersInChannels.map((record)=>{
+    globals.usersInChannels.map((record)=>{
       if (record.channelId == channelId && record.socketId != socket.id) {
+
+        console.log("(onJoinChannel) Sending object to user: " + channelId + " " + record.socketId);
 
         //sends the user object
         sendUserObject(record.socketId, socket.id, channelId);
@@ -64,6 +75,9 @@ const onJoinChannel = (socket, channelId) => {
       }
     })
     
+  }
+  else {
+    console.log("(onJoinChannel) Channel join failed: id-" + channelId + " " + response);
   }
 
   //send the response

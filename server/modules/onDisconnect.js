@@ -1,6 +1,7 @@
-const utils = require('./utils');
-const sendSystemMessage = require('./sendSystemMessage');
-var io = require('./server');
+utils = require('./utils');
+globals = require('./globals');
+sendSystemMessage = require('./sendSystemMessage');
+io = require('./server');
 
 //
 // called when the client disconnects
@@ -20,43 +21,34 @@ const onDisconnect = (socket, reason) => {
 
   //set the text of the message to send to clients
   const messageText = nick + " has disconnected (" + reason + ")"
-  //console.log(nick + " (" + socket.id + ") has disconnected (" + reason + ")");
 
-  //remove the user from the channels and send a notification to channels
-  utils.usersInChannels.map((record, i)=>{
+  //notify users who were in a channel with the disconnecting user
+  globals.usersInChannels.map((record)=>{
     if (record.socketId == socket.id) {
-
-      console.log("(onDisconnect) removing user from usersInChannels");
-
-      //send a message to the channels they were in
-      sendSystemMessage(record.channelId, messageText, socket.id)
-
-      //notify user's clients who were in a channel with the user to remove the user from their user lists
-      utils.usersInChannels.map((subrecord)=>{
+      globals.usersInChannels.map((subrecord)=>{
         if (subrecord.channelId == record.channelId && subrecord.socketId != socket.id) {
-          
           //send the event
-          io.to(subrecord.socketId).emit('remove user', { userId: socket.id, channel: [subrecord.channelId] });
-
+          io.to(record.socketId).emit('remove user', { userId: socket.id, channel: record.channelId });
         }
       })
+    }
+  })
 
-      //remove the record from the array
-      utils.usersInChannels.splice(i,1);
+  //notify users who were in a channel with the disconnecting user
+  globals.usersInChannels.map((record)=>{
+    if (record.socketId == socket.id) {
+      sendSystemMessage(record.channelId, messageText, socket.id)
     }
   })
 
   //remove the user from the list of online users
-  utils.onlineUsers.map((user, i) => {
-    if (user.socketId == socket.id) {
+  globals.usersInChannels = globals.usersInChannels.filter(record => record.socketId != socket.id)
+  globals.onlineUsers = globals.onlineUsers.filter(user => user.socketId != socket.id)
 
-      console.log("(onDisconnect) removing user from onlineUsers");
+  console.log("(onDisconnect) " + socket.id + " was removed from arrays. Result:");
+  console.log(globals.usersInChannels);    
+  console.log(globals.onlineUsers);    
 
-      //remove the record from the array
-      utils.onlineUsers.splice(i,1);
-
-    }
-  })
 }
 
 module.exports = onDisconnect;

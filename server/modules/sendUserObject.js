@@ -1,4 +1,5 @@
-const utils = require('./utils');
+utils = require('./utils');
+globals = require('./globals');
 var io = require('./server');
 
 //
@@ -28,9 +29,7 @@ const sendUserObject = (destinationSocketID, userSocketID, channelId) => {
     outgoingUser.isCurrentUser = true;
   }
 
-  console.log("(sendUserObject) Sending user: ");
-  console.log(outgoingUser);
-  console.log("(sendUserObject) ... in channel: " + channelId)
+  console.log("(sendUserObject) Sending user: '" + outgoingUser.nick + "' to channel: " + channelId)
 
   //send the user item to the client
   io.to(destinationSocketID).emit('user', { user: outgoingUser, channel: channelId} );

@@ -1,4 +1,4 @@
-const utils = require('./utils');
+require('./globals');
 var io = require('./server');
 
 //
@@ -18,7 +18,7 @@ const sendSystemMessage = (channelId, messageText, socketIdToExclude = false) =>
   }
 
   //filter users to only people in the target channel
-  const usersInThisChannel = utils.usersInChannels.filter(record => (
+  const usersInThisChannel = globals.usersInChannels.filter(record => (
     record.channelId == channelId
   ));
 

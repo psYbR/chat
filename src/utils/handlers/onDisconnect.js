@@ -1,6 +1,6 @@
 import { store } from '../../stores/store';
 import {
-  updatePing,
+  setPing,
   setDisconnected,
   setDisconnectionReason,
   setWaitingForNickAcceptance,
@@ -12,7 +12,7 @@ import {
 //
 
 const handleDisconnect = (reason) => {
-  store.dispatch(updatePing('--'));
+  store.dispatch(setPing('--'));
   store.dispatch(setDisconnected());
   store.dispatch(setDisconnectionReason(reason));
   store.dispatch(setWaitingForNickAcceptance());

@@ -1,7 +1,8 @@
-const config = require('../config');
-const utils = require('./utils');
-const sendUserObject = require('./sendUserObject');
-var io = require('./server');
+config = require('../config');
+globals = require('./globals');
+utils = require('./utils');
+sendUserObject = require('./sendUserObject');
+io = require('./server');
 
 //
 // called when the client requests a user list
@@ -12,7 +13,7 @@ var io = require('./server');
 
 const onGetUserList = (socket, channelId) => {
 
-  console.log("Request for user list for channel: '" + channelId + "' from socket: " + socket.id);
+  console.log("(onGetUserList) Request for user list for channel: '" + channelId + "' from socket: " + socket.id);
 
   //check the channel ID was a number
   let response = "success"
@@ -27,7 +28,7 @@ const onGetUserList = (socket, channelId) => {
       response = "success";
     }
   });
-  utils.userChannels.map((channel)=>{
+  globals.userChannels.map((channel)=>{
     if (channel.channelId == channelId) {
       response = "success";
     }
@@ -36,7 +37,7 @@ const onGetUserList = (socket, channelId) => {
   //check that the user is actually in that channel
   response = "not in that channel";
   let thisUsersChannels = []; //keep track of which channels the user *is* in, we'll use this later on
-  utils.usersInChannels.map((record)=>{
+  globals.usersInChannels.map((record)=>{
     if (record.channelId == channelId && record.socketId == socket.id) {
       response = "success";
     }
@@ -51,7 +52,7 @@ const onGetUserList = (socket, channelId) => {
   if (response == "success") {
 
     //get the list of other users in the requested channel
-    const userList = utils.usersInChannels.filter(record => record.channelId == channelId);
+    const userList = globals.usersInChannels.filter(record => record.channelId == channelId);
 
     //send each user to the client
     userList.map((record) => {      

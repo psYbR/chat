@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { hideStyleModal, setAppZoom, showChannelModal } from '../actions/userInterfaceActions';
+//import { hideStyleModal, setAppZoom, showChannelModal } from '../actions/userInterfaceActions';
 import { hideSystemMessages, showSystemMessages, setFontColor } from '../actions/configurationActions';
 import { colors, fonts } from '../utils/styleInfo';
 import FontPicker from './FontPicker';
@@ -9,9 +9,9 @@ class StyleModal extends React.Component {
   constructor(props) {
     super(props);
   }
-  handleMoreOptionsClick = (e) => {
-    e.preventDefault();
-  }
+  // handleMoreOptionsClick = (e) => {
+  //   e.preventDefault();
+  // }
   render() {
     return (
       

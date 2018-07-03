@@ -1,4 +1,5 @@
-const config = require('../config');
+config = require('../config');
+globals = require('./globals');
 
 //
 // contains common functions and globally used arrays
@@ -8,17 +9,8 @@ const config = require('../config');
 //TO DO: channel permissions
 //TO DO: blocked users
 
-//contains a list of users that are currently connected
-var onlineUsers = [];
-
-//contains a list of which channels online users have joined
-var usersInChannels = [];
-
-//contains user-created channels
-var userChannels = [];
-
 //a test value
-userChannels.push({
+globals.userChannels.push({
   ...config.defaultChannel,
   channelId: 21,
   channelName: 'admin channel',
@@ -27,7 +19,7 @@ userChannels.push({
 
 //for a given socket ID, return the user's nick
 const socketToNick = (socketId) => {
-  const userObj = onlineUsers.filter(user => 
+  const userObj = globals.onlineUsers.filter(user => 
     user.socketId == socketId
   );
   if (userObj) {
@@ -46,8 +38,5 @@ const socketToNick = (socketId) => {
 };
 
 module.exports = {
-  onlineUsers: onlineUsers,
-  usersInChannels: usersInChannels,
-  userChannels: userChannels,
-  socketToNick: socketToNick
+  socketToNick
 }

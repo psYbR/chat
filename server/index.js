@@ -25,11 +25,11 @@ io.on('connection', (socket) => {
   });
 
   socket.on('request default channels', () => {
-    onRequestChannels.defaultChannels(socket);
+    onRequestChannels.onRequestDefaultChannels(socket);
   });
 
   socket.on('request user channels', () => {
-    onRequestChannels.userChannels(socket);
+    onRequestChannels.onRequestUserChannels(socket);
   });
 
   socket.on('join channel', (channelId, callback) => {

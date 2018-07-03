@@ -1,5 +1,5 @@
 const config = require('../config');
-const utils = require('./utils');
+require('./globals');
 const sendSystemMessage = require('./sendSystemMessage');
 
 //
@@ -17,7 +17,7 @@ const onSetNick = (socket, nick) => {
   } else {
 
     //check if another user has that nick already
-    utils.onlineUsers.map((user)=>{
+    globals.onlineUsers.map((user)=>{
 
       //if the nick is in use
       if (user.nick == nick) { 
@@ -48,19 +48,19 @@ const onSetNick = (socket, nick) => {
     //if the user is changing their nick (ie. they already have a nick) drop them from the array first
     let wasExistingUser = false;
     let existingNick = '';
-    utils.onlineUsers.map((user) => {
+    globals.onlineUsers.map((user) => {
 
       if (user.socketId == socket.id) {
         console.log('User "' + user.nick + '" changed their nick to "' + nick + '".');
         wasExistingUser = true;
         existingNick = user.nick;
-        onlineUsers.splice(i,1);
+        globals.onlineUsers = globals.onlineUsers.filter(user => user.socketId = socket.id);
       }
 
     })
 
     //add the user to the array of online users
-    utils.onlineUsers.push({
+    globals.onlineUsers.push({
       nick: nick,
       socketId: socket.id
     })
@@ -72,11 +72,14 @@ const onSetNick = (socket, nick) => {
     }
 
     //get the channels this user is in and send a message
-    utils.usersInChannels.map((record)=>{
+    globals.usersInChannels.map((record)=>{
       if (record.socketId == socket.id) {
 
         //send the message
         sendSystemMessage(record.channelId, messageText, socket.id);
+
+        console.log('User "' + nick + '" added to array. result:');
+        console.log(globals.onlineUsers);
         
       }
     });
