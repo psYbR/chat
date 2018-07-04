@@ -123,7 +123,7 @@ class WelcomeModal extends React.Component {
                 </form>
 
                 <div className="termsContainer">
-                  <p className="termsParagraph">Accept <a href='#'>usage terms</a>?</p>
+                  <p className="termsParagraph">Accept <a href='/terms.html'>terms and conditions</a>?</p>
                   <label className="checkBoxContainer">
                     <input
                       type="checkbox"

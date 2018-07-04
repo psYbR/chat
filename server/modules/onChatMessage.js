@@ -6,14 +6,14 @@ getChannelNameFromId = require('./getChannelNameFromId');
 
 //returns friendly date string from a timestamp eg. '2018-06-24 10:37:21'
 const getFriendlyFromTimestamp = (timestamp, format) => {
-  var a = new Date(timestamp);
-  var year = a.getFullYear();
-  var month = (a.getMonth() + 1)  < 10 ? '0' + (a.getMonth() + 1) : (a.getMonth() + 1);
-  var date = a.getDate() < 10 ? '0' + a.getDate() : a.getDate();
-  var hour = a.getHours();
-  var min = a.getMinutes() < 10 ? '0' + a.getMinutes() : a.getMinutes();
-  var sec = a.getSeconds() < 10 ? '0' + a.getSeconds() : a.getSeconds();
-  var time = year + '-' + month + '-' + date + ' ' + hour + ':' + min + ':' + sec;
+  const a = new Date(timestamp);
+  const year = a.getFullYear();
+  const month = (a.getMonth() + 1)  < 10 ? '0' + (a.getMonth() + 1) : (a.getMonth() + 1);
+  const date = a.getDate() < 10 ? '0' + a.getDate() : a.getDate();
+  const hour = a.getHours();
+  const min = a.getMinutes() < 10 ? '0' + a.getMinutes() : a.getMinutes();
+  const sec = a.getSeconds() < 10 ? '0' + a.getSeconds() : a.getSeconds();
+  const time = year + '-' + month + '-' + date + ' ' + hour + ':' + min + ':' + sec;
   return time;
 }
 
@@ -60,10 +60,36 @@ const onChatMessage = (socket, msg) => {
     response = "user not found in target channel";
   }
 
+  //check the count of messages sent within the anti-flood window
+  +new Date;
+  const curTime = Date.now();
+  if (globals.userMessages.filter(
+        message => message.socketId == socket.id &&
+        message.timestamp > (curTime - config.antiFloodTime)
+      ).length >= config.antiFloodFrequency) {
+    response = "rate exceeded - please don't flood";
+  }
+
+  //check the count of repeated (same text) messages within a window
+  if (globals.userMessages.filter(
+        message => message.socketId == socket.id &&
+        message.timestamp > (curTime - config.antiFloodMatchTime) &&
+        message.messageText == outgoing.messageText
+      ).length >= config.antiFloodMatches) {
+    response = "repeats exceeded - please don't repeat";
+  }
+
+  // antiFloodMaxViolations
+
   //check channel message permissions here
   
   //if there were no errors
   if (response == "success") {
+
+    
+    //record the time the message was sent
+    globals.userMessages.push({socketId: socket.id, timestamp: curTime, messageText: outgoing.messageText})
+    //console.log(globals.userMessages);
 
     globals.log("[" + getFriendlyFromTimestamp(Date.now()) + "] #" + getChannelNameFromId(outgoing.channelId) + " " + outgoing.source + ": " + outgoing.messageText + "", 3);
 

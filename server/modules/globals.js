@@ -9,6 +9,9 @@ let usersInChannels = [];
 //contains user-created channels
 let userChannels = [];
 
+//contains chat message timestamps from users (used to track message frequency for anti-flood)
+let userMessages = [];
+
 const log = (message, logImportance = 1) => {
   if (logImportance >= config.logLevel) {
     console.log(message);
@@ -16,6 +19,7 @@ const log = (message, logImportance = 1) => {
 }
 
 module.exports = {
+  userMessages,
   log,
   onlineUsers,
   usersInChannels,
