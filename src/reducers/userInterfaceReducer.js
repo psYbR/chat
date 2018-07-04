@@ -4,6 +4,26 @@ export default (state = reducerDefaultState, action) => {
   switch (action.type) {
     case 'SET_UI_STATE':
       return action.userInterface;
+    case 'SET_MESSAGES_SINCE_NOT_FOCUSED':
+      return {
+        ...state,
+        messagesSinceNotFocused: true
+      }
+    case 'UNSET_MESSAGES_SINCE_NOT_FOCUSED':
+      return {
+        ...state,
+        messagesSinceNotFocused: false
+      }
+    case 'SET_APP_IS_FOCUSED':
+      return {
+        ...state,
+        appIsFocused: true
+      }
+    case 'UNSET_APP_IS_FOCUSED':
+      return {
+        ...state,
+        appIsFocused: false
+      }
     case 'SET_ACTIVE_CHANNEL':
       return {
         ...state,
@@ -32,12 +52,12 @@ export default (state = reducerDefaultState, action) => {
     case 'SET_WAIT_FOR_NICK_ACCEPTANCE':
       return {
         ...state,
-        waitForNickAcceptance: true
+        waitingForNickAcceptance: true
       };
     case 'UNSET_WAIT_FOR_NICK_ACCEPTANCE':
       return {
         ...state,
-        waitForNickAcceptance: false
+        waitingForNickAcceptance: false
       };
     case 'SET_NICK_SET_FAILED_REASON':
       return {

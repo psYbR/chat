@@ -13,7 +13,7 @@ sendUserObject = require('./sendUserObject');
 
 const onJoinChannel = (socket, channelId) => {
 
-  console.log("(onJoinChannel) Channel join request: '" + channelId + "' from socket: " + socket.id);
+  globals.log("(onJoinChannel) Channel join request: '" + channelId + "' from socket: " + socket.id);
 
   //check the channel ID was valid
   let response = "success"
@@ -40,7 +40,7 @@ const onJoinChannel = (socket, channelId) => {
   globals.usersInChannels.map((record)=>{
     if (record.channelId == channelId && record.socketId == socket.id) {
       response = "already in channel";
-      console.log("(onJoinChannel) user was already in channel: " + channelId);
+      globals.log("(onJoinChannel) user was already in channel: " + channelId, 2);
     }
   });
 
@@ -67,7 +67,7 @@ const onJoinChannel = (socket, channelId) => {
     globals.usersInChannels.map((record)=>{
       if (record.channelId == channelId && record.socketId != socket.id) {
 
-        console.log("(onJoinChannel) Sending object to user: " + channelId + " " + record.socketId);
+        globals.log("(onJoinChannel) Sending '" + channelId + "' to '" + record.socketId + "'");
 
         //sends the user object
         sendUserObject(record.socketId, socket.id, channelId);
@@ -77,7 +77,7 @@ const onJoinChannel = (socket, channelId) => {
     
   }
   else {
-    console.log("(onJoinChannel) Channel join failed: id-" + channelId + " " + response);
+    globals.log("(onJoinChannel) Channel join failed for '" + channelId + "': " + response, 2);
   }
 
   //send the response

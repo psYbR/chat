@@ -11,9 +11,9 @@ io = require('./server');
 // TO DO: check channel permissions
 // TO DO: get user properties: isAway, isBlocked, group
 
-const onGetUserList = (socket, channelId) => {
+const onRequestUserList = (socket, channelId) => {
 
-  console.log("(onGetUserList) Request for user list for channel: '" + channelId + "' from socket: " + socket.id);
+  globals.log("(onRequestUserList) Request for user list for channel: '" + channelId + "' from socket: " + socket.id);
 
   //check the channel ID was a number
   let response = "success"
@@ -72,4 +72,4 @@ const onGetUserList = (socket, channelId) => {
 
 };
 
-module.exports = onGetUserList;
+module.exports = onRequestUserList;

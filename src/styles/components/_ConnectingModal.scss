@@ -13,51 +13,51 @@
 
 /*FADE IN-OUT*/
 @-webkit-keyframes fade-in-out{
-    0%{
-      opacity: 1;
-    }
-    50%{
-      opacity: 0;
-    }
-    100%{
-      oapcity: 1;
-    }
+  0%{
+    opacity: 1;
   }
-  
-  @-moz-keyframes fade-in-out{
-    0%{
-      opacity: 1;
-    }
-    50%{
-      opacity: 0;
-    }
-    100%{
-      oapcity: 1;
-    }
+  50%{
+    opacity: 0;
   }
-  
-  @-o-keyframes fade-in-out{
-    0%{
-      opacity: 1;
-    }
-    50%{
-      opacity: 0;
-    }
-    100%{
-      oapcity: 1;
-    }
+  100%{
+    oapcity: 1;
   }
-  
-  @keyframes fade-in-out{
-    0%{
-      opacity: 1;
-    }
-    50%{
-      opacity: 0;
-    }
-    100%{
-      oapcity: 1;
-    }
+}
+
+@-moz-keyframes fade-in-out{
+  0%{
+    opacity: 1;
   }
+  50%{
+    opacity: 0;
+  }
+  100%{
+    oapcity: 1;
+  }
+}
+
+@-o-keyframes fade-in-out{
+  0%{
+    opacity: 1;
+  }
+  50%{
+    opacity: 0;
+  }
+  100%{
+    oapcity: 1;
+  }
+}
+
+@keyframes fade-in-out{
+  0%{
+    opacity: 1;
+  }
+  50%{
+    opacity: 0;
+  }
+  100%{
+    oapcity: 1;
+  }
+}
 
   

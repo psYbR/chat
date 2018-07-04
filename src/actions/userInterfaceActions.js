@@ -15,10 +15,10 @@ export const setUIState = (
     windowWidth = Math.round(window.innerWidth * 0.0625),
     windowHeight = Math.round(window.innerHeight * 0.0625),
     chatMessageInput = '',
-    //currentChannelId = 1,
     ping = '0',
     styleModalIsVisible = false, //use to hide/show the style modal
     appIsBlurred = true,
+    appIsFocused = true,
     appIsConnected = false, //whether the socket reports it has been successfully opened
     termsAccepted = true,
     defaultChannelsReceived = false, //whether the list of default channels was received from the server
@@ -31,7 +31,8 @@ export const setUIState = (
     nickSetFailedReason = '',
     disconnectionReason = '',
     leaveChannelModalIsVisible = false,
-    waitingForLeaveChannelConfirmation = false
+    waitingForLeaveChannelConfirmation = false,
+    messagesSinceNotFocused = false
   } = {}
 ) => ({
   type: 'SET_UI_STATE',
@@ -41,10 +42,10 @@ export const setUIState = (
     windowWidth,
     windowHeight,
     chatMessageInput,
-    //currentChannelId,
     ping,
     styleModalIsVisible,
     appIsBlurred,
+    appIsFocused,
     appIsConnected,
     termsAccepted,
     defaultChannelsReceived,
@@ -57,16 +58,23 @@ export const setUIState = (
     nickSetFailedReason,
     disconnectionReason,
     leaveChannelModalIsVisible,
-    waitingForLeaveChannelConfirmation
+    waitingForLeaveChannelConfirmation,
+    messagesSinceNotFocused
   }
 });
 
-//the current channel the user is in
-// export const setCurrentChannel = (channelId) => ({
-//   type: 'SET_CURRENT_CHANNEL',
-//   channelId
-// });
-//the current channel the user is in
+export const setMessagesSinceNotFocused = () => ({
+  type: 'SET_MESSAGES_SINCE_NOT_FOCUSED'
+})
+export const unsetMessagesSinceNotFocused = () => ({
+  type: 'UNSET_MESSAGES_SINCE_NOT_FOCUSED'
+})
+export const setAppIsFocused = () => ({
+  type: 'SET_APP_IS_FOCUSED'
+})
+export const unsetAppIsFocused = () => ({
+  type: 'UNSET_APP_IS_FOCUSED'
+})
 export const setPing = (ping) => ({
   type: 'UPDATE_PING',
   ping

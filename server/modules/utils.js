@@ -26,13 +26,13 @@ const socketToNick = (socketId) => {
     if (userObj[0]) {
       return userObj[0].nick;
     } else {
-      console.log("(utils - socket2nick) couldn't find nick (E:2) for socket: " + socketId);
+      globals.log("(utils - socket2nick) couldn't find nick (E:2) for socket: " + socketId, 2);
       return "E:2 ";
       
     }
     
   } else {
-    console.log("(utils - socket2nick) couldn't find nick (E:1)");
+    globals.log("(utils - socket2nick) couldn't find nick (E:1)", 2);
     return "E:1 ";
   }
 };

@@ -7,6 +7,52 @@ export default (state = reducerDefaultState, action) => {
         ...state,
         action.channel
       ];
+    case 'SET_CHANNEL_HAS_NEW_MESSAGES':
+      return state.map((channel) => {
+        if (channel.channelId == action.channelId) {
+          return {
+            ...channel,
+            hasNewMessages: true
+          }
+        } else {
+          return channel
+        }
+      })
+    case 'SET_CHANNEL_HAS_NOTIFS':
+      return state.map((channel) => {
+        if (channel.channelId == action.channelId) {
+          return {
+            ...channel,
+            hasNewNotifs: true
+          }
+        } else {
+          return channel
+        }
+      })
+    case 'SET_CHANNEL_HAS_MENTION':
+      return state.map((channel) => {
+        if (channel.channelId == action.channelId) {
+          return {
+            ...channel,
+            hasNewMention: true
+          }
+        } else {
+          return channel
+        }
+      })
+    case 'SET_CHANNEL_MESSAGES_READ':
+      return state.map((channel) => {
+        if (channel.channelId == action.channelId) {
+          return {
+            ...channel,
+            hasNewMessages: false,
+            hasNewNotifs: false,
+            hasNewMention: false
+          }
+        } else {
+          return channel
+        }
+      })
     case 'SET_CURRENT_CHANNEL':
       return state.map((channel) => {
         if (channel.channelId === action.channelId) {
@@ -30,9 +76,7 @@ export default (state = reducerDefaultState, action) => {
             wasJoined: false
           }
         } else {
-          return {
-            ...channel
-          }
+          return channel
         }
       })
     case 'SET_ALL_CHANNELS_WAS_JOINED':

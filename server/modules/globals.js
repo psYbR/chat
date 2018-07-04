@@ -1,3 +1,5 @@
+config = require('../config');
+
 //contains a list of users that are currently connected
 let onlineUsers = [];
 
@@ -7,7 +9,14 @@ let usersInChannels = [];
 //contains user-created channels
 let userChannels = [];
 
+const log = (message, logImportance = 1) => {
+  if (logImportance >= config.logLevel) {
+    console.log(message);
+  }
+}
+
 module.exports = {
+  log,
   onlineUsers,
   usersInChannels,
   userChannels

@@ -41,6 +41,22 @@ export const addChannel = (
 
 });
 
+export const setChannelHasNewMessages = (channelId) => ({
+  type: 'SET_CHANNEL_HAS_NEW_MESSAGES',
+  channelId
+});
+export const setChannelHasNotifs = (channelId) => ({
+  type: 'SET_CHANNEL_HAS_NOTIFS',
+  channelId
+});
+export const setChannelHasMention = (channelId) => ({
+  type: 'SET_CHANNEL_HAS_MENTION',
+  channelId
+});
+export const setChannelMessagesRead = (channelId) => ({
+  type: 'SET_CHANNEL_MESSAGES_READ',
+  channelId
+});
 export const setCurrentChannel = (channelId) => ({ 
   type: 'SET_CURRENT_CHANNEL',
   channelId

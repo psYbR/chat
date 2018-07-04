@@ -8,7 +8,7 @@ io = require('./server');
 
 const onRequestDefaultChannels = (socket) => { 
 
-  //console.log("Request for default channels from socket: " + socket.id)
+  globals.log("(onRequestChannels) Request for default channels from socket: " + socket.id)
 
   config.defaultChannels.map((channel, i)=>{
 
@@ -28,7 +28,7 @@ const onRequestDefaultChannels = (socket) => {
 
       //inform the client we're finished sending channels
       io.to(socket.id).emit('default channels finished');
-      //console.log("Sent default channels to socket: " + socket.id)
+      globals.log("(onRequestChannels) Sent default channels to socket: " + socket.id)
 
     }
 
@@ -42,7 +42,7 @@ const onRequestDefaultChannels = (socket) => {
 
 const onRequestUserChannels = (socket) => {
 
-  console.log("Request for user channels from socket: " + socket.id)
+  globals.log("(onRequestChannels) Request for user channels from socket: " + socket.id)
 
   globals.userChannels.map((channel, i)=>{
 
@@ -67,7 +67,7 @@ const onRequestUserChannels = (socket) => {
 
       //inform the client we're finished sending channels
       io.to(socket.id).emit('user channels finished');
-      console.log("sent user channels to socket: " + socket.id)
+      globals.log("(onRequestChannels) Sent user channels to socket: " + socket.id)
 
     }
 

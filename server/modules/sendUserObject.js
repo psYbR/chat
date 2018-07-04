@@ -29,7 +29,7 @@ const sendUserObject = (destinationSocketID, userSocketID, channelId) => {
     outgoingUser.isCurrentUser = true;
   }
 
-  console.log("(sendUserObject) Sending user: '" + outgoingUser.nick + "' to channel: " + channelId)
+  globals.log("(sendUserObject) Sending '" + outgoingUser.nick + "' to users in channel: '" + channelId + "'")
 
   //send the user item to the client
   io.to(destinationSocketID).emit('user', { user: outgoingUser, channel: channelId} );

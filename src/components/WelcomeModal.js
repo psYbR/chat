@@ -124,7 +124,7 @@ class WelcomeModal extends React.Component {
 
                 <div className="termsContainer">
                   <p className="termsParagraph">Accept <a href='#'>usage terms</a>?</p>
-                  <label className="CheckBoxContainer">
+                  <label className="checkBoxContainer">
                     <input
                       type="checkbox"
                       checked={this.props.userInterface.termsAccepted ? "checked" : ''}
@@ -133,7 +133,7 @@ class WelcomeModal extends React.Component {
                         else { this.props.dispatch(setTermsAccepted()); }
                       }}
                     />
-                    <span className="CheckBoxCheckmark"></span>
+                    <span className="checkBoxCheckmark"></span>
                   </label>
                 </div>
 

@@ -9,7 +9,7 @@ io = require('./server');
 
 const onDisconnect = (socket, reason) => {
 
-  console.log("(onDisconnect) " + socket.id + " has disconnected: " + reason + ". Getting nick...");
+  globals.log("(onDisconnect) " + socket.id + " has disconnected: " + reason + ". Getting nick...");
 
   //translate the reason into something more readable
   if (reason == 'transport error') {
@@ -28,7 +28,7 @@ const onDisconnect = (socket, reason) => {
       globals.usersInChannels.map((subrecord)=>{
         if (subrecord.channelId == record.channelId && subrecord.socketId != socket.id) {
           //send the event
-          console.log("(onDisconnect) sending 'remove user' event...")
+          globals.log("(onDisconnect) sending 'remove user' event...")
           io.to(subrecord.socketId).emit('remove user', socket.id);
         }
       })
@@ -46,9 +46,9 @@ const onDisconnect = (socket, reason) => {
   globals.usersInChannels = globals.usersInChannels.filter(record => record.socketId != socket.id)
   globals.onlineUsers = globals.onlineUsers.filter(user => user.socketId != socket.id)
 
-  console.log("(onDisconnect) " + socket.id + " was removed from arrays. Result:");
-  console.log(globals.usersInChannels);    
-  console.log(globals.onlineUsers);    
+  // globals.log("(onDisconnect) " + socket.id + " was removed from arrays. Result:");
+  // globals.log(globals.usersInChannels);    
+  // globals.log(globals.onlineUsers);    
 
 }
 

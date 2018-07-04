@@ -2,6 +2,20 @@ utils = require('./utils');
 globals = require('./globals');
 config = require('../config');
 io = require('./server');
+getChannelNameFromId = require('./getChannelNameFromId');
+
+//returns friendly date string from a timestamp eg. '2018-06-24 10:37:21'
+const getFriendlyFromTimestamp = (timestamp, format) => {
+  var a = new Date(timestamp);
+  var year = a.getFullYear();
+  var month = (a.getMonth() + 1)  < 10 ? '0' + (a.getMonth() + 1) : (a.getMonth() + 1);
+  var date = a.getDate() < 10 ? '0' + a.getDate() : a.getDate();
+  var hour = a.getHours();
+  var min = a.getMinutes() < 10 ? '0' + a.getMinutes() : a.getMinutes();
+  var sec = a.getSeconds() < 10 ? '0' + a.getSeconds() : a.getSeconds();
+  var time = year + '-' + month + '-' + date + ' ' + hour + ':' + min + ':' + sec;
+  return time;
+}
 
 //
 // called when the client sends a chat message
@@ -51,7 +65,7 @@ const onChatMessage = (socket, msg) => {
   //if there were no errors
   if (response == "success") {
 
-    console.log("'" + outgoing.source + "' said: '" + outgoing.messageText + "'");
+    globals.log("[" + getFriendlyFromTimestamp(Date.now()) + "] #" + getChannelNameFromId(outgoing.channelId) + " " + outgoing.source + ": " + outgoing.messageText + "", 3);
 
     //iterate users in channels
     globals.usersInChannels.map((record)=>{ 

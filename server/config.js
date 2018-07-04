@@ -10,6 +10,7 @@ const messageMaxLength = 510;
 const pingTimeout = 5000; //milliseconds
 const pingInterval = 3000; //milliseconds
 const maxHttpBufferSize = 50000; //50kb
+const logLevel = 2; // 1 = all messages, 2 = error messages and chat messages only, 3 = chat messages only, 4 = no logging
 
 //the default object for a channel
 const defaultChannel = {
@@ -55,13 +56,14 @@ const defaultChannels = [
 const rootDirectory = __dirname;
 
 module.exports = {
-  rootDirectory: rootDirectory,
-  defaultChannel: defaultChannel,
-  defaultChannels: defaultChannels,
-  nickMinLength: nickMinLength,
-  nickMaxLength: nickMaxLength,
-  messageMaxLength: messageMaxLength,
-  pingTimeout: pingTimeout,
-  pingInterval: pingInterval,
-  maxHttpBufferSize: maxHttpBufferSize
+  logLevel,
+  rootDirectory,
+  defaultChannel,
+  defaultChannels,
+  nickMinLength,
+  nickMaxLength,
+  messageMaxLength,
+  pingTimeout,
+  pingInterval,
+  maxHttpBufferSize
 };
