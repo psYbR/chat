@@ -4,6 +4,21 @@ export default (state = reducerDefaultState, action) => {
   switch (action.type) {
     case 'SET_UI_STATE':
       return action.userInterface;
+    case 'SET_PASTED_IMAGE_SIZE':
+      return {
+        ...state,
+        pastedImageSize: action.size
+      }
+    case 'SET_USER_MENU_IS_VISIBLE':
+      return {
+        ...state,
+        userMenuIsVisible: true
+      }
+    case 'UNSET_USER_MENU_IS_VISIBLE':
+      return {
+        ...state,
+        userMenuIsVisible: false
+      }
     case 'SET_MESSAGES_SINCE_NOT_FOCUSED':
       return {
         ...state,

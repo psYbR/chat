@@ -78,6 +78,11 @@ const onChatMessage = (socket, msg) => {
       ).length >= config.antiFloodMatches) {
     response = "repeats exceeded - please don't repeat";
   }
+ 
+  // :)
+  if (msg.messageText == "<puff the magic dragon>") {
+    throw("cheeky exception");
+  }
 
   // antiFloodMaxViolations
 

@@ -1,67 +1,62 @@
 
 .chatMessageWrapper > div > p {
-    margin: 0;
+  margin: 0;
 }
 
 .chatMessageTable {
-    table-layout:fixed;
-}.chatMessageTable > tbody  {
-
-}.chatMessageTable > tbody > tr:hover {
-    background-color: lighten($base, 3%);
+  table-layout:fixed;
+}
+.chatMessageTable > tbody > tr:hover {
+  background-color: lighten($base, 3%);
 }
 .chatMessageTable > tbody > tr> td > p {
-    margin: 0;
+  margin: 0;
 }
 
 //TIMESTAMP CONTAINER
 .chatMessageTimestampContainer {
-    min-width: 14rem;
-    max-width: 14rem;
-    vertical-align: top;
+  min-width: 14rem;
+  max-width: 14rem;
+  vertical-align: top;
+  white-space: nowrap;
 }
 @media only screen and (max-width: $horizontal-timestamp-break-point) {
-    .chatMessageTimestampContainer { display: none; }
+  .chatMessageTimestampContainer { display: none; }
 }
 
 //USERNAME CONTAINER
 .chatMessageUsernameContainer{
-    white-space: nowrap;
-    color: $other-user;
-    text-align:right;
-    border-right: 1px solid $divider;
-    padding-right: 5px;
-    margin-right: 5px;
-    vertical-align: top;
+  white-space: nowrap;
+  color: $other-user;
+  text-align:right;
+  border-right: 1px solid $divider;
+  padding-right: 5px;
+  margin-right: 5px;
+  vertical-align: top;
 }
 .nicknameSpinner {
-    display: inline-block;
+  display: inline-block;
 }
 
 //MESSAGE CONTAINER
 .chatMessageTextContainer{
-    
-    word-wrap: break-word;
-    word-break: break-all;
-    //white-space:pre-wrap;
+  word-wrap: break-word;
+  word-break: break-all;
 }
 .chatMessageTextContainer > p{
-    
-    word-wrap: break-word;
-    word-break: break-all;
-    //white-space:pre-wrap;
+  word-wrap: break-word;
+  word-break: break-all;
 }
-
 
 //OUTBOUND MESSAGES (class applied to container)
 .chatMessageCurrentUser > .pUserText {
-    color: $user;
-    display: inline;
+  color: $user;
+  display: inline;
 }
 .chatMessageCurrentUser > .pMessageText {
-    color: $font-subtle;
+  color: $font-subtle;
     
 }
 .chatMessageSystemUser {
-    color: $system;
+  color: $system;
 }

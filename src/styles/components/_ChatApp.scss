@@ -1,27 +1,27 @@
 html, body, #app {
-    height: 100%;
-    background-color: black;
+  height: 100%;
+  background-color: black;
 }
 
 body {
-    color: $font-default;
-    font-family: $font-family-default;
+  color: $font-default;
+  font-family: $font-family-default;
 }
 
 .chatAppContainer {
-    display: flex;
-    width: 100%;
-    background-color: $surround;
-    height: 100%;
-    width: 100%;
-    margin: 0;
+  display: flex;
+  width: 100%;
+  background-color: $surround;
+  height: 100%;
+  width: 100%;
+  margin: 0;
 }
 
 //used by ./components/WelcomeModal.js to blur the "background" by applying the blur to the app parent container
 .chatAppBlur {
-    -webkit-filter: blur(10px);
-    -moz-filter: blur(10px);
-    -o-filter: blur(10px);
-    -ms-filter: blur(10px);
-    filter: blur(10px);
+  -webkit-filter: blur(10px);
+  -moz-filter: blur(10px);
+  -o-filter: blur(10px);
+  -ms-filter: blur(10px);
+  filter: blur(10px);
 }

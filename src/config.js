@@ -3,6 +3,7 @@ export const maxMessageLength = 510; //IRC standard (512 including trailing CR)
 export const nickMinLength = 3;
 export const nickMaxLength = 20;
 export const systemNick = '*'; //the nickname of messages which originate from the System
+export const maxPastedImageSize = 800000; //max size in bytes of images that can be pasted (800kb)
 
-//uncomment and use 'npm run serve' to host the client separate to the server (faster client rebuild)
-export const localDev = 'http://localhost:3000';
+//set to false for production
+export const buildForDev = true;

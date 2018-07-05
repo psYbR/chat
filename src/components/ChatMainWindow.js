@@ -6,7 +6,7 @@ import ChatMessage from './ChatMessage';
 import getVisibleMessages from '../selectors/getVisibleMessages';
 import StyleModal from './StyleModal';
 import { hideChannelList, showChannelList, hideUserList, showUserList } from '../actions/userInterfaceActions';
-import { systemNick } from '../config';
+import { systemNick, maxPastedImageSize } from '../config';
 
 class ChatMainWindow extends React.Component {
   constructor(props) {
@@ -70,10 +70,11 @@ class ChatMainWindow extends React.Component {
   
           <div className="chatMessageContainer">
             <table className="chatMessageTable">
-              {this.props.channels.length < 1 ?
-  
-                //display a message if there are no channels joined or listed
-                <tbody>
+              <tbody>
+                {this.props.channels.length < 1 ?
+    
+                  //display a message if there are no channels joined or listed
+                  
                   <tr className="chatMessageWrapper">
                     <td className="chatMessageTimestampContainer">
                       <p>[0000-00-00 00:00:00]</p>
@@ -87,12 +88,26 @@ class ChatMainWindow extends React.Component {
                       <p className="pMessageText">Please join a channel.</p>
                     </td>
                   </tr>
-                </tbody>
-              :
-              //filter the visible messages according to the current channel and user configuration                        
-              getVisibleMessages(this.props).map((message) => {
-                return <ChatMessage key={message.receivedTimestamp || message.sentTimestamp || 12345} message={message} loginState={this.props.loginState} />
-              })}
+                  
+                :
+                //filter the visible messages according to the current channel and user configuration                        
+                getVisibleMessages(this.props).map((message) => {
+                  return <ChatMessage key={message.receivedTimestamp || message.sentTimestamp || 12345} message={message} loginState={this.props.loginState} />
+                })}
+
+                {this.props.userInterface.pastedImageSize > maxPastedImageSize &&
+                  <tr className="chatMessageWrapper">
+                    <td className="chatMessageTimestampContainer">
+                    </td>
+            
+                    <td className="chatMessageUsernameContainer chatMessageSystemUser">
+                    </td>
+            
+                    <td className="chatMessageTextContainer chatMessageSystemUser">
+                    <p><font style={{color: 'red'}}>Image size too large! Please remove and paste a smaller image.</font></p>
+                    </td>
+                  </tr>}
+              </tbody>
             </table>
           </div>
   

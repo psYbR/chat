@@ -28,39 +28,32 @@ const onConnect = (socket, wasReconnect) => {
 
     console.log("socket connection re-established");
 
-    //causes the server to throw an exception if true. for testing purposes
-    const throwError = false;
-
-    if (!throwError) {
-      //set the nick again (server ignores if it's already set)
-      requestSetNick((response)=>{
-        //handle the response (a string; either "success" or the reason the nick wasn't accepted eg. in use)
-        if (response == "success") {
-          console.log("setting nick succeeded!");
-          //store.dispatch(unblurApp());
-          //store.dispatch(setLoggedIn());
-          store.dispatch(unsetWaitingForNickAcceptance()); //un-disable the buttons
-          store.dispatch(setNickSetFailedReason('')); //update the UI and set the nick
-          //request to re-join channels the user was in
-          store.getState().channels.map((channel) => {
-            //this flag marks channels the user was disconnected from
-            if (channel.wasJoined) {
-              //send the request
-              requestJoinChannel(channel.channelId);
-            }
-          });
-          //get the user list for whatever channel the user is currently in
-          requestUserList();
-          //store.dispatch(resetDefaultChannelSelections()); //reset the default channel selections
-        } else {
-          console.log("setting nick failed: " + response);
-          store.dispatch(unsetWaitingForNickAcceptance());
-          store.dispatch(setNickSetFailedReason(response)); //tell the UI that setting the nick failed
-        } 
-      });
-    } else {
-      requestSetNick();
-    }
+    //set the nick again (server ignores if it's already set)
+    requestSetNick((response)=>{
+      //handle the response (a string; either "success" or the reason the nick wasn't accepted eg. in use)
+      if (response == "success") {
+        console.log("setting nick succeeded!");
+        //store.dispatch(unblurApp());
+        //store.dispatch(setLoggedIn());
+        store.dispatch(unsetWaitingForNickAcceptance()); //un-disable the buttons
+        store.dispatch(setNickSetFailedReason('')); //update the UI and set the nick
+        //request to re-join channels the user was in
+        store.getState().channels.map((channel) => {
+          //this flag marks channels the user was disconnected from
+          if (channel.wasJoined) {
+            //send the request
+            requestJoinChannel(channel.channelId);
+          }
+        });
+        //get the user list for whatever channel the user is currently in
+        requestUserList();
+        //store.dispatch(resetDefaultChannelSelections()); //reset the default channel selections
+      } else {
+        console.log("setting nick failed: " + response);
+        store.dispatch(unsetWaitingForNickAcceptance());
+        store.dispatch(setNickSetFailedReason(response)); //tell the UI that setting the nick failed
+      } 
+    });
 
   } else {
 

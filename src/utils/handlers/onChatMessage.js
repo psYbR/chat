@@ -28,7 +28,7 @@ const onChatMessage = (msg) => {
     }
   }
   //if the window isn't focused and the message was a message or a mention
-  if (!store.getState().userInterface.appIsFocused && (msg.source != systemNick)) {
+  if (!store.getState().userInterface.appIsFocused && msg.source != systemNick) {
     store.dispatch(setMessagesSinceNotFocused());
   }
 

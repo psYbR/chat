@@ -26,7 +26,7 @@ class LeaveChannelModal extends React.Component {
         <div className="modalOuterContainer leaveChannelOuterContainer">
             <div className="modalInnerContainer leaveChannelContainer">
 
-              <h3>Really leave channel '{this.props.channels.filter(channel => channel.isCurrent)[0].channelName}'?</h3>
+              <h3>Really leave channel '{this.props.channels.filter(channel => channel.isCurrent)[0] ? this.props.channels.filter(channel => channel.isCurrent)[0].channelName : ''}'?</h3>
 
               <div className="leaveChannelButtonContainer">
                 <button className="buttonDefault lcbLeave"

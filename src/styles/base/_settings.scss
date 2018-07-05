@@ -12,6 +12,10 @@ $theme: rgb(221, 81, 0); //orange
 
 // $theme: var(--theme);
 
+//breakpoints for full-screen modals
+$width-breakpoint: 40rem;
+$height-breakpoint: 45rem;
+
 $default-app-size: 62.5%; //62.5% will mean that .1rem = 1px
 
 $font-family-default: 'Source Sans Pro', sans-serif;

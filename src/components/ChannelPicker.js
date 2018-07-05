@@ -54,7 +54,7 @@ class Modal extends React.Component {
                   //this.props.dispatch(channelPickerFirstTab());
                 }}
               >
-                <h1>Default Channels</h1>
+                <h1 className="channelPickerTabTitle">Default Channels</h1>
               </div>
               <div className={"userTab tab tabDisabled" + (this.props.userInterface.channelPickerSecondTab ? " tabSelected" : "")}
                 onClick={(e) => {
@@ -76,7 +76,7 @@ class Modal extends React.Component {
                   }
                 }}
               >
-                <h1>User Channels</h1>
+                <h1 className="channelPickerTabTitle">User Channels</h1>
               </div>
             </div>
             

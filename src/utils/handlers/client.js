@@ -1,4 +1,8 @@
 import io from 'socket.io-client';
-import { localDev } from '../../config';
-const socket = io(localDev);
+import { buildForDev } from '../../config';
+if (buildForDev) {
+  var socket = io('http://localhost:3000');
+} else {
+  var socket = io();
+}
 export default socket;

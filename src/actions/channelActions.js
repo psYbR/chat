@@ -15,7 +15,8 @@ export const addChannel = (
     userIsOwner = false,
     userIsOp = false,
     userIsMod = false,
-    userIsVoice = false
+    userIsVoice = false,
+    userIsImage = false
   } = {}
 
 ) => ({ 
@@ -36,7 +37,8 @@ export const addChannel = (
     userIsOwner,
     userIsOp,
     userIsMod,
-    userIsVoice
+    userIsVoice,
+    userIsImage
   }
 
 });

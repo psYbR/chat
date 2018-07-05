@@ -32,7 +32,9 @@ export const setUIState = (
     disconnectionReason = '',
     leaveChannelModalIsVisible = false,
     waitingForLeaveChannelConfirmation = false,
-    messagesSinceNotFocused = false
+    messagesSinceNotFocused = false,
+    userMenuIsVisible = false,
+    pastedImageSize = 0
   } = {}
 ) => ({
   type: 'SET_UI_STATE',
@@ -59,10 +61,22 @@ export const setUIState = (
     disconnectionReason,
     leaveChannelModalIsVisible,
     waitingForLeaveChannelConfirmation,
-    messagesSinceNotFocused
+    messagesSinceNotFocused,
+    userMenuIsVisible,
+    pastedImageSize
   }
 });
 
+export const setPastedImageSize = (size) => ({
+  type: 'SET_PASTED_IMAGE_SIZE',
+  size
+})
+export const setUserMenuIsVisible = () => ({
+  type: 'SET_USER_MENU_IS_VISIBLE'
+})
+export const unsetUserMenuIsVisible = () => ({
+  type: 'UNSET_USER_MENU_IS_VISIBLE'
+})
 export const setMessagesSinceNotFocused = () => ({
   type: 'SET_MESSAGES_SINCE_NOT_FOCUSED'
 })

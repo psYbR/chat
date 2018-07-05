@@ -86,6 +86,24 @@ button:disabled {
   background-color: $surround;
   cursor: pointer;
 }
+@media only screen and (max-width: $width-breakpoint) {
+  .tab > h1 {
+    margin-top: .2rem;
+    margin-bottom: .2rem;
+  }
+  .tabContainer{
+    height: auto;
+  }
+}
+@media only screen and (max-height: $height-breakpoint) {
+  .tab > h1 {
+    margin-top: .2rem;
+    margin-bottom: .2rem;
+  }
+  .tabContainer{
+    height: auto;
+  }
+}
 .tabSelected {
   color: $theme;
   background-color: lighten($surround, 10%);
@@ -245,4 +263,20 @@ button:disabled {
 .tooltip:hover .tooltiptext {
   visibility: visible;
   opacity: 1;
+}
+
+//the div shown when the browser is not supported (IE)
+.noSupportContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: $base;
+}
+.noSupportContainer > h1 {
+  text-align: center;
+}
+.noSupportContainer > h2 {
+  text-align: center;
 }

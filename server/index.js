@@ -6,11 +6,20 @@ var onSetNick         = require('./modules/onSetNick');
 var onRequestChannels = require('./modules/onRequestChannels');
 var onJoinChannel     = require('./modules/onJoinChannel');
 var onRequestUserList = require('./modules/onRequestUserList');
+var onRequestLeaveChannel = require('./modules/onRequestLeaveChannel');
 
 //called whenever a client connects (or reconnects)
 io.on('connection', (socket) => {
 
   globals.log("(index) Connection from: " + getIpAddress(socket));
+
+  socket.on('leave channel', (channelId, callback) => {
+    try {
+      callback(onRequestLeaveChannel(socket, channelId));
+    } catch(err) {
+      globals.log('(index) Failed to call onRequestLeaveChannel: "' +  err + '" for client: ' + socket.id, 2)
+    }
+  });
 
   socket.on('disconnect', (reason) => {
     try {

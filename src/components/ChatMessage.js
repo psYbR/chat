@@ -5,7 +5,7 @@ import { getFriendlyFromTimestamp } from '../utils/dateUtils';
 import { systemNick } from '../config';
 
 const ChatMessage = ({ message , loginState }) => (
-    <tbody>
+    
         <tr className="chatMessageWrapper">
 
             <td className="chatMessageTimestampContainer">
@@ -25,7 +25,7 @@ const ChatMessage = ({ message , loginState }) => (
             </td>
 
         </tr>
-    </tbody>
+    
 );
 
 export default ChatMessage;

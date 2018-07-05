@@ -47,6 +47,7 @@ import userInterfaceReducer from '../reducers/userInterfaceReducer';
 import loginReducer from '../reducers/loginReducer';
 import defaultChannelsReducer from '../reducers/defaultChannelsReducer';
 import userChannelsReducer from '../reducers/userChannelsReducer';
+import { buildForDev } from '../config';
 
 import {
   setUIState,
@@ -56,20 +57,33 @@ import {
 
 //CREATE STORE
 const configureStore = () => {
-
-  const store = createStore(combineReducers({
-    channels: channelReducer,
-    messages: messageReducer,
-    configuration: configurationReducer,
-    users: userReducer,
-    userInterface: userInterfaceReducer,
-    loginState: loginReducer,
-    defaultChannels: defaultChannelsReducer,
-    userChannels: userChannelsReducer
-  }),
-  //enables the REDUX plugin to talk to the corresponding Chrome extension
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  );
+  
+  if (buildForDev) {
+    var store = createStore(combineReducers({
+      channels: channelReducer,
+      messages: messageReducer,
+      configuration: configurationReducer,
+      users: userReducer,
+      userInterface: userInterfaceReducer,
+      loginState: loginReducer,
+      defaultChannels: defaultChannelsReducer,
+      userChannels: userChannelsReducer
+    }),
+    //enables the REDUX plugin to talk to the corresponding Chrome extension
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    );
+  } else {
+    var store = createStore(combineReducers({
+      channels: channelReducer,
+      messages: messageReducer,
+      configuration: configurationReducer,
+      users: userReducer,
+      userInterface: userInterfaceReducer,
+      loginState: loginReducer,
+      defaultChannels: defaultChannelsReducer,
+      userChannels: userChannelsReducer
+    }));
+  }
 
   return store;
 };

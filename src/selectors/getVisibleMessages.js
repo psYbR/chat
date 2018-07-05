@@ -3,9 +3,9 @@ import getCurrentChannel from '../utils/getCurrentChannel';
 
 //sort comparitor - sort by timestamp
 const compare = (a,b) => {
-  if (a.timestamp < b.timestamp)
+  if (a.receivedTimestamp < b.receivedTimestamp)
     return -1;
-  if (a.timestamp > b.timestamp)
+  if (a.receivedTimestamp > b.receivedTimestamp)
     return 1;
   return 0;
 }

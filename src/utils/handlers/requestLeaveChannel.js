@@ -3,6 +3,8 @@ import socket from './client';
 import {
   setCurrentChannel
   ,leaveChannel
+  ,unsetWaitingForLeaveChannelConfirmation
+  ,hideLeaveChannelModal
 } from '../../actions/actions';
 import { getUserList } from './handleUserLists';
 import { getNowTimestamp } from '../utils'
@@ -22,6 +24,8 @@ const requestLeaveChannel = (channelId) => {
     console.log("requesting to leave channel ID: " + channelId);
     socket.emit('leave channel', channelId, ({ response, channelId }) => { //send the nick to the server
       //handle the response (a string; either "success" or the reason the channel wasn't joined eg. in use)
+      store.dispatch(hideLeaveChannelModal());
+      store.dispatch(unsetWaitingForLeaveChannelConfirmation());
       if (response == "success" || response == "already left channel") {
         console.log("request to leave channel ID " + channelId + " succeeded!");
         store.dispatch(leaveChannel(channelId));
@@ -36,7 +40,7 @@ const requestLeaveChannel = (channelId) => {
         console.log("request to leave channel ID " + channelId + " failed: " + response);
         //show an error
         store.dispatch(addMessage({source: systemNick, channelId: channelId, messageSent: true, receivedTimestamp: getNowTimestamp(), messageText: "Could not leave channel: " + response }));
-      }      
+      }
     });
   }
 }

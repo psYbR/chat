@@ -13,7 +13,7 @@ const UserWindow = (state) => {
         })}
       </div>
       <div className="userStatsContainer emphasised-container">
-        <p>{state.users.filter(user => user.group == "op").length} ops, {state.users.length} total</p>
+        <p>{state.users.filter(user => user.group == "op").length + " op(s)"}, {state.users.length + " user(s)"}</p>
       </div>
       <ConnectionStats />
     </div>
