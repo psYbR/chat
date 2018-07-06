@@ -7,6 +7,61 @@ export default (state = reducerDefaultState, action) => {
         ...state,
         action.channel
       ];
+    case 'SET_CHANNEL_IS_OWNER':
+      return state.map(channel => {
+        if (channel.channelId == action.channelId) {
+          return{
+            ...channel,
+            userIsOwner: true
+          }
+        } else {
+          return channel
+        }
+      })
+    case 'SET_CHANNEL_IS_OP':
+      return state.map(channel => {
+        if (channel.channelId == action.channelId) {
+          return{
+            ...channel,
+            userIsOp: true
+          }
+        } else {
+          return channel
+        }
+      })
+    case 'SET_CHANNEL_IS_MOD':
+      return state.map(channel => {
+        if (channel.channelId == action.channelId) {
+          return{
+            ...channel,
+            userIsMod: true
+          }
+        } else {
+          return channel
+        }
+      })
+    case 'SET_CHANNEL_IS_VOICE':
+      return state.map(channel => {
+        if (channel.channelId == action.channelId) {
+          return{
+            ...channel,
+            userIsVoice: true
+          }
+        } else {
+          return channel
+        }
+      })
+    case 'SET_CHANNEL_IS_IMAGE':
+      return state.map(channel => {
+        if (channel.channelId == action.channelId) {
+          return{
+            ...channel,
+            userIsImage: true
+          }
+        } else {
+          return channel
+        }
+      })
     case 'SET_CHANNEL_HAS_NEW_MESSAGES':
       return state.map((channel) => {
         if (channel.channelId == action.channelId) {

@@ -43,6 +43,26 @@ export const addChannel = (
 
 });
 
+export const setChannelIsOwner = (channelId) => ({
+  type: 'SET_CHANNEL_IS_OWNER',
+  channelId
+})
+export const setChannelIsOp = (channelId) => ({
+  type: 'SET_CHANNEL_IS_OP',
+  channelId
+})
+export const setChannelIsMod = (channelId) => ({
+  type: 'SET_CHANNEL_IS_MOD',
+  channelId
+})
+export const setChannelIsVoice = (channelId) => ({
+  type: 'SET_CHANNEL_IS_VOICE',
+  channelId
+})
+export const setChannelIsImage = (channelId) => ({
+  type: 'SET_CHANNEL_IS_IMAGE',
+  channelId
+})
 export const setChannelHasNewMessages = (channelId) => ({
   type: 'SET_CHANNEL_HAS_NEW_MESSAGES',
   channelId

@@ -34,7 +34,20 @@ const onJoinChannel = (socket, channelId) => {
     }
   });
 
-  //check the permissions for the channel here
+  //check whether the user can join the channel
+  const canJoin = true;
+  if (!canJoin) {
+    response = "you do not have permission to join that channel";
+  }
+
+  //the permissions the user has in the channel
+  let permissions = {
+    isOwner: false, //can configure the channel and assign ops
+    isOp: false, //can administer users in the channel
+    isMod: false, //can kick/voice
+    isVoice: false, //can send messages when flag is required
+    isImage: false //can paste images when flag is required
+  }
 
   //check if the user is already in the channel
   globals.usersInChannels.map((record)=>{
@@ -44,6 +57,7 @@ const onJoinChannel = (socket, channelId) => {
     }
   });
 
+  //make sure the user has a nick
   response = "(onJoinChannel) user's nick not found"
   globals.onlineUsers.map((record)=>{
     if (record.socketId == socket.id) {
@@ -81,7 +95,7 @@ const onJoinChannel = (socket, channelId) => {
   }
 
   //send the response
-  return({ response, channelId });
+  return({ response, channelId, permissions });
 
 };
 
