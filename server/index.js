@@ -7,6 +7,7 @@ var onRequestChannels = require('./modules/onRequestChannels');
 var onJoinChannel     = require('./modules/onJoinChannel');
 var onRequestUserList = require('./modules/onRequestUserList');
 var onRequestLeaveChannel = require('./modules/onRequestLeaveChannel');
+db = require('./modules/database');
 
 //called whenever a client connects (or reconnects)
 io.on('connection', (socket) => {
