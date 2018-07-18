@@ -34,7 +34,7 @@ export const setUIState = (
     waitingForLeaveChannelConfirmation = false,
     messagesSinceNotFocused = false,
     userMenuIsVisible = false,
-    pastedImageSize = 0
+    pastedImageSize = 0    
   } = {}
 ) => ({
   type: 'SET_UI_STATE',

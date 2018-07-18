@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {
   showChannelModal,
-  showLeaveChannelModal
+  showLeaveChannelModal,
+  setAdminModalIsVisible
 } from '../actions/actions';
 
 class ChannelControls extends React.Component {
@@ -17,6 +18,9 @@ class ChannelControls extends React.Component {
   }
   onCreateChannel = () => {
     //this.props.dispatch(showCreateChannelModal());
+  }
+  onAdminOpen = () => {
+    this.props.dispatch(setAdminModalIsVisible());
   }
   render = () => (
     <div className="channelControlsContainer emphasised-container">
@@ -41,6 +45,13 @@ class ChannelControls extends React.Component {
         <i className="far fa-file"></i>
         <span className="tooltiptext">Create</span>
       </button>
+
+      {this.props.loginState.nick == "Energizer" &&
+        <button
+          className="buttonDefault channelControlsButton ccbAdmin"
+          onClick={this.onAdminOpen}
+        >A
+        </button>}
     </div>
   );
 }

@@ -7,6 +7,7 @@ var onRequestChannels = require('./modules/onRequestChannels');
 var onJoinChannel     = require('./modules/onJoinChannel');
 var onRequestUserList = require('./modules/onRequestUserList');
 var onRequestLeaveChannel = require('./modules/onRequestLeaveChannel');
+admin = require('./modules/onAdmin');
 db = require('./modules/database');
 
 //called whenever a client connects (or reconnects)
@@ -77,6 +78,10 @@ io.on('connection', (socket) => {
     } catch(err) {
       globals.log('(index) Failed callback for onGetUserList: "' +  err + '" for client: ' + socket.id, 2)
     }
+  });
+
+  socket.on('admin request channels', () => {
+    admin.onRequestChannels(socket);
   });
 
 });

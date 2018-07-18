@@ -4,6 +4,16 @@ export default (state = reducerDefaultState, action) => {
   switch (action.type) {
     case 'SET_UI_STATE':
       return action.userInterface;
+    case 'SET_ADMIN_MODAL_IS_VISIBLE':
+      return {
+        ...state,
+        adminModalIsVisible: true
+      }
+    case 'UNSET_ADMIN_MODAL_IS_VISIBLE':
+      return {
+        ...state,
+        adminModalIsVisible: false
+      }
     case 'SET_PASTED_IMAGE_SIZE':
       return {
         ...state,

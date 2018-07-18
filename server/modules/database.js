@@ -19,15 +19,15 @@ const db = mysql.createConnection({
   database: "blazechat"
 });
 
-db.connect((err) => {
-  if (err) throw err;
-  console.log("Connected!");
-  con.query("SELECT * FROM users", (err, result) => {
-    if (err) throw err;
-    console.log("Result: " + result);
-  });
-});
+// db.connect((err) => {
+//   if (err) throw err;
+//   console.log("Connected!");
+//   con.query("SELECT * FROM users", (err, result) => {
+//     if (err) throw err;
+//     console.log("Result: " + result);
+//   });
+// });
 
-module.exports = {
-  db
-}
+// module.exports = {
+//   db
+// }

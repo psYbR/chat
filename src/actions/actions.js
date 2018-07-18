@@ -6,3 +6,5 @@ export * from './messageActions';
 export * from './userActions';
 export * from './userChannelsActions';
 export * from './userInterfaceActions';
+export * from './adminChannelActions';
+export * from './adminInterfaceActions';

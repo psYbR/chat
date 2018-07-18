@@ -86,7 +86,7 @@ const isIE = /*@cc_on!@*/false || !!document.documentMode; // Internet Explorer 
 const noSupportJSX = (
   <div className='noSupportContainer'>
     <h1>Sorry</h1>
-    <h2>Your browser is not supported, please try using <a href="http://www.google.com/chrome">Chrome</a>.</h2>
+    <h2>Your web browser is not supported. Please download an alternative such as <a href="http://www.google.com/chrome">Chrome</a>.</h2>
   </div>
 );
 

@@ -47,13 +47,15 @@ import userInterfaceReducer from '../reducers/userInterfaceReducer';
 import loginReducer from '../reducers/loginReducer';
 import defaultChannelsReducer from '../reducers/defaultChannelsReducer';
 import userChannelsReducer from '../reducers/userChannelsReducer';
+import adminChannelReducer from '../reducers/adminChannelReducer';
+import adminInterfaceReducer from '../reducers/adminInterfaceReducer';
 import { buildForDev } from '../config';
-
 import {
   setUIState,
   setLoginState,
   setConfiguration
 } from '../actions/actions';
+
 
 //CREATE STORE
 const configureStore = () => {
@@ -67,7 +69,9 @@ const configureStore = () => {
       userInterface: userInterfaceReducer,
       loginState: loginReducer,
       defaultChannels: defaultChannelsReducer,
-      userChannels: userChannelsReducer
+      userChannels: userChannelsReducer,
+      adminChannels: adminChannelReducer,
+      adminInterface: adminInterfaceReducer
     }),
     //enables the REDUX plugin to talk to the corresponding Chrome extension
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
@@ -81,7 +85,9 @@ const configureStore = () => {
       userInterface: userInterfaceReducer,
       loginState: loginReducer,
       defaultChannels: defaultChannelsReducer,
-      userChannels: userChannelsReducer
+      userChannels: userChannelsReducer,
+      adminChannels: adminChannelReducer,
+      adminInterface: adminInterfaceReducer
     }));
   }
 
