@@ -13,3 +13,8 @@ export const adminRequestChannels = () => {
 export const onAdminChannel = (channel) => {
   store.dispatch(addAdminChannel(channel)); //only do this if channels haven't already been received
 };
+
+export const adminCreateChannel = (newChannel) => {
+  console.log("sending create channel to server");
+  socket.emit('admin create channel', newChannel);
+}

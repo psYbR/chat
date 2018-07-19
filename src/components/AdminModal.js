@@ -5,13 +5,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
-  adminRequestChannels
+  adminRequestChannels,
+  adminCreateChannel
 } from '../utils/handlers/handleAdmin';
 import  {
   setAdminVisibleContent,
   setAdminChannelSearchFilter,
   setAdminEditingChannel,
-  removeAdminChannels
+  removeAdminChannels,
+  setAdminState
 } from '../actions/actions';
 
 let channelListObtained = false;
@@ -28,7 +30,11 @@ class AdminModal extends React.Component {
         <div className="modalOuterContainer">
           <div className="modalInnerContainer connectingModalContainer">
 
-            <h1>Admin Tools</h1>
+            <h1>Admin Tools <a onClick={() => {
+              this.props.dispatch(setAdminState());
+              this.props.dispatch(removeAdminChannels());
+              channelListObtained = false;
+            }}><i className="fas fa-times"></i></a></h1>
 
             <button
               className="buttonDefault"
@@ -58,6 +64,9 @@ class AdminModal extends React.Component {
                   className="adminChannelForm"
                   onSubmit={(e)=> {
                     e.preventDefault();
+                    console.log(e.target);
+                    const newChannel = {};
+                    adminCreateChannel(newChannel);
                     this.props.dispatch(removeAdminChannels());
                     this.props.dispatch(setAdminVisibleContent());
                     setTimeout(adminRequestChannels(), 1000);
@@ -139,7 +148,7 @@ class AdminModal extends React.Component {
                       if (!(nameMatch || topicMatch)) { return; }
                       //map the output to table rows
                       return (
-                        <tr key={channel.channelId}>
+                        <tr key={channel.channelId + "Y"}>
                           <td>{channel.channelId}</td>
                           <td>{channel.channelName}</td>
                           <td>{channel.topic}</td>
@@ -155,6 +164,33 @@ class AdminModal extends React.Component {
                       );
 
                     })}
+
+                    {this.props.adminChannels.map((channel)=>{
+
+//get the value of the text search field
+const filter = this.props.adminInterface.searchFilter || '';
+//check for matches against the channel name and topic
+const nameMatch = channel.channelName.toLowerCase().includes(filter.toLowerCase());
+const topicMatch = channel.topic.toLowerCase().includes(filter.toLowerCase());
+if (!(nameMatch || topicMatch)) { return; }
+//map the output to table rows
+return (
+  <tr key={channel.channelId}>
+    <td>{channel.channelId}</td>
+    <td>{channel.channelName}</td>
+    <td>{channel.topic}</td>
+    <td>{channel.isDefault ? 'Yes' : 'No'}</td>
+    <td><button key={channel.channelId} onClick={()=>{
+      this.props.dispatch(setAdminVisibleContent("editChannel"));
+      this.props.dispatch(setAdminEditingChannel(channel.channelId));
+    }}>Edit</button>
+    <button key={channel.channelId + "X"} onClick={()=>{
+      console.log("delete channel " + channel.channelId)
+    }}>Delete</button></td>
+  </tr>
+);
+
+})}
                   </tbody>
                 </table>
               </div>

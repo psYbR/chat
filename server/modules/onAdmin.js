@@ -25,12 +25,12 @@ const onRequestChannels = (socket) => {
   });
 };
 
-const onCreateChannel = (socket, channel) => {
-  console.log("Create channel:");
+const onAdminCreateChannel = (socket, channel) => {
+  console.log("[ADMIN] Create channel:");
   console.log(channel);
 }
 
 module.exports = { 
-  onCreateChannel,
+  onAdminCreateChannel,
   onRequestChannels
 }

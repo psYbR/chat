@@ -1,3 +1,8 @@
 .adminChannelForm > label  { 
   display: block;
 }
+
+.adminContentContainer {
+  overflow-y: scroll;
+  max-height: 50rem;
+}
