@@ -20,7 +20,7 @@ export const setAdminEditingChannel = (channelId) => ({
   type: 'SET_ADMIN_EDITING_CHANNEL',
   channelId
 });
-export const setAdminChannelSearchFilter = (filter) => ({
+export const setAdminChannelSearchFilter = (filter = '') => ({
   type: 'SET_ADMIN_CHANNEL_SEARCH_FILTER',
   filter
 });

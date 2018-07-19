@@ -11,7 +11,12 @@ const onRequestChannels = (socket) => {
       channelId: channel.channelId,
       channelName: channel.channelName,
       topic: channel.topic,
-      isDefault: true
+      isVisible: true,
+      isDefault: true,
+      requiresVoice: false,
+      requiresRegistration: false,
+      creatorId: 123456789,
+      creatorNick: '*'
     };
 
     //send the channel object
@@ -20,6 +25,12 @@ const onRequestChannels = (socket) => {
   });
 };
 
+const onCreateChannel = (socket, channel) => {
+  console.log("Create channel:");
+  console.log(channel);
+}
+
 module.exports = { 
+  onCreateChannel,
   onRequestChannels
 }

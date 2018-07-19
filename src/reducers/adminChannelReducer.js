@@ -7,6 +7,8 @@ export default (state = reducerDefaultState, action) => {
         ...state,
         action.channel
       ];
+    case 'REMOVE_ADMIN_CHANNELS':
+      return reducerDefaultState;
     default:
       return state;
   }

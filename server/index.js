@@ -83,5 +83,8 @@ io.on('connection', (socket) => {
   socket.on('admin request channels', () => {
     admin.onRequestChannels(socket);
   });
+  socket.on('admin create channel', (channel) => {
+    admin.onCreateChannel(socket,channel);
+  })
 
 });

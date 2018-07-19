@@ -5,23 +5,22 @@ import ChannelListItem from './ChannelListItem';
 import ChannelControls from './ChannelControls';
 
 class ChannelList extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-    render = () => (
-        <div className={"leftSideContainer " + (this.props.userInterface.appIsBlurred ? " chatAppBlur" : '') /*Blur the app if the flag is set*/}>
-            <Alerts />
-            <div className="channelListContainer emphasised-container">
-                {this.props.channels.map((channel) => {
-                    return <ChannelListItem key={channel.channelId} channel={channel} />
-                })}
-            </div>
-            <ChannelControls />
+  constructor(props) {
+    super(props);
+  }
+  render () {
+    return (
+      <div className={"leftSideContainer " + (this.props.userInterface.appIsBlurred ? " chatAppBlur" : '') /*Blur the app if the flag is set*/}>
+        <Alerts />
+        <div className="channelListContainer emphasised-container">
+          {this.props.channels.map((channel) => {
+            return <ChannelListItem key={channel.channelId} channel={channel} />
+          })}
         </div>
+        <ChannelControls />
+      </div>
     );
+  }
 }
 
-const mapStateToProps = (state) => {
-    return state;
-};
-export default connect(mapStateToProps)(ChannelList);
+export default connect((state) => { return state; })(ChannelList);

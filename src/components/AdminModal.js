@@ -1,3 +1,7 @@
+//this script is lazy as FUCK.
+//layout is shit
+//it's absolute bare minimum to administer channels
+
 import React from 'react';
 import { connect } from 'react-redux';
 import {
@@ -6,46 +10,17 @@ import {
 import  {
   setAdminVisibleContent,
   setAdminChannelSearchFilter,
-  setAdminEditingChannel
+  setAdminEditingChannel,
+  removeAdminChannels
 } from '../actions/actions';
 
 let channelListObtained = false;
-
-class EditChannel1 extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-  render = () => {
-    return (
-      <div className="adminContentContainer">
-        {this.props.adminChannels.map((channel)=> {
-          if (channel.channelId != this.props.adminInterface.editingChannelId) { 
-            return;
-          }
-          return (
-            <form
-              key={channel.channelId}
-              onSubmit={()=> {
-                console.log("submitted");
-              }} >
-              <input type="text" placeholder="Channel Name" defaultValue={channel.channelName}/>
-              <input type="submit" value="Save" />
-            </form>
-          );
-        })}
-      </div>
-    );
-  }
-}
-
-const mapStateToProps1 = (state) => { return state };
-const EditChannel = connect(mapStateToProps1)(EditChannel1);
 
 class AdminModal extends React.Component {
   constructor(props) {
     super(props);
   }
-  render = () => {
+  render() {
     return (
       <div className="modalWrapper">
         <div className="modalBlurContainer">
@@ -58,7 +33,7 @@ class AdminModal extends React.Component {
             <button
               className="buttonDefault"
               onClick={() => {
-                console.log('create default')
+                this.props.dispatch(setAdminVisibleContent("createChannel"));
               }}
             >Create Channel
             </button>
@@ -75,13 +50,64 @@ class AdminModal extends React.Component {
             >Edit Channels
             </button>
 
-            {/* Begin content section*/
-              this.props.adminInterface.visibleContent == "editChannel" &&
-              <EditChannel />
+            {/* Begin content section CREATE CHANNEL*/
+              this.props.adminInterface.visibleContent == "createChannel" &&
+              <div className="adminContentContainer">
+
+                <form
+                  className="adminChannelForm"
+                  onSubmit={(e)=> {
+                    e.preventDefault();
+                    this.props.dispatch(removeAdminChannels());
+                    this.props.dispatch(setAdminVisibleContent());
+                    setTimeout(adminRequestChannels(), 1000);
+                  }} >
+                  <label><input type="text" placeholder="Channel Name" /></label>
+                  <label><input type="text" placeholder="Channel Topic" /></label>
+                  <label><input type="checkbox" defaultChecked={true} />IsVisible</label>
+                  <label><input type="checkbox" />isDefault</label>
+                  <label><input type="checkbox" />RequiresVoice</label>
+                  <label><input type="checkbox" />RequiresRegistration</label>
+                  <label>CreatedBy: system (*)</label>
+                  <label><input type="submit" value="Save" /></label>
+                </form>
+              </div>
               /* End content section*/
             }
 
-            {/* Begin content section*/
+            {/* Begin content section EDIT CHANNEL*/
+              this.props.adminInterface.visibleContent == "editChannel" &&
+              <div className="adminContentContainer">
+                {this.props.adminChannels.map((channel)=> {
+                  if (channel.channelId != this.props.adminInterface.editingChannelId) { 
+                    return;
+                  }
+                  return (
+                    <form
+                      className="adminChannelForm"
+                      key={channel.channelId}
+                      onSubmit={(e)=> {
+                        e.preventDefault();
+                        this.props.dispatch(removeAdminChannels());
+                        this.props.dispatch(setAdminVisibleContent());
+                        setTimeout(adminRequestChannels(), 1000);
+                      }} >
+                      <label><input type="text" placeholder="Channel Name" defaultValue={channel.channelName} />Channel name</label>
+                      <label><input type="text" placeholder="Channel Topic" defaultValue={channel.topic} />Topic</label>
+                      <label><input type="checkbox" defaultChecked={channel.isVisible} />IsVisible</label>
+                      <label><input type="checkbox" defaultChecked={channel.isDefault} />isDefault</label>
+                      <label><input type="checkbox" defaultChecked={channel.requiresVoice} />RequiresVoice</label>
+                      <label><input type="checkbox" defaultChecked={channel.requiresRegistration} />RequiresRegistration</label>
+                      <label>CreatedBy: {channel.creatorNick}</label>
+                      <label><input type="submit" value="Save" /></label>
+                    </form>
+                  );
+                })}
+              </div>
+              /* End content section*/
+            }
+
+            {/* Begin content section CHANNEL LIST - EDIT CHANNELS*/
             this.props.adminInterface.visibleContent == "editChannelList" &&
               <div className="adminContentContainer">
 
@@ -121,7 +147,10 @@ class AdminModal extends React.Component {
                           <td><button key={channel.channelId} onClick={()=>{
                             this.props.dispatch(setAdminVisibleContent("editChannel"));
                             this.props.dispatch(setAdminEditingChannel(channel.channelId));
-                          }}>Edit</button></td>
+                          }}>Edit</button>
+                          <button key={channel.channelId + "X"} onClick={()=>{
+                            console.log("delete channel " + channel.channelId)
+                          }}>Delete</button></td>
                         </tr>
                       );
 
@@ -138,7 +167,4 @@ class AdminModal extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return state;
-};
-export default connect(mapStateToProps)(AdminModal);
+export default connect((state) => { return state; })(AdminModal);
