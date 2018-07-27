@@ -7,12 +7,12 @@ import { getVisibleUsers } from '../selectors/getVisibleUsers';
 const UserWindow = (state) => {
   return (
     <div className={"userWindowContainer " + (state.userInterface.appIsBlurred ? " chatAppBlur" : '') /*Blur the app if the flag is set*/}>
-      <div className="userListContainer emphasised-container">
+      <div className={state.configuration.lightTheme ? "userListContainer emphasised-container-light" : "userListContainer emphasised-container"}>
         {getVisibleUsers(state).map((user)=>{
           return <UserListItem key={user.userId} userName={user.nick} isAway={user.isAway} isSelected={user.isSelected} isCurrentUser={user.isCurrentUser} userGroup={user.group} />
         })}
       </div>
-      <div className="userStatsContainer emphasised-container">
+      <div className={state.configuration.lightTheme ? "userStatsContainer emphasised-container-light" : "userStatsContainer emphasised-container"}>
         <p>{state.users.filter(user => user.group == "op").length + " op(s)"}, {state.users.length + " user(s)"}</p>
       </div>
       <ConnectionStats />

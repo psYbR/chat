@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 const ConnectionStats = (state) => {
     return (
-        <div className="connectionStatsContainer emphasised-container">
+        <div className={state.configuration.lightTheme ? "connectionStatsContainer emphasised-container-light" : "connectionStatsContainer emphasised-container"}>
             <p>{state.userInterface.appIsConnected ? "[CONNECTED]" : "[DISCONNECTED]"} Ping: <span
                 className={state.userInterface.ping < 50 ? "ping-good" : (state.userInterface.ping < 250 ? "ping-ok" : "ping-bad")}
             >{state.userInterface.ping}ms</span></p>

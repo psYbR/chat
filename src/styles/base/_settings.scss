@@ -19,13 +19,13 @@ $height-breakpoint: 45rem;
 $default-app-size: 62.5%; //62.5% will mean that .1rem = 1px
 
 $font-family-default: 'Source Sans Pro', sans-serif;
-$font-default: rgb(205,215,197);
-$font-subtle: rgb(110,110,110);
+$font-default: rgb(205,215,197); $font-default-light: rgb(38,38,38);
+$font-subtle: rgb(110,110,110); $font-subtle-light: rgb(183, 188, 197);
 $selected: rgb(255,255,255);
 $selected-bg: rgb(156,154,148);
 $hover: rgb(80,80,80);
-$base: rgb(38,38,38);
-$surround: rgb(53,54,56);
+$base: rgb(38,38,38); $base-light: rgb(214, 214, 214);
+$surround: rgb(53,54,56); $surround-light: rgb(137, 140, 146);
 $shadow: rgb(0,0,0);
 $divider: $selected-bg;
 
@@ -71,14 +71,6 @@ $element-margin-h: 0.1rem; //should be half of $element-margin
 $element-border: 0.1rem;
 $channel-list-padding: 0.4rem 1.4rem 0.4rem 1.5rem; //padding for channel name list
 $user-list-padding: 0.4rem 1.4rem 0.4rem 0.4rem; //padding for username list
-
-// styling for the various containers
-.emphasised-container {
-  box-shadow: 0 0.1rem lighten($surround, 10%), inset 0 0.1rem 0.1rem darken($base, 5%);
-  border-radius: 0.2rem;
-  background-color: $base;
-  border: $element-border solid $shadow;
-}
 
 /*
 

@@ -7,18 +7,19 @@ class DefaultChannelPicker extends React.Component {
     super(props);
   }
   render() {
-    return (
+    return (  //{this.props.configuration.lightTheme ? "-light" : ""}
+              //{"" + (this.props.configuration.lightTheme ? " -light" : "")}
       <div className="ChannelPickerWrapper">
 
-        <div className="ChannelPickerTitleContainer">
+        <div className={"ChannelPickerTitleContainer" + (this.props.configuration.lightTheme ? " ChannelPickerTitleContainer-light" : "")}>
             <h3>Select some channels to join</h3>
         </div>
 
-        <div className="DCPContainer">
+        <div className={"DCPContainer" + (this.props.configuration.lightTheme ? " DCPContainer-light" : "")}>
             {this.props.defaultChannels.map((channel) => {
                 return (
                     <div
-                        className={"DCPChannel" + (channel.isSelected ? " DCPSelected" : '') + (this.props.userInterface.waitForNickAcceptance ? " DCPDisabled" : "")}
+                        className={"DCPChannel" + (channel.isSelected ? " DCPSelected" : '') + (this.props.userInterface.waitForNickAcceptance ? " DCPDisabled" : "") + (this.props.configuration.lightTheme ? " DCPChannel-light" : "")}
                         key={channel.channelId}
                         onClick={() => {
                             if (this.props.userInterface.waitForNickAcceptance) {

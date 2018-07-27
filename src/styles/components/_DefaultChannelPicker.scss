@@ -12,10 +12,16 @@
   width: calc(100% - 1.5rem);
   border-radius: .4rem .4rem 0 0;
 }
+.ChannelPickerTitleContainer-light {
+  background-color: $surround-light;
+}
 .ChannelPickerTitleContainer > h3 {
   margin: 0;
   text-align: center;
   color: $font-subtle;
+}
+.ChannelPickerTitleContainer-light > h3 {
+  color: $font-subtle-light;
 }
 
 .DCPContainer {
@@ -26,6 +32,9 @@
   max-height: 40rem;
   display: grid;
   grid-template-columns: repeat(auto-fill,minmax(160px, 1fr));
+}
+.DCPContainer-light {
+  background-color: lighten($surround-light, 10%);
 }
 
 .DCPChannel {
@@ -38,8 +47,14 @@
   cursor: pointer;
   padding: .8rem;
 }
+.DCPChannel-light {
+  color: $font-default-light;
+}
 .DCPChannel:hover {
   background-color: $surround;
+}
+.DCPChannel-light:hover {
+  background-color: $surround-light;
 }
 .DCPDisabled {
   opacity: .5;

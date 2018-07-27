@@ -24,7 +24,7 @@ class ChannelControls extends React.Component {
   }
   render () {
     return (
-      <div className="channelControlsContainer emphasised-container">
+      <div className={this.props.configuration.lightTheme ? "channelControlsContainer emphasised-container-light" : "channelControlsContainer emphasised-container"}>
         <button
           className="buttonDefault channelControlsButton ccbJoin tooltip"
           onClick={this.onAddChannel}

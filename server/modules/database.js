@@ -19,14 +19,28 @@ const db = mysql.createConnection({
   database: "blazechat"
 });
 
-// db.connect((err) => {
-//   if (err) throw err;
-//   console.log("Connected!");
-//   con.query("SELECT * FROM users", (err, result) => {
-//     if (err) throw err;
-//     console.log("Result: " + result);
-//   });
-// });
+
+db.connect((err) => {
+  if (err) throw err;
+  console.log("Connected!");
+});
+
+db.query("CREATE TABLE IF NOT EXISTS users ( \
+    userId int UNSIGNED AUTO_INCREMENT PRIMARY KEY \
+    ,nick varchar(100) \
+    ,isAdmin bit \
+    ,lastSeen datetime \
+    ,isGlobalBanned bit \
+  )",
+  (err)=>{
+  if (err) throw err;
+});
+
+db.query("SELECT * FROM users", (err, result) => {
+  if (err) throw err;
+  console.log("Result:");
+  console.log(result);
+});
 
 // module.exports = {
 //   db

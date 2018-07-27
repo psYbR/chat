@@ -4,6 +4,16 @@ export default (state = reducerDefaultState, action) => {
   switch (action.type) {
     case 'SET_CONFIGURATION':
       return action.configuration;
+    case 'SET_DARK_THEME':
+      return {
+        ...state,
+        lightTheme: false
+      }
+    case 'SET_LIGHT_THEME':
+      return {
+        ...state,
+        lightTheme: true
+      }
     case 'SET_FONT_STYLE':
       return {
         ...state,

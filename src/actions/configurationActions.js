@@ -3,10 +3,10 @@ export const setConfiguration = (
   {
 
     defaultFont = 'Source Sans Pro',
-    defaultColor = 'default',
+    defaultColor = 'Grey',
     isAway = false,
-    showSystemMessages = true
-
+    showSystemMessages = true,
+    lightTheme = true
   } = {}
 ) => ({
 
@@ -15,10 +15,20 @@ export const setConfiguration = (
     defaultFont,
     defaultColor,
     isAway,
-    showSystemMessages
+    showSystemMessages,
+    lightTheme
   }
 
 });
+
+export const setDarkTheme = () => ({
+  type: 'SET_DARK_THEME'
+});
+
+export const setLightTheme = () => ({
+  type: 'SET_LIGHT_THEME'
+});
+
 
 export const setFontStyle = ( defaultFont = 'Source Sans Pro' ) => ({
   type: 'SET_FONT_STYLE',

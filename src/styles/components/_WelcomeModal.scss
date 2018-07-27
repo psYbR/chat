@@ -53,6 +53,10 @@
   padding: 0 .5rem 0 .5rem;
   text-align: center;
 }
+.guestNickInput-light {
+  background-color: lighten($base-light, 10%);
+  color: $font-default-light;
+}
 .guestNickSubmitButton {
   margin-top: 1rem;
   background: $theme;

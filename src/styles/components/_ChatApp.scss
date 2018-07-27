@@ -16,6 +16,14 @@ body {
   width: 100%;
   margin: 0;
 }
+.chatAppContainer-light {
+  display: flex;
+  width: 100%;
+  background-color: $surround-light;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
 
 //used by ./components/WelcomeModal.js to blur the "background" by applying the blur to the app parent container
 .chatAppBlur {

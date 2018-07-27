@@ -14,12 +14,33 @@ body {
   font-size: $m-size;
 }
 
+// styling for the various containers
+.emphasised-container {
+  box-shadow: 0 0.1rem lighten($surround, 10%), inset 0 0.1rem 0.1rem darken($base, 5%);
+  border-radius: 0.2rem;
+  background-color: $base;
+  border: $element-border solid $shadow;
+}
+.emphasised-container-light {
+  box-shadow: 0 0.1rem lighten($surround-light, 10%), inset 0 0.1rem 0.1rem darken($base-light, 5%);
+  border-radius: 0.2rem;
+  background-color: $base-light;
+  border: $element-border solid $shadow;
+}
+
 a {
   color: $font-default;
   font-weight: bold;
 }
+.a-light {
+  color: $font-default-light;
+}
 a:hover {
   color: $theme;
+}
+
+.p-light {
+  color: $font-default-light;
 }
 
 button {
@@ -86,6 +107,9 @@ button:disabled {
   background-color: $surround;
   cursor: pointer;
 }
+.tab-light {
+  background-color: $surround-light;
+}
 @media only screen and (max-width: $width-breakpoint) {
   .tab > h1 {
     margin-top: .2rem;
@@ -108,8 +132,15 @@ button:disabled {
   color: $theme;
   background-color: lighten($surround, 10%);
 }
+.tabSelected-light {
+  color: $theme;
+  background-color: lighten($surround-light, 10%);
+}
 .tabDisabled {
   color: lighten($surround, 10%);
+}
+.tabDisabled-light {
+  color: lighten($surround-light, 10%);
 }
 
 //
@@ -139,6 +170,10 @@ button:disabled {
   margin: 5%;
   background-color: $base;
   border-radius: .5rem;
+  box-shadow: 0 0 5rem .1rem rgb(29, 29, 29);
+}
+.modalInnerContainer-light {
+  background-color: $base-light;
   box-shadow: 0 0 5rem .1rem rgb(29, 29, 29);
 }
 // I had hoped it was possible to blur the background but I guess it wasn't

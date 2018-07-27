@@ -13,10 +13,10 @@ import { connect } from 'react-redux';
 class ChatApp extends React.Component {
   constructor(props) {
     super(props);
-  }
+  } // {this.props.configuration.lightTheme ? "-light" : ""}
   render() {
     return (
-      <div className="chatAppContainer">
+      <div className={this.props.configuration.lightTheme ? "chatAppContainer-light" : "chatAppContainer"}>
         <DOMHandler />
         {(!this.props.userInterface.appIsConnected
         || !this.props.userInterface.defaultChannelsReceived)

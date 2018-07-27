@@ -32,6 +32,10 @@ class ChatMainWindow extends React.Component {
   }
   render() {
     return (
+
+      //{this.props.configuration.lightTheme ? "-light" : ""}
+      //{"" + (this.props.configuration.lightTheme ? " -light" : "")}
+
       <div className={"chatWindowContainer" + (this.props.userInterface.appIsBlurred ? " chatAppBlur" : '') /*Blur the app if the user isn't logged in*/}>
   
         <ChannelTopic
@@ -43,11 +47,11 @@ class ChatMainWindow extends React.Component {
           }
         />
   
-        <div className="chatMessageOuterContainer emphasised-container">
+        <div className={this.props.configuration.lightTheme ? "chatMessageOuterContainer emphasised-container-light" : "chatMessageOuterContainer emphasised-container"}>
   
           {this.props.userInterface.styleSelectionIsVisible && <StyleModal /> /* show the style modal if the button has been clicked */}
   
-          <div className="channelsHideContainer"
+          <div className={"channelsHideContainer" + (this.props.configuration.lightTheme ? " channelsHideContainer-light" : "")}
             onClick={() => { //the button to show/hide the channel list
               if (this.props.userInterface.channelListIsVisible) {
                 this.props.dispatch(hideChannelList());
@@ -58,7 +62,8 @@ class ChatMainWindow extends React.Component {
             <i className={'fa fa-caret-' + (this.props.userInterface.channelListIsVisible ? 'left' : 'right')}></i>
           </div>
   
-          <div className="usersHideContainer" onClick={() => { //the button to show/hide the users list
+          <div className={"usersHideContainer" + (this.props.configuration.lightTheme ? " usersHideContainer-light" : "")}
+            onClick={() => { //the button to show/hide the users list
             if (this.props.userInterface.userListIsVisible) {
               this.props.dispatch(hideUserList());
             } else {
@@ -68,8 +73,8 @@ class ChatMainWindow extends React.Component {
             <i className={'fa fa-caret-' + (this.props.userInterface.userListIsVisible ? 'right' : 'left')}></i>
           </div>
   
-          <div className="chatMessageContainer">
-            <table className="chatMessageTable">
+          <div className={"chatMessageContainer" + (this.props.configuration.lightTheme ? " chatMessageContainer-light" : "")}>
+            <table className={"chatMessageTable" + (this.props.configuration.lightTheme ? " chatMessageTable-light" : "")}>
               <tbody>
                 {this.props.channels.length < 1 ?
     
@@ -92,7 +97,7 @@ class ChatMainWindow extends React.Component {
                 :
                 //filter the visible messages according to the current channel and user configuration                        
                 getVisibleMessages(this.props).map((message) => {
-                  return <ChatMessage key={message.receivedTimestamp || message.sentTimestamp || 12345} message={message} loginState={this.props.loginState} />
+                  return <ChatMessage key={message.receivedTimestamp || message.sentTimestamp || 12345} message={message} loginState={this.props.loginState} lightTheme={this.props.configuration.lightTheme} />
                 })}
 
                 {this.props.userInterface.pastedImageSize > maxPastedImageSize &&

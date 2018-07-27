@@ -9,6 +9,9 @@
 .chatMessageTable > tbody > tr:hover {
   background-color: lighten($base, 3%);
 }
+.chatMessageTable-light > tbody > tr:hover {
+  background-color: lighten($base-light, 3%);
+}
 .chatMessageTable > tbody > tr> td > p {
   margin: 0;
 }
@@ -47,6 +50,9 @@
   word-wrap: break-word;
   word-break: break-all;
 }
+.chatMessageTextContainer-light > p{
+  //color: $font-default-light;
+}
 
 //OUTBOUND MESSAGES (class applied to container)
 .chatMessageCurrentUser > .pUserText {
@@ -55,7 +61,9 @@
 }
 .chatMessageCurrentUser > .pMessageText {
   color: $font-subtle;
-    
+}
+.chatMessageCurrentUser-light > .pMessageText {
+  color: $font-subtle-light;
 }
 .chatMessageSystemUser {
   color: $system;

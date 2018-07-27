@@ -10,6 +10,8 @@ import {
   ,setNickSetFailedReason
   ,setLoggedIn
   ,unblurApp
+  ,setLightTheme
+  ,setDarkTheme
   //,resetDefaultChannelSelections
 } from '../actions/actions';
 import DefaultChannelPicker from './DefaultChannelPicker';
@@ -71,19 +73,20 @@ class WelcomeModal extends React.Component {
     }
   }
   render() {
-    return (
+    return ( //{this.props.configuration.lightTheme ? "-light" : ""}
+             //{"" + (this.props.configuration.lightTheme ? " -light" : "")}
       
       <div className="modalWrapper">
         <div className="modalBlurContainer">
         </div>
         <div className="modalOuterContainer">
-            <div className="modalInnerContainer">
+            <div className={"modalInnerContainer" + (this.props.configuration.lightTheme ? " modalInnerContainer-light" : "")}>
 
               <div className="tabContainer">
-                <div className="guestTab tab tabSelected">
+                <div className={"guestTab tab tabSelected" + (this.props.configuration.lightTheme ? " tabSelected-light" : "")}>
                   <h1>Guest</h1>
                 </div>
-                <div className="loginTab tab">
+                <div className={"loginTab tab" + (this.props.configuration.lightTheme ? " tab-light" : "")}>
                   <h1>Login</h1>
                   <div className="loginTabBadges">
                     <i className="fas fa-envelope-square"></i>
@@ -97,7 +100,7 @@ class WelcomeModal extends React.Component {
                 <form className="guestNickInputForm" onSubmit={this.onGuestNickSubmit}>
                   {this.props.userInterface.nickSetFailedReason != '' ? <p className="nickSetFailedReason">{this.props.userInterface.nickSetFailedReason}</p> : ''}
                   <input 
-                    className="guestNickInput"
+                    className={"guestNickInput" + (this.props.configuration.lightTheme ? " guestNickInput-light" : "")}
                     type='text'
                     placeholder="Enter a nickname"
                     onChange={this.onGuestNickChange}
@@ -123,7 +126,7 @@ class WelcomeModal extends React.Component {
                 </form>
 
                 <div className="termsContainer">
-                  <p className="termsParagraph">Accept <a href='/terms.html'>terms and conditions</a>?</p>
+                  <p className={"termsParagraph" + (this.props.configuration.lightTheme ? " p-light" : "")}>Accept <a href='/terms.html' className={this.props.configuration.lightTheme ? "a-light" : ""}>terms and conditions</a>?</p>
                   <label className="checkBoxContainer">
                     <input
                       type="checkbox"
@@ -135,7 +138,11 @@ class WelcomeModal extends React.Component {
                     />
                     <span className="checkBoxCheckmark"></span>
                   </label>
+                  
                 </div>
+
+                <p><a className={this.props.configuration.lightTheme ? "a-light" : ""} onClick={() => {console.log("light set"); this.props.dispatch(setLightTheme())}}>Light</a>
+                <a className={this.props.configuration.lightTheme ? "a-light" : ""} onClick={() => {console.log("dark set"); this.props.dispatch(setDarkTheme())}}>Dark</a></p>
 
               </div>
 
