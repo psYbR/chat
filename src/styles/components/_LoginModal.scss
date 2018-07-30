@@ -6,9 +6,7 @@
 
 //TABS - moved to base
 .loginTab {
-  //text-decoration: line-through;
-  cursor: not-allowed;
-  color: lighten($surround, 10%);
+
 }
 
 //login icon badges
@@ -17,7 +15,6 @@
   position: absolute;
   right: 0;
   top: 0;
-  color: lighten($surround, 10%);
   font-size: 3rem;
 } .loginTabBadges > i {
   margin-top: .5rem;
@@ -57,7 +54,7 @@
   background-color: lighten($base-light, 10%);
   color: $font-default-light;
 }
-.guestNickSubmitButton {
+.guestNickSubmitButton, .loginButton {
   margin-top: 1rem;
   background: $theme;
   border: none;
@@ -69,7 +66,7 @@
   margin-bottom: $m-size;
   padding: 2.4rem;
 }
-.guestNickSubmitButton:disabled {
+.guestNickSubmitButton:disabled, .loginButton:disabled {
   opacity: .5;
 }
 @media only screen and (max-width: $width-breakpoint) {
@@ -81,7 +78,7 @@
     font-size: 2rem;
     width: auto;
   }
-  .guestNickSubmitButton{
+  .guestNickSubmitButton, .loginButton{
     font-size: 2rem;
     padding: .5rem;
     margin-bottom: .5rem;
@@ -95,11 +92,38 @@
     height: 3.5rem;
     font-size: 2rem;
   }
-  .guestNickSubmitButton{
+  .guestNickSubmitButton, .loginButton{
     font-size: 2rem;
     padding: .5rem;
     margin-bottom: .5rem;
   }
+}
+
+.loginFormContainer{
+  text-align: center;
+}
+.loginInput {
+  margin: 1.5rem;
+  margin-top: 2.5rem;
+  //display: block;
+}
+@media only screen and (max-height: $height-breakpoint) {
+  .loginInput {
+    margin: .5rem;
+  }
+}
+@media only screen and (max-width: $width-breakpoint) {
+  .loginInput {
+    margin: .5rem;
+  }
+}
+.loginMessage  {
+  text-align: center;
+  margin: .2rem;
+  margin-left: 1rem;
+}
+.loginButton {
+  width: auto;
 }
 
 //terms and conditions

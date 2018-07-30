@@ -4,6 +4,11 @@ export default (state = reducerDefaultState, action) => {
   switch (action.type) {
     case 'SET_UI_STATE':
       return action.userInterface;
+    case 'SET_WELCOME_MODAL_VISIBLE_TAB':
+      return {
+        ...state,
+        loginModalVisibleTab: action.tab
+      }
     case 'SET_ADMIN_MODAL_IS_VISIBLE':
       return {
         ...state,
@@ -74,21 +79,6 @@ export default (state = reducerDefaultState, action) => {
         ...state,
         windowHeight: action.windowHeight
       };*/
-    case 'SET_WAIT_FOR_NICK_ACCEPTANCE':
-      return {
-        ...state,
-        waitingForNickAcceptance: true
-      };
-    case 'UNSET_WAIT_FOR_NICK_ACCEPTANCE':
-      return {
-        ...state,
-        waitingForNickAcceptance: false
-      };
-    case 'SET_NICK_SET_FAILED_REASON':
-      return {
-        ...state,
-        nickSetFailedReason: action.nickSetFailedReason
-      };
     case 'SET_NUMBER_OF_USER_CHANNELS':
       return {
         ...state,
@@ -134,16 +124,6 @@ export default (state = reducerDefaultState, action) => {
       return {
         ...state,
         channelPickerSecondTab: true
-      };
-    case 'SET_TERMS_ACCEPTED':
-      return {
-        ...state,
-        termsAccepted: true
-      };
-    case 'UNSET_TERMS_ACCEPTED':
-      return {
-        ...state,
-        termsAccepted: false
       };
     case 'SHOW_CHANNEL_MODAL':
       return {

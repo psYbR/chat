@@ -86,5 +86,11 @@ io.on('connection', (socket) => {
   socket.on('admin create channel', (channel) => {
     admin.onAdminCreateChannel(socket,channel);
   })
+  socket.on('admin create database tables', (callback) => {
+    callback(admin.dbCreateTables());
+  })
+  socket.on('admin create default admin user', (callback) => {
+    callback(admin.dbCreateDefaultAdminUser());
+  })
 
 });

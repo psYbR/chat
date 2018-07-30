@@ -4,6 +4,11 @@ export default (state = reducerDefaultState, action) => {
   switch (action.type) {
     case 'SET_ADMIN_STATE':
       return action.adminInterface;
+    case 'SET_ADMIN_RESPONSE':
+      return {
+        ...state,
+        adminResponse: action.adminResponse
+      }
     case 'SET_ADMIN_EDITING_CHANNEL':
       return {
         ...state,

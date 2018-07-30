@@ -4,7 +4,8 @@ export const setAdminState = (
     adminModalIsVisible = false,
     visibleContent = '',
     searchFilter = '',
-    editingChannelId = 0
+    editingChannelId = 0,
+    adminResponse = ''
   } = {}
 ) => ({
   type: 'SET_ADMIN_STATE',
@@ -12,8 +13,14 @@ export const setAdminState = (
     adminModalIsVisible,
     visibleContent,
     searchFilter,
-    editingChannelId
+    editingChannelId,
+    adminResponse
   }
+});
+
+export const setAdminResponse = (adminResponse) => ({
+  type: 'SET_ADMIN_RESPONSE',
+  adminResponse
 });
 
 export const setAdminEditingChannel = (channelId) => ({

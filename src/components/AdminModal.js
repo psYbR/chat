@@ -6,7 +6,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {
   adminRequestChannels,
-  adminCreateChannel
+  adminCreateChannel,
+  adminDbCreateTables,
+  adminDbCreateDefaultAdminUser
 } from '../utils/handlers/handleAdmin';
 import  {
   setAdminVisibleContent,
@@ -21,6 +23,7 @@ let channelListObtained = false;
 class AdminModal extends React.Component {
   constructor(props) {
     super(props);
+    this.tablesCreated = false;
   }
   render() {
     return (
@@ -35,6 +38,24 @@ class AdminModal extends React.Component {
               this.props.dispatch(removeAdminChannels());
               channelListObtained = false;
             }}><i className="fas fa-times"></i></a></h1>
+
+            <p>{this.props.adminInterface.adminResponse}</p>
+
+            <button
+              className="buttonDefault"
+              onClick={() => {
+                adminDbCreateTables();
+              }}
+            >Create Database Tables
+            </button>
+
+            <button
+              className="buttonDefault"
+              onClick={() => {
+                adminDbCreateDefaultAdminUser();
+              }}
+            >Create Default Admin
+            </button>
 
             <button
               className="buttonDefault"

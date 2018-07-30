@@ -3,10 +3,10 @@ export const setConfiguration = (
   {
 
     defaultFont = 'Source Sans Pro',
-    defaultColor = 'Grey',
+    defaultColor = 'default',
     isAway = false,
     showSystemMessages = true,
-    lightTheme = true
+    lightTheme = false
   } = {}
 ) => ({
 

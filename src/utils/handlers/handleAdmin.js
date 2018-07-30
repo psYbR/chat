@@ -2,6 +2,7 @@ import { store } from '../../stores/store';
 import socket from './client';
 import {
   addAdminChannel
+  ,setAdminResponse
 } from '../../actions/actions';
 
 //request list of all channels
@@ -16,5 +17,19 @@ export const onAdminChannel = (channel) => {
 
 export const adminCreateChannel = (newChannel) => {
   console.log("sending create channel to server");
-  socket.emit('admin create channel', newChannel);
+  socket.emit('admin create channel', {newChannel});
+}
+
+// tell server to create database tables
+export const adminDbCreateTables = () => {
+  socket.emit('admin create database tables', (response) => {
+    store.dispatch(setAdminResponse(response));
+  });
+}
+
+//create the default admin account
+export const adminDbCreateDefaultAdminUser = () => {
+  socket.emit('admin create default admin user', (response) => {
+    store.dispatch(setAdminResponse(response));
+  });
 }

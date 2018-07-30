@@ -35,8 +35,8 @@ const onConnect = (socket, wasReconnect) => {
         console.log("setting nick succeeded!");
         //store.dispatch(unblurApp());
         //store.dispatch(setLoggedIn());
-        store.dispatch(unsetWaitingForNickAcceptance()); //un-disable the buttons
-        store.dispatch(setNickSetFailedReason('')); //update the UI and set the nick
+        //store.dispatch(unsetWaitingForNickAcceptance()); //un-disable the buttons
+        //store.dispatch(setNickSetFailedReason('')); //update the UI and set the nick
         //request to re-join channels the user was in
         store.getState().channels.map((channel) => {
           //this flag marks channels the user was disconnected from
@@ -50,13 +50,14 @@ const onConnect = (socket, wasReconnect) => {
         //store.dispatch(resetDefaultChannelSelections()); //reset the default channel selections
       } else {
         console.log("setting nick failed: " + response);
-        store.dispatch(unsetWaitingForNickAcceptance());
-        store.dispatch(setNickSetFailedReason(response)); //tell the UI that setting the nick failed
+        //store.dispatch(unsetWaitingForNickAcceptance());
+        //store.dispatch(setNickSetFailedReason(response)); //tell the UI that setting the nick failed
       } 
     });
 
   } else {
 
+    //store.dispatch(unsetWaitingForNickAcceptance());
     console.log("socket connection established");
     
   }

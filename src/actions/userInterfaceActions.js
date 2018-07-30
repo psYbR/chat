@@ -34,7 +34,8 @@ export const setUIState = (
     waitingForLeaveChannelConfirmation = false,
     messagesSinceNotFocused = false,
     userMenuIsVisible = false,
-    pastedImageSize = 0    
+    pastedImageSize = 0,
+    loginModalVisibleTab = 0
   } = {}
 ) => ({
   type: 'SET_UI_STATE',
@@ -49,23 +50,26 @@ export const setUIState = (
     appIsBlurred,
     appIsFocused,
     appIsConnected,
-    termsAccepted,
     defaultChannelsReceived,
     waitingForUserChannels,
     numberOfUserChannels,
     channelPickerIsVisible,
     channelPickerSecondTab,
     reconnectionMessage,
-    waitingForNickAcceptance,
-    nickSetFailedReason,
     disconnectionReason,
     leaveChannelModalIsVisible,
     waitingForLeaveChannelConfirmation,
     messagesSinceNotFocused,
     userMenuIsVisible,
-    pastedImageSize
+    pastedImageSize,
+    loginModalVisibleTab
   }
 });
+
+export const setLoginModalVisibleTab = (tab) => ({
+  type: 'SET_WELCOME_MODAL_VISIBLE_TAB',
+  tab
+})
 
 export const setPastedImageSize = (size) => ({
   type: 'SET_PASTED_IMAGE_SIZE',
@@ -105,16 +109,7 @@ export const setWindowWidth = (windowWidth) => ({
   type: 'SET_WINDOW_HEIGHT', //not used currently
   windowHeight
 }); */
-export const setWaitingForNickAcceptance = () => ({
-  type: 'SET_WAIT_FOR_NICK_ACCEPTANCE'
-});
-export const unsetWaitingForNickAcceptance = () => ({
-  type: 'UNSET_WAIT_FOR_NICK_ACCEPTANCE'
-});
-export const setNickSetFailedReason = (nickSetFailedReason) => ({
-  type: 'SET_NICK_SET_FAILED_REASON',
-  nickSetFailedReason
-});
+
 export const setNumberOfUserChannels = (numberOfUserChannels) => ({
   type: 'SET_NUMBER_OF_USER_CHANNELS',
   numberOfUserChannels
@@ -143,12 +138,6 @@ export const channelPickerShowFirstTab = () => ({
 });
 export const channelPickerShowSecondTab = () => ({
   type: 'CHANNEL_PICKER_SHOW_SECOND_TAB'
-});
-export const setTermsAccepted = () => ({
-  type: 'SET_TERMS_ACCEPTED'
-});
-export const unsetTermsAccepted = () => ({
-  type: 'UNSET_TERMS_ACCEPTED'
 });
 export const showChannelModal = () => ({
   type: 'SHOW_CHANNEL_MODAL'
