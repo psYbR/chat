@@ -2,18 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {
   setNick
-  ,setTermsAccepted
-  ,unsetTermsAccepted
-  ,setWaitingForNickAcceptance
-  ,unsetWaitingForNickAcceptance
   ,addChannel
-  ,setNickSetFailedReason
-  ,setLoggedIn
-  ,unblurApp
 } from '../actions/actions';
 import { nickMinLength, nickMaxLength } from '../config.js';
-import requestSetNick from "../utils/handlers/requestSetNick";
 import requestJoinChannel from '../utils/handlers/requestJoinChannel'
+import { setAppReady } from '../utils/setAppState'
 
 import socket from '../utils/handlers/client';
 
@@ -27,42 +20,51 @@ class loginGuestForm extends React.Component {
       nickSetFailedReason: ''
     }
   }
-  onGuestNickSubmit = (e) => {
+  onFormSubmit = (e) => {
     e.preventDefault();
-    this.setState({
-      ...this.state,
-      waitingForNickAcceptance: true,
-      nickSetFailedReason: ''
-    })
-    socket.emit('request guest login', this.state.nick, (response) => {
-      //handle the response (a string; either "success" or the reason the nick wasn't accepted eg. in use)
-      if (response == "success") {
-        this.setState({
-          ...this.state,
-          waitingForNickAcceptance: false
-        })
-        this.props.dispatch(unblurApp());
-        this.props.dispatch(setLoggedIn());
-        this.props.dispatch(setNick(this.state.nick));
-        this.props.defaultChannels.map((defaultChannel) => {
-          if (defaultChannel.isSelected) {
-            const joinedChannel = this.props.channels.filter(channel => channel.channelId == defaultChannel.channelId)[0];
-            if (!joinedChannel || !joinedChannel.isJoined) { //do a check first to make sure the channel isn't already joined
-              // add the channel to the UI
-              this.props.dispatch(addChannel({ channelId: defaultChannel.channelId, channelName: defaultChannel.channelName, topic: defaultChannel.topic }));
-              // here, send the actual server request to join the channel
-              requestJoinChannel(defaultChannel.channelId)
+    //sanity check the nick length
+    if (this.state.nick.length > nickMaxLength || this.state.nick.length < nickMinLength) { 
+      this.setState({
+        ...this.state,
+        waitingForNickAcceptance: false,
+        nickSetFailedReason: 'nick was invalid length'
+      })
+    } else {
+      this.setState({
+        ...this.state,
+        waitingForNickAcceptance: true,
+        nickSetFailedReason: ''
+      })
+      socket.emit('request login guest', this.state.nick, (response) => {
+        //handle the response (a string; either "success" or the reason the nick wasn't accepted eg. in use)
+        if (response == "success") {
+          this.setState({
+            ...this.state,
+            waitingForNickAcceptance: false,
+            nickSetFailedReason: ''
+          })
+          this.props.dispatch(setNick(this.state.nick));
+          setAppReady();
+          this.props.defaultChannels.map((defaultChannel) => {
+            if (defaultChannel.isSelected) {
+              const joinedChannel = this.props.channels.filter(channel => channel.channelId == defaultChannel.channelId)[0];
+              if (!joinedChannel || !joinedChannel.isJoined) { //do a check first to make sure the channel isn't already joined
+                // add the channel to the UI
+                this.props.dispatch(addChannel({ channelId: defaultChannel.channelId, channelName: defaultChannel.channelName, topic: defaultChannel.topic }));
+                // here, send the actual server request to join the channel
+                requestJoinChannel(defaultChannel.channelId)
+              }
             }
-          }
-        });
-      } else {
-        this.setState({
-          ...this.state,
-          waitingForNickAcceptance: false,
-          nickSetFailedReason: response
-        })
-      }
-    });
+          });
+        } else {
+          this.setState({
+            ...this.state,
+            waitingForNickAcceptance: false,
+            nickSetFailedReason: response
+          })
+        }
+      });
+    }
   }
   onNickChange = (e) => {
     const nick = e.target.value;
@@ -83,7 +85,7 @@ class loginGuestForm extends React.Component {
     return ( 
 
       <div className="guestNickEntry">
-        <form className="guestNickInputForm" onSubmit={this.onGuestNickSubmit}>
+        <form className="guestNickInputForm" onSubmit={this.onFormSubmit}>
 
           {this.state.nickSetFailedReason != '' ? <p className="nickSetFailedReason">{this.state.nickSetFailedReason}</p> : ''}
 

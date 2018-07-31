@@ -5,8 +5,6 @@ import requestSetNick from './requestSetNick';
 import { requestUserList } from './handleUserLists';
 import {
   setConnected
-  ,unsetWaitingForNickAcceptance
-  ,setNickSetFailedReason
  } from '../../actions/actions';
 
 //

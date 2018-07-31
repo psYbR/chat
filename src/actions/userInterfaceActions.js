@@ -10,64 +10,76 @@ if (Math.round(window.innerWidth * 0.0625) < horizontalBreakPoint) {
 //the default/initial state
 export const setUIState = (
   {
-    channelListIsVisible = initialWindowState,
-    userListIsVisible = initialWindowState,
+
+    loginModalVisible = false,
+
+    channelListVisible = initialWindowState,
+    userListVisible = initialWindowState,
+    styleModalVisible = false, //use to hide/show the style modal
+    leaveChannelModalVisible = false,
+    channelPickerVisible = false,
+
     windowWidth = Math.round(window.innerWidth * 0.0625),
     windowHeight = Math.round(window.innerHeight * 0.0625),
     chatMessageInput = '',
     ping = '0',
-    styleModalIsVisible = false, //use to hide/show the style modal
+    
     appIsBlurred = true,
     appIsFocused = true,
     appIsConnected = false, //whether the socket reports it has been successfully opened
-    termsAccepted = true,
     defaultChannelsReceived = false, //whether the list of default channels was received from the server
     waitingForUserChannels = false, //true while retrieval in progress
     numberOfUserChannels = 0, //the server will provide this value so that when the client requests a list, we know the progress of the list retrieval
-    channelPickerIsVisible = false,
+    
     channelPickerSecondTab = false, //false to show the first tab, true for the second
     reconnectionMessage = 'Connecting', //used by the ConnectingModal to show either Connecting or Re-connecting if the connection is being initially established or if it is lost
-    waitingForNickAcceptance = false, //set true while waiting for the server to accept changes to the nickname
-    nickSetFailedReason = '',
     disconnectionReason = '',
-    leaveChannelModalIsVisible = false,
+    
     waitingForLeaveChannelConfirmation = false,
     messagesSinceNotFocused = false,
-    userMenuIsVisible = false,
+    
     pastedImageSize = 0,
     loginModalVisibleTab = 0
   } = {}
 ) => ({
   type: 'SET_UI_STATE',
   userInterface: {
-    channelListIsVisible,
-    userListIsVisible,
+
+    loginModalVisible,
+
+    channelListVisible,
+    userListVisible,
     windowWidth,
     windowHeight,
     chatMessageInput,
     ping,
-    styleModalIsVisible,
+    styleModalVisible,
     appIsBlurred,
     appIsFocused,
     appIsConnected,
     defaultChannelsReceived,
     waitingForUserChannels,
     numberOfUserChannels,
-    channelPickerIsVisible,
+    channelPickerVisible,
     channelPickerSecondTab,
     reconnectionMessage,
     disconnectionReason,
-    leaveChannelModalIsVisible,
+    leaveChannelModalVisible,
     waitingForLeaveChannelConfirmation,
     messagesSinceNotFocused,
-    userMenuIsVisible,
     pastedImageSize,
     loginModalVisibleTab
   }
 });
 
-export const setLoginModalVisibleTab = (tab) => ({
-  type: 'SET_WELCOME_MODAL_VISIBLE_TAB',
+export const unsetLoginModalVisible = () => ({
+  type: 'UNSET_LOGIN_MODAL_VISIBLE'
+})
+export const setLoginModalVisible = () => ({
+  type: 'SET_LOGIN_MODAL_VISIBLE'
+})
+export const setLoginModalTab = (tab) => ({
+  type: 'SET_LOGIN_MODAL_TAB',
   tab
 })
 
@@ -75,12 +87,7 @@ export const setPastedImageSize = (size) => ({
   type: 'SET_PASTED_IMAGE_SIZE',
   size
 })
-export const setUserMenuIsVisible = () => ({
-  type: 'SET_USER_MENU_IS_VISIBLE'
-})
-export const unsetUserMenuIsVisible = () => ({
-  type: 'UNSET_USER_MENU_IS_VISIBLE'
-})
+
 export const setMessagesSinceNotFocused = () => ({
   type: 'SET_MESSAGES_SINCE_NOT_FOCUSED'
 })
@@ -88,10 +95,10 @@ export const unsetMessagesSinceNotFocused = () => ({
   type: 'UNSET_MESSAGES_SINCE_NOT_FOCUSED'
 })
 export const setAppIsFocused = () => ({
-  type: 'SET_APP_IS_FOCUSED'
+  type: 'SET_APP_FOCUSED'
 })
 export const unsetAppIsFocused = () => ({
-  type: 'UNSET_APP_IS_FOCUSED'
+  type: 'UNSET_APP_FOCUSED'
 })
 export const setPing = (ping) => ({
   type: 'UPDATE_PING',
@@ -145,11 +152,11 @@ export const showChannelModal = () => ({
 export const hideChannelModal = () => ({
   type: 'HIDE_CHANNEL_MODAL'
 });
-export const showStyleModal = () => ({
-  type: 'SHOW_STYLE_MODAL'
+export const setStyleModalVisible = () => ({
+  type: 'SET_STYLE_MODAL_VISIBLE'
 });
-export const hideStyleModal = () => ({
-  type: 'HIDE_STYLE_MODAL'
+export const unsetStyleModalVisible = () => ({
+  type: 'UNSET_STYLE_MODAL_VISIBLE'
 });
 export const showChannelList = () => ({
   type: 'SHOW_CHANNEL_LIST'

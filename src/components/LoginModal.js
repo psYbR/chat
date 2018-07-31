@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
-  setLoginModalVisibleTab
-  ,setLightTheme
+  setLightTheme
   ,setDarkTheme 
 } from '../actions/actions';
 
@@ -13,6 +12,9 @@ import DefaultChannelPicker from './DefaultChannelPicker';
 class LoginModal extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      activeTab: 0
+    }
   }
   render() {
     return (
@@ -24,12 +26,22 @@ class LoginModal extends React.Component {
           <div className={"modalInnerContainer" + (this.props.configuration.lightTheme ? " modalInnerContainer-light" : "")}>
 
             <div className="tabContainer">
-              <div className={"guestTab tab" + (this.props.userInterface.loginModalVisibleTab == 0 ? " tabSelected" : "") + (this.props.configuration.lightTheme ? " tabSelected-light" : "")}
-              onClick={()=>{this.props.dispatch(setLoginModalVisibleTab(0))}}>
+              <div className={"guestTab tab" + (this.state.activeTab == 0 ? " tabSelected" : "") + (this.props.configuration.lightTheme ? " tabSelected-light" : "")}
+              onClick={()=>{
+                this.setState({
+                  ...this.state,
+                  activeTab: 0
+                })
+              }}>
                 <h1>Guest</h1>
               </div>
-              <div className={"loginTab tab" + (this.props.userInterface.loginModalVisibleTab == 1 ? " tabSelected" : "") + (this.props.configuration.lightTheme ? " tab-light" : "")}
-              onClick={()=>{this.props.dispatch(setLoginModalVisibleTab(1))}}>
+              <div className={"loginTab tab" + (this.state.activeTab == 1 ? " tabSelected" : "") + (this.props.configuration.lightTheme ? " tab-light" : "")}
+              onClick={()=>{
+                this.setState({
+                  ...this.state,
+                  activeTab: 1
+                })
+              }}>
                 <h1>Login</h1>
                 <div className="loginTabBadges">
                   <i className="fas fa-envelope-square"></i>
@@ -42,11 +54,11 @@ class LoginModal extends React.Component {
             {/* <p>Theme: <a className={this.props.configuration.lightTheme ? "a-light" : ""} onClick={() => {this.props.dispatch(setLightTheme())}}>Light</a> 
             <a className={this.props.configuration.lightTheme ? "a-light" : ""} onClick={() => {this.props.dispatch(setDarkTheme())}}>Dark</a></p> */}
 
-            {this.props.userInterface.loginModalVisibleTab == 1 && 
+            {this.state.activeTab == 1 && 
               <LoginUserForm />
             }
 
-            {this.props.userInterface.loginModalVisibleTab == 0 && 
+            {this.state.activeTab== 0 && 
               <LoginGuestForm />
             }
 

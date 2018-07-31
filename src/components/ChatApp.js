@@ -23,28 +23,28 @@ class ChatApp extends React.Component {
         || !this.props.userInterface.defaultChannelsReceived)
           && <ConnectingModal />}
 
-        {(!this.props.loginState.loggedIn
+        {(this.props.userInterface.loginModalVisible
         && this.props.userInterface.appIsConnected
         && this.props.userInterface.defaultChannelsReceived)
           && <LoginModal />}
 
-        {this.props.adminInterface.adminModalIsVisible
+        {this.props.adminInterface.adminModalVisible
           && <AdminModal />}
 
-        {(this.props.userInterface.channelPickerIsVisible
+        {(this.props.userInterface.channelPickerVisible
         && this.props.userInterface.appIsConnected && this.props.loginState.loggedIn)
           && <ChannelPicker />}
 
-        {(this.props.userInterface.leaveChannelModalIsVisible
+        {(this.props.userInterface.leaveChannelModalVisible
         && this.props.userInterface.appIsConnected && this.props.loginState.loggedIn)
           && <LeaveChannelModal />}
 
-        {this.props.userInterface.channelListIsVisible
+        {this.props.userInterface.channelListVisible
           && <ChannelList />}
 
         <ChatMainWindow />
 
-        {this.props.userInterface.userListIsVisible
+        {this.props.userInterface.userListVisible
           && <UserList />}
 
       </div>

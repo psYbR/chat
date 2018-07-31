@@ -26,8 +26,8 @@ db.connect((err) => {
 
 db.query("SELECT * FROM users", (err, result) => {
   if (err) throw err;
-  //console.log("Result:");
-  //console.log(result);
+  console.log("Result:");
+  console.log(result);
 });
 
 module.exports = {

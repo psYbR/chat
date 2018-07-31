@@ -4,35 +4,36 @@ export default (state = reducerDefaultState, action) => {
   switch (action.type) {
     case 'SET_UI_STATE':
       return action.userInterface;
-    case 'SET_WELCOME_MODAL_VISIBLE_TAB':
+    case 'UNSET_LOGIN_MODAL_VISIBLE':
       return {
         ...state,
-        loginModalVisibleTab: action.tab
+        loginModalVisible: false
       }
-    case 'SET_ADMIN_MODAL_IS_VISIBLE':
+    case 'SET_LOGIN_MODAL_VISIBLE':
       return {
         ...state,
-        adminModalIsVisible: true
+        loginModalVisible: true
       }
-    case 'UNSET_ADMIN_MODAL_IS_VISIBLE':
+
+    case 'SET_LOGIN_MODAL_TAB':
       return {
         ...state,
-        adminModalIsVisible: false
+        loginModalTab: action.tab
+      }
+    case 'SET_ADMIN_MODAL_VISIBLE':
+      return {
+        ...state,
+        adminModalVisible: true
+      }
+    case 'UNSET_ADMIN_MODAL_VISIBLE':
+      return {
+        ...state,
+        adminModalVisible: false
       }
     case 'SET_PASTED_IMAGE_SIZE':
       return {
         ...state,
         pastedImageSize: action.size
-      }
-    case 'SET_USER_MENU_IS_VISIBLE':
-      return {
-        ...state,
-        userMenuIsVisible: true
-      }
-    case 'UNSET_USER_MENU_IS_VISIBLE':
-      return {
-        ...state,
-        userMenuIsVisible: false
       }
     case 'SET_MESSAGES_SINCE_NOT_FOCUSED':
       return {
@@ -44,12 +45,12 @@ export default (state = reducerDefaultState, action) => {
         ...state,
         messagesSinceNotFocused: false
       }
-    case 'SET_APP_IS_FOCUSED':
+    case 'SET_APP_FOCUSED':
       return {
         ...state,
         appIsFocused: true
       }
-    case 'UNSET_APP_IS_FOCUSED':
+    case 'UNSET_APP_FOCUSED':
       return {
         ...state,
         appIsFocused: false
@@ -128,42 +129,42 @@ export default (state = reducerDefaultState, action) => {
     case 'SHOW_CHANNEL_MODAL':
       return {
         ...state,
-        channelPickerIsVisible: true
+        channelPickerVisible: true
       };
     case 'HIDE_CHANNEL_MODAL':
       return {
         ...state,
-        channelPickerIsVisible: false
+        channelPickerVisible: false
       };
-    case 'SHOW_STYLE_MODAL':
+    case 'SET_STYLE_MODAL_VISIBLE':
       return {
         ...state,
-        styleSelectionIsVisible: true
+        styleModalVisible: true
       };
-    case 'HIDE_STYLE_MODAL':
+    case 'UNSET_STYLE_MODAL_VISIBLE':
       return {
         ...state,
-        styleSelectionIsVisible: false
+        styleModalVisible: false
       };
     case 'SHOW_CHANNEL_LIST':
       return {
         ...state,
-        channelListIsVisible: true
+        channelListVisible: true
       };
     case 'HIDE_CHANNEL_LIST':
       return {
         ...state,
-        channelListIsVisible: false
+        channelListVisible: false
       };
     case 'SHOW_USER_LIST':
       return {
         ...state,
-        userListIsVisible: true
+        userListVisible: true
       };
     case 'HIDE_USER_LIST':
       return {
         ...state,
-        userListIsVisible: false
+        userListVisible: false
       };
     case 'BLUR_APP':
       return {
@@ -178,12 +179,12 @@ export default (state = reducerDefaultState, action) => {
     case 'SHOW_LEAVE_CHANNEL_MODAL':
       return {
         ...state,
-        leaveChannelModalIsVisible: true
+        leaveChannelModalVisible: true
       }
     case 'HIDE_LEAVE_CHANNEL_MODAL':
       return {
         ...state,
-        leaveChannelModalIsVisible: false
+        leaveChannelModalVisible: false
       }
     case 'SET_WAITING_FOR_LEAVE_CHANNEL_CONFIRMATION':
       return {

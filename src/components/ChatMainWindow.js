@@ -49,28 +49,28 @@ class ChatMainWindow extends React.Component {
   
         <div className={this.props.configuration.lightTheme ? "chatMessageOuterContainer emphasised-container-light" : "chatMessageOuterContainer emphasised-container"}>
   
-          {this.props.userInterface.styleSelectionIsVisible && <StyleModal /> /* show the style modal if the button has been clicked */}
+          {this.props.userInterface.styleModalVisible && <StyleModal /> /* show the style modal if the button has been clicked */}
   
           <div className={"channelsHideContainer" + (this.props.configuration.lightTheme ? " channelsHideContainer-light" : "")}
             onClick={() => { //the button to show/hide the channel list
-              if (this.props.userInterface.channelListIsVisible) {
+              if (this.props.userInterface.channelListVisible) {
                 this.props.dispatch(hideChannelList());
               } else {
                 this.props.dispatch(showChannelList());
               }
           }}>
-            <i className={'fa fa-caret-' + (this.props.userInterface.channelListIsVisible ? 'left' : 'right')}></i>
+            <i className={'fa fa-caret-' + (this.props.userInterface.channelListVisible ? 'left' : 'right')}></i>
           </div>
   
           <div className={"usersHideContainer" + (this.props.configuration.lightTheme ? " usersHideContainer-light" : "")}
             onClick={() => { //the button to show/hide the users list
-            if (this.props.userInterface.userListIsVisible) {
+            if (this.props.userInterface.userListVisible) {
               this.props.dispatch(hideUserList());
             } else {
               this.props.dispatch(showUserList());
             }
           }}>
-            <i className={'fa fa-caret-' + (this.props.userInterface.userListIsVisible ? 'right' : 'left')}></i>
+            <i className={'fa fa-caret-' + (this.props.userInterface.userListVisible ? 'right' : 'left')}></i>
           </div>
   
           <div className={"chatMessageContainer" + (this.props.configuration.lightTheme ? " chatMessageContainer-light" : "")}>

@@ -1,7 +1,8 @@
 import { store } from '../../stores/store';
 import {
   addDefaultChannel,
-  setDefaultChannelsReceived
+  setDefaultChannelsReceived,
+  setLoginModalVisible
 } from '../../actions/actions';
 
 export const requestDefaultChannels = (socket) => {
@@ -20,4 +21,5 @@ export const onDefaultChannel = (channel) => {
 //handle finish sending of default channels
 export const onDefaultChannelsFinished = () => {
   store.dispatch(setDefaultChannelsReceived());
+  store.dispatch(setLoginModalVisible());
 };

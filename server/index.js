@@ -2,7 +2,7 @@ var io = require('./modules/server');
 var getIpAddress      = require('./modules/getIPAddress');
 var onDisconnect      = require('./modules/onDisconnect');
 var onChatMessage     = require('./modules/onChatMessage');
-var onSetNick         = require('./modules/onSetNick');
+var onLoginGuest         = require('./modules/onLoginGuest');
 var onRequestChannels = require('./modules/onRequestChannels');
 var onJoinChannel     = require('./modules/onJoinChannel');
 var onRequestUserList = require('./modules/onRequestUserList');
@@ -39,9 +39,9 @@ io.on('connection', (socket) => {
     }
   });
 
-  socket.on('set nick', (nick, callback) => {
+  socket.on('request login guest', (nick, callback) => {
     try {
-      callback(onSetNick(socket, nick));
+      callback(onLoginGuest(socket, nick));
     } catch(err) {
       globals.log('(index) Failed callback for onSetNick: "' +  err + '" for client: ' + socket.id, 2)
     }

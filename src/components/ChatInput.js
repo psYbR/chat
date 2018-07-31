@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { maxMessageLength, maxPastedImageSize } from '../config.js';
 import { 
   setChatMessageInput
-  ,showStyleModal
-  ,hideStyleModal
+  ,setStyleModalVisible
+  ,unsetStyleModalVisible
   ,addMessage
   ,setPastedImageSize 
 } from '../actions/actions';
@@ -60,11 +60,11 @@ class ChatInput extends React.Component {
       console.log("up arrow pressed");
     }
   }
-  onFontButtonClick = (e) => {
-    if (this.props.userInterface.styleSelectionIsVisible) {
-      this.props.dispatch(hideStyleModal());
+  onFontButtonClick = () => {
+    if (this.props.userInterface.styleModalVisible) {
+      this.props.dispatch(unsetStyleModalVisible());
     } else {
-      this.props.dispatch(showStyleModal());
+      this.props.dispatch(setStyleModalVisible());
     }
   }
   render() {
