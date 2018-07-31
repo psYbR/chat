@@ -24,12 +24,10 @@ db.connect((err) => {
   console.log("[database] Connected!");
 });
 
-db.query("SELECT * FROM users", (err, result) => {
-  if (err) throw err;
-  console.log("Result:");
-  console.log(result);
-});
+// db.query("SELECT * FROM users", (err, result) => {
+//   if (err) throw err;
+//   console.log("Result:");
+//   console.log(result);
+// });
 
-module.exports = {
-  db
-}
+module.exports = db;

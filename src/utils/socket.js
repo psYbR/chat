@@ -9,9 +9,6 @@ import {
   setPing,
   setDisconnectionReason
 } from '../actions/actions';
-import {
-  onAdminChannel
-} from './handlers/handleAdmin';
 
 //
 // set up the socket event handlers
@@ -85,10 +82,3 @@ socket.on('reconnect_failed', () => {
   onDisconnect("could not reconnect");
 });
 
-//
-// handle admin responses
-//
-
-socket.on('admin channel', (channel) => {
-  onAdminChannel(channel);
-});

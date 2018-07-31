@@ -32,8 +32,8 @@ const onAdminCreateChannel = (socket, channel) => {
 }
 
 const dbCreateTables = () => {
-  console.log("creating tables...");
-  db.query("DROP TABLE users");
+  console.log("Creating tables...");
+  //db.query("DROP TABLE IF EXISTS users");
   db.query("CREATE TABLE IF NOT EXISTS users ( \
     UserId int UNSIGNED AUTO_INCREMENT PRIMARY KEY \
     ,Nick varchar(100) \
@@ -46,21 +46,24 @@ const dbCreateTables = () => {
     ,DefaultColor varchar(100) \
     ,lastSeen datetime \
     ,isGlobalBanned int \
-  )", 
-  (err, )=>{
-    if (err) throw err;
-  });
-  return "Tables created.";
+  )",(err)=>{if(err)throw err});
+  return "Tables creating, see server console for result.";
 }
 
 const dbCreateDefaultAdminUser = () => {
-  console.log("creating default admin user...");
-  db.query("INSERT INTO users (Nick, Password, Email, IsGlobalAdmin, Theme, ShowSystemMessages, DefaultFont, DefaultColor, lastSeen, isGlobalBanned) \
-                       VALUES ('Energizer', SHA2('jiblet123', 256), 'tim.eastwood@hotmail.com', 1, 1, 1, 'Source Sans Pro', 'default', NULL, 0)",
-  (err, )=>{
+  db.query("SELECT * FROM users WHERE Nick='Energizer'", (err, result) => {
     if (err) throw err;
+    if (result.length > 0){
+      console.log("Default admin user already exists.");
+    } else {
+      db.query("INSERT INTO users (Nick, Password, Email, IsGlobalAdmin, Theme, ShowSystemMessages, DefaultFont, DefaultColor, lastSeen, isGlobalBanned) \
+      VALUES ('Energizer', SHA2('jiblet123', 256), 'tim.eastwood@hotmail.com', 1, 1, 1, 'Source Sans Pro', 'default', NULL, 0)",(err)=>{
+        if (err) throw err;
+        console.log("Created default admin user.");
+      });
+    }
   });
-  return "Default admin account created.";
+  return "See server console for result.";
 }
 
 module.exports = { 

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import {
   showChannelModal,
   showLeaveChannelModal,
-  setAdminModalIsVisible
+  setAdminModalVisible
 } from '../actions/actions';
 
 class ChannelControls extends React.Component {
@@ -20,7 +20,7 @@ class ChannelControls extends React.Component {
     //this.props.dispatch(showCreateChannelModal());
   }
   onAdminOpen = () => {
-    this.props.dispatch(setAdminModalIsVisible());
+    this.props.dispatch(setAdminModalVisible());
   }
   render () {
     return (

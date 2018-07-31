@@ -12,6 +12,7 @@ export const setUIState = (
   {
 
     loginModalVisible = false,
+    adminModalVisible = false,
 
     channelListVisible = initialWindowState,
     userListVisible = initialWindowState,
@@ -38,14 +39,14 @@ export const setUIState = (
     waitingForLeaveChannelConfirmation = false,
     messagesSinceNotFocused = false,
     
-    pastedImageSize = 0,
-    loginModalVisibleTab = 0
+    pastedImageSize = 0
   } = {}
 ) => ({
   type: 'SET_UI_STATE',
   userInterface: {
 
     loginModalVisible,
+    adminModalVisible,
 
     channelListVisible,
     userListVisible,
@@ -67,21 +68,23 @@ export const setUIState = (
     leaveChannelModalVisible,
     waitingForLeaveChannelConfirmation,
     messagesSinceNotFocused,
-    pastedImageSize,
-    loginModalVisibleTab
+    pastedImageSize
   }
 });
 
+export const unsetAdminModalVisible = () => ({
+  type: 'UNSET_ADMIN_MODAL_VISIBLE'
+})
+export const setAdminModalVisible = () => ({
+  type: 'SET_ADMIN_MODAL_VISIBLE'
+})
 export const unsetLoginModalVisible = () => ({
   type: 'UNSET_LOGIN_MODAL_VISIBLE'
 })
 export const setLoginModalVisible = () => ({
   type: 'SET_LOGIN_MODAL_VISIBLE'
 })
-export const setLoginModalTab = (tab) => ({
-  type: 'SET_LOGIN_MODAL_TAB',
-  tab
-})
+
 
 export const setPastedImageSize = (size) => ({
   type: 'SET_PASTED_IMAGE_SIZE',

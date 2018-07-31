@@ -6,6 +6,7 @@ import { requestUserList } from './handleUserLists';
 import {
   setConnected
  } from '../../actions/actions';
+import cookie from 'react-cookie';
 
 //
 // handle connections
@@ -21,16 +22,33 @@ const onConnect = (socket, wasReconnect) => {
   //get the default channel list
   requestDefaultChannels(socket);
 
+  var rediskey = cookie.load('rediskey');
+
+  if (!rediskey) {
+    socket.emit('create session', (response)=>{
+      cookie.save('rediskey', response, {
+        maxAge: 30 * 60,
+        domain: 'blaze.chat',
+        secure: true
+      });
+      //console.log(response);
+    });
+  } else {
+    socket.emit('check session', rediskey, (response)=>{
+      //console.log(response);
+    });
+  }
+
   //if the connection was re-established after a disconnect. Check the user is actually logged in
   if (wasReconnect && store.getState().loginState.loggedIn) {
 
-    console.log("socket connection re-established");
+    //console.log("socket connection re-established");
 
     //set the nick again (server ignores if it's already set)
     requestSetNick((response)=>{
       //handle the response (a string; either "success" or the reason the nick wasn't accepted eg. in use)
       if (response == "success") {
-        console.log("setting nick succeeded!");
+        console.log("resetting nick succeeded!");
         //store.dispatch(unblurApp());
         //store.dispatch(setLoggedIn());
         //store.dispatch(unsetWaitingForNickAcceptance()); //un-disable the buttons
@@ -47,7 +65,7 @@ const onConnect = (socket, wasReconnect) => {
         requestUserList();
         //store.dispatch(resetDefaultChannelSelections()); //reset the default channel selections
       } else {
-        console.log("setting nick failed: " + response);
+        console.log("resetting nick failed: " + response);
         //store.dispatch(unsetWaitingForNickAcceptance());
         //store.dispatch(setNickSetFailedReason(response)); //tell the UI that setting the nick failed
       } 
@@ -56,7 +74,7 @@ const onConnect = (socket, wasReconnect) => {
   } else {
 
     //store.dispatch(unsetWaitingForNickAcceptance());
-    console.log("socket connection established");
+    //console.log("socket connection established");
     
   }
 }

@@ -4,22 +4,6 @@ export default (state = reducerDefaultState, action) => {
   switch (action.type) {
     case 'SET_UI_STATE':
       return action.userInterface;
-    case 'UNSET_LOGIN_MODAL_VISIBLE':
-      return {
-        ...state,
-        loginModalVisible: false
-      }
-    case 'SET_LOGIN_MODAL_VISIBLE':
-      return {
-        ...state,
-        loginModalVisible: true
-      }
-
-    case 'SET_LOGIN_MODAL_TAB':
-      return {
-        ...state,
-        loginModalTab: action.tab
-      }
     case 'SET_ADMIN_MODAL_VISIBLE':
       return {
         ...state,
@@ -30,6 +14,19 @@ export default (state = reducerDefaultState, action) => {
         ...state,
         adminModalVisible: false
       }
+    case 'UNSET_LOGIN_MODAL_VISIBLE':
+      return {
+        ...state,
+        loginModalVisible: false
+      }
+    case 'SET_LOGIN_MODAL_VISIBLE':
+      return {
+        ...state,
+        loginModalVisible: true
+      }
+    
+
+
     case 'SET_PASTED_IMAGE_SIZE':
       return {
         ...state,

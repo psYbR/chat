@@ -28,7 +28,7 @@ class ChatApp extends React.Component {
         && this.props.userInterface.defaultChannelsReceived)
           && <LoginModal />}
 
-        {this.props.adminInterface.adminModalVisible
+        {this.props.userInterface.adminModalVisible && this.props.userInterface.appIsConnected
           && <AdminModal />}
 
         {(this.props.userInterface.channelPickerVisible

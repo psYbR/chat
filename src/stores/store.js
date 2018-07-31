@@ -8,7 +8,6 @@ import loginReducer from '../reducers/loginReducer';
 import defaultChannelsReducer from '../reducers/defaultChannelsReducer';
 import userChannelsReducer from '../reducers/userChannelsReducer';
 import adminChannelReducer from '../reducers/adminChannelReducer';
-import adminInterfaceReducer from '../reducers/adminInterfaceReducer';
 import { buildForDev } from '../config';
 import {
   setUIState,
@@ -28,8 +27,7 @@ const configureStore = () => {
     loginState: loginReducer,
     defaultChannels: defaultChannelsReducer,
     userChannels: userChannelsReducer,
-    adminChannels: adminChannelReducer,
-    adminInterface: adminInterfaceReducer
+    adminChannels: adminChannelReducer
   };
   
   if (buildForDev) {

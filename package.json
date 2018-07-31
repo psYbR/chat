@@ -21,6 +21,7 @@
     "paste.js": "0.0.21",
     "prop-types": "^15.6.1",
     "react": "15.6.1",
+    "react-cookie": "^1.0.5",
     "react-dom": "15.6.1",
     "react-modal": "2.2.2",
     "react-redux": "^5.0.7",

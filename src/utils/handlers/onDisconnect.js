@@ -15,7 +15,6 @@ const handleDisconnect = (reason) => {
   store.dispatch(setPing('--'));
   store.dispatch(setDisconnected());
   store.dispatch(setDisconnectionReason(reason));
-  store.dispatch(setWaitingForNickAcceptance());
   store.dispatch(setAllChannelsWasJoined());
 }
 
