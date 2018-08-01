@@ -1,4 +1,7 @@
 var io = require('./modules/server');
+var admin = require('./modules/onAdmin');
+globals = require('./modules/globals');
+
 var getIpAddress      = require('./modules/getIPAddress');
 var onDisconnect      = require('./modules/onDisconnect');
 var onChatMessage     = require('./modules/onChatMessage');
@@ -7,24 +10,8 @@ var onRequestChannels = require('./modules/onRequestChannels');
 var onJoinChannel     = require('./modules/onJoinChannel');
 var onRequestUserList = require('./modules/onRequestUserList');
 var onRequestLeaveChannel = require('./modules/onRequestLeaveChannel');
-admin = require('./modules/onAdmin');
-db = require('./modules/database');
-const SHA2 = require("sha2");
-
-let sessions = [];
-
-/*
-{
-socketId: 1123123123
-nick: 'abdefg'
-userId: 123124
-
-}
-*/
-
-const getUniqueKey = (socketId) => {
-  return SHA2["SHA-256"](socketId).toString("hex");
-}
+var onLoginUser = require('./modules/onLoginUser');
+var session = require('./modules/sessions');;
 
 //called whenever a client connects (or reconnects)
 io.on('connection', (socket) => {
@@ -32,48 +19,24 @@ io.on('connection', (socket) => {
   globals.log("(index) Connection from: " + getIpAddress(socket));
 
   socket.on('check session', (sessionId, callback)=>{
-    let response = '';
-
-    //if session was found
-    if (sessions.filter(session=>session.sessionId==sessionId).length>0) {
-      response = "success";
-    } else {
-      response = getUniqueKey(socket.id);
-      +new Date;
-      let expiryDatetime = Date.now() + (30 * 60 * 1000);
-      sessions.push({
-        sessionId: response,
-        socketId: socket.id,
-        nick: '',
-        userId: 0,
-        expiryDatetime
-      })
-    }
     try {
-      callback(response);
+      callback(session.checkSession(socket, sessionId))
     } catch(err) {
-      globals.log('(index) Failed to respond to session: "' +  err)
+      globals.log('(index) Failed to check session: "' +  err)
     }
   })
 
   socket.on('create session', (callback)=>{
-    let response = getUniqueKey(socket.id);
-    console.log("(index) Created session: " + getUniqueKey(socket.id));
-    +new Date;
-    let expiryDatetime = Date.now() + (30 * 60 * 1000);
-    sessions.push({
-      sessionId: response,
-      socketId: socket.id,
-      nick: '',
-      userId: 0,
-      expiryDatetime
-    })
     try {
-      callback(response);
+      callback(session.createSession(socket));
     } catch(err) {
-      globals.log('(index) Failed to respond to session: "' +  err)
+      globals.log('(index) Failed to create session: "' +  err)
     }
   })
+
+  socket.on('request login user', (login) => {
+    onLoginUser(socket, login);
+  });
 
   socket.on('leave channel', (channelId, callback) => {
     try {
@@ -155,7 +118,7 @@ io.on('connection', (socket) => {
 
   socket.conn.on('packet', function (packet) {
     if (packet.type === 'ping') {
-      const session = sessions.filter(session=>session.socketId == socket.id);
+      const session = globals.sessions.filter(session=>session.socketId == socket.id);
       if (session.length > 0) {
         //console.log('received ping from ' + session[0].sessionId);
       }

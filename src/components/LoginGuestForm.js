@@ -1,14 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import socket from '../utils/handlers/client';
+import { nickMinLength, nickMaxLength } from '../config.js';
 import {
   setNick
-  ,addChannel
 } from '../actions/actions';
-import { nickMinLength, nickMaxLength } from '../config.js';
-import requestJoinChannel from '../utils/handlers/requestJoinChannel'
 import { setAppReady } from '../utils/setAppState'
-
-import socket from '../utils/handlers/client';
+import requestJoinDefaultChannels from '../utils/handlers/requestJoinDefaultChannels';
 
 class loginGuestForm extends React.Component {
   constructor(props) {
@@ -20,50 +18,49 @@ class loginGuestForm extends React.Component {
       nickSetFailedReason: ''
     }
   }
-  onFormSubmit = (e) => {
-    e.preventDefault();
-    //sanity check the nick length
-    if (this.state.nick.length > nickMaxLength || this.state.nick.length < nickMinLength) { 
+  handleLoginResponse = (response) => {
+    if (response == "success") {
+
       this.setState({
         ...this.state,
         waitingForNickAcceptance: false,
-        nickSetFailedReason: 'nick was invalid length'
+        nickSetFailedReason: ''
       })
+
+      this.props.dispatch(setNick(this.state.nick));
+      setAppReady();
+      requestJoinDefaultChannels();
+
     } else {
+      this.setState({
+        ...this.state,
+        waitingForNickAcceptance: false,
+        nickSetFailedReason: response
+      })
+    }
+  }
+  componentDidMount = () => {
+    socket.on('login guest response', this.handleLoginResponse);
+  }
+  componentWillUnmount = () => {
+    socket.removeListener('login guest response', this.handleLoginResponse);
+  }
+  onFormSubmit = (e) => {
+    e.preventDefault();
+    //sanity check the nick length
+    if (this.state.nick.length < nickMaxLength && this.state.nick.length > nickMinLength) { 
       this.setState({
         ...this.state,
         waitingForNickAcceptance: true,
         nickSetFailedReason: ''
       })
-      socket.emit('request login guest', this.state.nick, (response) => {
-        //handle the response (a string; either "success" or the reason the nick wasn't accepted eg. in use)
-        if (response == "success") {
-          this.setState({
-            ...this.state,
-            waitingForNickAcceptance: false,
-            nickSetFailedReason: ''
-          })
-          this.props.dispatch(setNick(this.state.nick));
-          setAppReady();
-          this.props.defaultChannels.map((defaultChannel) => {
-            if (defaultChannel.isSelected) {
-              const joinedChannel = this.props.channels.filter(channel => channel.channelId == defaultChannel.channelId)[0];
-              if (!joinedChannel || !joinedChannel.isJoined) { //do a check first to make sure the channel isn't already joined
-                // add the channel to the UI
-                this.props.dispatch(addChannel({ channelId: defaultChannel.channelId, channelName: defaultChannel.channelName, topic: defaultChannel.topic }));
-                // here, send the actual server request to join the channel
-                requestJoinChannel(defaultChannel.channelId)
-              }
-            }
-          });
-        } else {
-          this.setState({
-            ...this.state,
-            waitingForNickAcceptance: false,
-            nickSetFailedReason: response
-          })
-        }
-      });
+      socket.emit('request login guest', this.state.nick);
+    } else {
+      this.setState({
+        ...this.state,
+        waitingForNickAcceptance: false,
+        nickSetFailedReason: 'nick was invalid length'
+      })
     }
   }
   onNickChange = (e) => {

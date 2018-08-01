@@ -16,7 +16,6 @@ const requestJoinChannel = (channelId) => {
   if (isNaN(channelId)) {
     //tell the UI joining the channel failed
     console.log("requesting to join channel ID failed: not a valid ID");
-    store.dispatch(addMessage({source: systemNick, channelId: channelId, messageSent: true, receivedTimestamp: getNowTimestamp(), messageText: "Could not join channel: invalid ID" }));
   }
   //if there was no error
   else {
@@ -32,6 +31,7 @@ const requestJoinChannel = (channelId) => {
         console.log("request to join channel ID " + channelId + " failed: " + response);
         //show an error
         store.dispatch(addMessage({source: systemNick, channelId: channelId, messageSent: true, receivedTimestamp: getNowTimestamp(), messageText: "Could not join channel: " + response }));
+        store.dispatch(setCurrentChannel(channelId));
       }      
     });
   }

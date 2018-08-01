@@ -43,11 +43,11 @@ class LoginModal extends React.Component {
                 })
               }}>
                 <h1>Login</h1>
-                <div className="loginTabBadges">
+                {/* <div className="loginTabBadges"> //Login tab badges
                   <i className="fas fa-envelope-square"></i>
                   <i className="fab fa-facebook-square"></i>
                   <i className="fab fa-google-plus-square"></i>
-                </div>
+                </div> */}
               </div>
             </div>
 

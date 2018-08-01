@@ -1,5 +1,8 @@
 config = require('../config');
 
+//stores active sessions
+let sessions = [];
+
 //contains a list of users that are currently connected
 let onlineUsers = [];
 
@@ -19,6 +22,7 @@ const log = (message, logImportance = 1) => {
 }
 
 module.exports = {
+  sessions,
   userMessages,
   log,
   onlineUsers,
