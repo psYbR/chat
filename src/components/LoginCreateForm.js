@@ -137,7 +137,8 @@ class loginUserForm extends React.Component {
               disabled={!this.state.emailIsValid ||
                 !this.state.termsAccepted ||
                 this.state.email.length < 5 ||
-                this.state.waitingForLoginResponse}
+                this.state.waitingForLoginResponse
+              }
             >
               {!this.state.waitingForLoginResponse ? "Start chatting" : "Logging in... "}
               {this.state.waitingForLoginResponse && <span className="fa fa-spinner fa-spin"></span>}

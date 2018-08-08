@@ -12,12 +12,59 @@ import {
   ,setPastedImageSize
 } from './actions/actions';
 
-//configure react-redux store provider
-const jsx = (
-  <Provider store={store}>
-    <ChatApp />
-  </Provider>
-);
+import { FadeTransform } from 'react-animation-components'
+
+// browser detection
+//var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0; // Opera 8.0+
+//var isFirefox = typeof InstallTrigger !== 'undefined'; // Firefox 1.0+
+//var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification)); // Safari 3.0+ "[object HTMLElementConstructor]" 
+const isIE = /*@cc_on!@*/false || !!document.documentMode; // Internet Explorer 6-11
+//var isEdge = !isIE && !!window.StyleMedia; // Edge 20+
+//var isChrome = !!window.chrome && !!window.chrome.webstore; // Chrome 1+
+//var isBlink = (isChrome || isOpera) && !!window.CSS; // Blink engine detection
+
+class ApplicationBase extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      displayMode: 'welcome'
+    }
+  }
+  componentWillMount(){
+    if (isIE) {
+      this.setState({displayMode:'IE'})
+    }
+  }
+  render() {
+    if (this.state.displayMode == 'welcome') {
+      return (
+        <FadeTransform in transformProps={{enterTransform: 'translateY(1.5rem)',exitTransform: 'translateY(-1.5rem)'}}>
+          <div className='modalOuterContainer'>
+            <div className='modalInnerContainer'>
+              <h1>welcome to <a>blazechat</a></h1>
+              <button className="guestNickSubmitButton" onClick={()=>{
+                this.setState({displayMode:'app'});
+              }}>PROCEED</button>
+            </div>
+          </div>
+        </FadeTransform>
+      )
+    } else if (this.state.displayMode == 'app') {
+      return (
+        <Provider store={store}>
+          <ChatApp />
+        </Provider>
+      )
+    } else if (this.state.displayMode=='IE') {
+      return (
+        <div className='noSupportContainer'>
+          <h1>Sorry</h1>
+          <h2>Your web browser is not supported. Please download an alternative such as <a href="http://www.google.com/chrome">Chrome</a>.</h2>
+        </div>
+      )
+    }
+  }
+}
 
 //handle pasting images
 document.onpaste = function (event) {
@@ -65,35 +112,4 @@ $(window).blur(() => {
   store.dispatch(unsetAppIsFocused());
 });
 
-// browser detection
-//var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0; // Opera 8.0+
-//var isFirefox = typeof InstallTrigger !== 'undefined'; // Firefox 1.0+
-//var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification)); // Safari 3.0+ "[object HTMLElementConstructor]" 
-const isIE = /*@cc_on!@*/false || !!document.documentMode; // Internet Explorer 6-11
-//var isEdge = !isIE && !!window.StyleMedia; // Edge 20+
-//var isChrome = !!window.chrome && !!window.chrome.webstore; // Chrome 1+
-//var isBlink = (isChrome || isOpera) && !!window.CSS; // Blink engine detection
-
-// console.log("isOpera: " + isOpera)
-// console.log("isFirefox: " + isFirefox)
-// console.log("isSafari: " + isSafari)
-// console.log("isIE: " + isIE) //aka isFilthy
-// console.log("isEdge: " + isEdge)
-// console.log("isChrome: " + isChrome)
-// console.log("isBlink: " + isBlink)
-
-//the content to display if using an unsupported browser
-const noSupportJSX = (
-  <div className='noSupportContainer'>
-    <h1>Sorry</h1>
-    <h2>Your web browser is not supported. Please download an alternative such as <a href="http://www.google.com/chrome">Chrome</a>.</h2>
-  </div>
-);
-
-
-if (!isIE) {
-  ReactDOM.render(jsx, document.getElementById('app'));
-} else {
-  ReactDOM.render(noSupportJSX, document.getElementById('app'));
-}
-
+ReactDOM.render(<ApplicationBase />, document.getElementById('app'));

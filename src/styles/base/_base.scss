@@ -147,6 +147,9 @@ button:disabled {
 // MODAL CONTAINERS
 //
 .modalWrapper {
+
+  
+
   display: flex;
   justify-content: center;
   position: absolute;
@@ -159,13 +162,12 @@ button:disabled {
     transition: width 2s;
 }
 .modalOuterContainer {
-  position: absolute;
-  width: 100%;
+  width: 100vw;
   max-width: 100rem;
-  //height: 100%;
   display: flex;
 }
 .modalInnerContainer {
+
   flex-grow: 1;
   margin: 5%;
   background-color: $base;
