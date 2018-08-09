@@ -72,4 +72,16 @@ const onRequestUserList = (socket, channelId) => {
 
 };
 
-module.exports = onRequestUserList;
+const onConnect = (socket) => {
+  socket.on('request user list', (channelId, callback) => {
+    try {
+      callback(onRequestUserList(socket, channelId));
+    } catch(err) {
+      globals.log('(index) Failed callback for onGetUserList: "' +  err + '" for client: ' + socket.id, 2)
+    }
+  });
+}
+
+module.exports = {
+  onConnect
+}

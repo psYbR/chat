@@ -52,4 +52,16 @@ const onDisconnect = (socket, reason) => {
 
 }
 
-module.exports = onDisconnect;
+const onConnect = (socket) => {
+  socket.on('disconnect', (reason) => {
+    try {
+      onDisconnect(socket, reason);
+    } catch(err) {
+      globals.log('(index) Failed to call onDisconnect: "' +  err + '" for client: ' + socket.id, 2)
+    }
+  });
+}
+
+module.exports = {
+  onConnect
+}

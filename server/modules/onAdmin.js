@@ -66,9 +66,21 @@ const dbCreateDefaultAdminUser = () => {
   return "See server console for result.";
 }
 
+const onConnect = (socket) => {
+  socket.on('admin request channels', () => {
+    admin.onRequestChannels(socket);
+  });
+  socket.on('admin create channel', (channel) => {
+    admin.onAdminCreateChannel(socket,channel);
+  })
+  socket.on('admin create database tables', (callback) => {
+    callback(admin.dbCreateTables());
+  })
+  socket.on('admin create default admin user', (callback) => {
+    callback(admin.dbCreateDefaultAdminUser());
+  })
+}
+
 module.exports = { 
-  dbCreateTables,
-  dbCreateDefaultAdminUser,
-  onAdminCreateChannel,
-  onRequestChannels
+  onConnect
 }

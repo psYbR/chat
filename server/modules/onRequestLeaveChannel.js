@@ -79,4 +79,16 @@ const onRequestLeaveChannel = (socket, channelId) => {
 
 };
 
-module.exports = onRequestLeaveChannel;
+const onConnect = (socket) => {
+  socket.on('leave channel', (channelId, callback) => {
+    try {
+      callback(onRequestLeaveChannel(socket, channelId));
+    } catch(err) {
+      globals.log('(index) Failed to call onRequestLeaveChannel: "' +  err + '" for client: ' + socket.id, 2)
+    }
+  });
+}
+
+module.exports = {
+  onConnect
+}

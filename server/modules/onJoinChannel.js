@@ -99,4 +99,16 @@ const onJoinChannel = (socket, channelId) => {
 
 };
 
-module.exports = onJoinChannel;
+const onConnect = (socket) => {
+  socket.on('join channel', (channelId, callback) => {
+    try {
+      callback(onJoinChannel(socket, channelId));
+    } catch(err) {
+      globals.log('(index) Failed callback for onJoinChannel: "' +  err + '" for client: ' + socket.id, 2)
+    }
+  });
+}
+
+module.exports = {
+  onConnect
+}

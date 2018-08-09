@@ -64,4 +64,17 @@ const onLoginGuest = (socket, nick) => {
 
 }
 
-module.exports = onLoginGuest;
+const onConnect = (socket) => {
+  socket.on('request login guest', (nick, callback) => {
+    try {
+      callback(onLoginGuest(socket, nick));
+    } catch(err) {
+      globals.log('(index) Failed callback for onSetNick: "' +  err + '" for client: ' + socket.id, 2)
+    }
+    
+  });
+}
+
+module.exports = {
+  onConnect
+}

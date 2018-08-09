@@ -121,4 +121,16 @@ const onChatMessage = (socket, msg) => {
 
 }
 
-module.exports = onChatMessage;
+const onConnect = (socket) => {
+  socket.on('chat message', (msg, callback) => {
+    try {
+      callback(onChatMessage(socket, msg));
+    } catch(err) {
+      globals.log('(index) Failed callback for onChatMessage: "' +  err + '" for client: ' + socket.id, 2)
+    }
+  });
+}
+
+module.exports = {
+  onConnect
+}

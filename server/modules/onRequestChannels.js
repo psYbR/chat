@@ -74,7 +74,23 @@ const onRequestUserChannels = (socket) => {
   });
 };
 
+const onConnect = (socket) => {
+  socket.on('request user channels', () => {
+    try {
+      onRequestUserChannels(socket);
+    } catch(err) {
+      globals.log('(index) Failed to call onRequestChannels.onRequestUserChannels: "' +  err + '" for client: ' + socket.id, 2)
+    }
+  });
+  socket.on('request default channels', () => {
+    try {
+      onRequestDefaultChannels(socket);
+    } catch(err) {
+      globals.log('(index) Failed to call onRequestChannels.onRequestDefaultChannels: "' +  err + '" for client: ' + socket.id, 2)
+    }
+  });
+}
+
 module.exports = {
-  onRequestDefaultChannels,
-  onRequestUserChannels
+  onConnect
 }

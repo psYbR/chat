@@ -55,7 +55,7 @@ class ApplicationBase extends React.Component {
           <ChatApp />
         </Provider>
       )
-    } else if (this.state.displayMode=='IE') {
+    } else if (this.state.displayMode == 'IE') {
       return (
         <div className='noSupportContainer'>
           <h1>Sorry</h1>

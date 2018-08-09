@@ -43,7 +43,23 @@ const createSession = (socket) => {
   return response;
 }
 
+const onConnect = (socket) => {
+  socket.on('check session', (sessionId, callback)=>{
+    try {
+      callback(session.checkSession(socket, sessionId))
+    } catch(err) {
+      globals.log('(index) Failed to check session: "' +  err)
+    }
+  })
+  socket.on('create session', (callback)=>{
+    try {
+      callback(session.createSession(socket));
+    } catch(err) {
+      globals.log('(index) Failed to create session: "' +  err)
+    }
+  })
+}
+
 module.exports = {
-  checkSession,
-  createSession
+  onConnect
 }

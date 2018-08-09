@@ -20,5 +20,13 @@ const onLoginUser = (socket, login) => {
   }
 
 }
+
+const onConnect = (socket) => {
+  socket.on('request login user', (login) => {
+    onLoginUser(socket, login);
+  });
+}
   
-module.exports = onLoginUser;
+module.exports = {
+  onConnect
+}
