@@ -149,11 +149,11 @@ export const channelPickerShowFirstTab = () => ({
 export const channelPickerShowSecondTab = () => ({
   type: 'CHANNEL_PICKER_SHOW_SECOND_TAB'
 });
-export const showChannelModal = () => ({
-  type: 'SHOW_CHANNEL_MODAL'
+export const setChannelModalVisible = () => ({
+  type: 'SET_CHANNEL_MODAL_VISIBLE'
 });
-export const hideChannelModal = () => ({
-  type: 'HIDE_CHANNEL_MODAL'
+export const unsetChannelModalVisible = () => ({
+  type: 'UNSET_CHANNEL_MODAL_VISIBLE'
 });
 export const setStyleModalVisible = () => ({
   type: 'SET_STYLE_MODAL_VISIBLE'
@@ -179,11 +179,11 @@ export const blurApp = () => ({
 export const unblurApp = () => ({
   type: 'UNBLUR_APP'
 });
-export const showLeaveChannelModal = () => ({
-  type: 'SHOW_LEAVE_CHANNEL_MODAL'
+export const setLeaveChannelModalVisible = () => ({
+  type: 'SET_LEAVE_CHANNEL_MODAL_VISBLE'
 });
-export const hideLeaveChannelModal = () => ({
-  type: 'HIDE_LEAVE_CHANNEL_MODAL'
+export const unsetLeaveChannelModalVisible = () => ({
+  type: 'UNSET_LEAVE_CHANNEL_MODAL_VISBLE'
 });
 export const setWaitingForLeaveChannelConfirmation = () => ({
   type: 'SET_WAITING_FOR_LEAVE_CHANNEL_CONFIRMATION'

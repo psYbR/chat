@@ -27,7 +27,8 @@ class ApplicationBase extends React.Component {
   constructor() {
     super();
     this.state = {
-      displayMode: 'welcome'
+      displayMode: 'welcome',
+      fadeOutWelcome: false
     }
   }
   componentWillMount(){
@@ -39,11 +40,19 @@ class ApplicationBase extends React.Component {
     if (this.state.displayMode == 'welcome') {
       return (
         <FadeTransform in transformProps={{enterTransform: 'translateY(1.5rem)',exitTransform: 'translateY(-1.5rem)'}}>
-          <div className='modalOuterContainer'>
-            <div className='modalInnerContainer'>
-              <h1>welcome to <a>blazechat</a></h1>
-              <button className="guestNickSubmitButton" onClick={()=>{
-                this.setState({displayMode:'app'});
+          <div className={'modal-outer-container splash-modal-outer' + (this.state.fadeOutWelcome ? ' modal-fade-out' : '')}>
+            <div className='modal-inner-container splash-modal-inner'>
+              <h1>Welcome to <a>blazechat</a></h1>
+              <h3>Placeholder</h3>
+              <p>Some text about the app here</p>
+              <button className="button-default" onClick={()=>{
+                this.setState({
+                  ...this.state,
+                  fadeOutWelcome: true
+                })
+                setTimeout(()=>{
+                  this.setState({displayMode:'app'});
+                }, 150)
               }}>PROCEED</button>
             </div>
           </div>

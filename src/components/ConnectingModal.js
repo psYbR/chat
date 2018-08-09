@@ -7,11 +7,11 @@ class ConnectingModal extends React.Component {
   }
   render() {
     return (
-      <div className="modalWrapper">
-        <div className="modalBlurContainer">
-        </div>
-        <div className="modalOuterContainer">
-            <div className="modalInnerContainer connectingModalContainer">
+      <div className="modal-wrapper">
+        {/* <div className="modal-blur-container">
+        </div> */}
+        <div className="modal-outer-container">
+            <div className="modal-inner-container connectingModalContainer">
                 <h1 className="connectingTitle">{this.props.userInterface.reconnectionMessage}...</h1>
                 <h1 style={
                     {

@@ -71,7 +71,7 @@ class ChatInput extends React.Component {
     return (
     <div className={this.props.configuration.lightTheme ? "chatInputContainer chatInputContainerActive emphasised-container-light" : "chatInputContainer chatInputContainerActive emphasised-container"}>
       <button
-        className="buttonDefault fontButton"
+        className="button-default button-font"
         onClick={this.onFontButtonClick}
       ><i className="fas fa-cog"></i></button>
       <form className="inputForm" onSubmit={this.onSubmit}>

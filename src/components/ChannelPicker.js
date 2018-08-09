@@ -42,21 +42,21 @@ class Modal extends React.Component {
   }
   render() {
     return (
-      <div className="modalWrapper">
-        <div className="modalBlurContainer">
-        </div>
-        <div className="modalOuterContainer">
-          <div className="modalInnerContainer channelPickerContainer">
+      <div className="modal-wrapper">
+        {/* <div className="modal-blur-container">
+        </div> */}
+        <div className="modal-outer-container">
+          <div className="modal-inner-container channelPickerContainer">
 
-            <div className="tabContainer">
-              <div className={"defaultTab tab" + (!this.props.userInterface.channelPickerSecondTab ? " tabSelected" : "")}
+            <div className="tab-container">
+              <div className={"defaultTab tab" + (!this.props.userInterface.channelPickerSecondTab ? " tab-selected" : "")}
                 onClick={(e) => {
                   //this.props.dispatch(channelPickerFirstTab());
                 }}
               >
                 <h1 className="channelPickerTabTitle">Default Channels</h1>
               </div>
-              <div className={"userTab tab tabDisabled" + (this.props.userInterface.channelPickerSecondTab ? " tabSelected" : "")}
+              <div className={"userTab tab tab-disabled" + (this.props.userInterface.channelPickerSecondTab ? " tab-selected" : "")}
                 onClick={(e) => {
                   return;
                   this.props.dispatch(channelPickerSecondTab());

@@ -9,8 +9,11 @@
   box-shadow: inset .1rem .1rem .2rem $theme, inset -.1rem -.1rem .2rem $theme
 }
 
-.fontButton {
+.button-font {
   height: 3rem;
+  font-size: 1.5rem;
+  padding: 0 .5rem 0 .5rem;
+  margin: .3rem .2rem .2rem .3rem;
 }
 
 .inputForm {

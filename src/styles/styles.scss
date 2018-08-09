@@ -1,5 +1,13 @@
 @import './base/settings';
 @import './base/base';
+
+@import './base/button';
+@import './base/checkbox';
+@import './base/modal';
+@import './base/scrollbar';
+@import './base/tab';
+@import './base/tooltip';
+
 @import './components/ChatApp';
 
 @import './components/ColumnMiddle';
@@ -25,3 +33,4 @@
 @import './components/UserChannelPicker';
 @import './components/LeaveChannelModal';
 @import './components/AdminModal';
+@import './components/SplashModal';

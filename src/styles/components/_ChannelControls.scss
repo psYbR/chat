@@ -8,9 +8,13 @@
   white-space: nowrap;
 }
 
-.channelControlsButton {
+.button-channel-controls {
+  width: auto;
   flex-grow: 1;
   height: calc($bar-height * 0.8);
+  font-size: 1.5rem;
+  padding: .2rem .5rem .2rem .5rem;
+  margin: 0 .2rem 0 .2rem;
   outline: none;
 }
 
@@ -18,22 +22,19 @@ $ccbjoin: rgb(56, 177, 0);
 .ccbJoin {
   background-color: $ccbjoin;
   border: 0;
-  border-top: .2rem solid lighten($ccbjoin, 10%);
-  border-bottom: .2rem solid darken($ccbjoin, 10%);
+  border-bottom: .4rem solid darken($ccbjoin, 10%);
 }
 
 $ccbleave: rgb(177, 0, 0);
 .ccbLeave {
   background-color: $ccbleave;
   border: 0;
-  border-top: .2rem solid lighten($ccbleave, 10%);
-  border-bottom: .2rem solid darken($ccbleave, 10%);
+  border-bottom: .4rem solid darken($ccbleave, 10%);
 }
 
 $ccbcreate: rgb(58, 176, 255);
 .ccbCreate {
   background-color: $ccbcreate;
   border: 0;
-  border-top: .2rem solid lighten($ccbcreate, 10%);
-  border-bottom: .2rem solid darken($ccbcreate, 10%);
+  border-bottom: .4rem solid darken($ccbcreate, 10%);
 }

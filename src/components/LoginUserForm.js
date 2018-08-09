@@ -7,7 +7,7 @@ import {
 import { setAppReady } from '../utils/setAppState'
 import requestJoinDefaultChannels from '../utils/handlers/requestJoinDefaultChannels';
 
-class loginUserForm extends React.Component {
+class LoginUserForm extends React.Component {
   constructor(props) {
     super(props);
     this.state={
@@ -23,8 +23,13 @@ class loginUserForm extends React.Component {
     if (response == "success") {
 
       this.props.dispatch(setNick(nick));
-      setAppReady();
       requestJoinDefaultChannels();
+
+      //animate
+      this.props.unmount()
+      setTimeout(()=>{
+        setAppReady();
+      },150)
 
     } else {
       this.setState({
@@ -108,9 +113,9 @@ class loginUserForm extends React.Component {
             value={this.state.password || ''}
           />
 
-          <div className="termsContainer">
-            <p className={"termsParagraph" + (this.props.configuration.lightTheme ? " p-light" : "")}>Accept <a href='terms.html' className={this.props.configuration.lightTheme ? "a-light" : ""}>terms and conditions</a>?</p>
-            <label className="checkBoxContainer">
+          <div className="terms-container terms-container-user">
+            <p className={"terms-paragraph" + (this.props.configuration.lightTheme ? " p-light" : "")}>Accept <a href='terms.html' className={this.props.configuration.lightTheme ? "a-light" : ""}>terms and conditions</a>?</p>
+            <label className="checkbox-container">
               <input
                 type="checkbox"
                 checked={this.state.termsAccepted ? "checked" : ''}
@@ -125,7 +130,7 @@ class loginUserForm extends React.Component {
                   }) }
                 }}
               />
-              <span className="checkBoxCheckmark"></span>
+              <span className="checkbox-checkmark"></span>
             </label>
             
           </div>
@@ -149,4 +154,4 @@ class loginUserForm extends React.Component {
   };
 }
 
-export default connect(state=>state)(loginUserForm);
+export default connect(state=>state)(LoginUserForm);

@@ -20,11 +20,11 @@ class LeaveChannelModal extends React.Component {
   render() {
     return (
       
-      <div className="modalWrapper">
-        <div className="modalBlurContainer">
-        </div>
-        <div className="modalOuterContainer leaveChannelOuterContainer">
-            <div className="modalInnerContainer leaveChannelContainer">
+      <div className="modal-wrapper">
+        {/* <div className="modal-blur-container">
+        </div> */}
+        <div className="modal-outer-container leaveChannelOuterContainer">
+            <div className="modal-inner-container leaveChannelContainer">
 
               <h3>Really leave channel '{this.props.channels.filter(channel => channel.isCurrent)[0] ? this.props.channels.filter(channel => channel.isCurrent)[0].channelName : ''}'?</h3>
 

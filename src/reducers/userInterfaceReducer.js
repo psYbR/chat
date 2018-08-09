@@ -123,12 +123,12 @@ export default (state = reducerDefaultState, action) => {
         ...state,
         channelPickerSecondTab: true
       };
-    case 'SHOW_CHANNEL_MODAL':
+    case 'SET_CHANNEL_MODAL_VISIBLE':
       return {
         ...state,
         channelPickerVisible: true
       };
-    case 'HIDE_CHANNEL_MODAL':
+    case 'UNSET_CHANNEL_MODAL_VISIBLE':
       return {
         ...state,
         channelPickerVisible: false
@@ -173,12 +173,12 @@ export default (state = reducerDefaultState, action) => {
         ...state,
         appIsBlurred: false
       };
-    case 'SHOW_LEAVE_CHANNEL_MODAL':
+    case 'SET_LEAVE_CHANNEL_MODAL_VISBLE':
       return {
         ...state,
         leaveChannelModalVisible: true
       }
-    case 'HIDE_LEAVE_CHANNEL_MODAL':
+    case 'UNSET_LEAVE_CHANNEL_MODAL_VISBLE':
       return {
         ...state,
         leaveChannelModalVisible: false

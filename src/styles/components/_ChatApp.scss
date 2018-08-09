@@ -1,35 +1,44 @@
-html, body, #app {
+.blazechat-root-container {
+  width: 100%;
   height: 100%;
+  background-color: $surround;
+  margin: 0;
+}
+.blazechat-overlay-container {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+.blazechat-color-overlay {
+  position: absolute;
+  left: -5vw;
+  top: -5vh;
+  width: 110vw;
+  height: 110vh;
   background-color: black;
 }
-
-body {
-  color: $font-default;
-  font-family: $font-family-default;
+.blazechat-color-overlay-visible {
+  transition: opacity 1000ms linear;
+  visibility: visible;
+  opacity: 1;
+}
+.blazechat-color-overlay-invisible {
+  transition: visibility 1000ms linear, opacity 1000ms linear;
+  visibility: hidden;
+  opacity: 0;
 }
 
-.chatAppContainer {
-  display: flex;
-  width: 100%;
-  background-color: $surround;
-  height: 100%;
-  width: 100%;
-  margin: 0;
+.blur-container {
+  width:100%;
+  height:100%;
+  position: absolute;
+  left: 0;
+  top: 0;
 }
-.chatAppContainer-light {
-  display: flex;
-  width: 100%;
-  background-color: $surround-light;
-  height: 100%;
-  width: 100%;
-  margin: 0;
-}
-
-//used by ./components/WelcomeModal.js to blur the "background" by applying the blur to the app parent container
-.chatAppBlur {
+.blur-container {
   -webkit-filter: blur(10px);
   -moz-filter: blur(10px);
   -o-filter: blur(10px);
   -ms-filter: blur(10px);
   filter: blur(10px);
-}
+} 

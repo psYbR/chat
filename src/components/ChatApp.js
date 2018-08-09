@@ -15,37 +15,23 @@ class ChatApp extends React.Component {
     super(props);
   }
   render() {
+    //&& this.props.loginState.loggedIn
     return (
-      <div className={this.props.configuration.lightTheme ? "chatAppContainer-light" : "chatAppContainer"}>
+      <div className="blazechat-root-container">
+
         <DOMHandler />
+        {(!this.props.userInterface.appIsConnected || !this.props.userInterface.defaultChannelsReceived) && <ConnectingModal />}
+        {(this.props.userInterface.loginModalVisible && this.props.userInterface.appIsConnected && this.props.userInterface.defaultChannelsReceived) && <LoginModal />}
+        {(this.props.userInterface.adminModalVisible && this.props.userInterface.appIsConnected) && <AdminModal />}
+        {(this.props.userInterface.channelPickerVisible && this.props.userInterface.appIsConnected) && <ChannelPicker />}
+        {(this.props.userInterface.leaveChannelModalVisible && this.props.userInterface.appIsConnected) && <LeaveChannelModal />}
 
-        {(!this.props.userInterface.appIsConnected
-        || !this.props.userInterface.defaultChannelsReceived)
-          && <ConnectingModal />}
-
-        {(this.props.userInterface.loginModalVisible
-        && this.props.userInterface.appIsConnected
-        && this.props.userInterface.defaultChannelsReceived)
-          && <LoginModal />}
-
-        {this.props.userInterface.adminModalVisible && this.props.userInterface.appIsConnected
-          && <AdminModal />}
-
-        {(this.props.userInterface.channelPickerVisible
-        && this.props.userInterface.appIsConnected && this.props.loginState.loggedIn)
-          && <ChannelPicker />}
-
-        {(this.props.userInterface.leaveChannelModalVisible
-        && this.props.userInterface.appIsConnected && this.props.loginState.loggedIn)
-          && <LeaveChannelModal />}
-
-        {this.props.userInterface.channelListVisible
-          && <ChannelList />}
-
-        <ChatMainWindow />
-
-        {this.props.userInterface.userListVisible
-          && <UserList />}
+        <div className={"blazechat-overlay-container" + (this.props.userInterface.appIsBlurred ? " blur-container" : "")}>
+          {this.props.userInterface.channelListVisible && <ChannelList />}
+          <ChatMainWindow />
+          {this.props.userInterface.userListVisible && <UserList />}
+          <div className={'blazechat-color-overlay' + (this.props.userInterface.appIsBlurred ? ' blazechat-color-overlay-visible' : ' blazechat-color-overlay-invisible')}></div>
+        </div>
 
       </div>
     );

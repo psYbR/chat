@@ -5,8 +5,8 @@
 }
 
 //TABS - moved to base
-.loginTab {
-
+.login-option-container {
+  transform: translateY(-1.5rem);
 }
 
 //login icon badges
@@ -127,25 +127,28 @@
 }
 
 //terms and conditions
-.termsContainer {
+.terms-container {
   display: flex;
   flex-direction: row;
   margin-bottom: 1rem;
 }
-.termsParagraph {
+.terms-paragraph {
   display: inline-block;
   margin: 0 1rem 0 0;
   padding: .5rem 0 0 0;
 }
 @media only screen and (max-width: $width-breakpoint) {
-  .termsContainer{
+  .terms-container{
     margin-bottom: 1.4rem;
   }
 }
 @media only screen and (max-height: $height-breakpoint) {
-  .termsContainer{
+  .terms-container{
     margin-bottom: 1.4rem;
   }
+}
+.terms-container-user {
+  justify-content: center;
 }
 
 

@@ -68,16 +68,16 @@ const dbCreateDefaultAdminUser = () => {
 
 const onConnect = (socket) => {
   socket.on('admin request channels', () => {
-    admin.onRequestChannels(socket);
+    onRequestChannels(socket);
   });
   socket.on('admin create channel', (channel) => {
-    admin.onAdminCreateChannel(socket,channel);
+    onAdminCreateChannel(socket,channel);
   })
   socket.on('admin create database tables', (callback) => {
-    callback(admin.dbCreateTables());
+    callback(dbCreateTables());
   })
   socket.on('admin create default admin user', (callback) => {
-    callback(admin.dbCreateDefaultAdminUser());
+    callback(dbCreateDefaultAdminUser());
   })
 }
 

@@ -2,6 +2,7 @@ import requestJoinChannel from './requestJoinChannel'
 import {
   addChannel
 } from '../../actions/actions';
+import { store } from '../../stores/store';
 
 //request to join default channels
 export default () => {

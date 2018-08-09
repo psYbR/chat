@@ -8,7 +8,7 @@ import {
 import { setAppReady } from '../utils/setAppState'
 import requestJoinDefaultChannels from '../utils/handlers/requestJoinDefaultChannels';
 
-class loginGuestForm extends React.Component {
+class LoginGuestForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,6 +17,7 @@ class loginGuestForm extends React.Component {
       waitingForNickAcceptance: false,
       nickSetFailedReason: ''
     }
+    this.timer = null
   }
   handleLoginResponse = (response) => {
     if (response == "success") {
@@ -28,8 +29,14 @@ class loginGuestForm extends React.Component {
       })
 
       this.props.dispatch(setNick(this.state.nick));
-      setAppReady();
       requestJoinDefaultChannels();
+
+      //animate
+      this.props.unmount()
+      setTimeout(()=>{
+        setAppReady();
+      },150)
+      
 
     } else {
       this.setState({
@@ -44,6 +51,16 @@ class loginGuestForm extends React.Component {
   }
   componentWillUnmount = () => {
     socket.removeListener('login guest response', this.handleLoginResponse);
+    clearTimeout(this.timer);
+  }
+  onTimer = () => {
+    if (this.state.waitingForNickAcceptance) {
+      this.setState({
+        ...this.state,
+        waitingForNickAcceptance: false,
+        nickSetFailedReason: "no response from server"
+      })
+    }
   }
   onFormSubmit = (e) => {
     e.preventDefault();
@@ -55,6 +72,10 @@ class loginGuestForm extends React.Component {
         nickSetFailedReason: ''
       })
       socket.emit('request login guest', this.state.nick);
+
+      //timer
+      this.timer = setTimeout(this.onTimer.bind(this), 5000)
+
     } else {
       this.setState({
         ...this.state,
@@ -113,17 +134,17 @@ class loginGuestForm extends React.Component {
 
         </form>
 
-        <div className="termsContainer">
-          <p className={"termsParagraph" + (this.props.configuration.lightTheme ? " p-light" : "")}>
+        <div className="terms-container">
+          <p className={"terms-paragraph" + (this.props.configuration.lightTheme ? " p-light" : "")}>
             Accept <a href='/terms.html' className={this.props.configuration.lightTheme ? "a-light" : ""}>terms and conditions</a>?
           </p>
-          <label className="checkBoxContainer">
+          <label className="checkbox-container">
             <input
               type="checkbox"
               checked={this.state.termsAccepted ? "checked" : ''}
               onChange={this.onAcceptTerms}
             />
-            <span className="checkBoxCheckmark"></span>
+            <span className="checkbox-checkmark"></span>
           </label>
         </div>
 
@@ -132,4 +153,4 @@ class loginGuestForm extends React.Component {
   };
 }
 
-export default connect(state=>state)(loginGuestForm);
+export default connect(state=>state)(LoginGuestForm);

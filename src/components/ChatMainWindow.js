@@ -36,7 +36,7 @@ class ChatMainWindow extends React.Component {
       //{this.props.configuration.lightTheme ? "-light" : ""}
       //{"" + (this.props.configuration.lightTheme ? " -light" : "")}
 
-      <div className={"chatWindowContainer" + (this.props.userInterface.appIsBlurred ? " chatAppBlur" : '') /*Blur the app if the user isn't logged in*/}>
+      <div className="chatWindowContainer">
   
         <ChannelTopic
           channelTopic={

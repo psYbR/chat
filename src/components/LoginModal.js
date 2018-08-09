@@ -15,23 +15,28 @@ class LoginModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeTab: 0
+      activeTab: 0,
+      fadeOut: false
     }
+  }
+  unmount = () => {
+    this.setState({
+      ...this.state,
+      fadeOut: true
+    })
   }
   render() {
     return (
 
-      <div className="modalWrapper">
-        <div className="modalBlurContainer">
-        </div>
+      <div className={"modal-wrapper" + (this.state.fadeOut ? ' modal-fade-out' : "")}>
 
-        <FadeTransform in transformProps={{enterTransform: 'translateY(1.5rem)',exitTransform: 'translateY(-1.5rem)'}}>
+        <FadeTransform in transformProps={{enterTransform: 'translateY(1.5rem)', exitTransform: 'translateY(-1.5rem)'}}>
         
-          <div className="modalOuterContainer">
-            <div className={"modalInnerContainer" + (this.props.configuration.lightTheme ? " modalInnerContainer-light" : "")}>
+          <div className="modal-outer-container">
+            <div className={"modal-inner-container" + (this.props.configuration.lightTheme ? " modal-inner-container-light" : "")}>
 
-              <div className="tabContainer">
-                <div className={"guestTab tab" + (this.state.activeTab == 0 ? " tabSelected" : "") + (this.props.configuration.lightTheme ? " tabSelected-light" : "")}
+              <div className="tab-container">
+                <div className={"guestTab tab" + (this.state.activeTab == 0 ? " tab-selected" : "") + (this.props.configuration.lightTheme ? " tab-selected-light" : "")}
                 onClick={()=>{
                   this.setState({
                     ...this.state,
@@ -40,7 +45,7 @@ class LoginModal extends React.Component {
                 }}>
                   <h1>Guest</h1>
                 </div>
-                <div className={"loginTab tab" + (this.state.activeTab == 1 ? " tabSelected" : "") + (this.props.configuration.lightTheme ? " tab-light" : "")}
+                <div className={"loginTab tab" + (this.state.activeTab == 1 ? " tab-selected" : "") + (this.props.configuration.lightTheme ? " tab-light" : "")}
                 onClick={()=>{
                   this.setState({
                     ...this.state,
@@ -60,16 +65,22 @@ class LoginModal extends React.Component {
               <a className={this.props.configuration.lightTheme ? "a-light" : ""} onClick={() => {this.props.dispatch(setDarkTheme())}}>Dark</a></p> */}
 
               {this.state.activeTab == 1 && 
-                <div className="loginOptionContainer">
-                  {this.state.createAccount == 1 ? 
-                    <LoginCreateForm /> :
-                    <LoginUserForm />
-                  }
-                </div>
+                <FadeTransform in duration={100} transformProps={{enterTransform: 'translateY(1.5rem)', exitTransform: 'translateY(-1.5rem)'}}>
+                  <div className="login-option-container">
+                    {this.state.createAccount == 1 ? 
+                      <LoginCreateForm /> :
+                      <LoginUserForm unmount={this.unmount} />
+                    }
+                  </div>
+                </FadeTransform>
               }
 
               {this.state.activeTab== 0 && 
-                <LoginGuestForm />
+                <FadeTransform in duration={100} transformProps={{enterTransform: 'translateY(1.5rem)', exitTransform: 'translateY(-1.5rem)'}}>
+                  <div className="login-option-container">
+                    <LoginGuestForm unmount={this.unmount} />
+                  </div>
+                </FadeTransform>
               }
 
               <div className="containerChannelPicker">
