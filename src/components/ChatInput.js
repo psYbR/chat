@@ -19,21 +19,68 @@ import sendChatMessage from '../utils/handlers/sendChatMessage';
 class ChatInput extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      imageUrl: '',
+      messageHasImage: false,
+      imageSize: 0
+    }
+  }
+  componentDidMount = () => {
+    document.onpaste = this.handleImagePaste
+  }
+  handleImagePaste = (event) => {
+    // use event.originalEvent.clipboard for newer chrome versions
+    let items = (event.clipboardData  || event.originalEvent.clipboardData).items;
+    // find pasted image among pasted items
+    let blob = null
+    let imageSize = 0
+    for (var i = 0; i < items.length; i++) {
+      if (items[i].type.indexOf("image") === 0) {
+        blob = items[i].getAsFile()
+        imageSize = blob.size
+      }
+    }
+    // load image if there is one on the clipboard
+    if (blob !== null) {
+      var reader = new FileReader()
+      reader.onload = (event) => {
+        document.getElementById("pastedImage").src = event.target.result
+        document.getElementById("pastedImageContainer").style.display = 'initial'
+        this.setState({
+          imageUrl: event.target.result,
+          messageHasImage: true,
+          imageSize
+        })
+      }
+      reader.readAsDataURL(blob)
+    }
+  }
+  handleImageRemoveClick = () => {
+    document.getElementById("pastedImage").src = '';
+    document.getElementById("pastedImageContainer").style.display = 'none';
+    this.setState({
+      ...this.state,
+      imageUrl: '',
+      messageHasImage: false,
+      imageSize: 0
+    })
   }
   onSubmit = (e) => {
     e.preventDefault();
     //check the user is in a channel before doing anything, and that any pasted image isn't over the size limit
-    if (this.props.channels.length > 0 && this.props.userInterface.pastedImageSize <= maxPastedImageSize) {
+    if (this.props.channels.length > 0 && this.state.imageSize <= maxPastedImageSize) {
       const message = this.props.userInterface.chatMessageInput;
       if (message && !(!message.replace(/\s/g, '').length)) {
-        this.props.dispatch(setChatMessageInput());
+        this.props.dispatch(setChatMessageInput())
         const outboundMsg = {
           channelId: this.props.channels.filter(channel => channel.isCurrent)[0].channelId, //verify serverside
           messageText: message,
           appliedFont: this.props.configuration.defaultFont, //validate
           appliedColor: this.props.configuration.defaultColor, //validate
           sentTimestamp: getNowTimestamp(),
-        };
+          messageHasImage: this.state.messageHasImage,
+          imageUrl: this.state.imageUrl
+        }
 
         //add the message to the UI but set it as not sent yet - the callback from sendMessage will set it as sent
         this.props.dispatch(addMessage(
@@ -46,6 +93,7 @@ class ChatInput extends React.Component {
 
         //send the message via the socket
         sendChatMessage(outboundMsg);
+        this.handleImageRemoveClick();
       }
     }
   }
@@ -69,7 +117,7 @@ class ChatInput extends React.Component {
   }
   render() {
     return (
-    <div className={this.props.configuration.lightTheme ? "chatInputContainer chatInputContainerActive emphasised-container-light" : "chatInputContainer chatInputContainerActive emphasised-container"}>
+    <div className={"chatInputContainer chatInputContainerActive" + (this.props.configuration.lightTheme ? " emphasised-container-light" : " emphasised-container")}>
       <button
         className="button-default button-font"
         onClick={this.onFontButtonClick}
@@ -93,11 +141,7 @@ class ChatInput extends React.Component {
         <div className="pastedImageContainer" id="pastedImageContainer">
           <img id="pastedImage"></img>
           <div className="pastedImageX"
-            onClick={()=>{
-              document.getElementById("pastedImage").src = '';
-              document.getElementById("pastedImageContainer").style.display = 'none';
-              this.props.dispatch(setPastedImageSize(0))
-            }}>
+            onClick={this.handleImageRemoveClick}>
             <i className="fas fa-times"></i>
           </div>
         </div>
@@ -108,8 +152,4 @@ class ChatInput extends React.Component {
   };  
 }
 
-const mapStateToProps = (state) => {
-    return state;
-};
-
-export default connect(mapStateToProps)(ChatInput);
+export default connect(state=>state)(ChatInput);

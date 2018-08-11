@@ -13,15 +13,14 @@ export const setUIState = (
 
     loginModalVisible = false,
     adminModalVisible = false,
-
     channelListVisible = initialWindowState,
     userListVisible = initialWindowState,
     styleModalVisible = false, //use to hide/show the style modal
     leaveChannelModalVisible = false,
     channelPickerVisible = false,
-
     windowWidth = Math.round(window.innerWidth * 0.0625),
     windowHeight = Math.round(window.innerHeight * 0.0625),
+    
     chatMessageInput = '',
     ping = '0',
     

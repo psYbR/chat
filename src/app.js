@@ -76,30 +76,7 @@ class ApplicationBase extends React.Component {
 }
 
 //handle pasting images
-document.onpaste = function (event) {
-  // use event.originalEvent.clipboard for newer chrome versions
-  var items = (event.clipboardData  || event.originalEvent.clipboardData).items;
 
-  // find pasted image among pasted items
-  var blob = null;
-  for (var i = 0; i < items.length; i++) {
-    if (items[i].type.indexOf("image") === 0) {
-      blob = items[i].getAsFile();
-      store.dispatch(setPastedImageSize(blob.size))
-    }
-  }
-
-  // load image if there is a pasted image
-  if (blob !== null) {
-    var reader = new FileReader();
-    reader.onload = function(event) {
-      //console.log(event.target.result); // data url!
-      document.getElementById("pastedImage").src = event.target.result;
-      document.getElementById("pastedImageContainer").style.display = 'initial';
-    };
-    reader.readAsDataURL(blob);
-  }
-}
 
 //handle notifications in the browser tab
 let notifToggle = false;
