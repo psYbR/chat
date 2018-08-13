@@ -39,10 +39,11 @@ a:hover {
   border: $element-border solid $shadow;
 }
 .emphasised-container-light {
-  box-shadow: 0 0.1rem lighten($surround-light, 10%), inset 0 0.1rem 0.1rem darken($base-light, 5%);
-  border-radius: 0.2rem;
+  box-shadow: 0;
+  border-radius: 0;
   background-color: $base-light;
-  border: $element-border solid $shadow;
+  border: 0;
+  border-top: $theme solid .2rem;
 }
 
 //the div shown when the browser is not supported (IE)

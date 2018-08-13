@@ -21,7 +21,7 @@ const ChatMessage = ({ message , loginState, lightTheme }) => (
             <td
                 className={(lightTheme ? "chatMessageTextContainer-light " : "chatMessageTextContainer ") + (message.type == 'outbound' ? (lightTheme ? "chatMessageCurrentUser-light " : "chatMessageCurrentUser ") : '') + (message.source == systemNick ? 'chatMessageSystemUser' : '') }
             >
-                {messageHTMLify(message.messageText, 'pMessageText', message.appliedFont, message.appliedColor, message.source)}
+                {messageHTMLify(message.messageText, 'pMessageText', message.appliedFont, message.appliedColor, message.source, lightTheme)}
             </td>
 
         </tr>

@@ -1,24 +1,30 @@
-.channelTopicContainer {
-    display: flex;
-    width: calc(100% - $element-margin);
-    margin-bottom: $element-margin;
-    min-height: $bar-height !important;
-    padding-left: 1rem;
-    padding-right: 1rem;
+.channel-topic-container {
+  display: flex;
+  width: calc(100% - $element-margin);
+  margin-bottom: $element-margin;
+  min-height: $bar-height !important;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 @media only screen and (max-height: $vertical-break-point) {
-    .channelTopicContainer {
-        display: none;
-    }
-} .topicForm {
-    width: 100%;
-} .topicText {
-    background-color: rgba(0,0,0,0);
-    color: $font-default;
-    width: 100%;
-    height: 100%;
-    padding: 0;
-    border: 0;
-} .topicText:focus{
-    outline: none;
+  .channel-topic-container {
+    display: none;
+  }
+
+} .topic-form {
+  width: 100%;
+}
+.topic-text {
+  background-color: rgba(0,0,0,0);
+  color: $font-default;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+}
+.topic-text-light {
+  color: $font-default-light;
+}
+.topic-text:focus{
+  outline: none;
 }

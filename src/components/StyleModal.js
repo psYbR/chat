@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-//import { hideStyleModal, setAppZoom, showChannelModal } from '../actions/userInterfaceActions';
-import { hideSystemMessages, showSystemMessages, setFontColor } from '../actions/configurationActions';
+import { hideSystemMessages, showSystemMessages, setFontColor, setLightTheme, setDarkTheme } from '../actions/configurationActions';
 import { colors, fonts } from '../utils/styleInfo';
 import FontPicker from './FontPicker';
 
@@ -15,8 +14,8 @@ class StyleModal extends React.Component {
   render() {
     return (
       
-      <div className="SMWrapper emphasised-container">
-        <div className="SMContainer ">
+      <div className={"SMWrapper" + (this.props.configuration.lightTheme ? " emphasised-container-light SMWrapper-light" : " emphasised-container")}>
+        <div className={"SMContainer" + (this.props.configuration.lightTheme ? " SMContainer-light" : "")}>
 
           <div className="SMColors">
             <h3>Font Color</h3>
@@ -32,7 +31,7 @@ class StyleModal extends React.Component {
                 <div className="SMbutton">
                 <span
                   style={{background: 'rgb(' + color.rgbValue + ')' }}
-                  className={this.props.configuration.defaultColor == color.colorName ? "SMColorSelected" : ""}
+                  className={this.props.configuration.defaultColor == color.colorName ? (this.props.configuration.lightTheme ? "SMColorSelected-light" : "SMColorSelected") : ""}
                 ></span></div>
               </label>
             ) }
@@ -56,7 +55,7 @@ class StyleModal extends React.Component {
 
             <div className='SMSystemMessages'>
               <p>Show system messages?</p>
-              <label className="checkBoxContainer">
+              <label className="check-box-container">
                 <input
                   type="checkbox"
                   checked={this.props.configuration.showSystemMessages ? "checked" : ''}
@@ -65,7 +64,7 @@ class StyleModal extends React.Component {
                     else { this.props.dispatch(showSystemMessages()); }
                   }}
                 />
-                <span className="checkBoxCheckmark"></span>
+                <span className="check-box-checkmark"></span>
               </label>
             </div>
 
@@ -74,6 +73,9 @@ class StyleModal extends React.Component {
                 onClick={this.handleMoreOptionsClick}
               >More Options </a></h3>
             </div> */}
+
+            <p>Theme: <a className={this.props.configuration.lightTheme ? "a-light" : ""} onClick={() => {this.props.dispatch(setLightTheme())}}>Light</a> 
+              <a className={this.props.configuration.lightTheme ? "a-light" : ""} onClick={() => {this.props.dispatch(setDarkTheme())}}>Dark</a></p>
 
           </div>
         

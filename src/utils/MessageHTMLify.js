@@ -32,7 +32,7 @@ const escapeHtml = (unsafe) => {
 //  The fifth parameter is the username/nickname of the user who sent the message and is also used to determine if the message was from System (it will be an asterisk)
 //
 
-export const messageHTMLify = (message, elementClassName, font, color, source) => {
+export const messageHTMLify = (message, elementClassName, font, color, source, lightTheme) => {
 
   message = escapeHtml(message); //filter any HTML in the message
 
@@ -79,9 +79,15 @@ export const messageHTMLify = (message, elementClassName, font, color, source) =
   messageOutgoing += message.substring(previousLastIndex); //assuming any tags have already been added (or there are none), add in the remainder of the message
 
   //set the style object of the p tag, based on the message's appliedFont and appliedColor properties. these are an overall style for the message - the color tags will override this for the specific section of the message where they are applied
-  const style = {
+  let style = {
     fontFamily: font,
-    color: 'rgb(' + colorNameToRGB(color) + ')'
+    color: 'rgb(' + colorNameToRGB(color, lightTheme) + ')'
+  }
+
+  if (lightTheme) {
+    style.textShadowColor = 'rgba(0, 0, 0, 0.75)'
+    style.textShadowOffset = {width: -1, height: 1}
+    
   }
 
   //override the font color for system messages

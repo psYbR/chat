@@ -5,10 +5,16 @@
   top: 1rem;
   right: 2rem;
 }
+.SMWrapper-light {
+  background-color: white;
+}
 .SMContainer {
   margin: $element-margin;
   background-color: $base;
   padding: .5rem;
+}
+.SMContainer-light {
+  background-color: rgba(0,0,0,0);
 }
 .SMContainer > div {
   text-align: center;
@@ -81,6 +87,9 @@
 }
 .SMColorSelected {
   box-shadow: 0 .2rem .5rem 0 rgba(0, 0, 0, 0.26), 0 0 .3rem .3rem white !important;
+}
+.SMColorSelected-light {
+  box-shadow: 0 .2rem .5rem 0 rgba(0, 0, 0, 0.26), 0 0 .3rem .3rem black !important;
 }
 .SMbutton span:hover {
   padding: .5rem;

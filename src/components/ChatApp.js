@@ -17,7 +17,7 @@ class ChatApp extends React.Component {
   render() {
     //&& this.props.loginState.loggedIn
     return (
-      <div className="blazechat-root-container">
+      <div className={"blazechat-root-container" + (this.props.configuration.lightTheme ? " blazechat-root-container-light" : "")}>
 
         <DOMHandler />
         {(!this.props.userInterface.appIsConnected || !this.props.userInterface.defaultChannelsReceived) && <ConnectingModal />}
@@ -30,7 +30,7 @@ class ChatApp extends React.Component {
           {this.props.userInterface.channelListVisible && <ChannelList />}
           <ChatMainWindow />
           {this.props.userInterface.userListVisible && <UserList />}
-          <div className={'blazechat-color-overlay' + (this.props.userInterface.appIsBlurred ? ' blazechat-color-overlay-visible' : ' blazechat-color-overlay-invisible')}></div>
+          <div className={'blazechat-color-overlay' + (this.props.userInterface.appIsBlurred ? ' blazechat-color-overlay-visible' : ' blazechat-color-overlay-invisible') + (this.props.configuration.lightTheme ? " blazechat-color-overlay-light" : "")}></div>
         </div>
 
       </div>
@@ -38,8 +38,4 @@ class ChatApp extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-    return state;
-}
-
-export default connect(mapStateToProps)(ChatApp);
+export default connect(state=>state)(ChatApp);

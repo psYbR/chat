@@ -4,6 +4,9 @@
   background-color: $surround;
   margin: 0;
 }
+.blazechat-root-container-light {
+  background-color: white;
+}
 .blazechat-overlay-container {
   display: flex;
   height: 100%;
@@ -15,7 +18,10 @@
   top: -5vh;
   width: 110vw;
   height: 110vh;
-  background-color: black;
+  background-color: rgb(0, 0, 0);
+}
+.blazechat-color-overlay-light {
+  background-color: rgb(255, 255, 255);
 }
 .blazechat-color-overlay-visible {
   transition: opacity 1000ms linear;

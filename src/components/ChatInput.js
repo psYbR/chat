@@ -117,15 +117,15 @@ class ChatInput extends React.Component {
   }
   render() {
     return (
-    <div className={"chatInputContainer chatInputContainerActive" + (this.props.configuration.lightTheme ? " emphasised-container-light" : " emphasised-container")}>
+    <div className={"chat-input-container chat-input-container-active" + (this.props.configuration.lightTheme ? " emphasised-container-light chat-input-container-light" : " emphasised-container")}>
       <button
         className="button-default button-font"
         onClick={this.onFontButtonClick}
       ><i className="fas fa-cog"></i></button>
-      <form className="inputForm" onSubmit={this.onSubmit}>
+      <form className="input-form" onSubmit={this.onSubmit}>
         
         <input
-          className="inputText"
+          className={"input-text" + (this.props.configuration.lightTheme ? " input-text-light" : "")}
           type='text'
           placeholder={!this.props.channels.length > 0 ? 'You are not in a channel.' : 'Type a message you want to send, then press enter to send it.'}
           value={this.props.userInterface.chatMessageInput || ''} //the input can't have an initial value of undefined or React will issue a warning
@@ -134,7 +134,7 @@ class ChatInput extends React.Component {
           disabled={!this.props.channels.length > 0 ? 'disabled' : ''}
           style={
             {fontFamily: this.props.configuration.defaultFont,
-            color: 'rgb(' + colorNameToRGB(this.props.configuration.defaultColor) + ')'}
+            color: 'rgb(' + colorNameToRGB(this.props.configuration.defaultColor, this.props.configuration.lightTheme) + ')'}
           }
         />
 

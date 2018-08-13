@@ -6,11 +6,11 @@ import {
 import { connect } from 'react-redux';
 import { requestUserList } from '../utils/handlers/handleUserLists';
 
-const ChannelListItem = ( { channel, dispatch } ) => (
+const ChannelListItem = ( { channel, dispatch, configuration } ) => (
   <div
     className= {"channelListChannelName " +
       //add classes to the channel list item as neccessary
-      (channel.isCurrent ? 'channel-current ' : '') +
+      (channel.isCurrent ? (configuration.lightTheme ? 'channel-current channel-current-light' : 'channel-current') : '') + 
       ((channel.hasNewNotifs && !channel.hasNewMessages && !channel.hasNewMention) ? 'channel-new-notif ' : '') +
       ((channel.hasNewMessages && !channel.hasNewMention) ? 'channel-new-message ' : '') +
       (channel.hasNewMention ? 'channel-mention ' : '') +

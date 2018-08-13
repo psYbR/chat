@@ -21,13 +21,19 @@ export const setConfiguration = (
 
 });
 
-export const setDarkTheme = () => ({
-  type: 'SET_DARK_THEME'
-});
+export const setDarkTheme = () => {
+  document.body.style.color = "rgb(205,215,197)";
+  return ({
+    type: 'SET_DARK_THEME'
+  })
+};
 
-export const setLightTheme = () => ({
-  type: 'SET_LIGHT_THEME'
-});
+export const setLightTheme = () => {
+  document.body.style.color = "rgb(38,38,38)";
+  return({
+    type: 'SET_LIGHT_THEME'
+  })
+};
 
 
 export const setFontStyle = ( defaultFont = 'Source Sans Pro' ) => ({

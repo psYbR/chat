@@ -31,5 +31,6 @@
 }
 .modal-inner-container-light {
   background-color: $base-light;
-  box-shadow: 0 0 5rem .1rem rgb(29, 29, 29);
+  box-shadow: 0;
+  //box-shadow: 0 0 5rem .1rem rgb(29, 29, 29);
 }

@@ -27,17 +27,23 @@
 //channel current
 .channel-current {
   background-color: $channel-current-bg;
-  border-radius: .3rem;
+  border-radius: .1rem;
 }
 .channel-current > p {
   font-style: italic;
   color: $channel-current;
-  text-shadow: .1rem .1rem $shadow;
 }
+.channel-current-light {
+  background-color: $channel-current-bg-light;
+}
+.channel-current-light > p {
+  color: $font-default-light;
+}
+
 
 //is selected
 .channel-selected {
-  border-radius: .3rem;
+  border-radius: .1rem;
   border: .1rem solid $channel-selected-border;
 }
 

@@ -36,7 +36,7 @@ class LoginModal extends React.Component {
             <div className={"modal-inner-container" + (this.props.configuration.lightTheme ? " modal-inner-container-light" : "")}>
 
               <div className="tab-container">
-                <div className={"guestTab tab" + (this.state.activeTab == 0 ? " tab-selected" : "") + (this.props.configuration.lightTheme ? " tab-selected-light" : "")}
+                <div className={"guestTab tab" + (this.state.activeTab == 0 ? (this.props.configuration.lightTheme ? " tab-selected-light" : " tab-selected") : (this.props.configuration.lightTheme ? " tab-light" : ""))}
                 onClick={()=>{
                   this.setState({
                     ...this.state,
@@ -45,7 +45,7 @@ class LoginModal extends React.Component {
                 }}>
                   <h1>Guest</h1>
                 </div>
-                <div className={"loginTab tab" + (this.state.activeTab == 1 ? " tab-selected" : "") + (this.props.configuration.lightTheme ? " tab-light" : "")}
+                <div className={"loginTab tab" + (this.state.activeTab == 1 ? (this.props.configuration.lightTheme ? " tab-selected-light" : " tab-selected") : (this.props.configuration.lightTheme ? " tab-light" : ""))}
                 onClick={()=>{
                   this.setState({
                     ...this.state,
@@ -61,8 +61,8 @@ class LoginModal extends React.Component {
                 </div>
               </div>
 
-              {/* <p>Theme: <a className={this.props.configuration.lightTheme ? "a-light" : ""} onClick={() => {this.props.dispatch(setLightTheme())}}>Light</a> 
-              <a className={this.props.configuration.lightTheme ? "a-light" : ""} onClick={() => {this.props.dispatch(setDarkTheme())}}>Dark</a></p> */}
+              <p>Theme: <a className={this.props.configuration.lightTheme ? "a-light" : ""} onClick={() => {this.props.dispatch(setLightTheme())}}>Light</a> 
+              <a className={this.props.configuration.lightTheme ? "a-light" : ""} onClick={() => {this.props.dispatch(setDarkTheme())}}>Dark</a></p>
 
               {this.state.activeTab == 1 && 
                 <FadeTransform in duration={100} transformProps={{enterTransform: 'translateY(1.5rem)', exitTransform: 'translateY(-1.5rem)'}}>
