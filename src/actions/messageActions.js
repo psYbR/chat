@@ -10,7 +10,9 @@ export const addMessage = (
     appliedFont = "Source Sans Pro", //uses the UI default, or the user's chosen override
     appliedColor = "default", //uses the UI default, or the user's chosen override
     messageSent = false, //if the message was sent to the server yet or not
-    sentTimestamp = getNowTimestamp() //when the message was sent to the server (save it a second time because the server will apply a different timestamp)
+    sentTimestamp = getNowTimestamp(), //when the message was sent to the server (save it a second time because the server will apply a different timestamp)
+    messageHasImage = false,
+    imageUrl = ''
   } = {}
 ) => ({
   type: 'ADD_MESSAGE',
@@ -23,7 +25,9 @@ export const addMessage = (
     appliedFont,
     appliedColor,
     messageSent,
-    sentTimestamp
+    sentTimestamp,
+    messageHasImage,
+    imageUrl
   }
 });
 

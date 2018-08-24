@@ -25,7 +25,7 @@ const getFriendlyFromTimestamp = (timestamp, format) => {
 
 const onChatMessage = (socket, msg) => {
 
-  //coping the incoming message
+  //copy the incoming message
   let outgoing = {};
   for (var property in msg) {
     outgoing[property] = msg[property];
@@ -44,6 +44,10 @@ const onChatMessage = (socket, msg) => {
       response = "success"
     }
   });
+
+  if (outgoing.messageHasImage) {
+    //check channel message permissions
+  }
 
   //check the length of the message doesn't exceed the limit
   if (outgoing.messageText && outgoing.messageText.length > config.messageMaxLength) {

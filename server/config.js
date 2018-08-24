@@ -7,7 +7,7 @@ const nickMaxLength = 20;
 const messageMaxLength = 510;
 const pingTimeout = 5000; //milliseconds
 const pingInterval = 3000; //milliseconds
-const maxHttpBufferSize = 500000; //500kb
+const maxHttpBufferSize = 1800000; //1800kb
 const logLevel = 2; // 1 = all messages, 2 = error messages and chat messages only, 3 = chat messages only, 4 = no logging
 const antiFloodTime = 5000; //ms to keep track of messages
 const antiFloodFrequency = 4; //max number of messages can be sent within the above timeframe

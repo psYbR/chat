@@ -6,7 +6,7 @@ import {
   ,setStyleModalVisible
   ,unsetStyleModalVisible
   ,addMessage
-  ,setPastedImageSize 
+  //,setPastedImageSize 
 } from '../actions/actions';
 import { getNowTimestamp, colorNameToRGB } from '../utils/utils';
 import sendChatMessage from '../utils/handlers/sendChatMessage';
@@ -95,6 +95,8 @@ class ChatInput extends React.Component {
         sendChatMessage(outboundMsg);
         this.handleImageRemoveClick();
       }
+    } else {
+      console.log("Could not send message. Img size: " + this.state.imageSize + ", limit: " + maxPastedImageSize)
     }
   }
   onMessageChange = (e) => {
@@ -123,7 +125,7 @@ class ChatInput extends React.Component {
         onClick={this.onFontButtonClick}
       ><i className="fas fa-cog"></i></button>
       <form className="input-form" onSubmit={this.onSubmit}>
-        
+        {this.state.messageHasImage && this.state.imageSize > maxPastedImageSize && <i style={{color: 'red'}}>Image above size limit!</i>}
         <input
           className={"input-text" + (this.props.configuration.lightTheme ? " input-text-light" : "")}
           type='text'
