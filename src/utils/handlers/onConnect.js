@@ -31,11 +31,11 @@ const onConnect = (socket, wasReconnect) => {
         domain: 'blaze.chat',
         secure: true
       });
-      //console.log(response);
+      console.log(response);
     });
   } else {
     socket.emit('check session', rediskey, (response)=>{
-      //console.log(response);
+      console.log(response);
     });
   }
 
