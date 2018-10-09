@@ -5,22 +5,35 @@ db = require('./database');
 
 const onLogin = (socket, payload) => {
 
-  socket.disconnect();
+  //socket.disconnect(); //do this if the user is banned
 
-  globals.log("(onLoginGuest) Request to login from '" + payload.nick + "'...")
+  globals.log("(onLogin) Request to login from: '" + payload.identifier + "'...")
 
   let response = '';  
 
   if (payload.loginType == 'user') {
     db.query("SELECT * FROM users WHERE email=? AND password=SHA2(?, 256)",[payload.email, payload.password], (err, result) => {
       if (err) throw err;
-      console.log("User found:");
-      console.log(result)
-      if (result.length > 0) { 
-        response = "success"
+      if (result.length > 0) {
+
+        const record = result[0];
+        console.log("User found:");
+        console.log(record.nick)
+
+        if (result[0].isGlobalBanned) {
+          socket.disconnect();
+        }
+
+        response = "success"        
+
       } else {
+
         response = "fail"
+        
       }
+
+      //send the response
+      io.to(socket.id).emit('login response', response);
       console.log("Response: " + response)
     })
   } else if (payload.loginType == 'guest') {
@@ -29,9 +42,11 @@ const onLogin = (socket, payload) => {
     if (!payload.nick || payload.nick.length > config.nickMaxLength || payload.nick.length < config.nickMinLength) {
       response = "invalid nick supplied"
     } else {
-
+      response = "success"
     }
     
+  } else {
+    globals.log(payload.loginType);
   }
 
   /*
@@ -84,9 +99,6 @@ const onLogin = (socket, payload) => {
   }
 
   */
-
-  //send the response
-  io.to(socket.id).emit('login response', response);
 
 }
 

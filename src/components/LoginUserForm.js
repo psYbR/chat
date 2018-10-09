@@ -6,6 +6,7 @@ import {
 } from '../actions/actions';
 import { setAppReady } from '../utils/setAppState'
 import requestJoinDefaultChannels from '../utils/handlers/requestJoinDefaultChannels';
+import { requestLogin } from '../utils/handlers/requestLogin';
 
 class LoginUserForm extends React.Component {
   constructor(props) {
@@ -40,10 +41,10 @@ class LoginUserForm extends React.Component {
     }
   }
   componentDidMount = () => {
-    socket.on('login user response', this.handleLoginResponse); //create listener
+    socket.on('login response', this.handleLoginResponse); //create listener
   }
   componentWillUnmount = () => {
-    socket.removeListener('login user response', this.handleLoginResponse); //destroy listener
+    socket.removeListener('login response', this.handleLoginResponse); //destroy listener
   }
   onFormSubmit=(e)=>{
     e.preventDefault();
@@ -54,7 +55,8 @@ class LoginUserForm extends React.Component {
         loginResponse: ''
       })
 
-      socket.emit('request login user', {email: this.state.email, password: this.state.password});
+      requestLogin('user',this.state.email);
+      //socket.emit('request login user', {email: this.state.email, password: this.state.password});
 
     } else {
       this.setState({

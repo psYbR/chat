@@ -7,6 +7,7 @@ import {
 } from '../actions/actions';
 import { setAppReady } from '../utils/setAppState'
 import requestJoinDefaultChannels from '../utils/handlers/requestJoinDefaultChannels';
+import requestLogin from '../utils/handlers/requestLogin';
 
 class LoginGuestForm extends React.Component {
   constructor(props) {
@@ -71,7 +72,9 @@ class LoginGuestForm extends React.Component {
         waitingForNickAcceptance: true,
         nickSetFailedReason: ''
       })
-      socket.emit('request login', this.state.nick);
+
+      requestLogin('guest',this.state.nick);
+      //socket.emit('request login', this.state.nick);
 
       //timer
       this.timer = setTimeout(this.onTimer.bind(this), 5000)
