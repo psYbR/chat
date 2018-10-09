@@ -2,81 +2,91 @@ import { store } from '../../stores/store';
 import { requestDefaultChannels } from './handleChannelLists';
 import requestJoinChannel from './requestJoinChannel';
 import requestSetNick from './requestSetNick';
-import { requestUserList } from './handleUserLists';
+//import { requestUserList } from './handleUserLists';
 import {
   setConnected
  } from '../../actions/actions';
 import cookie from 'react-cookie';
 
-//
-// handle connections
-//
+//rejoin channels after a disconnection
+const rejoinChannels = (socket) => {
+  store.getState().channels.map((channel) => {
+    if (channel.wasJoined) { //this flag marks channels the user was disconnected from
+      requestJoinChannel(channel.channelId);
+    }
+  });
+}
 
-// TO DO: handle rejected nick
-
-const onConnect = (socket, wasReconnect) => {
-
-  //set UI state to show connected
-  store.dispatch(setConnected());
-
-  //get the default channel list
+//await a login from the user
+const setAwaitLogin = (socket) => {
+  
+  console.log("Awaiting login; downloading channels...");
+  
+  //get the default channel list if needed
   requestDefaultChannels(socket);
 
-  var rediskey = cookie.load('rediskey');
+}
 
-  if (!rediskey) {
+//
+// handle connections to server
+//
+const onConnect = (socket, wasReconnect) => {  
+
+  console.log("Connected!");
+
+  //set UI state to connected
+  store.dispatch(setConnected());
+
+  //load the session cookie if it exists and create a session
+  var rediskey = cookie.load('rediskey');
+  if (!rediskey) { //if there was no cookie, create new session and cookie
+
+    console.log("Requesting session...");
+
     socket.emit('create session', (response)=>{
+
       cookie.save('rediskey', response, {
         maxAge: 30 * 60,
         domain: 'blaze.chat',
         secure: true
       });
-      console.log(response);
+
+      console.log("Session (new): " + response);
+      setAwaitLogin(socket);
+
     });
+
   } else {
     socket.emit('check session', rediskey, (response)=>{
-      console.log(response);
-    });
-  }
 
-  //if the connection was re-established after a disconnect. Check the user is actually logged in
-  if (wasReconnect && store.getState().loginState.loggedIn) {
+      if (response == "no session") { //if there was a cookie but the server doesn't recognise it
 
-    //console.log("socket connection re-established");
+        socket.emit('create session', (response)=>{
 
-    //set the nick again (server ignores if it's already set)
-    requestSetNick((response)=>{
-      //handle the response (a string; either "success" or the reason the nick wasn't accepted eg. in use)
-      if (response == "success") {
-        console.log("resetting nick succeeded!");
-        //store.dispatch(unblurApp());
-        //store.dispatch(setLoggedIn());
-        //store.dispatch(unsetWaitingForNickAcceptance()); //un-disable the buttons
-        //store.dispatch(setNickSetFailedReason('')); //update the UI and set the nick
-        //request to re-join channels the user was in
-        store.getState().channels.map((channel) => {
-          //this flag marks channels the user was disconnected from
-          if (channel.wasJoined) {
-            //send the request
-            requestJoinChannel(channel.channelId);
-          }
+          cookie.save('rediskey', response, {
+            maxAge: 30 * 60,
+            domain: 'blaze.chat',
+            secure: true
+          });
+
+          console.log("Session (rejected, new created): " + response);
+          setAwaitLogin(socket);
+
         });
-        //get the user list for whatever channel the user is currently in
-        requestUserList();
-        //store.dispatch(resetDefaultChannelSelections()); //reset the default channel selections
-      } else {
-        console.log("resetting nick failed: " + response);
-        //store.dispatch(unsetWaitingForNickAcceptance());
-        //store.dispatch(setNickSetFailedReason(response)); //tell the UI that setting the nick failed
-      } 
+
+      } else if (response == "success") { //if there was a cookie and the server recognises it
+
+        console.log("Session (found): " + response);
+        socket.emit('request restore login');
+
+      }
+
+      else {
+        console.log("session error: " + response);
+      }
     });
-
-  } else {
-
-    //store.dispatch(unsetWaitingForNickAcceptance());
-    //console.log("socket connection established");
-    
   }
+
 }
 
 export default onConnect;

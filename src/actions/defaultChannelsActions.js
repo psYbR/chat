@@ -2,7 +2,7 @@
 export const addDefaultChannel = (    
   {
     channelId = 0,
-    channelName = '',
+    name = '',
     topic = '',
     isSelected = false
   } = {}
@@ -10,7 +10,7 @@ export const addDefaultChannel = (
   type: 'ADD_DEFAULT_CHANNEL',
   channel: {
     channelId,
-    channelName,
+    name,
     topic,
     isSelected
   }

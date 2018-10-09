@@ -47,10 +47,10 @@ class LoginGuestForm extends React.Component {
     }
   }
   componentDidMount = () => {
-    socket.on('login guest response', this.handleLoginResponse);
+    socket.on('login response', this.handleLoginResponse);
   }
   componentWillUnmount = () => {
-    socket.removeListener('login guest response', this.handleLoginResponse);
+    socket.removeListener('login response', this.handleLoginResponse);
     clearTimeout(this.timer);
   }
   onTimer = () => {
@@ -71,7 +71,7 @@ class LoginGuestForm extends React.Component {
         waitingForNickAcceptance: true,
         nickSetFailedReason: ''
       })
-      socket.emit('request login guest', this.state.nick);
+      socket.emit('request login', this.state.nick);
 
       //timer
       this.timer = setTimeout(this.onTimer.bind(this), 5000)

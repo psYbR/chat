@@ -10,21 +10,24 @@ const onRequestDefaultChannels = (socket) => {
 
   globals.log("(onRequestChannels) Request for default channels from socket: " + socket.id)
 
-  config.defaultChannels.map((channel, i)=>{
+  globals.defaultChannels.map((channel, i)=>{
 
     //we don't want to send the entire channel object, so here we set up a new one with the required values in it
     const outgoingChannel = {
       channelId: channel.channelId,
-      channelName: channel.channelName,
+      name: channel.name,
       topic: channel.topic,
-      isSelected: channel.isSelected
+      isDefault: channel.isDefault,
+      requireImage: channel.requireImage,
+      requireVoice: channel.requireVoice,
+      requireLogin: channel.requireLogin,
     };
 
     //send the channel object
     io.to(socket.id).emit('default channel', outgoingChannel);
 
     //if all the channels have been sent
-    if (i == config.defaultChannels.length - 1) {
+    if (i == globals.defaultChannels.length - 1) {
 
       //inform the client we're finished sending channels
       io.to(socket.id).emit('default channels finished');

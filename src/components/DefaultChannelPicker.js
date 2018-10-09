@@ -33,7 +33,7 @@ class DefaultChannelPicker extends React.Component {
                         }}
                     >
                         <i className="fas fa-comment-alt"></i>
-                        <p>{channel.channelName}</p>
+                        <p>{channel.name}</p>
                     </div>
                 );
             })}

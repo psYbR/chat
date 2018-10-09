@@ -5,8 +5,7 @@ getIpAddress          = require('./modules/getIPAddress')
 session               = require('./modules/sessions')
 
 onDisconnect          = require('./modules/onDisconnect')
-onLoginGuest          = require('./modules/onLoginGuest')
-onLoginUser           = require('./modules/onLoginUser')
+onLogin               = require('./modules/onLogin')
 onCreateAccount       = require('./modules/onCreateAccount')
 onRequestLeaveChannel = require('./modules/onRequestLeaveChannel')
 onRequestChannels     = require('./modules/onRequestChannels')
@@ -21,8 +20,7 @@ io.on('connection', (socket) => {
 
   onDisconnect          .onConnect(socket)
   session               .onConnect(socket)
-  onLoginGuest          .onConnect(socket)
-  onLoginUser           .onConnect(socket)
+  onLogin               .onConnect(socket)
   onCreateAccount       .onConnect(socket)
   onRequestLeaveChannel .onConnect(socket)
   onRequestChannels     .onConnect(socket)
@@ -41,3 +39,29 @@ io.on('connection', (socket) => {
   });
 
 });
+
+
+/*
+
+| App Start |
+
+-- Does the server think I'm logged in already?
+|
+|-- Yes 
+|   |-- Get session details from server and set up client state
+|
+|-- No
+|   |-- Prompt User for login
+
+| App Reconnected |
+
+-- Does the server think I'm logged in already?
+|
+|-- Yes
+|   |-- Get session details from server and restore client state
+|
+|-- No
+|   |-- Prompt User for login
+
+
+*/

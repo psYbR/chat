@@ -25,7 +25,7 @@ const ChannelListItem = ( { channel, dispatch, configuration } ) => (
     <p>
       { channel.type == 'channel' && <i className="far fa-comments"></i> } 
       { channel.type == 'user' && <i className="far fa-user "></i> }
-      {channel.channelName}
+      {channel.name}
     </p>
   </div>
 );

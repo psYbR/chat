@@ -11,6 +11,7 @@ let usersInChannels = [];
 
 //contains user-created channels
 let userChannels = [];
+let defaultChannels = [];
 
 //contains chat message timestamps from users (used to track message frequency for anti-flood)
 let userMessages = [];
@@ -27,5 +28,6 @@ module.exports = {
   log,
   onlineUsers,
   usersInChannels,
-  userChannels
+  userChannels,
+  defaultChannels
 }

@@ -14,16 +14,7 @@ const checkSession = (socket, sessionId) => {
   if (globals.sessions.filter(session=>session.sessionId==sessionId).length>0) {
     response = "success";
   } else {
-    response = getUniqueKey(socket.id);
-    +new Date;
-    let expiryDatetime = Date.now() + (30 * 60 * 1000);
-    globals.sessions.push({
-      sessionId: response,
-      socketId: socket.id,
-      nick: '',
-      userId: 0,
-      expiryDatetime
-    })
+    response = "no session";
   }
   return response;
 }
@@ -33,7 +24,7 @@ const createSession = (socket) => {
   globals.log("(index) Created session: " + getUniqueKey(socket.id));
   +new Date;
   let expiryDatetime = Date.now() + (30 * 60 * 1000);
-  sessions.push({
+  globals.sessions.push({
     sessionId: response,
     socketId: socket.id,
     nick: '',
@@ -46,14 +37,14 @@ const createSession = (socket) => {
 const onConnect = (socket) => {
   socket.on('check session', (sessionId, callback)=>{
     try {
-      callback(session.checkSession(socket, sessionId))
+      callback(checkSession(socket, sessionId))
     } catch(err) {
       globals.log('(index) Failed to check session: "' +  err)
     }
   })
   socket.on('create session', (callback)=>{
     try {
-      callback(session.createSession(socket));
+      callback(createSession(socket));
     } catch(err) {
       globals.log('(index) Failed to create session: "' +  err)
     }
