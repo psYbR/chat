@@ -1,69 +1,87 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import socket from '../utils/handlers/client';
-import {
-  setNick
-} from '../actions/actions';
-import { setAppReady } from '../utils/setAppState'
-import requestJoinDefaultChannels from '../utils/handlers/requestJoinDefaultChannels';
+import { nickMinLength, nickMaxLength } from '../config.js';
 
-class loginUserForm extends React.Component {
+class loginCreateForm extends React.Component {
   constructor(props) {
     super(props);
     this.state={
       email: '',
       emailIsValid: false,
-      password: '',
-      termsAccepted: true,
-      waitingForLoginResponse: false,
-      loginResponse: ''
+      nick: '',
+      nickIsValid: false,
+      password1: '',
+      password2: '',
+      passwordsAreValid: false,
+      termsAccepted: false,
+      waitingForCreateResponse: false,
+      createResponse: ''
     }
   }
-  handleLoginResponse = ({response, nick}) => { //listener action
+  handleCreateResponse = (response) => { //listener action
     if (response == "success") {
-
-      this.props.dispatch(setNick(nick));
-      setAppReady();
-      requestJoinDefaultChannels();
-
+      this.props.goToLoginTab();
     } else {
       this.setState({
         ...this.state,
-        waitingForLoginResponse: false,
-        loginResponse: response
+        waitingForCreateResponse: false,
+        createResponse: response
       })
     }
   }
   componentDidMount = () => {
-    socket.on('login user response', this.handleLoginResponse); //create listener
+    socket.on('login create response', this.handleCreateResponse); //create listener
   }
   componentWillUnmount = () => {
-    socket.removeListener('login user response', this.handleLoginResponse); //destroy listener
+    socket.removeListener('login create response', this.handleCreateResponse); //destroy listener
   }
   onFormSubmit=(e)=>{
     e.preventDefault();
-    if (this.state.emailIsValid && this.state.termsAccepted && !this.state.waitingForLoginResponse && this.state.password.length > 0) {
+    if (
+      //check all the form info first
+      this.state.emailIsValid &&
+      this.state.termsAccepted &&
+      !this.state.waitingForCreateResponse &&
+      this.state.nick.length > nickMinLength &&
+      this.state.nick.length < nickMaxLength &&
+      this.state.password1.length > 3 &&
+      this.state.password1 == this.state.password2
+      ) {
       this.setState({
         ...this.state,
         waitingForLoginResponse: true,
         loginResponse: ''
       })
 
-      socket.emit('request login user', {email: this.state.email, password: this.state.password});
+      socket.emit('request create user', {
+        email: this.state.email,
+        nick: this.state.nick,
+        password: this.state.password1
+      });
 
-    } else {
+    }
+    //TODO do some more advanced form validation at this point
+    else {
       this.setState({
         ...this.state,
-        waitingForLoginResponse: false,
-        loginResponse: 'invalid form entry'
+        waitingForCreateResponse: false,
+        createResponse: 'please complete all form elements'
       })
     }
   }
-  onPWChange=(e)=>{
-    const password = e.target.value;
+  onPassword1Change=(e)=>{
+    const password1 = e.target.value;
     this.setState({
       ...this.state,
-      password
+      password1
+    })
+  }
+  onPassword2Change=(e)=>{
+    const password2 = e.target.value;
+    this.setState({
+      ...this.state,
+      password2
     })
   }
   onEmailChange=(e)=>{
@@ -83,6 +101,23 @@ class loginUserForm extends React.Component {
       })
     }
   }
+  onNickChange=(e)=>{
+    const nick = e.target.value;
+    //check if email is valid
+    if (!nick || (nick.length < nickMaxLength && nick.length > nickMinLength)) {
+      this.setState({
+        ...this.state,
+        nick,
+        nickIsValid: true
+      })
+    } else {
+      this.setState({
+        ...this.state,
+        nick,
+        nickIsValid: false
+      })
+    }
+  }
   render() {
     return (
 
@@ -91,7 +126,8 @@ class loginUserForm extends React.Component {
 
           {(this.state.email != '' && !this.state.emailIsValid) &&
             <p className="loginMessage">Please enter a valid email</p>}
-          {this.state.loginResponse != '' ? <p className="nickSetFailedReason">{this.state.loginResponse}</p> : ''}
+          {this.state.createResponse != '' ? <p className="nickSetFailedReason">{this.state.createResponse}</p> : ''}
+
           <input 
             className={"loginInput guestNickInput" + (this.props.configuration.lightTheme ? " guestNickInput-light" : "")}
             type='text'
@@ -100,17 +136,38 @@ class loginUserForm extends React.Component {
             value={this.state.email || ''}
             spellCheck="false"
           />
+
+          <input 
+            className={"loginInput guestNickInput" + (this.props.configuration.lightTheme ? " guestNickInput-light" : "")}
+            type='text'
+            placeholder="nick"
+            onChange={this.onNickChange}
+            value={this.state.nick || ''}
+            spellCheck="false"
+          />
+
+          {(this.state.password1 != this.state.password2 && !this.state.password1 == '') &&
+            <p className="loginMessage">Both passwords must match!</p>}
+
           <input
             className={"loginInput guestNickInput" + (this.props.configuration.lightTheme ? " guestNickInput-light" : "")}
             type='password'
             placeholder="password"
-            onChange={this.onPWChange}
-            value={this.state.password || ''}
+            onChange={this.onPassword1Change}
+            value={this.state.password1 || ''}
           />
 
-          <div className="termsContainer">
-            <p className={"termsParagraph" + (this.props.configuration.lightTheme ? " p-light" : "")}>Accept <a href='terms.html' className={this.props.configuration.lightTheme ? "a-light" : ""}>terms and conditions</a>?</p>
-            <label className="checkBoxContainer">
+          <input
+            className={"loginInput guestNickInput" + (this.props.configuration.lightTheme ? " guestNickInput-light" : "")}
+            type='password'
+            placeholder="password"
+            onChange={this.onPassword2Change}
+            value={this.state.password2 || ''}
+          />
+
+          <div className="terms-container terms-container-create">
+            <p className={"terms-paragraph" + (this.props.configuration.lightTheme ? " p-light" : "")}>Accept <a href='terms.html' className={this.props.configuration.lightTheme ? "a-light" : ""}>terms and conditions</a>?</p>
+            <label className="checkbox-container">
               <input
                 type="checkbox"
                 checked={this.state.termsAccepted ? "checked" : ''}
@@ -125,7 +182,7 @@ class loginUserForm extends React.Component {
                   }) }
                 }}
               />
-              <span className="checkBoxCheckmark"></span>
+              <span className="checkbox-checkmark"></span>
             </label>
             
           </div>
@@ -135,19 +192,24 @@ class loginUserForm extends React.Component {
               className='loginButton'
               //check for conditions that would cause the button to be disabled
               disabled={!this.state.emailIsValid ||
+                !this.state.nick.length > 3 ||
+                !(this.state.password1 == this.state.password2) ||
                 !this.state.termsAccepted ||
                 this.state.email.length < 5 ||
-                this.state.waitingForLoginResponse
+                this.state.waitingForCreateResponse
               }
             >
-              {!this.state.waitingForLoginResponse ? "Start chatting" : "Logging in... "}
-              {this.state.waitingForLoginResponse && <span className="fa fa-spinner fa-spin"></span>}
+              {!this.state.waitingForCreateResponse ? "Register" : "Registering... "}
+              {this.state.waitingForCreateResponse && <span className="fa fa-spinner fa-spin"></span>}
             </button>
           </p>
+
+          <p className="loginMessage"><i>Your email address will be encrypted and is used only for you to log in. We will never email you, ask you for your password, or share your information with anyone.</i></p>
+
         </form>
       </div>
     );
   };
 }
 
-export default connect(state=>state)(loginUserForm);
+export default connect(state=>state)(loginCreateForm);

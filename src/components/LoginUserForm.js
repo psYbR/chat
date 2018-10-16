@@ -1,12 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import socket from '../utils/handlers/client';
-import {
-  setNick
-} from '../actions/actions';
-import { setAppReady } from '../utils/setAppState'
+import { setNick } from '../actions/actions';
 import requestJoinDefaultChannels from '../utils/handlers/requestJoinDefaultChannels';
-import { requestLogin } from '../utils/handlers/requestLogin';
 
 class LoginUserForm extends React.Component {
   constructor(props) {
@@ -17,21 +13,52 @@ class LoginUserForm extends React.Component {
       password: '',
       termsAccepted: true,
       waitingForLoginResponse: false,
-      loginResponse: ''
+      loginResponse: '',
+      accountWasCreated: this.props.accountWasCreated
+    }
+  }
+  onFormSubmit=(e)=>{
+    e.preventDefault();
+    if (this.state.emailIsValid && this.state.termsAccepted && !this.state.waitingForLoginResponse && this.state.password.length > 0) {
+      this.setState({
+        ...this.state,
+        waitingForLoginResponse: true,
+        loginResponse: ''
+      })
+
+      const loginObject = {
+        type: 'user',
+        email: this.state.email,
+        password: this.state.password
+      }
+
+      //send the login request to the server
+      socket.emit('request login', loginObject);
+
+    } else {
+      this.setState({
+        ...this.state,
+        waitingForLoginResponse: false,
+        loginResponse: 'invalid form entry'
+      })
     }
   }
   handleLoginResponse = ({response, nick}) => { //listener action
     if (response == "success") {
 
       this.props.dispatch(setNick(nick));
+
       requestJoinDefaultChannels();
 
-      //animate
+      //animate closing this modal
       this.props.unmount()
-      setTimeout(()=>{
-        setAppReady();
-      },150)
 
+    } else if (!response) { //in case the response wasn't an object as expected
+      this.setState({
+        ...this.state,
+        waitingForLoginResponse: false,
+        loginResponse: "error sending request - invalid response"
+      })
     } else {
       this.setState({
         ...this.state,
@@ -46,26 +73,7 @@ class LoginUserForm extends React.Component {
   componentWillUnmount = () => {
     socket.removeListener('login response', this.handleLoginResponse); //destroy listener
   }
-  onFormSubmit=(e)=>{
-    e.preventDefault();
-    if (this.state.emailIsValid && this.state.termsAccepted && !this.state.waitingForLoginResponse && this.state.password.length > 0) {
-      this.setState({
-        ...this.state,
-        waitingForLoginResponse: true,
-        loginResponse: ''
-      })
-
-      requestLogin('user',this.state.email);
-      //socket.emit('request login user', {email: this.state.email, password: this.state.password});
-
-    } else {
-      this.setState({
-        ...this.state,
-        waitingForLoginResponse: false,
-        loginResponse: 'invalid form entry'
-      })
-    }
-  }
+  
   onPWChange=(e)=>{
     const password = e.target.value;
     this.setState({
@@ -98,6 +106,10 @@ class LoginUserForm extends React.Component {
 
           {(this.state.email != '' && !this.state.emailIsValid) &&
             <p className="loginMessage">Please enter a valid email</p>}
+
+          {this.state.accountWasCreated && 
+            <p className="loginMessage ping-good">Account was successfully created! Please log in:</p>}
+
           {this.state.loginResponse != '' ? <p className="nickSetFailedReason">{this.state.loginResponse}</p> : ''}
           <input 
             className={"loginInput guestNickInput" + (this.props.configuration.lightTheme ? " guestNickInput-light" : "")}
@@ -142,8 +154,8 @@ class LoginUserForm extends React.Component {
               className='loginButton'
               //check for conditions that would cause the button to be disabled
               disabled={!this.state.emailIsValid ||
+                this.props.defaultChannels.filter((channel) => channel.isSelected == true).length < 1 ||
                 !this.state.termsAccepted ||
-                this.state.email.length < 5 ||
                 this.state.waitingForLoginResponse}
             >
               {!this.state.waitingForLoginResponse ? "Start chatting" : "Logging in... "}

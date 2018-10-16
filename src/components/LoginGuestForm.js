@@ -2,12 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import socket from '../utils/handlers/client';
 import { nickMinLength, nickMaxLength } from '../config.js';
-import {
-  setNick
-} from '../actions/actions';
-import { setAppReady } from '../utils/setAppState'
+import { setNick } from '../actions/actions';
 import requestJoinDefaultChannels from '../utils/handlers/requestJoinDefaultChannels';
-import requestLogin from '../utils/handlers/requestLogin';
 
 class LoginGuestForm extends React.Component {
   constructor(props) {
@@ -20,24 +16,46 @@ class LoginGuestForm extends React.Component {
     }
     this.timer = null
   }
-  handleLoginResponse = (response) => {
-    if (response == "success") {
-
+  onFormSubmit = (e) => {
+    e.preventDefault();
+    //sanity check the nick length
+    if (this.state.nick.length < nickMaxLength && this.state.nick.length > nickMinLength) { 
       this.setState({
         ...this.state,
-        waitingForNickAcceptance: false,
+        waitingForNickAcceptance: true,
         nickSetFailedReason: ''
       })
 
+      const loginObject = {
+        type: 'guest',
+        nick: this.state.nick
+      }
+
+      //send the login request to the server
+      socket.emit('request login', loginObject);
+
+      //requestLogin('guest', loginObject);
+
+      //timer after which to show an error message if the server hasn't responded
+      this.timer = setTimeout(this.onTimer.bind(this), 5000)
+
+    } else {
+      this.setState({
+        ...this.state,
+        waitingForNickAcceptance: false,
+        nickSetFailedReason: 'nick was invalid length'
+      })
+    }
+  }
+  handleLoginResponse = (response) => {
+    if (response == "success") {
+
       this.props.dispatch(setNick(this.state.nick));
+
       requestJoinDefaultChannels();
 
       //animate
-      this.props.unmount()
-      setTimeout(()=>{
-        setAppReady();
-      },150)
-      
+      this.props.unmount()      
 
     } else {
       this.setState({
@@ -54,36 +72,13 @@ class LoginGuestForm extends React.Component {
     socket.removeListener('login response', this.handleLoginResponse);
     clearTimeout(this.timer);
   }
+  //show an error message if the server hasn't responded
   onTimer = () => {
     if (this.state.waitingForNickAcceptance) {
       this.setState({
         ...this.state,
         waitingForNickAcceptance: false,
         nickSetFailedReason: "no response from server"
-      })
-    }
-  }
-  onFormSubmit = (e) => {
-    e.preventDefault();
-    //sanity check the nick length
-    if (this.state.nick.length < nickMaxLength && this.state.nick.length > nickMinLength) { 
-      this.setState({
-        ...this.state,
-        waitingForNickAcceptance: true,
-        nickSetFailedReason: ''
-      })
-
-      requestLogin('guest',this.state.nick);
-      //socket.emit('request login', this.state.nick);
-
-      //timer
-      this.timer = setTimeout(this.onTimer.bind(this), 5000)
-
-    } else {
-      this.setState({
-        ...this.state,
-        waitingForNickAcceptance: false,
-        nickSetFailedReason: 'nick was invalid length'
       })
     }
   }

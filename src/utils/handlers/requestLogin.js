@@ -10,26 +10,10 @@ import {
 import { getNowTimestamp } from '../utils'
 //import { systemNick } from '../../config';
 
-const requestLogin = (type, nick) => {
+const requestLogin = (type, loginObject) => {
 
-  const payload = {
-    email: 'tim.eastwood@hotmail.com',
-    password: 'jiblet123',
-    loginType: 'user', //type
-    identifier: 'tim.eastwood@hotmail.com',
-    //nick,
-    loginTime: getNowTimestamp
-  }
-
-  socket.emit('request login', payload);
+  socket.emit('request login', loginObject);
 
 }
-
-socket.on('login response', (response) => {
-  if (response == "success")  {
-
-  }
-  console.log("Login response: " + response)
-});
 
 export default requestLogin;

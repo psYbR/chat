@@ -86,7 +86,7 @@ setInterval(()=>{
       document.title = 'New messages!';
     }
   } else {
-    document.title = 'BlazeChat';
+    document.title = 'BI Dashboard';
   }
   notifToggle = !notifToggle;
 }, 600)

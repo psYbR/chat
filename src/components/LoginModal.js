@@ -4,9 +4,10 @@ import {
   setLightTheme
   ,setDarkTheme
 } from '../actions/actions';
-
+import { setAppReady } from '../utils/setAppState'
 import LoginGuestForm from './LoginGuestForm';
 import LoginUserForm from './LoginUserForm';
+import LoginCreateForm from './LoginCreateForm';
 import DefaultChannelPicker from './DefaultChannelPicker';
 
 import { FadeTransform } from 'react-animation-components'
@@ -16,13 +17,24 @@ class LoginModal extends React.Component {
     super(props);
     this.state = {
       activeTab: 0,
-      fadeOut: false
+      fadeOut: false,
+      accountWasCreated: false
     }
   }
   unmount = () => {
     this.setState({
       ...this.state,
       fadeOut: true
+    })
+    setTimeout(()=>{
+      setAppReady();
+    },150)
+  }
+  goToLoginTab = () => {
+    this.setState({
+      ...this.state,
+      activeTab: 1,
+      accountWasCreated: true
     })
   }
   render() {
@@ -36,6 +48,7 @@ class LoginModal extends React.Component {
             <div className={"modal-inner-container" + (this.props.configuration.lightTheme ? " modal-inner-container-light" : "")}>
 
               <div className="tab-container">
+
                 <div className={"guestTab tab" + (this.state.activeTab == 0 ? (this.props.configuration.lightTheme ? " tab-selected-light" : " tab-selected") : (this.props.configuration.lightTheme ? " tab-light" : ""))}
                 onClick={()=>{
                   this.setState({
@@ -45,6 +58,7 @@ class LoginModal extends React.Component {
                 }}>
                   <h1>Guest</h1>
                 </div>
+
                 <div className={"loginTab tab" + (this.state.activeTab == 1 ? (this.props.configuration.lightTheme ? " tab-selected-light" : " tab-selected") : (this.props.configuration.lightTheme ? " tab-light" : ""))}
                 onClick={()=>{
                   this.setState({
@@ -59,23 +73,23 @@ class LoginModal extends React.Component {
                     <i className="fab fa-google-plus-square"></i>
                   </div> */}
                 </div>
+
+                <div className={"guestTab tab" + (this.state.activeTab == 2 ? (this.props.configuration.lightTheme ? " tab-selected-light" : " tab-selected") : (this.props.configuration.lightTheme ? " tab-light" : ""))}
+                onClick={()=>{
+                  this.setState({
+                    ...this.state,
+                    activeTab: 2
+                  })
+                }}>
+                  <h1>Register</h1>
+                </div>
+
               </div>
 
               <p>Theme: <a className={this.props.configuration.lightTheme ? "a-light" : ""} onClick={() => {this.props.dispatch(setLightTheme())}}>Light</a> 
               <a className={this.props.configuration.lightTheme ? "a-light" : ""} onClick={() => {this.props.dispatch(setDarkTheme())}}>Dark</a></p>
 
-              {this.state.activeTab == 1 && 
-                <FadeTransform in duration={100} transformProps={{enterTransform: 'translateY(1.5rem)', exitTransform: 'translateY(-1.5rem)'}}>
-                  <div className="login-option-container">
-                    {this.state.createAccount == 1 ? 
-                      <LoginCreateForm /> :
-                      <LoginUserForm unmount={this.unmount} />
-                    }
-                  </div>
-                </FadeTransform>
-              }
-
-              {this.state.activeTab== 0 && 
+              {this.state.activeTab == 0 && 
                 <FadeTransform in duration={100} transformProps={{enterTransform: 'translateY(1.5rem)', exitTransform: 'translateY(-1.5rem)'}}>
                   <div className="login-option-container">
                     <LoginGuestForm unmount={this.unmount} />
@@ -83,9 +97,27 @@ class LoginModal extends React.Component {
                 </FadeTransform>
               }
 
-              <div className="containerChannelPicker">
-                <DefaultChannelPicker />
-              </div>
+              {this.state.activeTab == 1 && 
+                <FadeTransform in duration={100} transformProps={{enterTransform: 'translateY(1.5rem)', exitTransform: 'translateY(-1.5rem)'}}>
+                  <div className="login-option-container">
+                    <LoginUserForm unmount={this.unmount} accountWasCreated={this.state.accountWasCreated} />
+                  </div>
+                </FadeTransform>
+              }
+
+              {this.state.activeTab == 2 && 
+                <FadeTransform in duration={100} transformProps={{enterTransform: 'translateY(1.5rem)', exitTransform: 'translateY(-1.5rem)'}}>
+                  <div className="login-option-container">
+                    <LoginCreateForm goToLoginTab={this.goToLoginTab} />
+                  </div>
+                </FadeTransform>
+              }
+
+              {this.state.activeTab < 2 && 
+                <div className="containerChannelPicker">
+                  <DefaultChannelPicker />
+                </div>
+              }
 
             </div>
           </div>

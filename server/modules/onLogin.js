@@ -3,108 +3,93 @@ globals = require('./globals');
 sendSystemMessage = require('./sendSystemMessage');
 db = require('./database');
 
-const onLogin = (socket, payload) => {
+const onLogin = (socket, loginObject) => {
 
   //socket.disconnect(); //do this if the user is banned
 
-  globals.log("(onLogin) Request to login from: '" + payload.identifier + "'...")
+  if (loginObject && loginObject.type && (loginObject.type == 'guest' || loginObject.type == 'user')) {
 
-  let response = '';  
+    //if the login was for a guest
+    if (loginObject.type == 'guest') {
 
-  if (payload.loginType == 'user') {
-    db.query("SELECT * FROM users WHERE email=? AND password=SHA2(?, 256)",[payload.email, payload.password], (err, result) => {
-      if (err) throw err;
-      if (result.length > 0) {
+      globals.log("(onLogin) Request to login guest from: '" + loginObject.nick + "'...")
 
-        const record = result[0];
-        console.log("User found:");
-        console.log(record.nick)
+      let response = "success";
 
-        if (result[0].isGlobalBanned) {
-          socket.disconnect();
-        }
+      //TODO limit nick to alphanumeric characters
 
-        response = "success"        
+      //check a nick was supplied with the request
+      if (!loginObject.nick || loginObject.nick.length > config.nickMaxLength || loginObject.nick.length < config.nickMinLength) {
+        response = "no nick supplied, or nick too long or short"
+      }
+
+      //check the nick isn't in use
+      if (globals.checkIfNickIsInUse(loginObject.nick)) {
+        response = "nick is in use"
+      }
+
+      if (globals.checkIfNickIsRegistered(loginObject.nick)) {
+        response = "nick is registered"
+      }
+
+      //if there were no errors thus far
+      if (response == "success") {
+
+        //check the nick isn't global banned
+        db.query("SELECT * FROM users WHERE nick=? AND isGlobalBanned=1",[loginObject.nick], (err, result) => {
+          if (err) throw err;
+          if (result.length > 0) {
+            //if the nick belongs to a banned user, drop them like a hot potato
+            socket.disconnect();
+          } else {
+            io.to(socket.id).emit('login response', "success");
+            globals.log("(onLogin): Guest login for '" + loginObject.nick + "' successful!")
+          }
+
+        });
 
       } else {
+        io.to(socket.id).emit('login response', response);
+        globals.log("(onLogin): Guest login: " + response)
+      }     
 
-        response = "fail"
-        
-      }
-
-      //send the response
-      io.to(socket.id).emit('login response', response);
-      console.log("Response: " + response)
-    })
-  } else if (payload.loginType == 'guest') {
-
-    //check a nick was supplied with the request
-    if (!payload.nick || payload.nick.length > config.nickMaxLength || payload.nick.length < config.nickMinLength) {
-      response = "invalid nick supplied"
-    } else {
-      response = "success"
     }
     
-  } else {
-    globals.log(payload.loginType);
-  }
+    //if the login was for a registered user
+    else if (loginObject.type == 'user') {
+      globals.log("(onLogin) Request to login user from: '" + loginObject.email + "'...")
 
-  /*
-  //check a nick was supplied with the request
-  if (!payload.nick) {
-    response = "no nick supplied";
-  } else {
+      db.query("SELECT * FROM users WHERE email=? AND password=SHA2(?, 256)",[loginObject.email, loginObject.password], (err, result) => {
 
-    //check if another user has that nick already
-    globals.onlineUsers.map((user)=>{
-
-      //if the nick is in use
-      if (user.nick == nick) { 
-        //if it's the current user
-        if (user.socketId == socket.id) { 
-          response = "nick in use by socket";
+        if (err) throw err;
+        if (result.length > 0) {
+  
+          if (result[0].isGlobalBanned) {
+            //if the user is banned, drop them like a hot potato
+            socket.disconnect();
+          } else {
+            globals.log("(onLogin) user '" + result[0].nick + "' successfully logged in!")
+            io.to(socket.id).emit('login response', {response: "success", nick: result[0].nick});
+          }
+  
         } else {
-          response = "nick in use";
+          io.to(socket.id).emit('login response', {response: "Incorrect email address or password!", nick: ''});
         }
-      }
 
-    })
+      })
 
-    // db.query("SELECT Nick FROM users", (err, result) => {
-    //   if (err) throw err;
-    //   //console.log("Result:");
-    //   //console.log(result);
-    // });
-
-    //check the length of the nick
-    if (nick.length > config.nickMaxLength) {
-      response = "nick too long";
     }
-    if (nick.length < config.nickMinLength) {
-      response = "nick too short";
-    }
+
+  } else {
+    io.to(socket.id).emit('login response', "error - no loginObject or invalid loginObject.type received!");
+    globals.log("(onLogin) no loginObject or invalid loginObject.type received!",2)
   }
-
-  //if there was no error
-  if (response == "success") {
-
-    globals.log("(onGuestLogin) Nick '" + nick + "' accepted.")
-
-    //add the user to the array of online users
-    globals.onlineUsers.push({
-      nick: nick,
-      socketId: socket.id
-    })
-
-  }
-
-  */
 
 }
 
 const onConnect = (socket) => {
-  socket.on('request login', (payload) => {
-    onLogin(socket, payload);    
+  socket.on('request login', (loginObject) => {
+    onLogin(socket, loginObject);    
   });
 }
 
