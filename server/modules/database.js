@@ -50,11 +50,14 @@ db.connect((err) => {
           /*  Database structure
 
           users: userId, nick, isAdmin, lastSeen, isGlobalBanned
-          userChannelPermissions: userChannelPermissionId, channelId, userId, permissionType
+          userChannelPermissions: userChannelPermissionId, channelId, userId, permissionType, allow
+            Permission types: "join", "voice", "image", "op", "owner"
           channels: channelId, name, topic, isVisible, isDefault, requireImage, requireVoice, requireLogin, isActive
           userIPHistory: userIPHistoryId, userId, IPAddress, hostname, nick, seen
+          sessions: sessionId, sessionKey, lastSocketId, lastActive, nickUsed
           */
 
+          // users
           db.query("CREATE TABLE IF NOT EXISTS users (\
             userId int NOT NULL AUTO_INCREMENT,\
             nick varchar(255) NULL,\
@@ -74,6 +77,19 @@ db.connect((err) => {
 
           });
 
+          // channelPermissions
+          db.query("CREATE TABLE IF NOT EXISTS channelPermissions (\
+            channelPermissionId int NOT NULL AUTO_INCREMENT,\
+            channelId int NOT NULL,\
+            userId int NOT NULL,\
+            permissionType varchar(100) NOT NULL,\
+            allow bit NOT NULL DEFAULT 1,\
+            PRIMARY KEY (channelPermissionId))", function (err, result) {
+              if (err) throw err;
+              console.log("'channelPermissions' table created");
+          });
+
+          // channels
           db.query("CREATE TABLE IF NOT EXISTS channels (\
             channelId int NOT NULL AUTO_INCREMENT,\
             name varchar(255) NOT NULL,\
@@ -129,14 +145,18 @@ db.connect((err) => {
     });
   }
 
-  //load list of default channels
-  db.query("SELECT * FROM channels WHERE isVisible=1 AND isDefault=1 AND isActive=1", (err, result) => {
-    if (err) throw err;
-    for (var i = 0; i < result.length; i++) {
-      globals.defaultChannels.push(result[i])
-      globals.log("Default channel registered: " + result[i].name)
-    }
-  });
+  if (!initialCreate) {
+
+    //load list of default channels
+    db.query("SELECT * FROM channels WHERE isVisible=1 AND isDefault=1 AND isActive=1", (err, result) => {
+      if (err) throw err;
+      for (var i = 0; i < result.length; i++) {
+        globals.defaultChannels.push(result[i])
+        globals.log("Default channel registered: " + result[i].name)
+      }
+    });
+
+  }
 
 
 });
