@@ -3,6 +3,8 @@ var db = require('./database');
 const SHA2 = require("sha2");
 globals = require('./globals');
 
+const ignoreSessions = true
+
 const getUniqueKey = (socketId) => {
   return SHA2["SHA-256"](socketId).toString("hex");
 }
@@ -26,7 +28,7 @@ setInterval(updateSessions,10000)
 const checkSession = (socket, sessionKey) => {
   let response = '';
   //if session was found
-  if (globals.sessions.filter(session=>session.sessionKey==sessionKey).length>0) {
+  if (globals.sessions.filter(session=>session.sessionKey==sessionKey).length>0 && !ignoreSessions) {
 
     //create date vars
     +new Date;

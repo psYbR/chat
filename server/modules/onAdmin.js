@@ -5,17 +5,17 @@ io = require('./server');
 db = require('./database');
 
 const onRequestChannels = (socket) => {
-  config.channels.map((channel, i)=>{
+  globals.channels.map((channel, i)=>{
 
     //we don't want to send the entire channel object, so here we set up a new one with the required values in it
     const outgoingChannel = {
       channelId: channel.channelId,
       channelName: channel.channelName,
       topic: channel.topic,
-      isVisible: true,
-      isDefault: true,
-      requiresVoice: false,
-      requiresRegistration: false,
+      isVisible: channel.isVisible,
+      isDefault: channel.isDefault,
+      requiresVoice: channel.requiresVoice,
+      requiresRegistration: channel.requiresRegistration,
       creatorId: 123456789, 
       creatorNick: '*'
     };

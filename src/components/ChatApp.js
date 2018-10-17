@@ -5,7 +5,7 @@ import UserList from './UserList';
 import DOMHandler from './DOMHandler';
 import LoginModal from './LoginModal';
 import ConnectingModal from './ConnectingModal';
-import ChannelPicker from './ChannelPicker';
+import ChannelPickerModal from './ChannelPickerModal';
 import LeaveChannelModal from './LeaveChannelModal';
 import AdminModal from './AdminModal';
 import { connect } from 'react-redux';
@@ -23,7 +23,7 @@ class ChatApp extends React.Component {
         {(!this.props.userInterface.appIsConnected || !this.props.userInterface.defaultChannelsReceived) && <ConnectingModal />}
         {(this.props.userInterface.loginModalVisible && this.props.userInterface.appIsConnected && this.props.userInterface.defaultChannelsReceived) && <LoginModal />}
         {(this.props.userInterface.adminModalVisible && this.props.userInterface.appIsConnected) && <AdminModal />}
-        {(this.props.userInterface.channelPickerVisible && this.props.userInterface.appIsConnected) && <ChannelPicker />}
+        {(this.props.userInterface.channelPickerVisible && this.props.userInterface.appIsConnected) && <ChannelPickerModal />}
         {(this.props.userInterface.leaveChannelModalVisible && this.props.userInterface.appIsConnected) && <LeaveChannelModal />}
 
         <div className={"blazechat-overlay-container" + (this.props.userInterface.appIsBlurred ? " blur-container" : "")}>

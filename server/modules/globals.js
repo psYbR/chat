@@ -11,12 +11,10 @@ const checkIfNickIsInUse = (nick) => {
 }
 
 const addToOnlineUsers = (socketId, nick) => {
-  if (onlineUsers.filter(user=>user.socketId).length < 1) {
-    const newUser = {
-      nick,
-      socketId
-    }
-    onlineUsers.push(newUser)
+  if (globals.onlineUsers.filter(user=>user.socketId == socketId).length < 1) {
+    globals.onlineUsers.push({socketId, nick})
+  } else {
+    console.log("(globals - addToOnlineUsers) didn't add user:" + socketId, nick)
   }
 }
 

@@ -3,15 +3,16 @@ export const addChannel = (
   {
     channelId = 0,
     channelName = '',
-    type = 'channel', //or 'user' for private message
+    isDefault = false,
     topic = '',
+    isSelectedInPicker = false,
     isCurrent = false,
     isJoined = false,
-    wasJoined = false,
+    wasJoinedBeforeDisconnect = false,
     joinFailed = false,
-    hasNewMessages = false,
-    hasNewNotifs = false,
-    hasNewMention = false,
+    hasMessages = false,
+    hasNotifs = false,
+    hasMention = false,
     userIsOwner = false,
     userIsOp = false,
     userIsMod = false,
@@ -25,15 +26,16 @@ export const addChannel = (
   channel: {
     channelId,
     channelName,
-    type,
+    isDefault,
     topic,
+    isSelectedInPicker,
     isCurrent,
     isJoined,
-    wasJoined,
+    wasJoinedBeforeDisconnect,
     joinFailed,
-    hasNewMessages,
-    hasNewNotifs,
-    hasNewMention,
+    hasMessages,
+    hasNotifs,
+    hasMention,
     userIsOwner,
     userIsOp,
     userIsMod,
@@ -43,28 +45,25 @@ export const addChannel = (
 
 });
 
-export const setChannelIsOwner = (channelId) => ({
-  type: 'SET_CHANNEL_IS_OWNER',
+
+export const selectChannelInPicker = (channelId) => ({ 
+  type: 'SELECT_CHANNEL_IN_PICKER',
   channelId
-})
-export const setChannelIsOp = (channelId) => ({
-  type: 'SET_CHANNEL_IS_OP',
+});
+export const deselectChannelInPicker = (channelId) => ({ 
+  type: 'DESELECT_CHANNEL_IN_PICKER',
   channelId
+});
+export const resetChannelPickerSelection = () => ({ 
+  type: 'RESET_CHANNEL_PICKER_SELECTION'
+});
+export const setChannelPermissions = (channelId, permissions) => ({
+  type: 'SET_CHANNEL_PERMISSIONS',
+  channelId,
+  permissions
 })
-export const setChannelIsMod = (channelId) => ({
-  type: 'SET_CHANNEL_IS_MOD',
-  channelId
-})
-export const setChannelIsVoice = (channelId) => ({
-  type: 'SET_CHANNEL_IS_VOICE',
-  channelId
-})
-export const setChannelIsImage = (channelId) => ({
-  type: 'SET_CHANNEL_IS_IMAGE',
-  channelId
-})
-export const setChannelHasNewMessages = (channelId) => ({
-  type: 'SET_CHANNEL_HAS_NEW_MESSAGES',
+export const setChannelHasMessages = (channelId) => ({
+  type: 'SET_CHANNEL_HAS_MESSAGES',
   channelId
 });
 export const setChannelHasNotifs = (channelId) => ({

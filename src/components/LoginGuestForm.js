@@ -50,6 +50,8 @@ class LoginGuestForm extends React.Component {
   handleLoginResponse = (response) => {
     if (response == "success") {
 
+      console.log("Login accepted, joining channels...")
+
       this.setState({
         ...this.state,
         waitingForNickAcceptance: false,
@@ -122,15 +124,17 @@ class LoginGuestForm extends React.Component {
 
           <button
             className='guestNickSubmitButton'
+
             //check for conditions that would cause the button to be disabled
             disabled={
               !this.state.nick ||
-              this.props.defaultChannels.filter((channel) => channel.isSelected == true).length < 1 ||
+              this.props.channels.filter((channel) => channel.isDefault && channel.isSelectedInPicker == true).length < 1 ||
               !this.state.termsAccepted ||
               this.state.nick.length < nickMinLength ||
               this.state.nick.length > nickMaxLength ||
               this.state.waitingForNickAcceptance
-            }>
+            }
+            >
             {!this.state.waitingForNickAcceptance ? "Start chatting" : "Logging in... "}
             {this.state.waitingForNickAcceptance && <span className="fa fa-spinner fa-spin"></span>}
           </button>

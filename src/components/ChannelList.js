@@ -14,7 +14,14 @@ class ChannelList extends React.Component {
         <Alerts />
         <div className={this.props.configuration.lightTheme ? "channelListContainer emphasised-container-light" : "channelListContainer emphasised-container"}>
           {this.props.channels.map((channel) => {
-            return <ChannelListItem key={channel.channelId} channel={channel} />
+            const displayChannel = {
+              ...channel,
+              lightTheme: this.props.configuration.lightTheme,
+              dispatch: this.props.dispatch
+            }
+            if (channel.isJoined) {
+              return <ChannelListItem key={channel.channelId} channel={displayChannel} />
+            }
           })}
         </div>
         <ChannelControls />

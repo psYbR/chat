@@ -15,52 +15,39 @@ const onRequestUserList = (socket, channelId) => {
 
   globals.log("(onRequestUserList) Request for user list for channel: '" + channelId + "' from socket: " + socket.id);
 
-  //check the channel ID was a number
   let response = "success"
+
+  //check the channel ID was a number
   if (isNaN(channelId)) {
+    globals.log("(onRequestUserList) invalid channel ID");
     response = "invalid channel ID";
   }
 
   //check that the channel ID is in one of the channel lists
-  response = "that channel was not found";
-  config.defaultChannels.map((channel)=>{
-    if (channel.channelId == channelId) {
-      response = "success";
-    }
-  });
-  globals.userChannels.map((channel)=>{
-    if (channel.channelId == channelId) {
-      response = "success";
-    }
-  });
+  if (globals.channels.filter(channel=>channel.channelId == channelId).length < 1) {
+    globals.log("(onRequestUserList) that channel was not found");
+    response = "that channel was not found";
+  }
 
   //check that the user is actually in that channel
-  response = "not in that channel";
-  let thisUsersChannels = []; //keep track of which channels the user *is* in, we'll use this later on
-  globals.usersInChannels.map((record)=>{
-    if (record.channelId == channelId && record.socketId == socket.id) {
-      response = "success";
-    }
-    if (record.socketId == socket.id) {
-      thisUsersChannels.push(record.channelId);
-    }
-  })
-
-  //check the permissions for the channel here
+  if (globals.usersInChannels.filter(channel=>channel.channelId == channelId && channel.socketId == socket.id).length < 1) {
+    globals.log("(onRequestUserList) can't get user list for channel the user is not in");
+    response = "can't get user list for channel the user is not in";
+  }
 
   //send the user the list of users in the channel
   if (response == "success") {
 
-    //get the list of other users in the requested channel
-    const userList = globals.usersInChannels.filter(record => record.channelId == channelId);
+    globals.log("(onRequestUserList) Sending user channel list...");
 
-    //send each user to the client
-    userList.map((record) => {      
+    //check the permissions for the channel here
 
-      //send the object
-      sendUserObject(socket.id, record.socketId, channelId);
-
-    });
+    //for each other user in the requested channel, send their details to the joining user
+    globals.usersInChannels.map((user) => {
+      if (user.channelId == channelId) {
+        sendUserObject(socket.id, user.socketId, channelId);
+      }
+    })
 
     //tell the user's client all the objects are sent
     io.to(socket.id).emit('user list finished');
@@ -77,7 +64,7 @@ const onConnect = (socket) => {
     try {
       callback(onRequestUserList(socket, channelId));
     } catch(err) {
-      globals.log('(index) Failed callback for onGetUserList: "' +  err + '" for client: ' + socket.id, 2)
+      globals.log('(index) Failed callback for onRequestUserList: "' +  err + '" for client: ' + socket.id, 2)
     }
   });
 }

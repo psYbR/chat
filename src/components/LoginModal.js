@@ -5,7 +5,7 @@ import { setAppReady } from '../utils/setAppState'
 import LoginGuestForm from './LoginGuestForm';
 import LoginUserForm from './LoginUserForm';
 import LoginCreateForm from './LoginCreateForm';
-import DefaultChannelPicker from './DefaultChannelPicker';
+import ChannelPicker from './ChannelPicker';
 
 import { FadeTransform } from 'react-animation-components'
 
@@ -65,7 +65,7 @@ class LoginModal extends React.Component {
                   })
                 }}>
                   <h1>Login</h1>
-                  {/* <div className="loginTabBadges"> //Login tab badges
+                  {/* <div className="loginTabBadges">
                     <i className="fas fa-envelope-square"></i>
                     <i className="fab fa-facebook-square"></i>
                     <i className="fab fa-google-plus-square"></i>
@@ -113,7 +113,7 @@ class LoginModal extends React.Component {
 
               {this.state.activeTab < 2 && 
                 <div className="containerChannelPicker">
-                  <DefaultChannelPicker />
+                  <ChannelPicker showDefaultChannels={true} />
                 </div>
               }
 

@@ -46,6 +46,8 @@ class LoginUserForm extends React.Component {
   handleLoginResponse = ({response, nick, isAdmin}) => { //listener action
     if (response == "success") {
 
+      console.log("Login accepted, joining channels...")
+
       this.props.dispatch(setNick(nick));
 
       if (isAdmin) {
@@ -158,7 +160,7 @@ class LoginUserForm extends React.Component {
               className='loginButton'
               //check for conditions that would cause the button to be disabled
               disabled={!this.state.emailIsValid ||
-                this.props.defaultChannels.filter((channel) => channel.isSelected == true).length < 1 ||
+                this.props.channels.filter((channel) => channel.isDefault && channel.isSelectedInPicker == true).length < 1 ||
                 !this.state.termsAccepted ||
                 this.state.waitingForLoginResponse}
             >

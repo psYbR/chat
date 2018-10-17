@@ -1,11 +1,6 @@
 import { store } from '../../stores/store';
 import {
-  addMessage
-  ,setChannelHasNotifs
-  ,setChannelHasNewMessages
-  ,setChannelHasMention
-  ,setMessagesSinceNotFocused
-} from '../../actions/actions';
+  addMessage ,setChannelHasNotifs ,setChannelHasMessages ,setChannelHasMention ,setMessagesSinceNotFocused } from '../../actions/actions';
 import getCurrentChannel from '../getCurrentChannel';
 import { systemNick } from '../../config';
 
@@ -13,6 +8,7 @@ import { systemNick } from '../../config';
 const onChatMessage = (msg) => {
   store.dispatch(addMessage({...msg, messageSent: true}));
   //set notifications for messages in other channels
+  console.log(getCurrentChannel()+ ' and ' + msg.channelId)
   if (msg.channelId != getCurrentChannel()) {
     //if the message was a system message
     if (msg.source == systemNick) {
@@ -20,7 +16,7 @@ const onChatMessage = (msg) => {
     }
     //if the message was a regular message
     else {
-      store.dispatch(setChannelHasNewMessages(msg.channelId));
+      store.dispatch(setChannelHasMessages(msg.channelId));
     }
     //if the message mentions the user's nick in it
     if (msg.messageText.includes(store.getState().loginState.nick)) {

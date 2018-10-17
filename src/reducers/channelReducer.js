@@ -7,67 +7,56 @@ export default (state = reducerDefaultState, action) => {
         ...state,
         action.channel
       ];
-    case 'SET_CHANNEL_IS_OWNER':
-      return state.map(channel => {
-        if (channel.channelId == action.channelId) {
-          return{
-            ...channel,
-            userIsOwner: true
-          }
-        } else {
-          return channel
-        }
-      })
-    case 'SET_CHANNEL_IS_OP':
-      return state.map(channel => {
-        if (channel.channelId == action.channelId) {
-          return{
-            ...channel,
-            userIsOp: true
-          }
-        } else {
-          return channel
-        }
-      })
-    case 'SET_CHANNEL_IS_MOD':
-      return state.map(channel => {
-        if (channel.channelId == action.channelId) {
-          return{
-            ...channel,
-            userIsMod: true
-          }
-        } else {
-          return channel
-        }
-      })
-    case 'SET_CHANNEL_IS_VOICE':
-      return state.map(channel => {
-        if (channel.channelId == action.channelId) {
-          return{
-            ...channel,
-            userIsVoice: true
-          }
-        } else {
-          return channel
-        }
-      })
-    case 'SET_CHANNEL_IS_IMAGE':
-      return state.map(channel => {
-        if (channel.channelId == action.channelId) {
-          return{
-            ...channel,
-            userIsImage: true
-          }
-        } else {
-          return channel
-        }
-      })
-    case 'SET_CHANNEL_HAS_NEW_MESSAGES':
+    case 'SELECT_CHANNEL_IN_PICKER':
       return state.map((channel) => {
         if (channel.channelId == action.channelId) {
           return {
             ...channel,
-            hasNewMessages: true
+            isSelectedInPicker: true
+          }
+        } else {
+          return channel
+        }
+      })
+    case 'DESELECT_CHANNEL_IN_PICKER':
+      return state.map((channel) => {
+        if (channel.channelId == action.channelId) {
+          return {
+            ...channel,
+            isSelectedInPicker: false
+          }
+        } else {
+          return channel
+        }
+      })
+    case 'RESET_CHANNEL_PICKER_SELECTION':
+      return state.map(channel => {
+        return {
+          ...channel,
+          isSelectedInPicker: false
+        }
+      })
+    case 'SET_CHANNEL_PERMISSIONS':
+      return state.map(channel => {
+        if (channel.channelId == action.channelId) {
+          return{
+            ...channel,
+            userIsOwner: action.permissions.userIsOwner,
+            userIsOp: action.permissions.userIsOp,
+            userIsMod: action.permissions.userIsMod,
+            userIsVoice: action.permissions.userIsVoice,
+            userIsImage: action.permissions.userIsImage
+          }
+        } else {
+          return channel
+        }
+      })
+    case 'SET_CHANNEL_HAS_MESSAGES':
+      return state.map((channel) => {
+        if (channel.channelId == action.channelId) {
+          return {
+            ...channel,
+            hasMessages: true
           }
         } else {
           return channel
@@ -78,7 +67,7 @@ export default (state = reducerDefaultState, action) => {
         if (channel.channelId == action.channelId) {
           return {
             ...channel,
-            hasNewNotifs: true
+            hasNotifs: true
           }
         } else {
           return channel
@@ -89,7 +78,7 @@ export default (state = reducerDefaultState, action) => {
         if (channel.channelId == action.channelId) {
           return {
             ...channel,
-            hasNewMention: true
+            hasMention: true
           }
         } else {
           return channel
@@ -100,9 +89,9 @@ export default (state = reducerDefaultState, action) => {
         if (channel.channelId == action.channelId) {
           return {
             ...channel,
-            hasNewMessages: false,
-            hasNewNotifs: false,
-            hasNewMention: false
+            hasMessages: false,
+            hasNotifs: false,
+            hasMention: false
           }
         } else {
           return channel
@@ -128,7 +117,7 @@ export default (state = reducerDefaultState, action) => {
           return {
             ...channel,
             isJoined: true,
-            wasJoined: false
+            wasJoinedBeforeDisconnect: false
           }
         } else {
           return channel
@@ -140,14 +129,23 @@ export default (state = reducerDefaultState, action) => {
           return {
             ...channel,
             isJoined: false,
-            wasJoined: true
+            wasJoinedBeforeDisconnect: true
           }
         } else {
           return channel
         }
       })
     case 'LEAVE_CHANNEL':
-      return state.filter(channel => channel.channelId != action.channelId);
+      return state.map((channel) => {
+        if (channel.channelId == action.channelId) {
+          return {
+            ...channel,
+            isJoined: false
+          }
+        } else {
+          return channel
+        }
+      });
     default:
       return state;
   }

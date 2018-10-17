@@ -48,6 +48,7 @@ const onLogin = (socket, loginObject) => {
             globals.log("(onLogin): Guest login for '" + loginObject.nick + "' successful!")
             session.sessionLogin(socket.id, 0, loginObject.nick) //add the info to the user's session
             globals.addToOnlineUsers(socket.id, loginObject.nick) //add to online-users array
+            
           }
 
         });

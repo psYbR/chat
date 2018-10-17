@@ -19,7 +19,7 @@ const requestJoinChannel = (channelId) => {
   }
   //if there was no error
   else {
-    console.log("requesting to join channel ID: " + channelId);
+    console.log("Requesting to join channel ID: " + channelId);
     socket.emit('join channel', channelId, ({ response, channelId }) => { //send the nick to the server
       //handle the response (a string; either "success" or the reason the channel wasn't joined eg. not allowed)
       if (response == "success" || response == "already in channel") {

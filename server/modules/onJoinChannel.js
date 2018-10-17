@@ -15,50 +15,36 @@ const onJoinChannel = (socket, channelId) => {
 
   globals.log("(onJoinChannel) Channel join request: '" + channelId + "' from socket: " + socket.id);
 
-  //check the channel ID was valid
   let response = "success"
+
+  //check the channel ID was valid
   if (isNaN(channelId)) {
+    globals.log("(onJoinChannel) invalid channel ID")
     response = "invalid channel ID";
   }
 
   //check that the ID is in the channel list
-  response = "channel not found";
-  globals.channels.map((channel)=>{
-    if (channel.channelId == channelId) {
-      response = "success";
-    }
-  });
+  if (globals.channels.filter(channel=>channel.channelId == channelId).length < 1) {
+    globals.log("(onJoinChannel) channel not found")
+    response = "channel not found";
+  }
 
-  //check whether the user can join the channel
-   
-
-  //the permissions the user has in the channel
-  // let permissions = {
-  //   isOwner: false, //can configure the channel and assign ops
-  //   isOp: false, //can administer users in the channel
-  //   isMod: false, //can kick/voice
-  //   isVoice: false, //can send messages when flag is required
-  //   isImage: false //can paste images when flag is required
-  // }
+  //make sure the user has a nick because if we can't find it here they won't show up in channel lists
+  if (globals.onlineUsers.filter(user=>user.socketId == socket.id).length < 1) {
+    globals.log("(onJoinChannel) users nick not found")
+    response = "user's nick not found"
+  }
 
   //check if the user is already in the channel
-  globals.usersInChannels.map((record)=>{
-    if (record.channelId == channelId && record.socketId == socket.id) {
-      response = "already in channel";
-      globals.log("(onJoinChannel) user was already in channel: " + channelId, 2);
-    }
-  });
-
-  //make sure the user has a nick
-  response = "(onJoinChannel) user's nick not found"
-  globals.onlineUsers.map((record)=>{
-    if (record.socketId == socket.id) {
-      response = "success";
-    }
-  })
+  if (globals.usersInChannels.filter(user=>user.socketId == socket.id && user.channelId == channelId).length > 0) {
+    globals.log("(onJoinChannel) user already in channel ID: " + channelId)
+    response = "user already in channel ID: " + channelId;
+  }
 
   //add the user to the channel
   if (response == "success") {
+
+    //check whether the user has permission to join the channel here
     
     //add the record to the array
     globals.usersInChannels.push({
@@ -68,6 +54,8 @@ const onJoinChannel = (socket, channelId) => {
 
     //send a message to the users of the channel
     sendSystemMessage(channelId, utils.socketToNick(socket.id) + " has joined the channel", socket.id);
+
+    globals.log("(onJoinChannel) user successfully joined channel ID: " + channelId)
 
     //send the user object to everyone in the channel except the joining user
     globals.usersInChannels.map((record)=>{
@@ -87,7 +75,7 @@ const onJoinChannel = (socket, channelId) => {
   }
 
   //send the response
-  return({ response, channelId, permissions });
+  return({ response, channelId });
 
 };
 

@@ -4,19 +4,6 @@ config = require('../config');
 io = require('./server');
 getChannelNameFromId = require('./getChannelNameFromId');
 
-//returns friendly date string from a timestamp eg. '2018-06-24 10:37:21'
-const getFriendlyFromTimestamp = (timestamp, format) => {
-  const a = new Date(timestamp);
-  const year = a.getFullYear();
-  const month = (a.getMonth() + 1)  < 10 ? '0' + (a.getMonth() + 1) : (a.getMonth() + 1);
-  const date = a.getDate() < 10 ? '0' + a.getDate() : a.getDate();
-  const hour = a.getHours();
-  const min = a.getMinutes() < 10 ? '0' + a.getMinutes() : a.getMinutes();
-  const sec = a.getSeconds() < 10 ? '0' + a.getSeconds() : a.getSeconds();
-  const time = year + '-' + month + '-' + date + ' ' + hour + ':' + min + ':' + sec;
-  return time;
-}
-
 //
 // called when the client sends a chat message
 //
@@ -25,7 +12,7 @@ const getFriendlyFromTimestamp = (timestamp, format) => {
 
 const onChatMessage = (socket, msg) => {
 
-  //copy the incoming message
+  //copy the incoming message (we want to modify the object but keep the original)
   let outgoing = {};
   for (var property in msg) {
     outgoing[property] = msg[property];
@@ -36,17 +23,13 @@ const onChatMessage = (socket, msg) => {
   outgoing.receivedTimestamp = Date.now();
   outgoing.sentTimestamp = "";
 
-  //grab the nickname associated with the source user and add it to the outgoing message (and also verify the user exists)
-  let response = "nick not found";
-  globals.onlineUsers.map((user) => {
-    if (user.socketId == socket.id) {
-      outgoing.source = user.nick;
-      response = "success"
-    }
-  });
+  let response = "success";
 
-  if (outgoing.messageHasImage) {
-    //check channel message permissions
+  //grab the nickname associated with the source user and add it to the outgoing message (and also verify the user exists)
+  if (globals.onlineUsers.filter(user=>user.socketId == socket.id).length < 1) {
+    response = "nick not found";
+  } else {
+    outgoing.source = globals.onlineUsers.filter(user=>user.socketId == socket.id)[0].nick;
   }
 
   //check the length of the message doesn't exceed the limit
@@ -55,12 +38,7 @@ const onChatMessage = (socket, msg) => {
   }
 
   //check the user is actually in the channel they're trying to send a message to
-  if (
-    globals.usersInChannels.filter(record => (
-      record.channelId == outgoing.channelId && record.socketId == socket.id
-    ))
-    .length < 1
-  ) {
+  if (globals.usersInChannels.filter(user=>user.channelId == outgoing.channelId && user.socketId == socket.id).length < 1) {
     response = "user not found in target channel";
   }
 
@@ -88,19 +66,22 @@ const onChatMessage = (socket, msg) => {
     throw("cheeky exception");
   }
 
-  // antiFloodMaxViolations
+  // antiFloodMaxViolations goes here
 
-  //check channel message permissions here
+  if (outgoing.messageHasImage) {
+    //check channel message permissions
+  }
+
+  // check channel message permissions here
   
   //if there were no errors
   if (response == "success") {
-
     
     //record the time the message was sent
     globals.userMessages.push({socketId: socket.id, timestamp: curTime, messageText: outgoing.messageText})
     //console.log(globals.userMessages);
 
-    globals.log("[" + getFriendlyFromTimestamp(Date.now()) + "] #" + getChannelNameFromId(outgoing.channelId) + " " + outgoing.source + ": " + outgoing.messageText + "", 3);
+    globals.log("[" + globals.getSQLDate(Date.now()) + "] #" + getChannelNameFromId(outgoing.channelId) + " " + outgoing.source + ": " + outgoing.messageText + "", 3);
 
     //iterate users in channels
     globals.usersInChannels.map((record)=>{ 
@@ -127,11 +108,11 @@ const onChatMessage = (socket, msg) => {
 
 const onConnect = (socket) => {
   socket.on('chat message', (msg, callback) => {
-    try {
+    //try {
       callback(onChatMessage(socket, msg));
-    } catch(err) {
-      globals.log('(index) Failed callback for onChatMessage: "' +  err + '" for client: ' + socket.id, 2)
-    }
+    //} catch(err) {
+      //globals.log('(index) Failed callback for onChatMessage: "' +  err + '" for client: ' + socket.id, 2)
+    //}
   });
 }
 

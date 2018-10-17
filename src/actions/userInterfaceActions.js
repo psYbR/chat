@@ -77,10 +77,9 @@ export const unsetAdminModalVisible = () => ({
 export const setAdminModalVisible = () => ({
   type: 'SET_ADMIN_MODAL_VISIBLE'
 })
-export const unsetLoginModalVisible = () => {
-  console.log('modal set not visible')
-  return {type: 'UNSET_LOGIN_MODAL_VISIBLE'}
-}
+export const unsetLoginModalVisible = () => ({
+  type: 'UNSET_LOGIN_MODAL_VISIBLE'
+})
 export const setLoginModalVisible = () => ({
   type: 'SET_LOGIN_MODAL_VISIBLE'
 })

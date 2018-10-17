@@ -5,8 +5,6 @@ import configurationReducer from '../reducers/configurationReducer';
 import userReducer from '../reducers/userReducer';
 import userInterfaceReducer from '../reducers/userInterfaceReducer';
 import loginReducer from '../reducers/loginReducer';
-import defaultChannelsReducer from '../reducers/defaultChannelsReducer';
-import userChannelsReducer from '../reducers/userChannelsReducer';
 import adminChannelReducer from '../reducers/adminChannelReducer';
 import { buildForDev } from '../config';
 import {
@@ -25,8 +23,6 @@ const configureStore = () => {
     users: userReducer,
     userInterface: userInterfaceReducer,
     loginState: loginReducer,
-    defaultChannels: defaultChannelsReducer,
-    userChannels: userChannelsReducer,
     adminChannels: adminChannelReducer
   };
   
