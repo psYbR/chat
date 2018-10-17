@@ -50,6 +50,11 @@ class LoginGuestForm extends React.Component {
   handleLoginResponse = (response) => {
     if (response == "success") {
 
+      this.setState({
+        ...this.state,
+        waitingForNickAcceptance: false,
+      })
+
       this.props.dispatch(setNick(this.state.nick));
 
       requestJoinDefaultChannels();

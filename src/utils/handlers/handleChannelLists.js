@@ -18,8 +18,10 @@ export const onDefaultChannel = (channel) => {
   }
 };
 
-//handle finish sending of default channels
+//handle finish receiving of default channels
 export const onDefaultChannelsFinished = () => {
   store.dispatch(setDefaultChannelsReceived());
-  store.dispatch(setLoginModalVisible());
+  if (!store.getState().loginState.loggedIn) { 
+    store.dispatch(setLoginModalVisible()); //only show the modal if not already logged in
+  }
 };

@@ -4,7 +4,8 @@ export const setLoginState = (
     nick = '',
     username = '',
     usernameIsValidNick = false,
-    usernameIsValidEmail = false
+    usernameIsValidEmail = false,
+    isAdmin = false
   } = {}
 ) => ({
   type: 'SET_LOGIN_STATE',
@@ -13,7 +14,8 @@ export const setLoginState = (
     nick,
     username,
     usernameIsValidNick,
-    usernameIsValidEmail
+    usernameIsValidEmail,
+    isAdmin
   }
 });
   
@@ -41,4 +43,8 @@ export const setNick = (nick) => ({
   type: 'SET_NICK',
   nick
 });
+export const setAdmin = () => {
+  console.log('(action) Global admin enabled');
+  return {type: 'SET_ADMIN'}
+};
   

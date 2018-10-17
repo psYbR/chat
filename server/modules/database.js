@@ -27,13 +27,13 @@ const db = mysql.createConnection({
 }
 });
 
+const initialCreate = false
+const sessionReset = false
 
 db.connect((err) => {
   if (err) throw err;
-  console.log("Connected!");
+  console.log("(database) Connected!");
 
-  //const initialCreate = true
-  const initialCreate = false
   if (initialCreate) {
 
     db.query("DROP DATABASE blazechat", (err, result) => {
@@ -53,8 +53,8 @@ db.connect((err) => {
           userChannelPermissions: userChannelPermissionId, channelId, userId, permissionType, allow
             Permission types: "join", "voice", "image", "op", "owner"
           channels: channelId, name, topic, isVisible, isDefault, requireImage, requireVoice, requireLogin, isActive
-          userIPHistory: userIPHistoryId, userId, IPAddress, hostname, nick, seen
-          sessions: sessionId, sessionKey, lastSocketId, lastActive, nickUsed
+          IP: IPId, lastUserId, IPAddress, lastNick, lastActiveDatetime, isGlobalBanned, lastSessionKey
+          sessions: sessionId, sessionKey, lastSocketId, lastActiveDatetime, expiryDatetime, lastNick, lastUserID
           */
 
           // users
@@ -77,6 +77,20 @@ db.connect((err) => {
 
           });
 
+          // IP (ip address history)
+          db.query("CREATE TABLE IF NOT EXISTS IP (\
+            IPId int NOT NULL AUTO_INCREMENT,\
+            lastUserId int NOT NULL,\
+            IPAddress varchar(255) NOT NULL,\
+            lastNick varchar(100),\
+            lastActiveDatetime datetime NOT NULL,\
+            isGlobalBanned bit NOT NULL DEFAULT 0,\
+            lastSessionKey varchar(100),\
+            PRIMARY KEY (IPId))", function (err, result) {
+              if (err) throw err;
+              console.log("'IP' (IP address history) table created");
+          });
+
           // channelPermissions
           db.query("CREATE TABLE IF NOT EXISTS channelPermissions (\
             channelPermissionId int NOT NULL AUTO_INCREMENT,\
@@ -87,6 +101,20 @@ db.connect((err) => {
             PRIMARY KEY (channelPermissionId))", function (err, result) {
               if (err) throw err;
               console.log("'channelPermissions' table created");
+          });
+          
+          // sessions
+          db.query("CREATE TABLE IF NOT EXISTS sessions (\
+            sessionId int NOT NULL AUTO_INCREMENT,\
+            sessionKey varchar(100) NOT NULL,\
+            lastSocketId varchar(100) NOT NULL,\
+            lastActiveDatetime datetime NOT NULL,\
+            expiryDatetime datetime NOT NULL,\
+            lastNick varchar(100) NULL,\
+            lastUserId varchar(100) NULL,\
+            PRIMARY KEY (sessionId))", function (err, result) {
+              if (err) throw err;
+              console.log("'sessions' table created");
           });
 
           // channels
@@ -151,10 +179,36 @@ db.connect((err) => {
     db.query("SELECT * FROM channels WHERE isVisible=1 AND isDefault=1 AND isActive=1", (err, result) => {
       if (err) throw err;
       for (var i = 0; i < result.length; i++) {
-        globals.defaultChannels.push(result[i])
-        globals.log("Default channel registered: " + result[i].name)
+        globals.channels.push(result[i])
       }
+      globals.log("(database) Default channels registered.")
     });
+
+    if (!sessionReset) {
+      //restore sessions, skipping ones that had no nick associated
+      db.query("SELECT sessionKey, lastSocketId, lastNick, lastUserId, unix_timestamp(expiryDatetime) * 1000 as expiryDatetime FROM sessions WHERE expiryDatetime > NOW()", (err, result) => {
+        if (err) throw err;
+        for (var i = 0; i < result.length; i++) {
+          globals.sessions.push({
+            sessionKey: result[i].sessionKey,
+            socketId: result[i].lastSocketId,
+            lastNick: result[i].lastNick,
+            lastUserId: result[i].lastUserId,
+            expiryDatetime: result[i].expiryDatetime
+          })
+          globals.log("(database) Session restored for: '" + result[i].lastNick + "', " + result[i].lastUserId + ", " + result[i].sessionKey)
+        } 
+      });
+    } else {
+      //delete sessions
+      db.query("DELETE FROM sessions", (err, result) => {
+        if (err) throw err;
+      });
+    }
+
+
+    
+
 
   }
 

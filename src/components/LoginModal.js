@@ -1,9 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {
-  setLightTheme
-  ,setDarkTheme
-} from '../actions/actions';
+import { setLightTheme ,setDarkTheme, setLoggedIn } from '../actions/actions';
 import { setAppReady } from '../utils/setAppState'
 import LoginGuestForm from './LoginGuestForm';
 import LoginUserForm from './LoginUserForm';
@@ -26,6 +23,7 @@ class LoginModal extends React.Component {
       ...this.state,
       fadeOut: true
     })
+    this.props.dispatch(setLoggedIn())
     setTimeout(()=>{
       setAppReady();
     },150)

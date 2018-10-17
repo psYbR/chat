@@ -47,7 +47,7 @@ class ChannelControls extends React.Component {
           <span className="tooltiptext">Create</span>
         </button>
 
-        {this.props.loginState.nick == "Energizer" &&
+        {this.props.loginState.isAdmin &&
           <button
             className="button-default button-channel-controls ccbAdmin"
             onClick={this.onAdminOpen}
@@ -58,4 +58,4 @@ class ChannelControls extends React.Component {
   }
 }
 
-export default connect((state) => { return state; })(ChannelControls);
+export default connect(state=>state)(ChannelControls);

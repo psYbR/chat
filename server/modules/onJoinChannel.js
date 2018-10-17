@@ -21,33 +21,25 @@ const onJoinChannel = (socket, channelId) => {
     response = "invalid channel ID";
   }
 
-  //check that the ID is in one of the channel lists
+  //check that the ID is in the channel list
   response = "channel not found";
-  config.defaultChannels.map((channel)=>{
-    if (channel.channelId == channelId) {
-      response = "success";
-    }
-  });
-  globals.userChannels.map((channel)=>{
+  globals.channels.map((channel)=>{
     if (channel.channelId == channelId) {
       response = "success";
     }
   });
 
   //check whether the user can join the channel
-  const canJoin = true;
-  if (!canJoin) {
-    response = "you do not have permission to join that channel";
-  }
+   
 
   //the permissions the user has in the channel
-  let permissions = {
-    isOwner: false, //can configure the channel and assign ops
-    isOp: false, //can administer users in the channel
-    isMod: false, //can kick/voice
-    isVoice: false, //can send messages when flag is required
-    isImage: false //can paste images when flag is required
-  }
+  // let permissions = {
+  //   isOwner: false, //can configure the channel and assign ops
+  //   isOp: false, //can administer users in the channel
+  //   isMod: false, //can kick/voice
+  //   isVoice: false, //can send messages when flag is required
+  //   isImage: false //can paste images when flag is required
+  // }
 
   //check if the user is already in the channel
   globals.usersInChannels.map((record)=>{

@@ -2,6 +2,7 @@ config = require('../config');
 globals = require('./globals');
 sendSystemMessage = require('./sendSystemMessage');
 db = require('./database');
+session = require('./sessions');
 
 const onLogin = (socket, loginObject) => {
 
@@ -28,22 +29,25 @@ const onLogin = (socket, loginObject) => {
         response = "nick is in use"
       }
 
-      if (globals.checkIfNickIsRegistered(loginObject.nick)) {
-        response = "nick is registered"
-      }
-
       //if there were no errors thus far
       if (response == "success") {
 
         //check the nick isn't global banned
-        db.query("SELECT * FROM users WHERE nick=? AND isGlobalBanned=1",[loginObject.nick], (err, result) => {
+        db.query("SELECT * FROM users WHERE nick=?",[loginObject.nick], (err, result) => {
           if (err) throw err;
           if (result.length > 0) {
-            //if the nick belongs to a banned user, drop them like a hot potato
-            socket.disconnect();
+            if (result[0].isGlobalBanned) {
+              //if the nick belongs to a banned user, drop them like a hot potato
+              socket.disconnect();
+            } else {
+              io.to(socket.id).emit('login response', "That nick is registered and can't be used");
+              globals.log("(onLogin): Guest tried to use registered nick: " + loginObject.nick)
+            }
           } else {
-            io.to(socket.id).emit('login response', "success");
+            io.to(socket.id).emit('login response', "success"); //send response
             globals.log("(onLogin): Guest login for '" + loginObject.nick + "' successful!")
+            session.sessionLogin(socket.id, 0, loginObject.nick) //add the info to the user's session
+            globals.addToOnlineUsers(socket.id, loginObject.nick) //add to online-users array
           }
 
         });
@@ -69,7 +73,9 @@ const onLogin = (socket, loginObject) => {
             socket.disconnect();
           } else {
             globals.log("(onLogin) user '" + result[0].nick + "' successfully logged in!")
-            io.to(socket.id).emit('login response', {response: "success", nick: result[0].nick});
+            io.to(socket.id).emit('login response', {response: "success", nick: result[0].nick, isAdmin: result[0].isAdmin});
+            session.sessionLogin(socket.id, result[0].userId, result[0].nick) //add the info to the user's session
+            globals.addToOnlineUsers(socket.id, result[0].nick) //add to online-users array
           }
   
         } else {

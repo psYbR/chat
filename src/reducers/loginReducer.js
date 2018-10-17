@@ -39,6 +39,11 @@ export default (state = reducerDefaultState, action) => {
         ...state,
         nick: action.nick  
       };
+    case 'SET_ADMIN':
+      return {
+        ...state,
+        isAdmin: true
+      }
     default:
       return state;
   }

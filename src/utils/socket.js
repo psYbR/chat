@@ -5,6 +5,7 @@ import onChatMessage from './handlers/onChatMessage';
 import { onRemoveUser, onReceiveUser } from './handlers/handleUserLists';
 import onDisconnect from './handlers/onDisconnect';
 import onConnect from './handlers/onConnect';
+import onLoginRestore from './handlers/onLoginRestore';
 import {
   setPing,
   setDisconnectionReason
@@ -13,6 +14,10 @@ import {
 //
 // set up the socket event handlers
 //
+
+socket.on('login restore', (loginObject) => {
+  onLoginRestore(loginObject);
+});
 
 socket.on('user', ({ user, channel }) => {
   onReceiveUser(user, channel);

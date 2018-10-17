@@ -5,7 +5,7 @@ io = require('./server');
 db = require('./database');
 
 const onRequestChannels = (socket) => {
-  config.defaultChannels.map((channel, i)=>{
+  config.channels.map((channel, i)=>{
 
     //we don't want to send the entire channel object, so here we set up a new one with the required values in it
     const outgoingChannel = {

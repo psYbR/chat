@@ -1,7 +1,7 @@
 io                    = require('./modules/server')
 admin                 = require('./modules/onAdmin')
 globals               = require('./modules/globals')
-getIpAddress          = require('./modules/getIPAddress')
+IPAddress             = require('./modules/IPAddress')
 session               = require('./modules/sessions')
 
 onDisconnect          = require('./modules/onDisconnect')
@@ -17,8 +17,7 @@ onChatMessage         = require('./modules/onChatMessage')
 //called whenever a client connects (or reconnects)
 io.on('connection', (socket) => {
 
-  globals.log("(index) Connection from: " + getIpAddress(socket));
-
+  IPAddress             .onConnect(socket)
   onDisconnect          .onConnect(socket)
   session               .onConnect(socket)
   onLogin               .onConnect(socket)
@@ -41,29 +40,3 @@ io.on('connection', (socket) => {
   });
 
 });
-
-
-/*
-
-| App Start |
-
--- Does the server think I'm logged in already?
-|
-|-- Yes 
-|   |-- Get session details from server and set up client state
-|
-|-- No
-|   |-- Prompt User for login
-
-| App Reconnected |
-
--- Does the server think I'm logged in already?
-|
-|-- Yes
-|   |-- Get session details from server and restore client state
-|
-|-- No
-|   |-- Prompt User for login
-
-
-*/

@@ -10,19 +10,22 @@ const checkIfNickIsInUse = (nick) => {
   return onlineUsers.filter(user=>user.nick == nick).length > 0
 }
 
-const checkIfNickIsRegistered = (nick) => {
-  db.query("SELECT * FROM users WHERE nick=?",[nick], (err, result) => {
-    if (err) throw err;
-    return (result.length > 0)
-  });
+const addToOnlineUsers = (socketId, nick) => {
+  if (onlineUsers.filter(user=>user.socketId).length < 1) {
+    const newUser = {
+      nick,
+      socketId
+    }
+    onlineUsers.push(newUser)
+  }
 }
+
 
 //contains a list of which channels online users have joined
 let usersInChannels = [];
 
 //contains user-created channels
-let userChannels = [];
-let defaultChannels = [];
+let channels = [];
 
 //contains chat message timestamps from users (used to track message frequency for anti-flood)
 let userMessages = [];
@@ -33,14 +36,27 @@ const log = (message, logImportance = 1) => {
   }
 }
 
+//returns friendly date string from a timestamp eg. '2018-06-24 10:37:21'
+const getSQLDate = (timestamp) => {
+  var a = new Date(timestamp);
+  var year = a.getFullYear();
+  var month = (a.getMonth() + 1)  < 10 ? '0' + (a.getMonth() + 1) : (a.getMonth() + 1);
+  var date = a.getDate() < 10 ? '0' + a.getDate() : a.getDate();
+  var hour = a.getHours();
+  var min = a.getMinutes() < 10 ? '0' + a.getMinutes() : a.getMinutes();
+  var sec = a.getSeconds() < 10 ? '0' + a.getSeconds() : a.getSeconds();
+  var time = year + '-' + month + '-' + date + ' ' + hour + ':' + min + ':' + sec;
+  return time;
+}
+
 module.exports = {
   sessions,
   userMessages,
   log,
   onlineUsers,
   usersInChannels,
-  userChannels,
-  defaultChannels,
+  channels,
   checkIfNickIsInUse,
-  checkIfNickIsRegistered
+  getSQLDate,
+  addToOnlineUsers
 }

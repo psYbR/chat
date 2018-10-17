@@ -10,12 +10,12 @@ globals = require('./globals');
 //TO DO: blocked users
 
 //a test value
-globals.userChannels.push({
-  ...config.defaultChannel,
-  channelId: 21,
-  channelName: 'admin channel',
-  topic: 'secret admin stuff'
-});
+// globals.channels.push({
+//   ...config.defaultChannel,
+//   channelId: 21,
+//   channelName: 'admin channel',
+//   topic: 'secret admin stuff'
+// });
 
 //for a given socket ID, return the user's nick
 const socketToNick = (socketId) => {
