@@ -1,4 +1,4 @@
-import socket from '../utils/handlers/client';
+import { socket } from '../utils/handlers/client';
 import { store } from '../stores/store';
 import {
   unblurApp

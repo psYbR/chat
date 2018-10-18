@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import socket from '../utils/handlers/client';
+import { socket } from '../utils/handlers/client';
+import log from '../utils/log'
 
 class AdminModal extends React.Component {
   constructor(props) {
@@ -69,7 +70,7 @@ class AdminModal extends React.Component {
                   this.props.dispatch(setAdminEditingChannel(channel.channelId));
                 }}>Edit</button>
                 <button key={channel.channelId + "X"} onClick={()=>{
-                  console.log("delete channel " + channel.channelId)
+                  log("delete channel " + channel.channelId)
                 }}>Delete</button></td>
               </tr>
             );

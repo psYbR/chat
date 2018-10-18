@@ -1,9 +1,10 @@
 import { store } from '../../stores/store';
-import socket from './client';
+import { socket } from './client';
 import { maxTimestamp, maxMessageLength } from '../../config';
 import {
   setMessageSent
 } from '../../actions/actions';
+import log from '../log'
 
 //send chat messages to the server and handle the response on success or failure
 export const sendChatMessage = (outboundMsg) => {
@@ -29,10 +30,10 @@ export const sendChatMessage = (outboundMsg) => {
     socket.emit('chat message', outboundMsg, ({ timestamp, response }) => {
       // handle the response
       if (response == "success") {
-        console.log("Message " + timestamp + " sent successfully!");
+        log("Message " + timestamp + " sent successfully!");
         store.dispatch(setMessageSent(timestamp, "success"));
       } else {
-        console.log("Message " + timestamp + " not sent: " + response);
+        log("Message " + timestamp + " not sent: " + response);
         store.dispatch(setMessageSent(timestamp, response));
       }
     });

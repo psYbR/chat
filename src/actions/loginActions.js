@@ -1,3 +1,5 @@
+import log from '../utils/log'
+
 export const setLoginState = (
   {
     loggedIn = false,
@@ -44,7 +46,7 @@ export const setNick = (nick) => ({
   nick
 });
 export const setAdmin = () => {
-  console.log('(action) Global admin enabled');
+  log('(action) Global admin enabled');
   return {type: 'SET_ADMIN'}
 };
   

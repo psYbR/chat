@@ -1,7 +1,8 @@
 import { store } from '../../stores/store';
 import { addUser, removeUser, flushUserList } from '../../actions/actions';
-import socket from './client';
+import { socket } from './client';
 import getCurrentChannel from '../getCurrentChannel';
+import log from '../log'
 
 //requests a list of users for the current channel
 export const requestUserList = () => {
@@ -18,9 +19,9 @@ export const requestUserList = () => {
       socket.emit('request user list', currentChannelId, (response) => {
         //handle the response
         if (response == "success") {
-          console.log("user list request sent");
+          log("user list request sent");
         } else {
-          console.log("user list request failed: " + response);
+          log("user list request failed: " + response);
         }
       });
     //},0) //0ms ensures it happens next tick :)
@@ -31,20 +32,20 @@ export const requestUserList = () => {
 //handle removing a user from channels (array)
 export const onRemoveUser = (userId) => {
   if (userId) {
-    console.log("Remove user request received: " + userId)
+    log("Remove user request received: " + userId)
     store.dispatch(removeUser(userId));
   } else {
-    console.log("invalid user ID received for removing a user: " + userId);
+    log("invalid user ID received for removing a user: " + userId);
   }  
 };
 
 //handle receiving a single user
 export const onReceiveUser = (user) => {
   if (typeof(user) == 'object') {
-    console.log("user received: " + user.nick)
+    log("user received: " + user.nick)
     store.dispatch(addUser(user));
   } else {
-    console.log("invalid user obj received:");
-    console.log(user);
+    log("invalid user obj received:");
+    log(user);
   }  
 };

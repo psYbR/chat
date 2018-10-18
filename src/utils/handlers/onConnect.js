@@ -5,6 +5,7 @@ import requestJoinChannel from './requestJoinChannel';
 //import { requestUserList } from './handleUserLists';
 import { setConnected } from '../../actions/actions';
 import Cookie from 'js-cookie';
+import log from '../log'
 
 const cookieDomain = 'localhost'
 const useSecure = false
@@ -21,7 +22,7 @@ const rejoinChannels = (socket) => {
 //await a login from the user
 const setAwaitLogin = (socket) => {
   
-  console.log("Downloading channel list and awaiting login.");
+  log("Downloading channel list and awaiting login.");
   
   //get the default channel list if needed
   requestDefaultChannels(socket);
@@ -33,7 +34,7 @@ const setAwaitLogin = (socket) => {
 //
 const onConnect = (socket, wasReconnect) => {  
 
-  console.log("Connected!");
+  log("Connected!");
 
   //set UI state to connected
   store.dispatch(setConnected());
@@ -43,7 +44,7 @@ const onConnect = (socket, wasReconnect) => {
 
   if (!sessionKey) { //if there was no cookie, create new session and cookie
 
-    console.log("Requesting session...");
+    log("Requesting session...");
     socket.emit('create session', (response)=>{
       var expiry = new Date(new Date().getTime() + 30 * 60 * 1000); // 30 minutes
       Cookie.set('sessionKey', response, {
@@ -51,13 +52,13 @@ const onConnect = (socket, wasReconnect) => {
         domain: cookieDomain,
         secure: useSecure
       });
-      console.log("Session (new): " + response);
+      log("Session (new): " + response);
       setAwaitLogin(socket);
     });
 
   } else {
 
-    console.log("Session found, checking with server... " + sessionKey)
+    log("Session found, checking with server... " + sessionKey)
     socket.emit('check session', sessionKey, (response)=>{
       if (response == "no session") { //if there was a cookie but the server doesn't recognise it
         socket.emit('create session', (response)=>{
@@ -67,18 +68,18 @@ const onConnect = (socket, wasReconnect) => {
             domain: cookieDomain,
             secure: useSecure
           });
-          console.log("Session rejected, new one was created.");
+          log("Session rejected, new one was created.");
           setAwaitLogin(socket);
 
         });
 
       } else if (response == "success") { //if there was a cookie and the server recognises it
-        console.log("Session accepted!");
+        log("Session accepted!");
         setAwaitLogin(socket);
       }
 
       else {
-        console.log("Session error: " + response);
+        log("Session error: " + response);
       }
     });
   }

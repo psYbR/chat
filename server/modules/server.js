@@ -32,18 +32,18 @@ var io = require('socket.io')(http, {
 // NOTE: blazebox is set up with nginx as a reverse proxy to listen on port 80 / 443 and forward connections
 // therefore this does not need to be changed for production
 http.listen(3000, () => {  // do some neat ASCII ;)
-  console.log("")
-  console.log("> Initializing BlazeChat.......")
-  console.log("")
-  console.log("__________ .__                                   .__               __   ")
-  console.log("\\______   \\|  |  _____   ________  ____    ____  |  |__  _____   _/  |_ ")
-  console.log(" |    |  _/|  |  \\__  \\  \\___   /_/ <> \\ _/ ___\\ |  |  \\ \\__  \\  \\   __\\")
-  console.log(" |    |   \\|  |__ / <> \\_ /  __/ \\  ___/ \\  \\___ |   \\  \\ / <> \\_ |  |  ")
-  console.log(" |______  /|____/(____  //_____ \\ \\___  \\ \\___  ||___|__/(______/ |__|  ")
-  console.log("        \\/            \\/       \\/     \\/      \\/   (C) BlazeChat 2018")
-  console.log("")
+  // console.log("")
+  // console.log("> Initializing BlazeChat.......")
+  // console.log("")
+  // console.log("__________ .__                                   .__               __   ")
+  // console.log("\\______   \\|  |  _____   ________  ____    ____  |  |__  _____   _/  |_ ")
+  // console.log(" |    |  _/|  |  \\__  \\  \\___   /_/ <> \\ _/ ___\\ |  |  \\ \\__  \\  \\   __\\")
+  // console.log(" |    |   \\|  |__ / <> \\_ /  __/ \\  ___/ \\  \\___ |   \\  \\ / <> \\_ |  |  ")
+  // console.log(" |______  /|____/(____  //_____ \\ \\___  \\ \\___  ||___|__/(______/ |__|  ")
+  // console.log("        \\/            \\/       \\/     \\/      \\/   (C) BlazeChat 2018")
+  // console.log("")
   console.log("> blazechat running!")
-  console.log("")
+  // console.log("")
 });
 
 module.exports = io;

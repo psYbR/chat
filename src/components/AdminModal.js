@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import socket from '../utils/handlers/client';
+import { socket } from '../utils/handlers/client';
 import  {
   //resetAdminChannelList
   unsetAdminModalVisible

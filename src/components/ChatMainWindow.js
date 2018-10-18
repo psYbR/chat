@@ -7,6 +7,7 @@ import getVisibleMessages from '../selectors/getVisibleMessages';
 import StyleModal from './StyleModal';
 import { hideChannelList, showChannelList, hideUserList, showUserList } from '../actions/userInterfaceActions';
 import { systemNick, maxPastedImageSize } from '../config';
+import log from '../utils/log'
 
 class ChatMainWindow extends React.Component {
   constructor(props) {
@@ -20,7 +21,7 @@ class ChatMainWindow extends React.Component {
     const height = elem[0].scrollHeight;
     const curScroll = elem[0].scrollTop; //get the scroll position (this is the actual height of the element - the visible height)
     const scrollDiff = (height - curScroll) - parentElem[0].scrollHeight; //calculate how far from the bottom the user has scrolled up. this value is actually about -80 when fully at the bottom and is about 20 when scrolled up a few lines
-    //console.log("scroll diff: " + scrollDiff + ". height - cur pos = " + height + " - " + curScroll + " = " + (height - curScroll));
+    //log("scroll diff: " + scrollDiff + ". height - cur pos = " + height + " - " + curScroll + " = " + (height - curScroll));
     if ( scrollDiff < 20) {
       setTimeout(() => {
         // scroll the element to the bottom whenever its contents change. the timeout is yucky but even though this function sits on componentDidUpdate(), React hasn't finished rendering the window so setting the scroll position immediately results in setting it to wherever the render is up to

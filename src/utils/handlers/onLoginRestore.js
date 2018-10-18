@@ -2,11 +2,12 @@ import { store } from '../../stores/store';
 import requestJoinChannel from './requestJoinChannel';
 import { setAppReady } from '../setAppState';
 import { setNick, setAdmin, setLoggedIn } from '../../actions/actions';
+import log from '../log'
 
 // handle session restoration
 const onLoginRestore = ({isAdmin, nick, channels, loggedIn}) => {  
 
-  console.log("Existing session found, restoring info for '" + nick + "'." + isAdmin)
+  log("Existing session found, restoring info for '" + nick + "'." + isAdmin)
 
   store.dispatch(setNick(nick));
 

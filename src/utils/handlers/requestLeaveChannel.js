@@ -1,5 +1,5 @@
 import { store } from '../../stores/store';
-import socket from './client';
+import { socket } from './client';
 import {
   setCurrentChannel
   ,leaveChannel
@@ -9,6 +9,7 @@ import {
 import { getUserList } from './handleUserLists';
 import { getNowTimestamp } from '../utils'
 import { systemNick } from '../../config';
+import log from '../log'
 
 //send request to join a channel
 const requestLeaveChannel = (channelId) => {
@@ -16,18 +17,18 @@ const requestLeaveChannel = (channelId) => {
   //check ID is a number
   if (isNaN(channelId)) {
     //tell the UI joining the channel failed
-    console.log("requesting to leave channel ID failed: not a valid ID");
+    log("requesting to leave channel ID failed: not a valid ID");
     store.dispatch(addMessage({source: systemNick, channelId: channelId, messageSent: true, receivedTimestamp: getNowTimestamp(), messageText: "Could not leave channel: invalid request" }));
   }
   //if there was no error
   else {
-    console.log("requesting to leave channel ID: " + channelId);
+    log("requesting to leave channel ID: " + channelId);
     socket.emit('leave channel', channelId, ({ response, channelId }) => { //send the nick to the server
       //handle the response (a string; either "success" or the reason the channel wasn't joined eg. in use)
       store.dispatch(hideLeaveChannelModal());
       store.dispatch(unsetWaitingForLeaveChannelConfirmation());
       if (response == "success" || response == "already left channel") {
-        console.log("request to leave channel ID " + channelId + " succeeded!");
+        log("request to leave channel ID " + channelId + " succeeded!");
         store.dispatch(leaveChannel(channelId));
         //check the user is still in another channel
         if (store.getState().channels.length > 0) {
@@ -37,7 +38,7 @@ const requestLeaveChannel = (channelId) => {
           getUserList();
         }
       } else {
-        console.log("request to leave channel ID " + channelId + " failed: " + response);
+        log("request to leave channel ID " + channelId + " failed: " + response);
         //show an error
         store.dispatch(addMessage({source: systemNick, channelId: channelId, messageSent: true, receivedTimestamp: getNowTimestamp(), messageText: "Could not leave channel: " + response }));
       }

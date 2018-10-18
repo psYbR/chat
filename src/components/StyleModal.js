@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { hideSystemMessages, showSystemMessages, setFontColor, setLightTheme, setDarkTheme } from '../actions/configurationActions';
 import { colors, fonts } from '../utils/styleInfo';
 import FontPicker from './FontPicker';
+import log from '../utils/log'
 
 class StyleModal extends React.Component {
   constructor(props) {
@@ -23,7 +24,7 @@ class StyleModal extends React.Component {
               <label key={i}>
                 <input className="SMinput" type="radio" name="color" value={color.colorName}
                   onClick={(e) => {
-                    //console.log(e.target.value);
+                    //log(e.target.value);
                     this.props.dispatch(setFontColor(e.target.value));
                   }}
                 />

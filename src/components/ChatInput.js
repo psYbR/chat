@@ -10,6 +10,7 @@ import {
 } from '../actions/actions';
 import { getNowTimestamp, colorNameToRGB } from '../utils/utils';
 import sendChatMessage from '../utils/handlers/sendChatMessage';
+import log from '../utils/log'
 
 // to do:
 //
@@ -96,7 +97,7 @@ class ChatInput extends React.Component {
         this.handleImageRemoveClick();
       }
     } else {
-      console.log("Could not send message. Img size: " + this.state.imageSize + ", limit: " + maxPastedImageSize)
+      log("Could not send message. Img size: " + this.state.imageSize + ", limit: " + maxPastedImageSize)
     }
   }
   onMessageChange = (e) => {
@@ -107,7 +108,7 @@ class ChatInput extends React.Component {
   }
   handleKeyPress = (e) => {
     if (e.key == "ArrowUp") {
-      console.log("up arrow pressed");
+      log("up arrow pressed");
     }
   }
   onFontButtonClick = () => {

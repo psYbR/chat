@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import socket from '../utils/handlers/client';
+import { socket } from '../utils/handlers/client';
 import { setNick, setAdmin } from '../actions/actions';
 import requestJoinDefaultChannels from '../utils/handlers/requestJoinDefaultChannels';
+import log from '../utils/log'
 
 class LoginUserForm extends React.Component {
   constructor(props) {
@@ -46,7 +47,7 @@ class LoginUserForm extends React.Component {
   handleLoginResponse = ({response, nick, isAdmin}) => { //listener action
     if (response == "success") {
 
-      console.log("Login accepted, joining channels...")
+      log("Login accepted, joining channels...")
 
       this.props.dispatch(setNick(nick));
 

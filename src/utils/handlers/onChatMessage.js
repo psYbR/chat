@@ -3,12 +3,13 @@ import {
   addMessage ,setChannelHasNotifs ,setChannelHasMessages ,setChannelHasMention ,setMessagesSinceNotFocused } from '../../actions/actions';
 import getCurrentChannel from '../getCurrentChannel';
 import { systemNick } from '../../config';
+import log from '../log'
 
 //handle incoming chat messages
 const onChatMessage = (msg) => {
   store.dispatch(addMessage({...msg, messageSent: true}));
   //set notifications for messages in other channels
-  console.log(getCurrentChannel()+ ' and ' + msg.channelId)
+  log(getCurrentChannel()+ ' and ' + msg.channelId)
   if (msg.channelId != getCurrentChannel()) {
     //if the message was a system message
     if (msg.source == systemNick) {

@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import socket from '../utils/handlers/client';
+import { socket } from '../utils/handlers/client';
 import { nickMinLength, nickMaxLength } from '../config.js';
 import { setNick } from '../actions/actions';
 import requestJoinDefaultChannels from '../utils/handlers/requestJoinDefaultChannels';
+import log from '../utils/log'
 
 class LoginGuestForm extends React.Component {
   constructor(props) {
@@ -50,7 +51,7 @@ class LoginGuestForm extends React.Component {
   handleLoginResponse = (response) => {
     if (response == "success") {
 
-      console.log("Login accepted, joining channels...")
+      log("Login accepted, joining channels...")
 
       this.setState({
         ...this.state,

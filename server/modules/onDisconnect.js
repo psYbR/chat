@@ -12,7 +12,7 @@ const onDisconnect = (socket, reason) => {
   globals.log("(onDisconnect) " + socket.id + " has disconnected: " + reason + ". Getting nick...");
 
   //translate the reason into something more readable
-  if (reason == 'transport error') {
+  if (reason == 'transport error' || reason == 'transport close') {
     reason = 'connection closed';
   }
 
@@ -44,11 +44,7 @@ const onDisconnect = (socket, reason) => {
 
   //remove the user from the list of online users
   globals.usersInChannels = globals.usersInChannels.filter(record => record.socketId != socket.id)
-  globals.onlineUsers = globals.onlineUsers.filter(user => user.socketId != socket.id)
-
-  // globals.log("(onDisconnect) " + socket.id + " was removed from arrays. Result:");
-  // globals.log(globals.usersInChannels);    
-  // globals.log(globals.onlineUsers);    
+  globals.onlineUsers = globals.onlineUsers.filter(user => user.socketId != socket.id)   
 
 }
 

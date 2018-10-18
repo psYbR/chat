@@ -9,10 +9,18 @@ import {
   setAppIsFocused
   ,unsetAppIsFocused
   ,unsetMessagesSinceNotFocused
-  ,setPastedImageSize
+  //,setPastedImageSize
 } from './actions/actions';
-
+import Welcome from './Welcome';
 import { FadeTransform } from 'react-animation-components'
+
+console.log("__________ .__                                   .__               __   ")
+console.log("\\______   \\|  |  _____   ________  ____    ____  |  |__  _____   _/  |_ ")
+console.log(" |    |  _/|  |  \\__  \\  \\___   /_/ <> \\ _/ ___\\ |  |  \\ \\__  \\  \\   __\\")
+console.log(" |    |   \\|  |__ / <> \\_ /  __/ \\  ___/ \\  \\___ |   \\  \\ / <> \\_ |  |  ")
+console.log(" |______  /|____/(____  //_____ \\ \\___  \\ \\___  ||___|__/(______/ |__|  ")
+console.log("        \\/            \\/       \\/     \\/      \\/   (C) BlazeChat 2018")
+console.log("")
 
 // browser detection
 //var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0; // Opera 8.0+
@@ -31,6 +39,15 @@ class ApplicationBase extends React.Component {
       fadeOutWelcome: false
     }
   }
+  setWelcomeFadeout = () => {
+    this.setState({
+      ...this.state,
+      fadeOutWelcome: true
+    })
+    setTimeout(()=>{
+      this.setState({displayMode:'app'});
+    }, 150)
+  }
   componentWillMount(){
     if (isIE) {
       this.setState({displayMode:'IE'})
@@ -40,22 +57,7 @@ class ApplicationBase extends React.Component {
     if (this.state.displayMode == 'welcome') {
       return (
         <FadeTransform in transformProps={{enterTransform: 'translateY(1.5rem)',exitTransform: 'translateY(-1.5rem)'}}>
-          <div className={'modal-outer-container splash-modal-outer' + (this.state.fadeOutWelcome ? ' modal-fade-out' : '')}>
-            <div className='modal-inner-container splash-modal-inner'>
-              <h1>Welcome to <a>blazechat</a></h1>
-              <h3>Placeholder</h3>
-              <p>Some text about the app here</p>
-              <button className="button-default" onClick={()=>{
-                this.setState({
-                  ...this.state,
-                  fadeOutWelcome: true
-                })
-                setTimeout(()=>{
-                  this.setState({displayMode:'app'});
-                }, 150)
-              }}>PROCEED</button>
-            </div>
-          </div>
+          <Welcome fadeOut={this.setWelcomeFadeout} fadingOut={this.state.fadeOutWelcome} />
         </FadeTransform>
       )
     } else if (this.state.displayMode == 'app') {
@@ -86,7 +88,7 @@ setInterval(()=>{
       document.title = 'New messages!';
     }
   } else {
-    document.title = 'BI Dashboard';
+    document.title = 'BlazeChat';
   }
   notifToggle = !notifToggle;
 }, 600)

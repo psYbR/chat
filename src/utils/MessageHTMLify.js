@@ -1,11 +1,12 @@
 import React from 'react';
 import { colors, fonts, colorNameToRGB } from './styleInfo';
 import { systemNick } from '../config';
+import log from './log'
 
 //escapes unsafe html tags
 const escapeHtml = (unsafe) => {
   if (unsafe == null) {
-    console.log('MessageHTMLify was given an undefined value for checking!');
+    log('MessageHTMLify was given an undefined value for checking!');
     return 'undefined';
   }
   if (typeof unsafe.replace === "function") {

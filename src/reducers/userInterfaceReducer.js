@@ -100,13 +100,13 @@ export default (state = reducerDefaultState, action) => {
     case 'SET_CONNECTED':
       return {
         ...state,
-        appIsConnected: true,
-        reconnectionMessage: "Reconnecting"
+        appIsConnected: true
       };  
     case 'SET_DISCONNECTED':
       return {
         ...state,
-        appIsConnected: false
+        appIsConnected: false,
+        reconnectionMessage: "Reconnecting"
       };
     case 'SET_DISCONNECTION_REASON':
       return {

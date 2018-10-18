@@ -1,5 +1,6 @@
 import { store } from '../../stores/store';
 import { addChannel, setDefaultChannelsReceived, setLoginModalVisible } from '../../actions/actions';
+import log from '../log'
 
 export const requestDefaultChannels = (socket) => {
   if (!store.getState().userInterface.defaultChannelsReceived) { 
@@ -21,10 +22,10 @@ export const onDefaultChannel = (channelObject) => {
 
 //handle finish receiving of default channels
 export const onDefaultChannelsFinished = () => {
-  console.log("List of default channels received!")
+  log("List of default channels received!")
   store.dispatch(setDefaultChannelsReceived());
   if (!store.getState().loginState.loggedIn) {
-    console.log("Showing login screen...")
+    log("Showing login screen...")
     store.dispatch(setLoginModalVisible()); //only show the modal if not already logged in
   }
 };
