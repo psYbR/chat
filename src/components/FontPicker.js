@@ -9,9 +9,9 @@ class FontPicker extends React.Component {
     super(props);
 
 		// Bind component methods to this context
-		this.onWrapperClick = this.onWrapperClick.bind(this);
-		this.onOptionClick = this.onOptionClick.bind(this);
-		this.onRipple = this.onRipple.bind(this);
+		//this.onWrapperClick = this.onWrapperClick.bind(this);
+		//this.onOptionClick = this.onOptionClick.bind(this);
+		//this.onRipple = this.onRipple.bind(this);
 
 		this.state = {
 			isOptionsVisible: false,
@@ -26,11 +26,11 @@ class FontPicker extends React.Component {
 	onOptionClick(e, font) {
 		e.stopPropagation();
 
-		if (this.state.isOptionsVisible == false)
-			return;
+		if (this.state.isOptionsVisible == false) {
+      return;
+    }
 
 		this.onChange(font);
-
 		this.setState({isOptionsVisible: false, selectedFont: font});
 	}
 
@@ -42,9 +42,9 @@ class FontPicker extends React.Component {
 		let target = e.target;
 
 		var div = document.createElement("div"),
-				targetOffset = target.getBoundingClientRect(),
-				xPos = e.pageX - targetOffset.left,
-				yPos = e.pageY - targetOffset.top;
+    targetOffset = target.getBoundingClientRect(),
+    xPos = e.pageX - targetOffset.left,
+    yPos = e.pageY - targetOffset.top;
 
 		div.classList.add('ripple-effect');
 		div.style.top = parseInt(yPos - targetOffset.height / 2) + "px";
@@ -58,7 +58,7 @@ class FontPicker extends React.Component {
     }
 
 	onChange (font) {
-        this.props.dispatch(setFontStyle(font));
+    this.props.dispatch(setFontStyle(font));
 	}
 
 	render() {
@@ -75,9 +75,9 @@ class FontPicker extends React.Component {
 				<div className="ReactFontPicker_Wrapper" onClick={this.onWrapperClick}>
 
 					{/* Floating label text */}
-                    <div className={value === "" ? "ReactFontPicker_Label" : "ReactFontPicker_LabelFloat"}>
-                        <p>{label}</p>
-                    </div>
+          <div className={value === "" ? "ReactFontPicker_Label" : "ReactFontPicker_LabelFloat"}>
+              <p>{label}</p>
+          </div>
 
 					{/* Selected option */}
 					<div className="ReactFontPicker_SelectedOption">
@@ -101,12 +101,12 @@ class FontPicker extends React.Component {
 
 							return (
 								<div className="ReactFontPicker_Option ripple"
-										 style={style}
-										 key={i}
-										 onMouseDown={(e) => this.onRipple(e)}
-										 onMouseUp={(e) => this.onOptionClick(e, n)}
-										 onClick={(e) => this.onOptionClick(e, n)}
-										 >
+                    style={style}
+                    key={i}
+                    onMouseDown={(e) => this.onRipple(e)}
+                    onMouseUp={(e) => this.onOptionClick(e, n)}
+                    onClick={(e) => this.onOptionClick(e, n)}
+                    >
 									{n}
 								</div>
 							);

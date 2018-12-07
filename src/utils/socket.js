@@ -87,7 +87,7 @@ const setUpSocketHandlers = () => {
     });
     socket.on('reconnect_error', (error) => {
       if (error == "Error: xhr poll error") {
-        error = "could not find connection to server";
+        error = "could not find server";
       }
       onDisconnect("reconnect error: " + error);
     });

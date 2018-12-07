@@ -69,8 +69,8 @@ class ApplicationBase extends React.Component {
     } else if (this.state.displayMode == 'IE') {
       return (
         <div className='noSupportContainer'>
-          <h1>Sorry</h1>
-          <h2>Your web browser is not supported. Please download an alternative such as <a href="http://www.google.com/chrome">Chrome</a>.</h2>
+          <h1>Sorry :(</h1>
+          <h2>Your web browser, Internet Explorer, is not supported. Please download an alternative such as <a href="http://www.google.com/chrome">Google Chrome</a> or <a href="https://www.mozilla.org">Firefox</a>.</h2>
         </div>
       )
     }

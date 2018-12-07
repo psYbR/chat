@@ -4,12 +4,17 @@ import {
 import getCurrentChannel from '../getCurrentChannel';
 import { systemNick } from '../../config';
 import log from '../log'
+import { getNowTimestamp } from '../dateUtils';
 
 //handle incoming chat messages
 const onChatMessage = (msg) => {
+
+  //use our own timestamp
+  msg.receivedTimestamp = getNowTimestamp();
+
   store.dispatch(addMessage({...msg, messageSent: true}));
   //set notifications for messages in other channels
-  log(getCurrentChannel()+ ' and ' + msg.channelId)
+  log(getCurrentChannel() + ' and ' + msg.channelId)
   if (msg.channelId != getCurrentChannel()) {
     //if the message was a system message
     if (msg.source == systemNick) {

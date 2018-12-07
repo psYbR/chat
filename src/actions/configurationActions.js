@@ -1,4 +1,3 @@
-
 export const setConfiguration = (
   {
 
@@ -6,7 +5,9 @@ export const setConfiguration = (
     defaultColor = 'default',
     isAway = false,
     showSystemMessages = true,
-    lightTheme = false
+    lightTheme = false,
+    activeTheme = 0
+
   } = {}
 ) => ({
 
@@ -16,10 +17,23 @@ export const setConfiguration = (
     defaultColor,
     isAway,
     showSystemMessages,
-    lightTheme
+    lightTheme,
+    activeTheme
   }
 
 });
+
+export const setTheme = (theme) => {
+  if (theme === 0) {
+    document.body.style.color = "rgb(38,38,38)";
+  } else if (theme === 1) {
+    document.body.style.color = "rgb(205,215,197)";
+  }
+  return({
+    type: 'SET_THEME',
+    theme
+  })
+};
 
 export const setDarkTheme = () => {
   document.body.style.color = "rgb(205,215,197)";
