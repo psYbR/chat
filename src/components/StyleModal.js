@@ -86,8 +86,4 @@ class StyleModal extends React.Component {
   };
 }
 
-const mapStateToProps = (state) => {
-  return state;
-};
-
-export default connect(mapStateToProps)(StyleModal);
+export default connect(state=>state)(StyleModal);
