@@ -2,9 +2,12 @@
   display: block;
 }
 
-.adminContentContainer {
+.admin-content-container, .admin-modal-inner-container {
+  text-align: center;
+}
+
+.admin-modal-inner-container{
   overflow-y: scroll;
-  max-height: 85%;
 }
 
 .admin-modal-outer-container {
@@ -19,9 +22,17 @@
   border: .1rem rgba(70, 70, 70, 0.315) solid;
 }
 .adminChannelTable tr:hover {
-  background-color: rgba(25, 72, 124, 0.459)
+  background-color: rgba(25, 72, 124, 0.459);
 }
 
 .admin-delete-confirmation{
   color: red;
+}
+
+.admin-channel-editor-table {
+  border-collapse: collapse;
+}
+.admin-channel-editor-table td{
+  line-height: 3rem;
+  border: .1rem rgba(70, 70, 70, 0.315) solid;
 }

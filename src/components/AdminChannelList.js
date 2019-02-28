@@ -1,6 +1,6 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { socket } from '../utils/handlers/client';
+import React from 'react'
+import { connect } from 'react-redux'
+import { socket } from '../utils/handlers/client'
 import log from '../utils/log'
 
 class AdminModal extends React.Component {
@@ -9,23 +9,21 @@ class AdminModal extends React.Component {
     this.state = {
       channelList: [],
       searchFilter: '',
-      showDeleteConfirmation: false,
-      channelIdToDelete: 0,
+      showDeactivateConfirmation: false,
+      channelIdToDeactivate: 0,
       showTable: true
     }
   }
-  handleConfirmedDeletedChannel = (response) => {
+  handleConfirmedDeactivatedChannel = (response) => {
     console.log(response)
-    //add the channels to the channel list as they're received
     this.setState({
       ...this.state,
-      showDeleteConfirmation: false,
-      channelIdToDelete: 0,
+      showDeactivateConfirmation: false,
+      channelIdToDeactivate: 0,
       showTable: true
     });
   }
   handleReceiveAdminChannel = (response) => {
-    //console.log(response)
     //add the channels to the channel list as they're received
     this.setState({
       ...this.state,
@@ -36,38 +34,41 @@ class AdminModal extends React.Component {
     });
   }
   componentDidMount = () => {
-    socket.on('admin channel', this.handleReceiveAdminChannel);
-    console.log('requesting channels - admin')
-    socket.emit('admin request channels');
+    socket.on('admin channel', this.handleReceiveAdminChannel)
+    socket.on('admin channel deactivate confirmation', this.handleConfirmedDeactivatedChannel)
+
+    socket.emit('admin request channels')
   }
   componentWillUnmount = () => {
-    socket.removeListener('admin channel', this.handleReceiveAdminChannel);
+    socket.removeListener('admin channel', this.handleReceiveAdminChannel)
+    socket.removeListener('admin channel deactivate confirmation', this.handleConfirmedDeactivatedChannel)
   }
   render() {
     return (
-      <div className="adminContentContainer">
+      <div className="admin-content-container">
 
         <p><button
-          className="buttonDefault"
+          className="button-default"
           onClick={()=> {
             this.props.goToLocation('menu');
           }}
         >MainMenu
         </button></p>
 
-        {this.state.showDeleteConfirmation && 
+        {this.state.showDeactivateConfirmation && 
           <div>
-            <p className='admin-delete-confirmation'>Really delete channel, ID: {this.state.channelIdToDelete || ''}?</p>
+            <p className='admin-delete-confirmation'>Really set channel inactive? ID: {this.state.channelIdToDeactivate || ''}</p>
             <button onClick={(e)=>{
               e.preventDefault()
-              //do things here to trigger the delete of a channel
+              console.log('sending deactivate request for ID: ' + this.state.channelIdToDeactivate)
+              socket.emit('admin deactivate channel', this.state.channelIdToDeactivate);
             }}>Yes</button>
             <button onClick={(e)=>{
               e.preventDefault()
               this.setState({
                 ...this.state,
-                showDeleteConfirmation: false,
-                channelIdToDelete: 0,
+                showDeactivateConfirmation: false,
+                channelIdToDeactivate: 0,
                 showTable: true
               })
             }}>No</button>
@@ -128,19 +129,19 @@ class AdminModal extends React.Component {
                     <td>{channel.creatorNick}</td>
                     <td>{channel.isActive ? 'Yes' : 'No'}</td>
                     <td>
-                      <a onClick={()=>{
-                        this.setState({
-
-                        })
-                      }}>Edit</a>&nbsp;
-                      <a onClick={()=>{
-                        this.setState({
-                          ...this.state,
-                          showTable: false,
-                          channelIdToDelete: channel.channelId,
-                          showDeleteConfirmation: true
-                        })
-                      }}>Delete</a>
+                      {channel.isActive &&
+                        <a onClick={()=>{
+                          this.props.setEditingChannel(channel)
+                          setTimeout(()=>{this.props.goToLocation('createChannel')},1)
+                      }}>Edit</a> }&nbsp; {channel.isActive &&
+                        <a onClick={()=>{
+                          this.setState({
+                            ...this.state,
+                            showTable: false,
+                            channelIdToDeactivate: channel.channelId,
+                            showDeactivateConfirmation: true
+                          })
+                        }}>Deactivate</a> }
                     </td>
                   </tr>
                 );

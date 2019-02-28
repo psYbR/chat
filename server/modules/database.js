@@ -2,8 +2,9 @@
 mysql = require('mysql');
 
 const db = mysql.createConnection({
-  host: "localhost",
-  user: "blazechat",
+  host: "localhost"
+  ,user: "blaze"
+  ,password: "BlazeProof1337"
   ,multipleStatements: true
   ,database: "blazechat"
   ,typeCast: function castField( field, useDefaultTypeCasting ) {
@@ -12,12 +13,12 @@ const db = mysql.createConnection({
     // has more than one bit, then we cannot assume it is supposed to be a Boolean.
     if ( ( field.type === "BIT" ) && ( field.length === 1 ) ) {
 
-        var bytes = field.buffer();
+      var bytes = field.buffer();
 
-        // A Buffer in Node represents a collection of 8-bit unsigned integers.
-        // Therefore, our single "bit field" comes back as the bits '0000 0001',
-        // which is equivalent to the number 1.
-        return( bytes[ 0 ] === 1 );
+      // A Buffer in Node represents a collection of 8-bit unsigned integers.
+      // Therefore, our single "bit field" comes back as the bits '0000 0001',
+      // which is equivalent to the number 1.
+      return( bytes[ 0 ] === 1 );
 
     }
 
@@ -126,32 +127,34 @@ db.connect((err) => {
             requireImage bit NOT NULL DEFAULT 0,\
             requireVoice bit NOT NULL DEFAULT 0,\
             requireLogin bit NOT NULL DEFAULT 0,\
+            creatorId int NULL,\
+            creatorNick varchar(100) NULL,\
             isActive bit NOT NULL DEFAULT 1,\
             PRIMARY KEY (channelId))", function (err, result) {
             if (err) throw err;
             console.log("'channels' table created");
 
             db.query(
-              "INSERT INTO channels (name, topic) VALUES ('lobby', 'Welcome to the lobby');\
-              INSERT INTO channels (name, topic) VALUES ('help', 'Join this channel to get help using Chat App');\
-              INSERT INTO channels (name, topic) VALUES ('technology', 'for discussion of all things tech-related');\
-              INSERT INTO channels (name, topic) VALUES ('music', 'for discussion of all things music');\
-              INSERT INTO channels (name, topic) VALUES ('movies', 'for discussion of all things movies');\
-              INSERT INTO channels (name, topic) VALUES ('tv', 'for discussion of all things TV');\
-              INSERT INTO channels (name, topic) VALUES ('software', 'for discussion of all things software');\
-              INSERT INTO channels (name, topic) VALUES ('games', 'for discussion of all things games');\
-              INSERT INTO channels (name, topic) VALUES ('consoles', 'for discussion of all things consoles');\
-              INSERT INTO channels (name, topic) VALUES ('retro', 'for discussion of all things retro tech');\
-              INSERT INTO channels (name, topic) VALUES ('art', 'for discussion of all things art');\
-              INSERT INTO channels (name, topic) VALUES ('photography', 'for discussion of all things photography');\
-              INSERT INTO channels (name, topic) VALUES ('drones', 'for discussion of all things related to drones');\
-              INSERT INTO channels (name, topic) VALUES ('travel', 'for discussion of all things travel');\
-              INSERT INTO channels (name, topic) VALUES ('news', 'for discussion of all things related to world news');\
-              INSERT INTO channels (name, topic) VALUES ('melbourne', 'people from melbourne, gather here');\
-              INSERT INTO channels (name, topic) VALUES ('sydney', 'people from sydney, gather here');\
-              INSERT INTO channels (name, topic) VALUES ('perth', 'people from perth, gather here');\
-              INSERT INTO channels (name, topic) VALUES ('brisbane', 'people from brisbane, gather here');\
-              INSERT INTO channels (name, topic) VALUES ('nz', 'people from new zealand, gather here');"
+              "INSERT INTO channels (name, topic, creatorId, creatorNick) VALUES ('lobby', 'Welcome to the lobby', 0, 'system');\
+              INSERT INTO channels (name, topic, creatorId, creatorNick) VALUES ('help', 'Join this channel to get help using Chat App', 0, 'system');\
+              INSERT INTO channels (name, topic, creatorId, creatorNick) VALUES ('technology', 'for discussion of all things tech-related', 0, 'system');\
+              INSERT INTO channels (name, topic, creatorId, creatorNick) VALUES ('music', 'for discussion of all things music', 0, 'system');\
+              INSERT INTO channels (name, topic, creatorId, creatorNick) VALUES ('movies', 'for discussion of all things movies', 0, 'system');\
+              INSERT INTO channels (name, topic, creatorId, creatorNick) VALUES ('tv', 'for discussion of all things TV', 0, 'system');\
+              INSERT INTO channels (name, topic, creatorId, creatorNick) VALUES ('software', 'for discussion of all things software', 0, 'system');\
+              INSERT INTO channels (name, topic, creatorId, creatorNick) VALUES ('games', 'for discussion of all things games', 0, 'system');\
+              INSERT INTO channels (name, topic, creatorId, creatorNick) VALUES ('consoles', 'for discussion of all things consoles', 0, 'system');\
+              INSERT INTO channels (name, topic, creatorId, creatorNick) VALUES ('retro', 'for discussion of all things retro tech', 0, 'system');\
+              INSERT INTO channels (name, topic, creatorId, creatorNick) VALUES ('art', 'for discussion of all things art', 0, 'system');\
+              INSERT INTO channels (name, topic, creatorId, creatorNick) VALUES ('photography', 'for discussion of all things photography', 0, 'system');\
+              INSERT INTO channels (name, topic, creatorId, creatorNick) VALUES ('drones', 'for discussion of all things related to drones', 0, 'system');\
+              INSERT INTO channels (name, topic, creatorId, creatorNick) VALUES ('travel', 'for discussion of all things travel', 0, 'system');\
+              INSERT INTO channels (name, topic, creatorId, creatorNick) VALUES ('news', 'for discussion of all things related to world news', 0, 'system');\
+              INSERT INTO channels (name, topic, creatorId, creatorNick) VALUES ('melbourne', 'people from melbourne, gather here', 0, 'system');\
+              INSERT INTO channels (name, topic, creatorId, creatorNick) VALUES ('sydney', 'people from sydney, gather here', 0, 'system');\
+              INSERT INTO channels (name, topic, creatorId, creatorNick) VALUES ('perth', 'people from perth, gather here', 0, 'system');\
+              INSERT INTO channels (name, topic, creatorId, creatorNick) VALUES ('brisbane', 'people from brisbane, gather here', 0, 'system');\
+              INSERT INTO channels (name, topic, creatorId, creatorNick) VALUES ('nz', 'people from new zealand, gather here', 0, 'system');"
               ,  (err, result) => {
               if (err) throw err;
               console.log("Default channels inserted");
@@ -175,7 +178,7 @@ db.connect((err) => {
   if (!initialCreate) {
 
     //load list of default channels
-    db.query("SELECT * FROM channels WHERE isVisible=1 AND isDefault=1 AND isActive=1", (err, result) => {
+    db.query("SELECT * FROM channels WHERE isVisible=true AND isActive=true", (err, result) => {
       if (err) throw err;
       for (var i = 0; i < result.length; i++) {
         globals.channels.push(result[i])
@@ -196,7 +199,7 @@ db.connect((err) => {
             expiryDatetime: result[i].expiryDatetime
           })
           globals.log("(database) Session restored for: '" + result[i].lastNick + "', " + result[i].lastUserId + ", " + result[i].sessionKey)
-        } 
+        }
       });
     } else {
       //delete sessions

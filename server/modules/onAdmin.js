@@ -5,84 +5,63 @@ io = require('./server');
 db = require('./database');
 
 const onRequestChannels = (socket) => {
-  globals.channels.map((channel, i)=>{
-
-    console.log(channel)
-
-    //we don't want to send the entire channel object, so here we set up a new one with the required values in it
-    const outgoingChannel = {
-      channelId: channel.channelId,
-      name: channel.name,
-      topic: channel.topic,
-      isVisible: channel.isVisible,
-      isDefault: channel.isDefault,
-      requireImage: channel.requireImage,
-      requireVoice: channel.requireVoice,
-      requireLogin: channel.requireLogin,
-      creatorId: 123456789,
-      creatorNick: '*',
-      isActive: channel.isActive
-    };
-
-    //send the channel object
-    io.to(socket.id).emit('admin channel', outgoingChannel);
-
+  globals.log("(ADMIN) Requested channel list.",4);
+  db.query("SELECT * FROM channels", (err, result) => {
+    if (err) throw err;
+    for (var i = 0; i < result.length; i++) {
+      //send the channel object
+      io.to(socket.id).emit('admin channel', result[i]);
+    }
   });
 };
 
 const onAdminCreateChannel = (socket, channel) => {
-  console.log("[ADMIN] Create channel:");
-  console.log(channel);
+  globals.log("(ADMIN) Created a channel.",4);
+  db.query("INSERT INTO channels (name, topic, isVisible, isDefault, requireImage, requireVoice, requireLogin, creatorId, creatorNick) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      [channel.name, channel.topic, channel.isVisible, channel.isDefault, channel.requireImage, channel.requireVoice, channel.requireLogin, channel.creatorId, channel.creatorNick]
+    ,(err, res)=>{
+      if (err) throw err;
+      globals.log("(ADMIN) Admin created a new channel.",4);
+      io.to(socket.id).emit('admin channel create confirmation');
+      globals.channels.push(channel)
+  }); 
 }
 
-const dbCreateTables = () => {
-  console.log("Creating tables...");
-  //db.query("DROP TABLE IF EXISTS users");
-  db.query("CREATE TABLE IF NOT EXISTS users ( \
-    UserId int UNSIGNED AUTO_INCREMENT PRIMARY KEY \
-    ,Nick varchar(100) \
-    ,Password varchar(8000) \
-    ,Email varchar(255) \
-    ,IsGlobalAdmin int \
-    ,Theme int \
-    ,ShowSystemMessages int \
-    ,DefaultFont varchar(100) \
-    ,DefaultColor varchar(100) \
-    ,lastSeen datetime \
-    ,isGlobalBanned int \
-  )",(err)=>{if(err)throw err});
-  return "Tables creating, see server console for result.";
+const onAdminEditChannel = (socket, channel) => {
+  globals.log("(ADMIN) Edited a channel.",4);
+  db.query("UPDATE channels SET name=?, topic=?, isVisible=?, isDefault=?, requireImage=?, requireVoice=?, requireLogin=? WHERE channelId=?",
+      [channel.name, channel.topic, channel.isVisible, channel.isDefault, channel.requireImage, channel.requireVoice, channel.requireLogin, channel.channelId]
+    ,(err, res)=>{
+      if (err) throw err;
+      globals.log("(ADMIN) Admin edited a channel.",4);
+      io.to(socket.id).emit('admin channel create or edit confirmation');
+      globals.channels = globals.channels.filter(chan=>chan.channelId != channel.channelId) //remove
+      globals.channels.push(channel) //re-add
+  }); 
 }
 
-const dbCreateDefaultAdminUser = () => {
-  db.query("SELECT * FROM users WHERE Nick='Energizer'", (err, result) => {
+const onAdminDeactivateChannel = (socket, channel) => {
+  globals.log("(ADMIN) deactivated a channel.",4);
+  db.query("UPDATE channels SET isActive=false WHERE channelId=?",[channel],(err, res)=>{
     if (err) throw err;
-    if (result.length > 0){
-      console.log("Default admin user already exists.");
-    } else {
-      db.query("INSERT INTO users (Nick, Password, Email, IsGlobalAdmin, Theme, ShowSystemMessages, DefaultFont, DefaultColor, lastSeen, isGlobalBanned) \
-      VALUES ('Energizer', SHA2('jiblet123', 256), 'tim.eastwood@hotmail.com', 1, 1, 1, 'Source Sans Pro', 'default', NULL, 0)",(err)=>{
-        if (err) throw err;
-        console.log("Created default admin user.");
-      });
-    }
+    globals.log("(ADMIN) Admin set isActive=false for a channel.",4);
+    io.to(socket.id).emit('admin channel create or edit confirmation');
+    globals.channels = globals.channels.filter(chan=>chan.channelId != channel)
   });
-  return "See server console for result.";
 }
 
 const onConnect = (socket) => {
   socket.on('admin request channels', () => {
-    console.log('(ADMIN) user requested channels')
     onRequestChannels(socket);
   });
   socket.on('admin create channel', (channel) => {
     onAdminCreateChannel(socket,channel);
   })
-  socket.on('admin create database tables', (callback) => {
-    callback(dbCreateTables());
+  socket.on('admin edit channel', (channel) => {
+    onAdminEditChannel(socket,channel);
   })
-  socket.on('admin create default admin user', (callback) => {
-    callback(dbCreateDefaultAdminUser());
+  socket.on('admin deactivate channel', (channel) => {
+    onAdminDeactivateChannel(socket,channel);
   })
 }
 

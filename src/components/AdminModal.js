@@ -12,21 +12,30 @@ class AdminModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      tablesCreated: false,
+      //tablesCreated: false,
       visibleContent: 'menu',
       adminResponse: '',
-      editingChannel: {}
+      editingChannel: {
+        channelId: '',
+        name: '',
+        topic: '',
+        isVisible: true,
+        isDefault: true,
+        requireImage: true,
+        requireVoice: false,
+        requireLogin: false,
+        creatorId: 0,
+        creatorNick: ''
+      }
     }
-    this.goToLocation = this.goToLocation.bind(this);
-    this.setEditingChannel = this.setEditingChannel.bind(this);
   }
-  goToLocation(location) {
+  goToLocation = (location) => {
     this.setState({
       ...this.state,
       visibleContent: location
     });
   }
-  setEditingChannel(channel) {
+  setEditingChannel = (channel) => {
     this.setState({
       ...this.state,
       editingChannel: channel
@@ -36,7 +45,7 @@ class AdminModal extends React.Component {
     return (
       <div className="modal-wrapper">
         <div className="modal-outer-container admin-modal-outer-container">
-          <div className="modal-inner-container connectingModalContainer">
+          <div className="modal-inner-container connecting-modal-container admin-modal-inner-container">
 
             <h1>Admin Menu <a onClick={() => {
               this.props.dispatch(unsetAdminModalVisible());
@@ -47,56 +56,48 @@ class AdminModal extends React.Component {
               <p>{this.state.adminResponse}</p>
 
               <button
-                className="buttonDefault"
-                onClick={() => {
-                  socket.emit('admin create database tables', (response) => {
-                    this.setState({
-                      ...this.state,
-                      adminResponse: response
-                    });
-                  });
-                }}
-              >Create Database Tables
-              </button>
-
-              <button
-                className="buttonDefault"
-                onClick={() => {
-                  socket.emit('admin create default admin user', (response) => {
-                    this.setState({
-                      ...this.state,
-                      adminResponse: response
-                    });
-                  });
-                }}
-              >Create Default Admin
-              </button>
-
-              <button
-                className="buttonDefault"
+                className="button-default"
                 onClick={() => {
                   this.setState({
                     ...this.state,
+                    editingChannel: {
+                      channelId: '',
+                      name: '',
+                      topic: '',
+                      isVisible: true,
+                      isDefault: true,
+                      requireImage: true,
+                      requireVoice: false,
+                      requireLogin: false,
+                      creatorId: 0,
+                      creatorNick: ''
+                    },
                     visibleContent: 'createChannel'
                   })
+                  setTimeout(()=>{
+                    this.setState({
+                      ...this.state,
+                      visibleContent: 'createChannel'
+                    })
+                  },1)
                 }}
-              >Create Channel
+              >Create New Channel
               </button>
 
               <button
-                className="buttonDefault"
+                className="button-default"
                 onClick={()=> {
                   this.setState({
                     ...this.state,
                     visibleContent: 'channelList'
                   })
                 }}
-              >Edit Channels
+              >View / Edit Channels
               </button></div>
             }
 
-            {this.state.visibleContent == 'createChannel' && <AdminChannelEditor goToLocation={this.goToLocation} editingChannel={this.editingChannel} />}
-            {this.state.visibleContent == 'channelList' && <AdminChannelList goToLocation={this.goToLocation} />}
+            {this.state.visibleContent == 'createChannel' && <AdminChannelEditor goToLocation={this.goToLocation} editingChannel={this.state.editingChannel} />}
+            {this.state.visibleContent == 'channelList' && <AdminChannelList goToLocation={this.goToLocation} setEditingChannel={this.setEditingChannel} />}
 
           </div>
         </div>
