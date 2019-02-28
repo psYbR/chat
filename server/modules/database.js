@@ -3,8 +3,7 @@ mysql = require('mysql');
 
 const db = mysql.createConnection({
   host: "localhost",
-  user: "blaze",
-  password: "BlazeProof1337"
+  user: "blazechat",
   ,multipleStatements: true
   ,database: "blazechat"
   ,typeCast: function castField( field, useDefaultTypeCasting ) {
