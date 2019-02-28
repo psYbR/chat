@@ -14,13 +14,13 @@ import {
 import Welcome from './Welcome';
 import { FadeTransform } from 'react-animation-components'
 
-console.log("__________ .__                                   .__               __   ")
-console.log("\\______   \\|  |  _____   ________  ____    ____  |  |__  _____   _/  |_ ")
-console.log(" |    |  _/|  |  \\__  \\  \\___   /_/ <> \\ _/ ___\\ |  |  \\ \\__  \\  \\   __\\")
-console.log(" |    |   \\|  |__ / <> \\_ /  __/ \\  ___/ \\  \\___ |   \\  \\ / <> \\_ |  |  ")
-console.log(" |______  /|____/(____  //_____ \\ \\___  \\ \\___  ||___|__/(______/ |__|  ")
-console.log("        \\/            \\/       \\/     \\/      \\/   (C) BlazeChat 2018")
-console.log("")
+// console.log("__________ .__                                   .__               __   ")
+// console.log("\\______   \\|  |  _____   ________  ____    ____  |  |__  _____   _/  |_ ")
+// console.log(" |    |  _/|  |  \\__  \\  \\___   /_/ <> \\ _/ ___\\ |  |  \\ \\__  \\  \\   __\\")
+// console.log(" |    |   \\|  |__ / <> \\_ /  __/ \\  ___/ \\  \\___ |   \\  \\ / <> \\_ |  |  ")
+// console.log(" |______  /|____/(____  //_____ \\ \\___  \\ \\___  ||___|__/(______/ |__|  ")
+// console.log("        \\/            \\/       \\/     \\/      \\/   (C) BlazeChat 2018")
+// console.log("")
 
 // browser detection
 //var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0; // Opera 8.0+

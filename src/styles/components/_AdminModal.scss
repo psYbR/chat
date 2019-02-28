@@ -4,5 +4,24 @@
 
 .adminContentContainer {
   overflow-y: scroll;
-  max-height: 50rem;
+  max-height: 85%;
+}
+
+.admin-modal-outer-container {
+  max-width: none;
+  width: 200rem;
+}
+
+.adminChannelTable {
+  border-collapse: collapse;
+}
+.adminChannelTable td, .adminChannelTable th {
+  border: .1rem rgba(70, 70, 70, 0.315) solid;
+}
+.adminChannelTable tr:hover {
+  background-color: rgba(25, 72, 124, 0.459)
+}
+
+.admin-delete-confirmation{
+  color: red;
 }

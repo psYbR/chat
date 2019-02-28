@@ -56,7 +56,7 @@ class StyleModal extends React.Component {
 
             <div className='SMSystemMessages'>
               <p>Show system messages?</p>
-              <label className="check-box-container">
+              <label className="checkbox-container">
                 <input
                   type="checkbox"
                   checked={this.props.configuration.showSystemMessages ? "checked" : ''}
@@ -65,7 +65,7 @@ class StyleModal extends React.Component {
                     else { this.props.dispatch(showSystemMessages()); }
                   }}
                 />
-                <span className="check-box-checkmark"></span>
+                <span className="checkbox-checkmark"></span>
               </label>
             </div>
 
@@ -75,7 +75,8 @@ class StyleModal extends React.Component {
               >More Options </a></h3>
             </div> */}
 
-            <p>Theme: <a className={this.props.configuration.lightTheme ? "a-light" : ""} onClick={() => {this.props.dispatch(setLightTheme())}}>Light</a> 
+            <p>Theme: <a className={this.props.configuration.lightTheme ? "a-light" : ""} onClick={() => {this.props.dispatch(setLightTheme())}}>Light</a>
+                &nbsp;|&nbsp; 
               <a className={this.props.configuration.lightTheme ? "a-light" : ""} onClick={() => {this.props.dispatch(setDarkTheme())}}>Dark</a></p>
 
           </div>

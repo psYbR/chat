@@ -35,9 +35,7 @@ class AdminModal extends React.Component {
   render() {
     return (
       <div className="modal-wrapper">
-        {/* <div className="modal-blur-container">
-        </div> */}
-        <div className="modal-outer-container">
+        <div className="modal-outer-container admin-modal-outer-container">
           <div className="modal-inner-container connectingModalContainer">
 
             <h1>Admin Menu <a onClick={() => {

@@ -7,17 +7,21 @@ db = require('./database');
 const onRequestChannels = (socket) => {
   globals.channels.map((channel, i)=>{
 
+    console.log(channel)
+
     //we don't want to send the entire channel object, so here we set up a new one with the required values in it
     const outgoingChannel = {
       channelId: channel.channelId,
-      channelName: channel.channelName,
+      name: channel.name,
       topic: channel.topic,
       isVisible: channel.isVisible,
       isDefault: channel.isDefault,
-      requiresVoice: channel.requiresVoice,
-      requiresRegistration: channel.requiresRegistration,
-      creatorId: 123456789, 
-      creatorNick: '*'
+      requireImage: channel.requireImage,
+      requireVoice: channel.requireVoice,
+      requireLogin: channel.requireLogin,
+      creatorId: 123456789,
+      creatorNick: '*',
+      isActive: channel.isActive
     };
 
     //send the channel object
@@ -68,6 +72,7 @@ const dbCreateDefaultAdminUser = () => {
 
 const onConnect = (socket) => {
   socket.on('admin request channels', () => {
+    console.log('(ADMIN) user requested channels')
     onRequestChannels(socket);
   });
   socket.on('admin create channel', (channel) => {

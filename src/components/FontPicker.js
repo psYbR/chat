@@ -19,7 +19,7 @@ class FontPicker extends React.Component {
 		}
   }
 
-	onWrapperClick() {
+	onWrapperClick = () => {
 		this.setState({isOptionsVisible: !this.state.isOptionsVisible});
 	}
 
