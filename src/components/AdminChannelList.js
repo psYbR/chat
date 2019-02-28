@@ -60,7 +60,7 @@ class AdminModal extends React.Component {
             <p className='admin-delete-confirmation'>Really delete channel, ID: {this.state.channelIdToDelete || ''}?</p>
             <button onClick={(e)=>{
               e.preventDefault()
-              //do things
+              //do things here to trigger the delete of a channel
             }}>Yes</button>
             <button onClick={(e)=>{
               e.preventDefault()
