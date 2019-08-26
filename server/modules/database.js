@@ -1,5 +1,6 @@
 
-mysql = require('mysql');
+mysql = require('mysql')
+globals = require('globals')
 
 const db = mysql.createConnection({
   host: "localhost"
@@ -8,31 +9,74 @@ const db = mysql.createConnection({
   ,multipleStatements: true
   ,database: "blazechat"
   ,typeCast: function castField( field, useDefaultTypeCasting ) {
-
     // We only want to cast bit fields that have a single-bit in them. If the field
     // has more than one bit, then we cannot assume it is supposed to be a Boolean.
     if ( ( field.type === "BIT" ) && ( field.length === 1 ) ) {
-
       var bytes = field.buffer();
-
       // A Buffer in Node represents a collection of 8-bit unsigned integers.
       // Therefore, our single "bit field" comes back as the bits '0000 0001',
       // which is equivalent to the number 1.
       return( bytes[ 0 ] === 1 );
-
     }
-
     return( useDefaultTypeCasting() );
-
 }
-});
+})
+
+// const db_tableUsers = [
+//   0 = 'userId int NOT NULL AUTO_INCREMENT'
+// ]
 
 const initialCreate = false
 const sessionReset = false
 
 db.connect((err) => {
-  if (err) throw err;
-  console.log("(database) Connected!");
+  if (err) {
+    if (err.code == 'ER_ACCESS_DENIED_ERROR') {
+      console.log("(Database ERROR) - Access denied!")
+    } else {
+      console.log("(Database ERROR):")
+      console.log(err.code)
+    }
+  } else {
+    globals.databaseConnected = true
+
+    console.log("(database) Connected!")
+  }
+
+  if (!initialCreate) {
+
+    //load list of default channels
+    db.query("SELECT * FROM channels WHERE isVisible=true AND isActive=true", (err, result) => {
+      if (err) throw err;
+      for (var i = 0; i < result.length; i++) {
+        globals.channels.push(result[i])
+      }
+      globals.log("(database) Default channels registered.")
+    });
+
+    if (!sessionReset) {
+      //restore sessions, skipping ones that had no nick associated
+      db.query("SELECT sessionKey, lastSocketId, lastNick, lastUserId, unix_timestamp(expiryDatetime) * 1000 as expiryDatetime FROM sessions WHERE expiryDatetime > NOW()", (err, result) => {
+        if (err) throw err;
+        for (var i = 0; i < result.length; i++) {
+          globals.sessions.push({
+            sessionKey: result[i].sessionKey,
+            socketId: result[i].lastSocketId,
+            lastNick: result[i].lastNick,
+            lastUserId: result[i].lastUserId,
+            expiryDatetime: result[i].expiryDatetime
+          })
+          globals.log("(database) Session restored for: '" + result[i].lastNick + "', " + result[i].lastUserId + ", " + result[i].sessionKey)
+        }
+      });
+    } else {
+      //delete sessions
+      db.query("DELETE FROM sessions", (err, result) => {
+        if (err) throw err;
+      });
+    }
+
+  }
 
   if (initialCreate) {
 
@@ -162,57 +206,13 @@ db.connect((err) => {
 
           });
 
-          // db.query("SELECT", (err, result) => {
-          //   if (err) throw err;
-          // });
-
         });
 
-        
-
       });
 
     });
   }
 
-  if (!initialCreate) {
-
-    //load list of default channels
-    db.query("SELECT * FROM channels WHERE isVisible=true AND isActive=true", (err, result) => {
-      if (err) throw err;
-      for (var i = 0; i < result.length; i++) {
-        globals.channels.push(result[i])
-      }
-      globals.log("(database) Default channels registered.")
-    });
-
-    if (!sessionReset) {
-      //restore sessions, skipping ones that had no nick associated
-      db.query("SELECT sessionKey, lastSocketId, lastNick, lastUserId, unix_timestamp(expiryDatetime) * 1000 as expiryDatetime FROM sessions WHERE expiryDatetime > NOW()", (err, result) => {
-        if (err) throw err;
-        for (var i = 0; i < result.length; i++) {
-          globals.sessions.push({
-            sessionKey: result[i].sessionKey,
-            socketId: result[i].lastSocketId,
-            lastNick: result[i].lastNick,
-            lastUserId: result[i].lastUserId,
-            expiryDatetime: result[i].expiryDatetime
-          })
-          globals.log("(database) Session restored for: '" + result[i].lastNick + "', " + result[i].lastUserId + ", " + result[i].sessionKey)
-        }
-      });
-    } else {
-      //delete sessions
-      db.query("DELETE FROM sessions", (err, result) => {
-        if (err) throw err;
-      });
-    }
-
-
-    
-
-
-  }
 
 
 });
