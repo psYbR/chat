@@ -6,7 +6,8 @@ export const setConfiguration = (
     isAway = false,
     showSystemMessages = true,
     lightTheme = false,
-    activeTheme = 0
+    activeTheme = 0,
+    enableAutoAFK = true
 
   } = {}
 ) => ({
@@ -18,7 +19,8 @@ export const setConfiguration = (
     isAway,
     showSystemMessages,
     lightTheme,
-    activeTheme
+    activeTheme,
+    enableAutoAFK
   }
 
 });
@@ -70,4 +72,12 @@ export const hideSystemMessages = () => ({
 
 export const showSystemMessages = () => ({
   type: 'SHOW_SYSTEM_MESSAGES'
+});
+
+export const enableAutoAFK = () => ({
+  type: 'ENABLE_AUTO_AFK'
+});
+
+export const disableAutoAFK = () => ({
+  type: 'DISABLE_AUTO_AFK'
 });

@@ -11,16 +11,20 @@ const getUniqueKey = (socketId) => {
 
 //regularly drops sessions that are expired
 const updateSessions = () => {
-  +new Date;
-  let now = Date.now();
-  //get rid of sessions from the live table if they are expired
-  globals.sessions = globals.sessions.filter(session => session.expiryDatetime > now)
-  //globals.log("(session) Sessions purged from Globals.")
-  //get rid of sessions from the DB table if they are expired
-  db.query("DELETE FROM sessions WHERE expiryDatetime < NOW()", (err, result) => {
-    if (err) throw err;
-    //globals.log("(session) Sessions purged from DB."); 
-  });
+  if (globals.databaseConnected) {
+    +new Date;
+    let now = Date.now();
+    //get rid of sessions from the live table if they are expired
+    globals.sessions = globals.sessions.filter(session => session.expiryDatetime > now)
+    //globals.log("(session) Sessions purged from Globals.")
+    //get rid of sessions from the DB table if they are expired
+    db.query("DELETE FROM sessions WHERE expiryDatetime < NOW()", (err, result) => {
+      if (err) throw err;
+      //globals.log("(session) Sessions purged from DB."); 
+    });
+  } else {
+    globals.log("(sessions) Waiting for database...")
+  }
 }
 setInterval(updateSessions,10000)
 
@@ -39,7 +43,7 @@ const checkSession = (socket, sessionKey) => {
     db.query("UPDATE sessions SET lastSocketId=?, lastActiveDatetime=?, expiryDatetime=? WHERE sessionKey=?",
       [socket.id, globals.getSQLDate(now), globals.getSQLDate(expiryDatetime), sessionKey],  (err, result) => {
       if (err) throw err;
-      globals.log("(session) Existing session found and updated."); 
+      globals.log("(sessions) Existing session found and updated."); 
     });
 
     //update the live table
@@ -65,7 +69,7 @@ const checkSession = (socket, sessionKey) => {
 
       //if there was a user record
       if (result.length > 0) {
-        globals.log('(session) User account found for existing session')
+        globals.log('(sessions) User account found for existing session')
         if (result[0].isGlobalBanned) {
           socket.disconnect(); //if the user is banned, drop them like a hot potato
         } else {
@@ -73,7 +77,7 @@ const checkSession = (socket, sessionKey) => {
           loggedIn = true
         }
       } else {
-        globals.log('(session) No user account found for existing session.')
+        globals.log('(sessions) No user account found for existing session.')
       }
 
       let channels = {};
@@ -94,7 +98,7 @@ const checkSession = (socket, sessionKey) => {
     response = "success";
 
   } else {
-    globals.log("(session) Session '" + sessionKey + "' not found.")
+    globals.log("(sessions) Session '" + sessionKey + "' not found.")
     response = "no session";
   }
   return response;
@@ -103,7 +107,7 @@ const checkSession = (socket, sessionKey) => {
 //creates a new session
 const createSession = (socket) => {
   let response = getUniqueKey(socket.id);
-  globals.log("(session) Created session: " + getUniqueKey(socket.id));
+  globals.log("(sessions) Created session: " + getUniqueKey(socket.id));
   +new Date;
   const expiryDatetime = Date.now() + (config.sessionExpiry * 60 * 1000);
   const now = Date.now();
@@ -119,7 +123,7 @@ const createSession = (socket) => {
   db.query("INSERT INTO sessions (sessionKey, lastSocketId, lastActiveDatetime, expiryDatetime, lastNick, lastUserID) VALUES (?,?,?,?,'',0)",
     [response, socket.id, globals.getSQLDate(now), globals.getSQLDate(expiryDatetime)],  (err, result) => {
     if (err) throw err;
-    globals.log("(session) New session created."); 
+    globals.log("(sessions) New session created."); 
   });
 
   return response;
@@ -152,7 +156,7 @@ const sessionLogin = (socketId, userId, nick) => {
   db.query("UPDATE sessions SET lastNick=?, lastSocketId=?, lastUserId= ?, lastActiveDatetime=?, expiryDatetime=? WHERE sessionKey=?",
     [nick, socketId, userId, globals.getSQLDate(now), globals.getSQLDate(expiryDatetime), sessionKeyFromSocketId(socketId)],  (err, result) => {
     if (err) throw err;
-    globals.log("(session) Session info updated for '" + nick + "', userId: " + userId);
+    globals.log("(sessions) Session info updated for '" + nick + "', userId: " + userId);
 
   });
 }

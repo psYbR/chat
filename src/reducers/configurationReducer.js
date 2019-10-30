@@ -34,6 +34,16 @@ export default (state = reducerDefaultState, action) => {
         ...state,
         showSystemMessages: true
       }
+    case 'ENABLE_AUTO_AFK':
+      return {
+        ...state,
+        enableAutoAFK: false
+      }
+    case 'DISABLE_AUTO_AFK':
+      return {
+        ...state,
+        enableAutoAFK: true
+      }
     default:
       return state;
   }

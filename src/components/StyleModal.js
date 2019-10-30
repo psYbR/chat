@@ -1,6 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { hideSystemMessages, showSystemMessages, setFontColor, setLightTheme, setDarkTheme } from '../actions/configurationActions';
+import {
+  hideSystemMessages,
+  showSystemMessages,
+  setFontColor,
+  setLightTheme,
+  setDarkTheme,
+  enableAutoAFK,
+  disableAutoAFK
+} from '../actions/configurationActions';
 import { colors, fonts } from '../utils/styleInfo';
 import FontPicker from './FontPicker';
 import log from '../utils/log'
@@ -63,6 +71,18 @@ class StyleModal extends React.Component {
                   onChange={() => {
                     if (this.props.configuration.showSystemMessages) { this.props.dispatch(hideSystemMessages()); }
                     else { this.props.dispatch(showSystemMessages()); }
+                  }}
+                />
+                <span className="checkbox-checkmark"></span>
+              </label>
+              <p>Auto AFK?</p>
+              <label className="checkbox-container">
+                <input
+                  type="checkbox"
+                  checked={this.props.configuration.enableAutoAFK ? "checked" : ''}
+                  onChange={() => {
+                    if (this.props.configuration.enableAutoAFK) { this.props.dispatch(disableAutoAFK()); }
+                    else { this.props.dispatch(enableAutoAFK()); }
                   }}
                 />
                 <span className="checkbox-checkmark"></span>

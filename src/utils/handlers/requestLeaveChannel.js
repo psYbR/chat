@@ -4,7 +4,7 @@ import {
   setCurrentChannel
   ,leaveChannel
   ,unsetWaitingForLeaveChannelConfirmation
-  ,hideLeaveChannelModal
+  ,unsetLeaveChannelModalVisible
 } from '../../actions/actions';
 import { getUserList } from './handleUserLists';
 import { getNowTimestamp } from '../utils'
@@ -25,7 +25,7 @@ const requestLeaveChannel = (channelId) => {
     log("requesting to leave channel ID: " + channelId);
     socket.emit('leave channel', channelId, ({ response, channelId }) => { //send the nick to the server
       //handle the response (a string; either "success" or the reason the channel wasn't joined eg. in use)
-      store.dispatch(hideLeaveChannelModal());
+      store.dispatch(unsetLeaveChannelModalVisible());
       store.dispatch(unsetWaitingForLeaveChannelConfirmation());
       if (response == "success" || response == "already left channel") {
         log("request to leave channel ID " + channelId + " succeeded!");

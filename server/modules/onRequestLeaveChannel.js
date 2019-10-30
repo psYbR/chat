@@ -19,12 +19,7 @@ const onRequestLeaveChannel = (socket, channelId) => {
 
   //check that the ID is in one of the channel lists
   response = "channel not found";
-  config.defaultChannels.map((channel)=>{
-    if (channel.channelId == channelId) {
-      response = "success";
-    }
-  });
-  globals.userChannels.map((channel)=>{
+  globals.channels.map((channel)=>{
     if (channel.channelId == channelId) {
       response = "success";
     }

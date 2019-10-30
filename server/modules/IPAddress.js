@@ -76,13 +76,17 @@ const logIPAddress = (socket) => {
 
 //regularly drops sessions that are expired
 const purgeIPAddresses = () => {
-  +new Date;
+  if (globals.databaseConnected) {
+    +new Date;
 
-  //get rid of IPs (that aren't banned) from the DB table if they are older than the configured age
-  db.query("DELETE FROM IP WHERE lastActiveDatetime < ? AND isGlobalBanned = 0",[globals.getSQLDate(Date.now() - (config.maxIPLogAge * 24 * 60 * 60 * 1000))], (err, result) => {
-    if (err) throw err;
-    //globals.log("(session) Sessions purged from DB."); 
-  });
+    //get rid of IPs (that aren't banned) from the DB table if they are older than the configured age
+    db.query("DELETE FROM IP WHERE lastActiveDatetime < ? AND isGlobalBanned = 0",[globals.getSQLDate(Date.now() - (config.maxIPLogAge * 24 * 60 * 60 * 1000))], (err, result) => {
+      if (err) throw err;
+      //globals.log("(session) Sessions purged from DB."); 
+    });
+  } else {
+    globals.log("(IPAddress) IP logging disabled - no database connection")
+  }
 }
 setInterval(purgeIPAddresses, 5 * 60 * 1000)
 

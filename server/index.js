@@ -17,26 +17,32 @@ onChatMessage         = require('./modules/onChatMessage')
 //called whenever a client connects (or reconnects)
 io.on('connection', (socket) => {
 
-  IPAddress             .onConnect(socket)
-  onDisconnect          .onConnect(socket)
-  session               .onConnect(socket)
-  onLogin               .onConnect(socket)
-  onLoginCreate         .onConnect(socket)
-  onCreateAccount       .onConnect(socket)
-  onRequestLeaveChannel .onConnect(socket)
-  onRequestChannels     .onConnect(socket)
-  onJoinChannel         .onConnect(socket)
-  onRequestUserList     .onConnect(socket)
-  onChatMessage         .onConnect(socket)
-  admin                 .onConnect(socket)
+  if (globals.databaseConnected) {
 
-  socket.conn.on('packet', function (packet) {
-    if (packet.type === 'ping') {
-      const session = globals.sessions.filter(session=>session.socketId == socket.id);
-      if (session.length > 0) {
-        //console.log('received ping from ' + session[0].sessionId);
+    IPAddress             .onConnect(socket)
+    onDisconnect          .onConnect(socket)
+    session               .onConnect(socket)
+    onLogin               .onConnect(socket)
+    onLoginCreate         .onConnect(socket)
+    onCreateAccount       .onConnect(socket)
+    onRequestLeaveChannel .onConnect(socket)
+    onRequestChannels     .onConnect(socket)
+    onJoinChannel         .onConnect(socket)
+    onRequestUserList     .onConnect(socket)
+    onChatMessage         .onConnect(socket)
+    admin                 .onConnect(socket)
+
+    socket.conn.on('packet', function (packet) {
+      if (packet.type === 'ping') {
+        const session = globals.sessions.filter(session=>session.socketId == socket.id);
+        if (session.length > 0) {
+          //console.log('received ping from ' + session[0].sessionId);
+        }
       }
-    }
-  });
+    });
+  
+  } else {
+    globals.log("User connection ignored - no database connection!")
+  }
 
 });

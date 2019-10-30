@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
-  hideLeaveChannelModal,
-  setWaitingForLeaveChannelConfirmation
+  unsetLeaveChannelModalVisible,
+  setWaitingForLeaveChannelConfirmation,
+  unsetWaitingForLeaveChannelConfirmation //test
 } from '../actions/actions';
 import requestLeaveChannel from '../utils/handlers/requestLeaveChannel';
 
@@ -15,7 +16,8 @@ class LeaveChannelModal extends React.Component {
     requestLeaveChannel(this.props.channels.filter(channel => channel.isCurrent)[0].channelId);
   }
   onStayClick = () => {
-    this.props.dispatch(hideLeaveChannelModal());
+    this.props.dispatch(unsetLeaveChannelModalVisible());
+    this.props.dispatch(unsetWaitingForLeaveChannelConfirmation()); //test
   }
   render() {
     return (
@@ -29,16 +31,18 @@ class LeaveChannelModal extends React.Component {
               <h3>Really leave channel '{this.props.channels.filter(channel => channel.isCurrent)[0] ? this.props.channels.filter(channel => channel.isCurrent)[0].channelName : ''}'?</h3>
 
               <div className="leaveChannelButtonContainer">
-                <button className="buttonDefault lcbLeave"
+                <button className="button-default lcbLeave"
                   onClick={this.onLeaveClick}
                   disabled={this.props.userInterface.waitingForLeaveChannelConfirmation}
                 >Leave</button>
 
-                <button className="buttonDefault lcbStay"
+                <button className="button-default lcbStay"
                   onClick={this.onStayClick}
                   disabled={this.props.userInterface.waitingForLeaveChannelConfirmation}
                 >Stay</button>
               </div>
+
+              {this.props.userInterface.waitingForLeaveChannelConfirmation && <h1 style={{textAlign: 'center'}}><div className="fa fa-spinner fa-spin"></div></h1>}
 
             </div>
         </div>
